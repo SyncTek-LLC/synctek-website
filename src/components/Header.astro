@@ -6,12 +6,13 @@ const navLinks = [
   { label: 'Blog', href: '/blog/' },
   { label: 'Open Source', href: '/open-source/' },
   { label: 'About', href: '/about/' },
+  { label: 'Contact', href: '/contact/' },
 ];
 
 const currentPath = Astro.url.pathname;
 ---
 
-<header class="sticky top-0 z-50 border-b border-border-gray dark:border-border-gray bg-light-bg/80 dark:bg-obsidian/80 backdrop-blur-md">
+<header class="sticky top-0 z-50 border-b border-light-border dark:border-border-gray bg-light-bg/80 dark:bg-obsidian/80 backdrop-blur-md">
   <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16" aria-label="Main navigation">
     <!-- Logo -->
     <a href="/" class="flex items-center gap-2 no-underline">
@@ -46,7 +47,7 @@ const currentPath = Astro.url.pathname;
         aria-expanded="false"
         class="p-2 rounded-lg hover:bg-light-surface dark:hover:bg-border-gray"
       >
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true">
           <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
         </svg>
       </button>
@@ -66,7 +67,7 @@ const currentPath = Astro.url.pathname;
           aria-label="Close navigation menu"
           class="p-2 rounded-lg hover:bg-light-surface dark:hover:bg-border-gray"
         >
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
@@ -85,12 +86,6 @@ const currentPath = Astro.url.pathname;
             {link.label}
           </a>
         ))}
-        <a
-          href="/contact/"
-          class="text-lg font-medium no-underline py-2 text-light-gray-500 dark:text-muted hover:text-light-text-primary dark:hover:text-terminal-white transition-colors"
-        >
-          Contact
-        </a>
       </div>
     </div>
   </div>

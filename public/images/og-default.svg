@@ -1,0 +1,19 @@
+<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0A0A0A"/>
+      <stop offset="100%" style="stop-color:#151515"/>
+    </linearGradient>
+    <linearGradient id="chrome" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#707070"/>
+      <stop offset="50%" style="stop-color:#D0D0D0"/>
+      <stop offset="100%" style="stop-color:#909090"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <circle cx="600" cy="250" r="300" fill="rgba(176,176,176,0.04)"/>
+  <text x="600" y="280" text-anchor="middle" fill="url(#chrome)" font-family="system-ui, sans-serif" font-size="72" font-weight="700" letter-spacing="-2">SyncTek</text>
+  <text x="600" y="340" text-anchor="middle" fill="#9CA3AF" font-family="system-ui, sans-serif" font-size="28">AI-powered developer tools</text>
+  <text x="600" y="530" text-anchor="middle" fill="#6B7280" font-family="monospace" font-size="18">synctek.io</text>
+  <rect x="400" y="600" width="400" height="2" fill="url(#chrome)" rx="1"/>
+</svg>

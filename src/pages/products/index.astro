@@ -11,7 +11,7 @@ const products = [specterqa];
   description="AI-powered developer tools from SyncTek. CLI-first, open source, built for developers who want full control."
 >
   <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-    <h1 class="text-3xl sm:text-4xl font-bold mb-4">Products</h1>
+    <h1 class="text-3xl sm:text-4xl font-bold tracking-tight mb-4">Products</h1>
     <p class="text-lg text-light-gray-500 dark:text-light-text max-w-2xl mb-12">
       We build developer tools that solve real problems. Every tool is CLI-first, ships with cost controls built in, and gives you full ownership of your workflow. No accounts, no dashboards, no lock-in.
     </p>
@@ -28,6 +28,11 @@ const products = [specterqa];
           accentColor={product.accentColor}
         />
       ))}
+      <!-- Coming soon placeholder -->
+      <div class="rounded-lg border border-dashed border-border-gray dark:border-border-gray p-6 flex flex-col items-center justify-center text-center">
+        <p class="text-muted text-sm font-medium">More tools in development</p>
+        <p class="text-muted/60 text-xs mt-1">Stay tuned for announcements</p>
+      </div>
     </div>
   </section>
 </BaseLayout>

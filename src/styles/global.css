@@ -12,7 +12,7 @@
   --color-obsidian: #0A0A0A;
   --color-dark-surface: #111111;
   --color-border-gray: #1F1F1F;
-  --color-muted: #6B7280;
+  --color-muted: #8B949E;
   --color-light-text: #9CA3AF;
   --color-terminal-white: #D4D4D4;
   --color-accent-silver: #B0B0B0;
@@ -22,6 +22,9 @@
   --color-warning-amber: #D29922;
   --color-error-red: #F85149;
   --color-accent-purple: #BC8CFF;
+  --color-accent-green: #3FB950;
+  --color-accent-blue: #58A6FF;
+  --gradient-chrome: linear-gradient(135deg, #707070, #D0D0D0, #909090);
 
   /* Light mode colors */
   --color-light-bg: #FAFAFA;
@@ -53,6 +56,11 @@ html.dark {
   background-color: var(--color-obsidian);
   color: var(--color-terminal-white);
   color-scheme: dark;
+}
+
+html.dark body {
+  background-image: radial-gradient(circle, rgba(176,176,176,0.03) 1px, transparent 1px);
+  background-size: 24px 24px;
 }
 
 /* Light mode */
@@ -234,4 +242,41 @@ html.dark .prose :not(pre) > code {
 html:not(.dark) .prose :not(pre) > code {
   background: var(--color-light-surface);
   color: var(--color-light-text-primary);
+}
+
+/* Card hover effects */
+.card-hover {
+  transition: all 0.2s ease;
+}
+.card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(176,176,176,0.08);
+}
+
+/* Scroll reveal animation */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-reveal {
+  opacity: 0;
+}
+.animate-reveal.visible {
+  animation: fadeInUp 0.5s ease forwards;
+}
+
+/* Chrome gradient text */
+.text-chrome {
+  background: linear-gradient(135deg, #808080, #E0E0E0, #A0A0A0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Glow utilities */
+.glow-sm {
+  box-shadow: 0 0 20px rgba(176,176,176,0.15);
+}
+.glow-md {
+  box-shadow: 0 0 40px rgba(176,176,176,0.1), 0 0 80px rgba(176,176,176,0.05);
 }

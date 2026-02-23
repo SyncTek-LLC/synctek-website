@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionDivider from '../components/SectionDivider.astro';
 import teamData from '../data/team';
 ---
 
@@ -10,15 +11,17 @@ import teamData from '../data/team';
   <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
     <!-- Mission -->
     <div class="max-w-3xl mb-16">
-      <h1 class="text-3xl sm:text-4xl font-bold mb-6">About SyncTek</h1>
+      <h1 class="text-3xl sm:text-4xl font-bold tracking-tight mb-6">About SyncTek</h1>
       <p class="text-lg text-light-gray-500 dark:text-light-text mb-4">
         SyncTek builds developer tools that make AI practical for everyday engineering work. We ship CLI-first tools that solve real problems, cost less than the alternatives, and give developers full control over their workflows.
       </p>
     </div>
 
+    <SectionDivider />
+
     <!-- Story -->
-    <div class="max-w-3xl mb-16">
-      <h2 class="text-2xl font-semibold mb-6">Our story</h2>
+    <div class="max-w-3xl mb-16 mt-16">
+      <h2 class="text-2xl font-semibold tracking-tight mb-6">Our story</h2>
       <div class="space-y-4 text-light-gray-500 dark:text-light-text">
         <p>
           SyncTek was founded in 2026 with a straightforward thesis: AI is useful when it saves developers time. Not when it replaces them, not when it generates entire codebases, but when it handles the tedious work that slows down shipping.
@@ -32,9 +35,11 @@ import teamData from '../data/team';
       </div>
     </div>
 
+    <SectionDivider />
+
     <!-- Values -->
-    <div class="max-w-3xl mb-16">
-      <h2 class="text-2xl font-semibold mb-8">What we believe</h2>
+    <div class="max-w-3xl mb-16 mt-16">
+      <h2 class="text-2xl font-semibold tracking-tight mb-8">What we believe</h2>
       <div class="space-y-8">
         <div>
           <h3 class="text-lg font-semibold mb-2">Ship honest tools</h3>
@@ -69,13 +74,15 @@ import teamData from '../data/team';
       </div>
     </div>
 
+    <SectionDivider />
+
     <!-- Team -->
-    <div class="max-w-3xl mb-16">
-      <h2 class="text-2xl font-semibold mb-8">Team</h2>
+    <div class="max-w-3xl mb-16 mt-16">
+      <h2 class="text-2xl font-semibold tracking-tight mb-8">Team</h2>
       <div class="space-y-6">
         {teamData.members.map((member: any) => (
           <div class="flex items-start gap-6 p-6 rounded-lg border border-light-border dark:border-border-gray">
-            <div class="w-16 h-16 rounded-full bg-accent-silver/20 flex items-center justify-center text-accent-silver font-bold text-2xl flex-shrink-0">
+            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-[#707070] to-[#D0D0D0] flex items-center justify-center text-obsidian font-bold text-2xl flex-shrink-0 shadow-lg">
               {member.name.charAt(0)}
             </div>
             <div>
@@ -108,7 +115,7 @@ import teamData from '../data/team';
     <!-- Contact CTA -->
     <div class="max-w-3xl">
       <div class="rounded-lg border border-light-border dark:border-border-gray p-8">
-        <h2 class="text-xl font-semibold mb-4">Get in touch</h2>
+        <h2 class="text-xl font-semibold tracking-tight mb-4">Get in touch</h2>
         <p class="text-light-gray-500 dark:text-light-text mb-4">
           Have questions, feedback, or want to work with us? We would like to hear from you.
         </p>
