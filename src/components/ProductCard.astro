@@ -11,10 +11,10 @@ interface Props {
   accentColor?: string;
 }
 
-const { slug, name, tagline, type, status, license, accentColor = '#238636' } = Astro.props;
+const { slug, name, tagline, type, status, license, accentColor = '#B0B0B0' } = Astro.props;
 
 const statusVariant = {
-  launched: 'green' as const,
+  launched: 'silver' as const,
   beta: 'yellow' as const,
   'coming-soon': 'gray' as const,
 };
@@ -22,11 +22,11 @@ const statusVariant = {
 
 <a
   href={`/products/${slug}/`}
-  class="group block rounded-lg border border-light-border dark:border-border-gray p-6 no-underline transition-colors hover:border-sync-green dark:hover:border-sync-green"
+  class="group block rounded-lg border border-light-border dark:border-border-gray p-6 no-underline transition-colors hover:border-accent-silver dark:hover:border-accent-silver"
   style={`border-left: 3px solid ${accentColor}`}
 >
   <div class="flex items-start justify-between mb-3">
-    <h3 class="text-lg font-semibold text-light-text-primary dark:text-terminal-white group-hover:text-sync-green transition-colors">
+    <h3 class="text-lg font-semibold text-light-text-primary dark:text-terminal-white group-hover:text-accent-silver-hover transition-colors">
       {name}
     </h3>
     <Badge text={status === 'coming-soon' ? 'Coming Soon' : status.charAt(0).toUpperCase() + status.slice(1)} variant={statusVariant[status as keyof typeof statusVariant] || 'gray'} />

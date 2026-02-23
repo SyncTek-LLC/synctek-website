@@ -60,9 +60,9 @@ const jsonLd = {
   <article class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
     <!-- Breadcrumb -->
     <nav class="mb-8 text-sm text-light-gray-500 dark:text-muted" aria-label="Breadcrumb">
-      <a href="/blog/" class="hover:text-sync-green no-underline transition-colors">Blog</a>
+      <a href="/blog/" class="hover:text-accent-silver-hover no-underline transition-colors">Blog</a>
       <span class="mx-2">&gt;</span>
-      <a href={`/blog/category/${category}/`} class="hover:text-sync-green no-underline transition-colors capitalize">{category}</a>
+      <a href={`/blog/category/${category}/`} class="hover:text-accent-silver-hover no-underline transition-colors capitalize">{category}</a>
     </nav>
 
     <!-- Header -->
@@ -92,7 +92,7 @@ const jsonLd = {
                   <li style={`padding-left: ${(heading.depth - 2) * 0.75}rem`}>
                     <a
                       href={`#${heading.slug}`}
-                      class="text-light-gray-500 dark:text-muted hover:text-sync-green no-underline transition-colors"
+                      class="text-light-gray-500 dark:text-muted hover:text-accent-silver-hover no-underline transition-colors"
                     >
                       {heading.text}
                     </a>
@@ -116,7 +116,7 @@ const jsonLd = {
           {tags.map((tag) => (
             <a
               href={`/blog/tag/${tag}/`}
-              class="text-xs px-3 py-1 rounded-full bg-link-blue/10 text-link-blue hover:bg-link-blue/20 no-underline transition-colors"
+              class="text-xs px-3 py-1 rounded-full bg-accent-silver/10 text-accent-silver hover:bg-accent-silver/20 no-underline transition-colors"
             >
               #{tag}
             </a>
@@ -128,7 +128,7 @@ const jsonLd = {
     <!-- Author bio -->
     <div class="mt-8 p-6 rounded-lg border border-light-border dark:border-border-gray max-w-3xl">
       <div class="flex items-center gap-4">
-        <div class="w-12 h-12 rounded-full bg-sync-green/20 flex items-center justify-center text-sync-green font-bold text-lg">
+        <div class="w-12 h-12 rounded-full bg-accent-silver/20 flex items-center justify-center text-accent-silver font-bold text-lg">
           {author.charAt(0)}
         </div>
         <div>

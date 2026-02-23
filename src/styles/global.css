@@ -8,27 +8,28 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  /* Brand colors — dark mode defaults */
-  --color-obsidian: #0F1419;
-  --color-dark-surface: #161B22;
-  --color-border-gray: #21262D;
-  --color-muted: #8B949E;
-  --color-light-text: #C9D1D9;
-  --color-terminal-white: #E6EDF3;
-  --color-sync-green: #238636;
-  --color-sync-green-hover: #2ea043;
-  --color-link-blue: #58A6FF;
+  /* Brand colors — dark mode (primary) — monochrome silver/chrome on deep black */
+  --color-obsidian: #0A0A0A;
+  --color-dark-surface: #111111;
+  --color-border-gray: #1F1F1F;
+  --color-muted: #6B7280;
+  --color-light-text: #9CA3AF;
+  --color-terminal-white: #D4D4D4;
+  --color-accent-silver: #B0B0B0;
+  --color-accent-silver-hover: #E0E0E0;
+  --color-code-bg: #0F0F0F;
+  --color-tertiary-bg: #1A1A1A;
   --color-warning-amber: #D29922;
   --color-error-red: #F85149;
   --color-accent-purple: #BC8CFF;
 
   /* Light mode colors */
-  --color-light-bg: #FFFFFF;
-  --color-light-text-primary: #24292F;
-  --color-light-green: #1A7F37;
-  --color-light-gray-500: #656D76;
-  --color-light-border: #D0D7DE;
-  --color-light-surface: #F6F8FA;
+  --color-light-bg: #FAFAFA;
+  --color-light-text-primary: #1A1A1A;
+  --color-light-accent: #555555;
+  --color-light-gray-500: #4B5563;
+  --color-light-border: #E5E5E5;
+  --color-light-surface: #F0F0F0;
 
   /* Font families */
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
@@ -63,7 +64,7 @@ html:not(.dark) {
 
 /* Focus visible ring */
 :focus-visible {
-  outline: 2px solid var(--color-sync-green);
+  outline: 2px solid var(--color-accent-silver);
   outline-offset: 2px;
 }
 
@@ -74,8 +75,8 @@ html:not(.dark) {
   left: 0;
   z-index: 100;
   padding: 0.5rem 1rem;
-  background: var(--color-sync-green);
-  color: white;
+  background: var(--color-accent-silver);
+  color: #0A0A0A;
   font-weight: 600;
   text-decoration: none;
 }
@@ -132,11 +133,11 @@ html:not(.dark) {
 }
 
 html.dark .prose a {
-  color: var(--color-link-blue);
+  color: var(--color-accent-silver-hover);
 }
 
 html:not(.dark) .prose a {
-  color: var(--color-light-green);
+  color: var(--color-light-accent);
 }
 
 .prose ul, .prose ol {

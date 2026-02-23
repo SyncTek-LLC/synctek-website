@@ -1,17 +1,18 @@
 ---
 interface Props {
   text: string;
-  variant?: 'green' | 'yellow' | 'gray' | 'blue' | 'purple' | 'red';
+  variant?: 'green' | 'yellow' | 'gray' | 'blue' | 'purple' | 'red' | 'silver';
   size?: 'sm' | 'md';
 }
 
 const { text, variant = 'gray', size = 'sm' } = Astro.props;
 
 const variantClasses: Record<string, string> = {
-  green: 'bg-sync-green/15 text-sync-green border-sync-green/30',
+  green: 'bg-accent-silver/15 text-accent-silver border-accent-silver/30',
+  silver: 'bg-accent-silver/15 text-accent-silver border-accent-silver/30',
   yellow: 'bg-warning-amber/15 text-warning-amber border-warning-amber/30',
   gray: 'bg-muted/15 text-muted border-muted/30',
-  blue: 'bg-link-blue/15 text-link-blue border-link-blue/30',
+  blue: 'bg-accent-purple/15 text-accent-purple border-accent-purple/30',
   purple: 'bg-accent-purple/15 text-accent-purple border-accent-purple/30',
   red: 'bg-error-red/15 text-error-red border-error-red/30',
 };

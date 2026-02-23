@@ -28,14 +28,14 @@ const categoryVariant: Record<string, 'green' | 'blue' | 'purple' | 'yellow'> = 
 
 <a
   href={`/blog/${slug}/`}
-  class="group block rounded-lg border border-light-border dark:border-border-gray p-6 no-underline transition-colors hover:border-sync-green dark:hover:border-sync-green"
+  class="group block rounded-lg border border-light-border dark:border-border-gray p-6 no-underline transition-colors hover:border-accent-silver dark:hover:border-accent-silver"
 >
   <div class="flex items-center gap-3 mb-3 text-sm text-light-gray-500 dark:text-muted">
     <time datetime={date.toISOString()}>{formattedDate}</time>
     {readingTime && <span>{readingTime}</span>}
     <Badge text={category} variant={categoryVariant[category] || 'gray'} />
   </div>
-  <h3 class="text-lg font-semibold text-light-text-primary dark:text-terminal-white group-hover:text-sync-green transition-colors mb-2">
+  <h3 class="text-lg font-semibold text-light-text-primary dark:text-terminal-white group-hover:text-accent-silver-hover transition-colors mb-2">
     {title}
   </h3>
   <p class="text-sm text-light-gray-500 dark:text-muted line-clamp-2">

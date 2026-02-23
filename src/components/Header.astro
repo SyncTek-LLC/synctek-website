@@ -14,8 +14,8 @@ const currentPath = Astro.url.pathname;
 <header class="sticky top-0 z-50 border-b border-border-gray dark:border-border-gray bg-light-bg/80 dark:bg-obsidian/80 backdrop-blur-md">
   <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16" aria-label="Main navigation">
     <!-- Logo -->
-    <a href="/" class="flex items-center gap-2 text-lg font-semibold no-underline">
-      <span class="text-sync-green">Sync</span><span class="text-light-text-primary dark:text-terminal-white">Tek</span>
+    <a href="/" class="flex items-center gap-2 no-underline">
+      <img src="/images/synctek-logo.png" alt="SyncTek" class="h-8 sm:h-9 w-auto" />
     </a>
 
     <!-- Desktop nav -->
@@ -26,7 +26,7 @@ const currentPath = Astro.url.pathname;
           class:list={[
             'text-sm font-medium no-underline transition-colors',
             currentPath.startsWith(link.href)
-              ? 'text-sync-green'
+              ? 'text-accent-silver-hover dark:text-terminal-white'
               : 'text-light-gray-500 dark:text-muted hover:text-light-text-primary dark:hover:text-terminal-white',
           ]}
         >
@@ -78,7 +78,7 @@ const currentPath = Astro.url.pathname;
             class:list={[
               'text-lg font-medium no-underline py-2 transition-colors',
               currentPath.startsWith(link.href)
-                ? 'text-sync-green'
+                ? 'text-accent-silver-hover dark:text-terminal-white'
                 : 'text-light-gray-500 dark:text-muted hover:text-light-text-primary dark:hover:text-terminal-white',
             ]}
           >

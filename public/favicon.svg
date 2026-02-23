@@ -1,10 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
-  <!-- Left bracket -->
-  <path d="M10 6L4 16L10 26" stroke="#238636" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-  <!-- Right bracket -->
-  <path d="M22 6L28 16L22 26" stroke="#238636" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-  <!-- Sync arrows -->
-  <path d="M16 10L16 22" stroke="#238636" stroke-width="2" stroke-linecap="round"/>
-  <path d="M13 12L16 9L19 12" stroke="#238636" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M13 20L16 23L19 20" stroke="#238636" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <defs>
+    <linearGradient id="chrome" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#707070"/>
+      <stop offset="50%" stop-color="#D0D0D0"/>
+      <stop offset="100%" stop-color="#909090"/>
+    </linearGradient>
+  </defs>
+  <!-- Metallic S mark -->
+  <path d="M22 8.5C22 8.5 20 5 16 5C12 5 9 7.5 9 10.5C9 13.5 11.5 15 16 16C20.5 17 23 18.5 23 21.5C23 24.5 20 27 16 27C12 27 10 23.5 10 23.5" stroke="url(#chrome)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
