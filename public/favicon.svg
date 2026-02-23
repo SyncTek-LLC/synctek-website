@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <!-- Left bracket -->
+  <path d="M10 6L4 16L10 26" stroke="#238636" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Right bracket -->
+  <path d="M22 6L28 16L22 26" stroke="#238636" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Sync arrows -->
+  <path d="M16 10L16 22" stroke="#238636" stroke-width="2" stroke-linecap="round"/>
+  <path d="M13 12L16 9L19 12" stroke="#238636" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M13 20L16 23L19 20" stroke="#238636" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

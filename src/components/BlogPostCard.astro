@@ -1,0 +1,44 @@
+---
+import Badge from './Badge.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  date: Date;
+  category: string;
+  slug: string;
+  readingTime?: string;
+}
+
+const { title, description, date, category, slug, readingTime } = Astro.props;
+
+const formattedDate = date.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+});
+
+const categoryVariant: Record<string, 'green' | 'blue' | 'purple' | 'yellow'> = {
+  releases: 'green',
+  engineering: 'blue',
+  tutorials: 'purple',
+  company: 'yellow',
+};
+---
+
+<a
+  href={`/blog/${slug}/`}
+  class="group block rounded-lg border border-light-border dark:border-border-gray p-6 no-underline transition-colors hover:border-sync-green dark:hover:border-sync-green"
+>
+  <div class="flex items-center gap-3 mb-3 text-sm text-light-gray-500 dark:text-muted">
+    <time datetime={date.toISOString()}>{formattedDate}</time>
+    {readingTime && <span>{readingTime}</span>}
+    <Badge text={category} variant={categoryVariant[category] || 'gray'} />
+  </div>
+  <h3 class="text-lg font-semibold text-light-text-primary dark:text-terminal-white group-hover:text-sync-green transition-colors mb-2">
+    {title}
+  </h3>
+  <p class="text-sm text-light-gray-500 dark:text-muted line-clamp-2">
+    {description}
+  </p>
+</a>

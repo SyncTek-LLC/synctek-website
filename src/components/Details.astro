@@ -1,0 +1,16 @@
+---
+interface Props {
+  summary: string;
+}
+
+const { summary } = Astro.props;
+---
+
+<details class="my-4 rounded-lg border border-light-border dark:border-border-gray">
+  <summary class="cursor-pointer p-4 font-medium text-light-text-primary dark:text-terminal-white hover:text-sync-green transition-colors">
+    {summary}
+  </summary>
+  <div class="px-4 pb-4 text-sm text-light-gray-500 dark:text-light-text">
+    <slot />
+  </div>
+</details>

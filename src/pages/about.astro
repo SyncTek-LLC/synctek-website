@@ -1,0 +1,124 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import teamData from '../data/team';
+---
+
+<BaseLayout
+  title="About"
+  description="SyncTek builds developer tools that make AI practical for everyday engineering work. CLI-first, open source, honest about tradeoffs."
+>
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <!-- Mission -->
+    <div class="max-w-3xl mb-16">
+      <h1 class="text-3xl sm:text-4xl font-bold mb-6">About SyncTek</h1>
+      <p class="text-lg text-light-gray-500 dark:text-light-text mb-4">
+        SyncTek builds developer tools that make AI practical for everyday engineering work. We ship CLI-first tools that solve real problems, cost less than the alternatives, and give developers full control over their workflows.
+      </p>
+    </div>
+
+    <!-- Story -->
+    <div class="max-w-3xl mb-16">
+      <h2 class="text-2xl font-semibold mb-6">Our story</h2>
+      <div class="space-y-4 text-light-gray-500 dark:text-light-text">
+        <p>
+          SyncTek was founded in 2026 with a straightforward thesis: AI is useful when it saves developers time. Not when it replaces them, not when it generates entire codebases, but when it handles the tedious work that slows down shipping.
+        </p>
+        <p>
+          Our first product, SpecterQA, came from frustration with brittle test suites. Every frontend refactor broke dozens of tests that had nothing wrong with them -- they were just coupled to CSS selectors and DOM structure. We built a testing tool where AI personas navigate your app visually, the way a real user would. Tests break when the user experience breaks. Not when your markup changes.
+        </p>
+        <p>
+          We build in the open. The tools you run locally are MIT licensed. We publish our costs, document our tradeoffs, and fix problems the day we find them. When we discovered our original product name collided with an existing company, we rebranded within 24 hours. That is how we operate.
+        </p>
+      </div>
+    </div>
+
+    <!-- Values -->
+    <div class="max-w-3xl mb-16">
+      <h2 class="text-2xl font-semibold mb-8">What we believe</h2>
+      <div class="space-y-8">
+        <div>
+          <h3 class="text-lg font-semibold mb-2">Ship honest tools</h3>
+          <p class="text-light-gray-500 dark:text-light-text">
+            We tell developers exactly what our tools do, what they cost, and where they fall short. Every tradeoff is documented. Every limitation is stated upfront. We would rather lose a user to honesty than gain one through hype.
+          </p>
+        </div>
+        <div>
+          <h3 class="text-lg font-semibold mb-2">Open where it counts</h3>
+          <p class="text-light-gray-500 dark:text-light-text">
+            We open-source the tools developers run locally. The CLI on your machine is yours -- MIT licensed, forkable, community-driven. What matters is that the tool you depend on is not a black box.
+          </p>
+        </div>
+        <div>
+          <h3 class="text-lg font-semibold mb-2">Developer autonomy</h3>
+          <p class="text-light-gray-500 dark:text-light-text">
+            Our tools run where you want, integrate how you want, and never lock you in. YAML configs, standard outputs, CLI-first design. No accounts, no dashboards, no SaaS dependencies for core functionality.
+          </p>
+        </div>
+        <div>
+          <h3 class="text-lg font-semibold mb-2">Cost transparency</h3>
+          <p class="text-light-gray-500 dark:text-light-text">
+            AI tools cost money to run. We build cost controls directly into the engine and publish typical cost ranges for every feature. No surprise bills. A 3-step smoke test costs about $0.30-$0.60.
+          </p>
+        </div>
+        <div>
+          <h3 class="text-lg font-semibold mb-2">Fix it now</h3>
+          <p class="text-light-gray-500 dark:text-light-text">
+            When we find a problem, we fix it immediately. Not next sprint. Not after launch. Now. Speed of correction is a competitive advantage.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Team -->
+    <div class="max-w-3xl mb-16">
+      <h2 class="text-2xl font-semibold mb-8">Team</h2>
+      <div class="space-y-6">
+        {teamData.members.map((member: any) => (
+          <div class="flex items-start gap-6 p-6 rounded-lg border border-light-border dark:border-border-gray">
+            <div class="w-16 h-16 rounded-full bg-sync-green/20 flex items-center justify-center text-sync-green font-bold text-2xl flex-shrink-0">
+              {member.name.charAt(0)}
+            </div>
+            <div>
+              <h3 class="text-lg font-semibold">{member.name}</h3>
+              <p class="text-sm text-sync-green mb-2">{member.role}</p>
+              <p class="text-sm text-light-gray-500 dark:text-muted mb-3">{member.bio}</p>
+              <div class="flex gap-4">
+                {member.links.github && (
+                  <a href={member.links.github} target="_blank" rel="noopener noreferrer" class="text-sm text-light-gray-500 dark:text-muted hover:text-sync-green no-underline transition-colors">
+                    GitHub
+                  </a>
+                )}
+                {member.links.twitter && (
+                  <a href={member.links.twitter} target="_blank" rel="noopener noreferrer" class="text-sm text-light-gray-500 dark:text-muted hover:text-sync-green no-underline transition-colors">
+                    Twitter
+                  </a>
+                )}
+                {member.links.linkedin && (
+                  <a href={member.links.linkedin} target="_blank" rel="noopener noreferrer" class="text-sm text-light-gray-500 dark:text-muted hover:text-sync-green no-underline transition-colors">
+                    LinkedIn
+                  </a>
+                )}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Contact CTA -->
+    <div class="max-w-3xl">
+      <div class="rounded-lg border border-light-border dark:border-border-gray p-8">
+        <h2 class="text-xl font-semibold mb-4">Get in touch</h2>
+        <p class="text-light-gray-500 dark:text-light-text mb-4">
+          Have questions, feedback, or want to work with us? We would like to hear from you.
+        </p>
+        <a
+          href="/contact/"
+          class="inline-flex items-center px-6 py-3 rounded-lg bg-sync-green text-white font-semibold no-underline hover:bg-sync-green-hover transition-colors"
+        >
+          Contact us
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

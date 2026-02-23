@@ -1,0 +1,81 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import BlogPostCard from '../../../components/BlogPostCard.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const categories = ['releases', 'engineering', 'tutorials', 'company'];
+  return categories.map((category) => ({
+    params: { category },
+    props: { category },
+  }));
+}
+
+const { category } = Astro.props;
+
+const allPosts = await getCollection('blog', ({ data }) => !data.draft && data.category === category);
+const sortedPosts = allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+function getReadingTime(text: string): string {
+  const wpm = 200;
+  const words = text.split(/\s+/).length;
+  const minutes = Math.ceil(words / wpm);
+  return `${minutes} min read`;
+}
+
+const allCategories = [
+  { label: 'All', href: '/blog/', active: false },
+  { label: 'Releases', href: '/blog/category/releases/', active: category === 'releases' },
+  { label: 'Engineering', href: '/blog/category/engineering/', active: category === 'engineering' },
+  { label: 'Tutorials', href: '/blog/category/tutorials/', active: category === 'tutorials' },
+  { label: 'Company', href: '/blog/category/company/', active: category === 'company' },
+];
+
+const categoryTitle = category.charAt(0).toUpperCase() + category.slice(1);
+---
+
+<BaseLayout
+  title={`${categoryTitle} - Blog`}
+  description={`${categoryTitle} posts from the SyncTek blog.`}
+>
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <h1 class="text-3xl sm:text-4xl font-bold mb-8">Blog</h1>
+
+    <!-- Category filter -->
+    <nav class="flex flex-wrap gap-2 mb-12" aria-label="Blog categories">
+      {allCategories.map((cat) => (
+        <a
+          href={cat.href}
+          class:list={[
+            'px-4 py-1.5 rounded-full text-sm font-medium no-underline transition-colors',
+            cat.active
+              ? 'bg-sync-green text-white'
+              : 'bg-light-surface dark:bg-dark-surface text-light-gray-500 dark:text-muted hover:text-light-text-primary dark:hover:text-terminal-white',
+          ]}
+        >
+          {cat.label}
+        </a>
+      ))}
+    </nav>
+
+    <!-- Posts -->
+    <div class="space-y-6">
+      {sortedPosts.map((post) => (
+        <BlogPostCard
+          title={post.data.title}
+          description={post.data.description}
+          date={post.data.date}
+          category={post.data.category}
+          slug={post.slug}
+          readingTime={getReadingTime(post.body || '')}
+        />
+      ))}
+    </div>
+
+    {sortedPosts.length === 0 && (
+      <p class="text-light-gray-500 dark:text-muted text-center py-12">
+        No posts in this category yet.
+      </p>
+    )}
+  </section>
+</BaseLayout>

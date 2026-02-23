@@ -1,0 +1,133 @@
+---
+title: "Introducing SpecterQA: AI Personas Test Your Web App in Real Browsers"
+description: "SpecterQA uses AI vision models to navigate your web app like a real user. No test scripts, no selectors, no brittle automation."
+date: 2026-02-24
+author: "Maurice"
+category: releases
+tags: ["specterqa", "testing", "ai", "open-source", "playwright"]
+product: specterqa
+---
+
+Traditional test scripts are coupled to implementation details. Change a CSS class, rename an ID, restructure your markup — tests break. But the application still works fine. You spend more time maintaining test infrastructure than catching real bugs.
+
+SpecterQA takes a different approach.
+
+## What SpecterQA does
+
+SpecterQA is an open-source CLI for behavioral testing. Instead of writing test scripts with selectors and assertions, you define AI personas and goals. The AI navigates your web app in a real browser, visually, the way a human would.
+
+The loop is straightforward:
+
+1. **Screenshot** — Playwright captures the current browser state
+2. **Decide** — Claude's vision model receives the screenshot plus the persona's context (who they are, what they're trying to do, how patient they are). It returns a structured action: click at coordinates, type text, scroll, press a key, or signal done/stuck
+3. **Execute** — Playwright performs the action
+4. **Repeat** — Until the journey completes, the agent gets stuck, or the budget runs out
+
+No CSS selectors. No XPath. No DOM traversal. The AI reads the screen the same way a human does.
+
+## Why vision-based testing matters
+
+Selector-based tests are fragile by design. They are coupled to your markup — class names, element IDs, DOM hierarchy. Change any of those (even for a good reason, like a refactor) and your tests break.
+
+Vision-based tests are coupled to the user experience. They break when what the user sees changes. Which is exactly what you want your tests to catch.
+
+A persona with low technical comfort navigates differently than a power user. A persona with low patience gives up faster — just like a real frustrated user would. This surfaces UX problems that scripted tests never find.
+
+## Personas are YAML
+
+You define who is testing your app:
+
+```yaml title="personas/new-employee.yaml"
+name: "New Employee"
+role: "Just started, learning the system"
+technical_comfort: low
+patience: medium
+goals:
+  - "Find the onboarding checklist"
+  - "Complete the first task"
+frustrations:
+  - "Unclear navigation"
+  - "Too many options on the dashboard"
+```
+
+And what they are trying to do:
+
+```yaml title="journeys/first-day-onboarding.yaml"
+name: "First-day onboarding"
+product: your-app
+persona: new-employee
+steps:
+  - goal: "Log in with the provided credentials"
+  - goal: "Find and open the onboarding checklist"
+  - goal: "Complete the first item on the checklist"
+```
+
+The persona attributes shape how the AI navigates. This is not just randomized clicking — it is structured behavioral simulation.
+
+## Getting started
+
+Five commands, under sixty seconds:
+
+```bash
+pip install specterqa
+specterqa install       # downloads Playwright browsers
+specterqa init          # scaffolds sample config
+export ANTHROPIC_API_KEY=sk-ant-...
+specterqa run -p demo   # run the sample journey
+```
+
+The `specterqa init` command creates a `.specterqa/` directory with sample product, persona, and journey YAML files you can modify for your own application.
+
+## Cost transparency
+
+Every run costs money. We built this into the engine, not as an afterthought.
+
+| Journey type | Typical cost |
+|---|---|
+| 3-step smoke test | $0.30 - $0.60 |
+| 5-step standard journey | $0.50 - $1.50 |
+| 10-step complex journey with forms | $1.00 - $3.00 |
+
+Default budget cap is $5.00 per run. You can set per-day and monthly limits in your product YAML. The engine uses model routing — simple actions go to Haiku (cheaper), complex reasoning goes to Sonnet — to keep costs predictable.
+
+## CI integration
+
+SpecterQA outputs JUnit XML, so it drops into any existing pipeline:
+
+```yaml title=".github/workflows/test.yml"
+- name: Run behavioral tests
+  run: |
+    pip install specterqa
+    specterqa install
+    specterqa run -p my-app --output junit
+  env:
+    ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+```
+
+This runs alongside your unit tests and integration tests. SpecterQA supplements your existing test suite — it does not replace it.
+
+## MCP server for AI agents
+
+SpecterQA ships with an MCP server, so you can use it directly from Claude Desktop, Cursor, or any MCP-compatible agent platform. Available tools include `specterqa_run`, `specterqa_list_products`, `specterqa_get_results`, and `specterqa_init`.
+
+Install it from the MCP Registry: `io.github.SyncTekLLC/specterqa`
+
+## Honest tradeoffs
+
+We believe in stating limitations upfront:
+
+- **Requires an Anthropic API key.** There is no free tier for the AI calls.
+- **Every run costs money.** Budget accordingly. The cost controls are there for a reason.
+- **Vision models are not perfect.** They can misread UI elements, especially small text or low-contrast interfaces.
+- **Alpha software.** This is v0.3.0. The API may change as we learn from real-world usage.
+- **Supplements, does not replace.** Unit tests and integration tests still matter. SpecterQA catches the UX-level problems they miss.
+
+## What's next
+
+Try it. Point it at your staging environment. Define a persona that matches your least technical user. See what breaks.
+
+- **PyPI:** [specterqa on PyPI](https://pypi.org/project/specterqa/)
+- **GitHub:** [SyncTek-LLC/specterqa](https://github.com/SyncTek-LLC/specterqa)
+- **MCP Registry:** `io.github.SyncTekLLC/specterqa`
+
+MIT licensed. We would genuinely appreciate feedback — especially on the persona model and what attributes you would want to define for your test users. Open an issue or reach out on [Twitter](https://twitter.com/SyncTekLLC).

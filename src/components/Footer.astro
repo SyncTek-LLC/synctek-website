@@ -1,0 +1,81 @@
+---
+const footerLinks = [
+  { label: 'Products', href: '/products/' },
+  { label: 'Blog', href: '/blog/' },
+  { label: 'Open Source', href: '/open-source/' },
+  { label: 'About', href: '/about/' },
+  { label: 'Contact', href: '/contact/' },
+];
+
+const socialLinks = [
+  {
+    label: 'GitHub',
+    href: 'https://github.com/SyncTek-LLC',
+    icon: 'github',
+  },
+  {
+    label: 'Twitter',
+    href: 'https://twitter.com/SyncTekLLC',
+    icon: 'twitter',
+  },
+  {
+    label: 'LinkedIn',
+    href: 'https://linkedin.com/company/synctek-llc',
+    icon: 'linkedin',
+  },
+];
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="border-t border-light-border dark:border-border-gray mt-24">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="flex flex-col md:flex-row justify-between gap-8">
+      <!-- Brand -->
+      <div class="flex flex-col gap-4">
+        <a href="/" class="text-lg font-semibold no-underline">
+          <span class="text-sync-green">Sync</span><span class="text-light-text-primary dark:text-terminal-white">Tek</span>
+        </a>
+        <p class="text-sm text-light-gray-500 dark:text-muted max-w-xs">
+          AI-powered developer tools. Honest software that works on your terms.
+        </p>
+      </div>
+
+      <!-- Nav links -->
+      <nav class="flex flex-col gap-2" aria-label="Footer navigation">
+        {footerLinks.map((link) => (
+          <a
+            href={link.href}
+            class="text-sm text-light-gray-500 dark:text-muted hover:text-light-text-primary dark:hover:text-terminal-white no-underline transition-colors"
+          >
+            {link.label}
+          </a>
+        ))}
+      </nav>
+
+      <!-- Social links -->
+      <div class="flex flex-col gap-2">
+        {socialLinks.map((link) => (
+          <a
+            href={link.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-sm text-light-gray-500 dark:text-muted hover:text-light-text-primary dark:hover:text-terminal-white no-underline transition-colors"
+          >
+            {link.label}
+          </a>
+        ))}
+      </div>
+    </div>
+
+    <!-- Copyright -->
+    <div class="mt-12 pt-6 border-t border-light-border dark:border-border-gray flex flex-col sm:flex-row justify-between items-center gap-4">
+      <p class="text-sm text-light-gray-500 dark:text-muted">
+        &copy; {currentYear} SyncTek LLC. All rights reserved.
+      </p>
+      <p class="text-sm text-light-gray-500 dark:text-muted">
+        Built with <a href="https://astro.build" target="_blank" rel="noopener noreferrer" class="hover:text-light-text-primary dark:hover:text-terminal-white no-underline">Astro</a>
+      </p>
+    </div>
+  </div>
+</footer>

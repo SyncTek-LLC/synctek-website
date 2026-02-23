@@ -1,0 +1,65 @@
+---
+interface Props {
+  currentPage: number;
+  totalPages: number;
+  baseUrl: string;
+}
+
+const { currentPage, totalPages, baseUrl } = Astro.props;
+
+const prevUrl = currentPage > 1
+  ? currentPage === 2
+    ? baseUrl
+    : `${baseUrl}${currentPage - 1}/`
+  : null;
+
+const nextUrl = currentPage < totalPages
+  ? `${baseUrl}${currentPage + 1}/`
+  : null;
+---
+
+{totalPages > 1 && (
+  <nav class="flex items-center justify-center gap-4 mt-12" aria-label="Blog pagination">
+    {prevUrl ? (
+      <a
+        href={prevUrl}
+        class="flex items-center gap-2 text-sm font-medium text-light-gray-500 dark:text-muted hover:text-light-text-primary dark:hover:text-terminal-white no-underline transition-colors"
+      >
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+        </svg>
+        Previous
+      </a>
+    ) : (
+      <span class="flex items-center gap-2 text-sm text-light-border dark:text-border-gray">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+        </svg>
+        Previous
+      </span>
+    )}
+
+    <span class="text-sm text-light-gray-500 dark:text-muted">
+      Page {currentPage} of {totalPages}
+    </span>
+
+    {nextUrl ? (
+      <a
+        href={nextUrl}
+        class="flex items-center gap-2 text-sm font-medium text-light-gray-500 dark:text-muted hover:text-light-text-primary dark:hover:text-terminal-white no-underline transition-colors"
+      >
+        Next
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+        </svg>
+      </a>
+    ) : (
+      <span class="flex items-center gap-2 text-sm text-light-border dark:text-border-gray">
+        Next
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+        </svg>
+      </span>
+    )}
+  </nav>
+)}

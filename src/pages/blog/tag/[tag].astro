@@ -1,0 +1,59 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import BlogPostCard from '../../../components/BlogPostCard.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  const tags = [...new Set(posts.flatMap((post) => post.data.tags || []))];
+  return tags.map((tag) => ({
+    params: { tag },
+    props: { tag },
+  }));
+}
+
+const { tag } = Astro.props;
+
+const allPosts = await getCollection('blog', ({ data }) => !data.draft && (data.tags || []).includes(tag));
+const sortedPosts = allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+function getReadingTime(text: string): string {
+  const wpm = 200;
+  const words = text.split(/\s+/).length;
+  const minutes = Math.ceil(words / wpm);
+  return `${minutes} min read`;
+}
+---
+
+<BaseLayout
+  title={`#${tag} - Blog`}
+  description={`Blog posts tagged with "${tag}" from the SyncTek blog.`}
+>
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div class="mb-8">
+      <a href="/blog/" class="text-sm text-sync-green hover:underline no-underline">&larr; All posts</a>
+    </div>
+    <h1 class="text-3xl sm:text-4xl font-bold mb-8">
+      Posts tagged <span class="text-sync-green">#{tag}</span>
+    </h1>
+
+    <div class="space-y-6">
+      {sortedPosts.map((post) => (
+        <BlogPostCard
+          title={post.data.title}
+          description={post.data.description}
+          date={post.data.date}
+          category={post.data.category}
+          slug={post.slug}
+          readingTime={getReadingTime(post.body || '')}
+        />
+      ))}
+    </div>
+
+    {sortedPosts.length === 0 && (
+      <p class="text-light-gray-500 dark:text-muted text-center py-12">
+        No posts with this tag yet.
+      </p>
+    )}
+  </section>
+</BaseLayout>

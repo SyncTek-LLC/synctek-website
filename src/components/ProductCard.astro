@@ -1,0 +1,39 @@
+---
+import Badge from './Badge.astro';
+
+interface Props {
+  slug: string;
+  name: string;
+  tagline: string;
+  type: string;
+  status: string;
+  license: string;
+  accentColor?: string;
+}
+
+const { slug, name, tagline, type, status, license, accentColor = '#238636' } = Astro.props;
+
+const statusVariant = {
+  launched: 'green' as const,
+  beta: 'yellow' as const,
+  'coming-soon': 'gray' as const,
+};
+---
+
+<a
+  href={`/products/${slug}/`}
+  class="group block rounded-lg border border-light-border dark:border-border-gray p-6 no-underline transition-colors hover:border-sync-green dark:hover:border-sync-green"
+  style={`border-left: 3px solid ${accentColor}`}
+>
+  <div class="flex items-start justify-between mb-3">
+    <h3 class="text-lg font-semibold text-light-text-primary dark:text-terminal-white group-hover:text-sync-green transition-colors">
+      {name}
+    </h3>
+    <Badge text={status === 'coming-soon' ? 'Coming Soon' : status.charAt(0).toUpperCase() + status.slice(1)} variant={statusVariant[status as keyof typeof statusVariant] || 'gray'} />
+  </div>
+  <p class="text-sm text-light-gray-500 dark:text-muted mb-4">{tagline}</p>
+  <div class="flex items-center gap-2">
+    <Badge text={type} variant="blue" />
+    <Badge text={license} variant="purple" />
+  </div>
+</a>

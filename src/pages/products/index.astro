@@ -1,0 +1,33 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import specterqa from '../../data/products/specterqa';
+
+const products = [specterqa];
+---
+
+<BaseLayout
+  title="Products"
+  description="AI-powered developer tools from SyncTek. CLI-first, open source, built for developers who want full control."
+>
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <h1 class="text-3xl sm:text-4xl font-bold mb-4">Products</h1>
+    <p class="text-lg text-light-gray-500 dark:text-light-text max-w-2xl mb-12">
+      We build developer tools that solve real problems. Every tool is CLI-first, ships with cost controls built in, and gives you full ownership of your workflow. No accounts, no dashboards, no lock-in.
+    </p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {products.map((product) => (
+        <ProductCard
+          slug={product.slug}
+          name={product.name}
+          tagline={product.tagline}
+          type={product.type}
+          status={product.status}
+          license={product.license}
+          accentColor={product.accentColor}
+        />
+      ))}
+    </div>
+  </section>
+</BaseLayout>

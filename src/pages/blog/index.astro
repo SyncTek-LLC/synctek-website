@@ -1,0 +1,78 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BlogPostCard from '../../components/BlogPostCard.astro';
+import Pagination from '../../components/Pagination.astro';
+import Badge from '../../components/Badge.astro';
+import { getCollection } from 'astro:content';
+
+const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+const sortedPosts = allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const postsPerPage = 10;
+const totalPages = Math.ceil(sortedPosts.length / postsPerPage);
+const currentPage = 1;
+const posts = sortedPosts.slice(0, postsPerPage);
+
+function getReadingTime(text: string): string {
+  const wpm = 200;
+  const words = text.split(/\s+/).length;
+  const minutes = Math.ceil(words / wpm);
+  return `${minutes} min read`;
+}
+
+const categories = [
+  { label: 'All', href: '/blog/', active: true },
+  { label: 'Releases', href: '/blog/category/releases/' },
+  { label: 'Engineering', href: '/blog/category/engineering/' },
+  { label: 'Tutorials', href: '/blog/category/tutorials/' },
+  { label: 'Company', href: '/blog/category/company/' },
+];
+---
+
+<BaseLayout
+  title="Blog"
+  description="Engineering, releases, and tutorials from the SyncTek team. AI-powered developer tools, open-source development, and lessons learned."
+>
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <h1 class="text-3xl sm:text-4xl font-bold mb-8">Blog</h1>
+
+    <!-- Category filter -->
+    <nav class="flex flex-wrap gap-2 mb-12" aria-label="Blog categories">
+      {categories.map((cat) => (
+        <a
+          href={cat.href}
+          class:list={[
+            'px-4 py-1.5 rounded-full text-sm font-medium no-underline transition-colors',
+            cat.active
+              ? 'bg-sync-green text-white'
+              : 'bg-light-surface dark:bg-dark-surface text-light-gray-500 dark:text-muted hover:text-light-text-primary dark:hover:text-terminal-white',
+          ]}
+        >
+          {cat.label}
+        </a>
+      ))}
+    </nav>
+
+    <!-- Posts -->
+    <div class="space-y-6">
+      {posts.map((post) => (
+        <BlogPostCard
+          title={post.data.title}
+          description={post.data.description}
+          date={post.data.date}
+          category={post.data.category}
+          slug={post.slug}
+          readingTime={getReadingTime(post.body || '')}
+        />
+      ))}
+    </div>
+
+    {sortedPosts.length === 0 && (
+      <p class="text-light-gray-500 dark:text-muted text-center py-12">
+        No posts yet. Check back soon.
+      </p>
+    )}
+
+    <Pagination currentPage={currentPage} totalPages={totalPages} baseUrl="/blog/" />
+  </section>
+</BaseLayout>

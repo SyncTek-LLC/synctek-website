@@ -1,0 +1,141 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Badge from '../components/Badge.astro';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+  readingTime: string;
+  headings: { depth: number; slug: string; text: string }[];
+}
+
+const { post, readingTime, headings } = Astro.props;
+const { title, description, date, author, category, tags, image, updated } = post.data;
+
+const formattedDate = date.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+
+const categoryVariant: Record<string, 'green' | 'blue' | 'purple' | 'yellow'> = {
+  releases: 'green',
+  engineering: 'blue',
+  tutorials: 'purple',
+  company: 'yellow',
+};
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: title,
+  datePublished: date.toISOString(),
+  dateModified: updated ? updated.toISOString() : date.toISOString(),
+  author: {
+    '@type': 'Person',
+    name: author,
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: 'SyncTek LLC',
+  },
+  description,
+  mainEntityOfPage: `https://synctek.io/blog/${post.slug}/`,
+};
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  ogImage={image}
+  ogType="article"
+  article={{
+    publishedTime: date.toISOString(),
+    modifiedTime: updated ? updated.toISOString() : date.toISOString(),
+    author,
+    tags,
+  }}
+  jsonLd={jsonLd}
+>
+  <article class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Breadcrumb -->
+    <nav class="mb-8 text-sm text-light-gray-500 dark:text-muted" aria-label="Breadcrumb">
+      <a href="/blog/" class="hover:text-sync-green no-underline transition-colors">Blog</a>
+      <span class="mx-2">&gt;</span>
+      <a href={`/blog/category/${category}/`} class="hover:text-sync-green no-underline transition-colors capitalize">{category}</a>
+    </nav>
+
+    <!-- Header -->
+    <header class="mb-12 max-w-3xl">
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">{title}</h1>
+      <div class="flex flex-wrap items-center gap-3 text-sm text-light-gray-500 dark:text-muted">
+        <time datetime={date.toISOString()}>{formattedDate}</time>
+        <span>&middot;</span>
+        <span>{author}</span>
+        <span>&middot;</span>
+        <span>{readingTime}</span>
+        <Badge text={category} variant={categoryVariant[category] || 'gray'} />
+      </div>
+    </header>
+
+    <!-- Content with TOC sidebar -->
+    <div class="flex gap-12">
+      <!-- TOC sidebar (desktop only) -->
+      {headings.length > 0 && (
+        <aside class="hidden lg:block w-56 shrink-0">
+          <nav class="sticky top-24" aria-label="Table of contents">
+            <h2 class="text-sm font-semibold mb-3 text-light-text-primary dark:text-terminal-white">On this page</h2>
+            <ul class="space-y-2 text-sm">
+              {headings
+                .filter((h) => h.depth <= 3)
+                .map((heading) => (
+                  <li style={`padding-left: ${(heading.depth - 2) * 0.75}rem`}>
+                    <a
+                      href={`#${heading.slug}`}
+                      class="text-light-gray-500 dark:text-muted hover:text-sync-green no-underline transition-colors"
+                    >
+                      {heading.text}
+                    </a>
+                  </li>
+                ))}
+            </ul>
+          </nav>
+        </aside>
+      )}
+
+      <!-- Article body -->
+      <div class="prose min-w-0 max-w-3xl flex-1">
+        <slot />
+      </div>
+    </div>
+
+    <!-- Tags -->
+    {tags && tags.length > 0 && (
+      <div class="mt-12 pt-6 border-t border-light-border dark:border-border-gray max-w-3xl">
+        <div class="flex flex-wrap gap-2">
+          {tags.map((tag) => (
+            <a
+              href={`/blog/tag/${tag}/`}
+              class="text-xs px-3 py-1 rounded-full bg-link-blue/10 text-link-blue hover:bg-link-blue/20 no-underline transition-colors"
+            >
+              #{tag}
+            </a>
+          ))}
+        </div>
+      </div>
+    )}
+
+    <!-- Author bio -->
+    <div class="mt-8 p-6 rounded-lg border border-light-border dark:border-border-gray max-w-3xl">
+      <div class="flex items-center gap-4">
+        <div class="w-12 h-12 rounded-full bg-sync-green/20 flex items-center justify-center text-sync-green font-bold text-lg">
+          {author.charAt(0)}
+        </div>
+        <div>
+          <p class="font-semibold text-light-text-primary dark:text-terminal-white">{author}</p>
+          <p class="text-sm text-light-gray-500 dark:text-muted">Founder and CEO of SyncTek LLC. Building AI-powered developer tools.</p>
+        </div>
+      </div>
+    </div>
+  </article>
+</BaseLayout>
