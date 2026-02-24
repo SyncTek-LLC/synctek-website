@@ -23,13 +23,9 @@ const { class: className = '', height = 40 } = Astro.props;
 
   <style>
     .st-icon { stroke: #E5E5E5; fill: none; }
-    .st-land { fill: #E5E5E5; stroke: none; }
-    .st-grid { stroke: #E5E5E5; opacity: 0.25; }
     .st-txt { fill: #E5E5E5; }
 
     :root:not(.dark) .st-icon { stroke: #171717; }
-    :root:not(.dark) .st-land { fill: #171717; }
-    :root:not(.dark) .st-grid { stroke: #171717; }
     :root:not(.dark) .st-txt { fill: #171717; }
   </style>
 
@@ -38,27 +34,23 @@ const { class: className = '', height = 40 } = Astro.props;
     <!-- Circle outline -->
     <circle class="st-icon" cx="20" cy="20" r="17" stroke-width="1.5"/>
 
-    <!-- Grid lines (clipped, subtle) -->
+    <!-- Lines cutting through the globe (clipped to circle) -->
     <g clip-path="url(#globe-clip)">
-      <line class="st-grid" x1="3" y1="13" x2="37" y2="13" stroke-width="0.6"/>
-      <line class="st-grid" x1="3" y1="27" x2="37" y2="27" stroke-width="0.6"/>
-      <ellipse class="st-grid" cx="20" cy="20" rx="7" ry="17" stroke-width="0.6" fill="none"/>
+      <!-- Diagonal cut, upper-left to mid-right -->
+      <line class="st-icon" x1="3" y1="8" x2="34" y2="16" stroke-width="1"/>
+      <!-- Horizontal cut, slightly above center -->
+      <line class="st-icon" x1="3" y1="20" x2="37" y2="18" stroke-width="1"/>
+      <!-- Diagonal cut, left to lower-right -->
+      <line class="st-icon" x1="6" y1="26" x2="37" y2="30" stroke-width="1"/>
+      <!-- Vertical-ish cut on the left -->
+      <line class="st-icon" x1="12" y1="3" x2="10" y2="37" stroke-width="1"/>
+      <!-- Vertical-ish cut on the right -->
+      <line class="st-icon" x1="28" y1="4" x2="32" y2="37" stroke-width="1"/>
     </g>
 
-    <!-- Abstract continent shapes (clipped to globe) -->
-    <g clip-path="url(#globe-clip)">
-      <!-- Top-left landmass — angular, suggesting North America/Europe -->
-      <polygon class="st-land" points="8,7 17,5 19,12 14,16 6,14"/>
-      <!-- Center-right landmass — angular, suggesting Asia -->
-      <polygon class="st-land" points="23,11 35,9 37,18 30,22 24,19"/>
-      <!-- Bottom landmass — angular, suggesting Africa/South America -->
-      <polygon class="st-land" points="12,24 22,22 26,28 20,34 10,32"/>
-    </g>
-
-    <!-- Fragments that "cut through" the globe border (NOT clipped) -->
-    <polygon class="st-land" points="35,8 39,6 40,10 37,11"/>
-    <polygon class="st-land" points="7,31 3,34 5,37 9,34"/>
-    <polygon class="st-land" points="18,2 22,0 23,3 19,4"/>
+    <!-- Lines extending beyond the circle for "cut through" effect -->
+    <line class="st-icon" x1="5" y1="7" x2="12" y2="5" stroke-width="1"/>
+    <line class="st-icon" x1="33" y1="31" x2="39" y2="34" stroke-width="1"/>
   </g>
 
   <!-- Wordmark -->
