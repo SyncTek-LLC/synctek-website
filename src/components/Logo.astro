@@ -5,62 +5,44 @@ interface Props {
 }
 const { class: className = '', height = 40 } = Astro.props;
 ---
-<svg
-  class:list={['logo-svg', className]}
-  height={height}
-  viewBox="0 0 370 40"
-  fill="none"
-  preserveAspectRatio="xMidYMid meet"
-  xmlns="http://www.w3.org/2000/svg"
-  role="img"
-  aria-label="SyncTek"
->
-  <defs>
-    <clipPath id="ring-behind">
-      <!-- Upper-right triangle: inner ring is BEHIND outer here -->
-      <polygon points="0,0 40,0 40,40"/>
-    </clipPath>
-    <clipPath id="ring-front">
-      <!-- Lower-left triangle: inner ring is IN FRONT of outer here -->
-      <polygon points="0,0 40,40 0,40"/>
-    </clipPath>
-  </defs>
+<div class:list={['logo-container', className]} style={`height: ${height}px;`}>
+  <img
+    src="/images/synctek-icon.png"
+    alt=""
+    class="logo-icon"
+    height={height}
+    width={height}
+  />
+  <span class="logo-text">SYNCTEK</span>
+</div>
 
-  <style>
-    .st-icon { stroke: #E5E5E5; fill: none; }
-    .st-shadow { fill: #E5E5E5; opacity: 0.2; stroke: none; }
-    .st-txt { fill: #E5E5E5; }
+<style>
+  .logo-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
 
-    :root:not(.dark) .st-icon { stroke: #171717; }
-    :root:not(.dark) .st-shadow { fill: #171717; }
-    :root:not(.dark) .st-txt { fill: #171717; }
-  </style>
+  .logo-icon {
+    object-fit: contain;
+    /* Dark mode: invert the black icon to white */
+    filter: invert(0);
+  }
 
-  <!-- Interlocking rings icon -->
-  <g class="logo-icon">
-    <!-- Layer 1: Inner ring BACK portion (behind outer ring) -->
-    <circle class="st-icon" cx="23" cy="20" r="8.5" stroke-width="3" clip-path="url(#ring-behind)"/>
+  :global(.dark) .logo-icon {
+    filter: invert(1);
+  }
 
-    <!-- Layer 2: Full outer ring (covers inner where it goes behind) -->
-    <circle class="st-icon" cx="19" cy="16" r="13" stroke-width="3.5"/>
+  .logo-text {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    font-size: 1.2em;
+    letter-spacing: 0.1em;
+    color: #171717;
+    line-height: 1;
+  }
 
-    <!-- Layer 3: Inner ring FRONT portion (in front of outer ring) -->
-    <circle class="st-icon" cx="23" cy="20" r="8.5" stroke-width="3" clip-path="url(#ring-front)"/>
-
-    <!-- Shadow -->
-    <ellipse class="st-shadow" cx="21" cy="36" rx="9" ry="1.2"/>
-  </g>
-
-  <!-- Wordmark -->
-  <text
-    class="st-txt"
-    x="48"
-    y="32"
-    font-family="'Orbitron', sans-serif"
-    font-size="36"
-    font-weight="700"
-    letter-spacing="2"
-    text-rendering="geometricPrecision"
-    dominant-baseline="auto"
-  >SYNCTEK</text>
-</svg>
+  :global(.dark) .logo-text {
+    color: #E5E5E5;
+  }
+</style>
