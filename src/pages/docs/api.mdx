@@ -1,0 +1,641 @@
+---
+layout: ../../layouts/DocsLayout.astro
+title: "REST API Reference — ForgeOS Documentation"
+description: "Full REST API reference for ForgeOS. Auth, projects, initiatives, changesets, reviews, gates, billing, and Shared Mind endpoints."
+---
+
+# REST API Reference
+
+Base URL: `https://api.forgeos.synctek.io`
+
+All endpoints require authentication unless noted otherwise. Include one of:
+
+- **Session cookie:** `forge_session` (set by `POST /auth/login`)
+- **API key header:** `X-ForgeOS-API-Key: fos_your_key_here`
+
+Responses are JSON. Errors follow the format `{"detail": "error message"}`.
+
+---
+
+## Auth
+
+Authentication, registration, and session management.
+
+### `POST /auth/register`
+
+Create a new user account. **No auth required.**
+
+```bash
+curl -X POST https://api.forgeos.synctek.io/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{"email": "dev@company.com", "password": "secure-password-12"}'
+```
+
+**Request body:**
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `email` | string | Yes | Email address |
+| `password` | string | Yes | 12-128 characters |
+
+**Response** `201`:
+
+```json
+{
+  "user_id": "usr_a1b2c3d4",
+  "email": "dev@company.com",
+  "role": "user",
+  "created_at": "2026-02-25T10:00:00Z"
+}
+```
+
+**Errors:** `409` email exists, `422` validation failed.
+
+---
+
+### `POST /auth/login`
+
+Authenticate and create a session. Sets `forge_session` and `forge_csrf` cookies. **No auth required.**
+
+```bash
+curl -X POST https://api.forgeos.synctek.io/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email": "dev@company.com", "password": "secure-password-12"}' \
+  -c cookies.txt
+```
+
+**Request body:**
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `email` | string | Yes | Email address |
+| `password` | string | Yes | Password |
+
+**Response** `200`:
+
+```json
+{
+  "user_id": "usr_a1b2c3d4",
+  "email": "dev@company.com",
+  "role": "user"
+}
+```
+
+**Errors:** `401` invalid credentials (identical error for wrong password and unknown email — no enumeration).
+
+---
+
+### `POST /auth/logout`
+
+Invalidate the current session and clear cookies.
+
+**Response** `204`: No content.
+
+**Errors:** `401` no valid session.
+
+---
+
+### `GET /auth/me`
+
+Get the current authenticated user's info.
+
+**Response** `200`:
+
+```json
+{
+  "user_id": "usr_a1b2c3d4",
+  "email": "dev@company.com",
+  "role": "user",
+  "created_at": "2026-02-25T10:00:00Z"
+}
+```
+
+---
+
+### `POST /auth/register-agent`
+
+Register an autonomous agent identity. **No auth required.** Returns an API key scoped to the agent.
+
+```bash
+curl -X POST https://api.forgeos.synctek.io/auth/register-agent \
+  -H "Content-Type: application/json" \
+  -d '{"agent_name": "ci-agent", "owner_email": "dev@company.com"}'
+```
+
+---
+
+## Projects
+
+CRUD operations for projects. All endpoints require auth.
+
+### `POST /api/projects`
+
+Create a new project. Optionally import an existing codebase by providing `source_directory`.
+
+```bash
+curl -X POST https://api.forgeos.synctek.io/api/projects \
+  -H "Content-Type: application/json" \
+  -H "X-ForgeOS-API-Key: fos_your_key" \
+  -d '{
+    "name": "my-app",
+    "description": "Web application",
+    "platform": "web"
+  }'
+```
+
+**Request body:**
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `name` | string | Yes | Project name |
+| `description` | string | Yes | Project description |
+| `platform` | string | Yes | Platform (e.g., `web`, `mobile`, `api`) |
+| `constraints` | object | No | Project constraints |
+| `source_directory` | string | No | Path to existing codebase (triggers auto-scan) |
+
+**Response** `201`: Full project object with generated `id` (e.g., `proj_a1b2c3d4`).
+
+---
+
+### `GET /api/projects`
+
+List all projects (lightweight summaries). Filtered by the requesting user's organization.
+
+**Response** `200`: Array of project summaries.
+
+```json
+[
+  {
+    "id": "proj_a1b2c3d4",
+    "name": "my-app",
+    "platform": "web",
+    "status": "created",
+    "created_at": "2026-02-25T10:00:00Z"
+  }
+]
+```
+
+---
+
+### `GET /api/projects/{project_id}`
+
+Retrieve a single project by ID.
+
+**Response** `200`: Full project object.
+
+**Errors:** `403` access denied, `404` not found.
+
+---
+
+### `DELETE /api/projects/{project_id}`
+
+Delete a project. The governance ledger is preserved for audit trail.
+
+**Response** `204`: No content.
+
+---
+
+## Initiatives
+
+Track units of work within a project.
+
+### `POST /projects/{project_id}/initiatives`
+
+Create a new initiative.
+
+```bash
+curl -X POST https://api.forgeos.synctek.io/projects/proj_abc/initiatives \
+  -H "Content-Type: application/json" \
+  -H "X-ForgeOS-API-Key: fos_your_key" \
+  -d '{
+    "title": "Add user authentication",
+    "description": "Implement login, registration, and session management",
+    "priority": "high"
+  }'
+```
+
+**Request body:**
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `title` | string | Yes | Initiative title |
+| `description` | string | Yes | What this initiative accomplishes |
+| `priority` | string | No | `low`, `medium`, `high`, or `critical` (default: `medium`) |
+
+**Response** `201`: Full initiative object with generated `id` (e.g., `init_a1b2c3d4`).
+
+---
+
+### `GET /projects/{project_id}/initiatives`
+
+List all initiatives for a project, optionally filtered by status.
+
+**Query params:** `status` (optional) — filter by `active`, `completed`, or `abandoned`.
+
+**Response** `200`: Array of initiative summaries.
+
+---
+
+### `GET /projects/{project_id}/initiatives/{init_id}`
+
+Retrieve a single initiative.
+
+---
+
+### `PATCH /projects/{project_id}/initiatives/{init_id}`
+
+Update an initiative's status or priority.
+
+**Request body:**
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `status` | string | No | `active`, `completed`, or `abandoned` |
+| `priority` | string | No | `low`, `medium`, `high`, or `critical` |
+
+---
+
+## Changesets
+
+Propose and track code changes with auto-computed risk profiles.
+
+### `POST /projects/{project_id}/changesets`
+
+Propose a new changeset. Automatically computes risk score and creates a gate pipeline.
+
+```bash
+curl -X POST https://api.forgeos.synctek.io/projects/proj_abc/changesets \
+  -H "Content-Type: application/json" \
+  -H "X-ForgeOS-API-Key: fos_your_key" \
+  -d '{
+    "initiative_id": "init_a1b2c3d4",
+    "description": "Add JWT token validation middleware",
+    "files_changed": ["src/middleware/auth.ts", "src/config.ts"],
+    "modules_affected": ["auth", "config"]
+  }'
+```
+
+**Request body:**
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `initiative_id` | string | Yes | Parent initiative |
+| `description` | string | Yes | What changed and why |
+| `files_changed` | string[] | Yes | File paths that changed |
+| `modules_affected` | string[] | Yes | Module/area names affected |
+| `branch` | string | No | Git branch name |
+
+**Response** `201`: Changeset with embedded `risk_profile` (score, required gates, roles, evidence).
+
+---
+
+### `GET /projects/{project_id}/changesets`
+
+List all changesets for a project. Optional `status` filter.
+
+---
+
+### `GET /projects/{project_id}/changesets/{cs_id}`
+
+Retrieve a changeset with its risk profile and gate pipeline.
+
+---
+
+### `PATCH /projects/{project_id}/changesets/{cs_id}`
+
+Update a changeset's status.
+
+---
+
+## Evidence
+
+Attach artifacts (test results, scans, etc.) to changesets to satisfy gate requirements.
+
+### `POST /projects/{project_id}/changesets/{cs_id}/evidence`
+
+Attach evidence to a changeset. Auto-populates gate evidence requirements.
+
+```bash
+curl -X POST https://api.forgeos.synctek.io/projects/proj_abc/changesets/cs_def/evidence \
+  -H "Content-Type: application/json" \
+  -H "X-ForgeOS-API-Key: fos_your_key" \
+  -d '{
+    "type": "unit_test",
+    "summary": "47 tests passed, 0 failed, 92% coverage"
+  }'
+```
+
+**Request body:**
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `type` | string | Yes | `unit_test`, `coverage`, `lint`, `security_scan`, `benchmark`, `migration_plan`, `ux_snapshot`, `a11y_audit`, or `ai_review` |
+| `summary` | string | Yes | Summary of the evidence |
+| `file_refs` | string[] | No | File references |
+
+**Response** `201`: Evidence object.
+
+---
+
+### `GET /projects/{project_id}/changesets/{cs_id}/evidence`
+
+List all evidence for a changeset.
+
+---
+
+## Reviews
+
+Request and submit quality reviews on changesets. Reviews gate progression.
+
+### `POST /projects/{project_id}/changesets/{cs_id}/reviews`
+
+Request a human review for a changeset.
+
+**Request body:**
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `role` | string | Yes | `architect`, `qa_test`, `security`, `performance`, `reliability`, `accessibility`, or `docs_release` |
+
+---
+
+### `POST /projects/{project_id}/changesets/{cs_id}/reviews/ai`
+
+Request an AI-powered review. Uses Claude to analyze the changeset against the role's quality criteria. If approved, auto-satisfies the gate role requirement.
+
+**Request body:** Same as human review request (`role` field).
+
+**Errors:** `402` AI spend cap exceeded, `503` AI service unavailable.
+
+---
+
+### `POST /projects/{project_id}/changesets/{cs_id}/reviews/complete`
+
+Combined create and submit review in one call. Designed for MCP convenience.
+
+**Request body:**
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `role` | string | Yes | Review role |
+| `status` | string | Yes | `approved`, `blocked`, or `pending` |
+| `notes` | string | Yes | Review summary (minimum 20 chars for approvals) |
+| `findings` | object[] | Yes | Structured findings |
+| `reviewer_id` | string | No | Reviewer identifier |
+| `reviewer_type` | string | No | `human` or `ai_agent` |
+| `evidence_refs` | string[] | No | Evidence IDs referenced |
+
+**Anti-gaming:** All changesets require at least one approval from a reviewer different from the changeset creator.
+
+---
+
+### `GET /projects/{project_id}/changesets/{cs_id}/reviews`
+
+List all reviews for a changeset.
+
+---
+
+### `PATCH /projects/{project_id}/changesets/{cs_id}/reviews/{rev_id}`
+
+Submit a decision on an existing review.
+
+---
+
+## Gates
+
+Inspect and advance the governance gate pipeline for changesets.
+
+### `GET /projects/{project_id}/changesets/{cs_id}/gates`
+
+Get the full gate pipeline. Shows all gates, their requirements, completion status, and the current active gate.
+
+**Response** `200`:
+
+```json
+{
+  "changeset_id": "cs_def",
+  "current_gate": "design",
+  "gates": [
+    {
+      "id": "intent",
+      "status": "passed",
+      "promoted_by": "local_agent",
+      "promoted_at": "2026-02-25T10:05:00Z"
+    },
+    {
+      "id": "design",
+      "status": "pending",
+      "required_evidence": ["ai_review"],
+      "required_roles": ["architect"],
+      "satisfied_evidence": [],
+      "satisfied_roles": []
+    }
+  ]
+}
+```
+
+---
+
+### `POST /projects/{project_id}/changesets/{cs_id}/gates/{gate_id}/promote`
+
+Promote a gate to passed. All required evidence and role reviews must be satisfied.
+
+**Gate IDs:** `intent`, `design`, `implementation`, `verification`, `hardening`, `release`.
+
+**Request body (optional):**
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `promoted_by` | string | Who is promoting (default: `local`) |
+
+**Errors:** `400` requirements not met.
+
+---
+
+### `POST /projects/{project_id}/changesets/{cs_id}/gates/{gate_id}/reject`
+
+Reject a gate with a reason.
+
+**Request body:**
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `reason` | string | Rejection reason |
+| `rejected_by` | string | Who is rejecting |
+
+---
+
+### `POST /projects/{project_id}/changesets/{cs_id}/gates/{gate_id}/skip`
+
+Skip a gate with a waiver. Only allowed for low-risk changesets (risk score 50 or below).
+
+---
+
+### `GET /projects/{project_id}/changesets/{cs_id}/release-check`
+
+Check if a changeset is ready for release.
+
+**Response** `200`:
+
+```json
+{
+  "can_release": true,
+  "blockers": []
+}
+```
+
+---
+
+## Billing
+
+Subscription management, trials, and AI spend monitoring.
+
+### `POST /api/billing/trial/start`
+
+Start a 14-day free Pro trial. Available to free-plan users who have not previously trialed.
+
+**Response** `200`:
+
+```json
+{
+  "plan": "pro",
+  "plan_status": "trialing",
+  "plan_expires_at": "2026-03-11T10:00:00Z"
+}
+```
+
+---
+
+### `GET /api/billing/status`
+
+Get current plan and subscription state.
+
+---
+
+### `POST /api/billing/checkout`
+
+Create a Stripe Checkout session for plan upgrade. Returns a `checkout_url` for browser redirect.
+
+**Request body:**
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `plan_id` | string | Yes | `pro` or `enterprise` |
+
+---
+
+### `POST /api/billing/portal`
+
+Create a Stripe Customer Portal session for subscription management.
+
+---
+
+### `GET /api/billing/spend`
+
+Get current month AI spend summary.
+
+**Response** `200`:
+
+```json
+{
+  "org_id": "org_abc",
+  "spend_usd": 12.34,
+  "cap_usd": 50.00,
+  "pct": 24.68,
+  "period": "2026-02",
+  "reset_at": "2026-03-01T00:00:00Z"
+}
+```
+
+---
+
+### `GET /api/billing/spend/history`
+
+Get daily AI spend breakdown. Query param: `days` (default 30, max 90).
+
+---
+
+## Shared Mind
+
+Federated institutional knowledge — patterns, anti-patterns, and lessons shared across the team.
+
+### `POST /api/shared-mind/{team_id}/observe`
+
+Record an observation.
+
+**Request body:**
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `domain` | string | Yes | Knowledge domain |
+| `observation_type` | string | Yes | `pattern`, `anti-pattern`, `fix-recipe`, `architecture-decision`, or `lesson` |
+| `content` | string | Yes | What was observed |
+| `confidence` | number | No | 0.0-1.0 (default: 0.8) |
+| `tags` | string[] | No | Tags |
+
+---
+
+### `GET /api/shared-mind/{team_id}/query`
+
+Query relevant knowledge for a context.
+
+**Query params:**
+
+| Param | Type | Required | Description |
+|-------|------|----------|-------------|
+| `context` | string | Yes | Free-text context (keywords extracted automatically) |
+| `domain` | string | No | Domain filter |
+
+---
+
+### `POST /api/shared-mind/{team_id}/consolidate`
+
+Trigger consolidation of raw observations into structured knowledge nodes.
+
+---
+
+### `GET /api/shared-mind/{team_id}/stats`
+
+Get aggregate statistics for a team's Shared Mind.
+
+---
+
+### `GET /api/shared-mind/{team_id}/domains`
+
+List all knowledge domains.
+
+---
+
+### `GET /api/shared-mind/{team_id}/domain/{domain}`
+
+Get consolidated knowledge for a specific domain. Returns patterns, anti-patterns, fix recipes, and architecture decisions.
+
+---
+
+## Sessions
+
+Developer work sessions linking tasks to initiatives.
+
+### `POST /projects/{project_id}/sessions`
+
+Start a new work session.
+
+### `GET /projects/{project_id}/sessions/{session_id}`
+
+Get session details.
+
+### `POST /projects/{project_id}/sessions/{session_id}/end`
+
+End a session.
+
+### `POST /projects/{project_id}/sessions/{session_id}/tasks`
+
+Add a task to a session.
+
+---
+
+## Workflow
+
+### `GET /workflow/{initiative_id}`
+
+Get current workflow state for an initiative. Returns current step, next actions, blockers, and progress percentage.

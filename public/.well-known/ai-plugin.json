@@ -1,0 +1,18 @@
+{
+  "schema_version": "v1",
+  "name_for_model": "forgeos",
+  "name_for_human": "ForgeOS",
+  "description_for_model": "ForgeOS is a governance OS for agentic teams. Use this plugin to create and track engineering initiatives, check gate approval status, submit code and architecture reviews, manage delegations, and query audit trails. Ideal for AI agents that need structured governance in their development workflows.",
+  "description_for_human": "Governance OS for agentic development teams. Create initiatives, enforce gates, track delegations, generate audit trails.",
+  "auth": {
+    "type": "user_http",
+    "authorization_type": "bearer"
+  },
+  "api": {
+    "type": "openapi",
+    "url": "https://synctek.io/api/openapi.json"
+  },
+  "logo_url": "https://synctek.io/images/forgeos-logo.png",
+  "contact_email": "api@synctek.io",
+  "legal_info_url": "https://synctek.io/legal/terms"
+}

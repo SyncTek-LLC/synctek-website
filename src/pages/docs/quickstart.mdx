@@ -1,0 +1,155 @@
+---
+layout: ../../layouts/DocsLayout.astro
+title: "Quickstart — ForgeOS Documentation"
+description: "Get ForgeOS running in under 3 minutes. Register, create a project, connect the MCP server, and run your first governance command."
+---
+
+# Quickstart
+
+Get ForgeOS running in under 3 minutes. By the end of this guide, your AI agent will be calling governance tools before every action.
+
+## 1. Register an account
+
+```bash
+curl -X POST https://api.forgeos.synctek.io/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{"email": "you@company.com", "password": "your-secure-password"}'
+```
+
+You will receive a `user_id` in the response. Save it.
+
+## 2. Log in and get a session
+
+```bash
+curl -X POST https://api.forgeos.synctek.io/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email": "you@company.com", "password": "your-secure-password"}' \
+  -c cookies.txt
+```
+
+This sets a `forge_session` cookie. Use `-b cookies.txt` on subsequent requests, or use an API key (see [Authentication](/docs/auth/)).
+
+## 3. Create a project
+
+```bash
+curl -X POST https://api.forgeos.synctek.io/api/projects \
+  -H "Content-Type: application/json" \
+  -b cookies.txt \
+  -d '{
+    "name": "my-app",
+    "description": "My application under ForgeOS governance",
+    "platform": "web"
+  }'
+```
+
+Note the `id` in the response (e.g., `proj_a1b2c3d4`). You will use this as your `project_id`.
+
+## 4. Generate an API key
+
+API keys are the recommended auth method for MCP and programmatic access. Generate one from the dashboard or via API after logging in.
+
+Your API key will have the prefix `fos_` and is shown only once. Store it securely.
+
+## 5. Install the MCP server
+
+The ForgeOS MCP server connects your editor's AI agent directly to governance tools. No SDK required.
+
+```bash
+npm install -g @synctek/forgeos-mcp
+```
+
+Or use `npx` for zero-install:
+
+```bash
+npx -y @synctek/forgeos-mcp@latest
+```
+
+## 6. Configure your editor
+
+### Cursor
+
+Add to your Cursor MCP settings (`.cursor/mcp.json` in your project, or global settings):
+
+```json
+{
+  "mcpServers": {
+    "forgeos": {
+      "command": "npx",
+      "args": ["-y", "@synctek/forgeos-mcp@latest"],
+      "env": {
+        "FORGEOS_ENGINE_URL": "https://api.forgeos.synctek.io",
+        "FORGEOS_API_KEY": "fos_your_api_key_here"
+      }
+    }
+  }
+}
+```
+
+### Claude Code
+
+Add to `~/.claude/settings.json`:
+
+```json
+{
+  "mcpServers": {
+    "forgeos": {
+      "command": "npx",
+      "args": ["-y", "@synctek/forgeos-mcp@latest"],
+      "env": {
+        "FORGEOS_ENGINE_URL": "https://api.forgeos.synctek.io",
+        "FORGEOS_API_KEY": "fos_your_api_key_here"
+      }
+    }
+  }
+}
+```
+
+### VS Code (Copilot)
+
+Add to your VS Code `settings.json`:
+
+```json
+{
+  "mcp": {
+    "servers": {
+      "forgeos": {
+        "command": "npx",
+        "args": ["-y", "@synctek/forgeos-mcp@latest"],
+        "env": {
+          "FORGEOS_ENGINE_URL": "https://api.forgeos.synctek.io",
+          "FORGEOS_API_KEY": "fos_your_api_key_here"
+        }
+      }
+    }
+  }
+}
+```
+
+### Other MCP clients
+
+Any MCP-compatible client works. Set these environment variables:
+
+- `FORGEOS_ENGINE_URL` = `https://api.forgeos.synctek.io`
+- `FORGEOS_API_KEY` = your API key
+
+Then run the MCP server via stdio: `npx -y @synctek/forgeos-mcp@latest`
+
+## 7. Run your first governance command
+
+Open your editor and ask your AI agent:
+
+> "Initialize ForgeOS for my project."
+
+The agent will call `forge_init` with your project ID. You will see the project state, active initiatives, governance rules, and workflow runbook returned.
+
+Then try:
+
+> "Create an initiative for adding user authentication."
+
+The agent calls `forge_create_initiative`, creating a tracked initiative with a generated ID. From here, every change goes through gates — propose a changeset, submit evidence, get reviews, and promote gates before code ships.
+
+## Next steps
+
+- [Authentication](/docs/auth/) — API key management, rate limits, and security
+- [MCP Server](/docs/mcp/) — All 13 governance tools with parameters and examples
+- [REST API](/docs/api/) — Full HTTP endpoint reference

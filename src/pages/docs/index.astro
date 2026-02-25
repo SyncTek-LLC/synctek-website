@@ -1,0 +1,56 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro';
+---
+
+<DocsLayout
+  title="ForgeOS Documentation"
+  description="Everything you need to integrate ForgeOS governance into your development workflow. Quickstart, MCP setup, REST API reference, and authentication guide."
+>
+  <h1>ForgeOS Documentation</h1>
+  <p>
+    Everything you need to integrate ForgeOS into your development workflow.
+    Govern your agents with constitutional enforcement, Ed25519-signed audit trails, and circuit breakers.
+  </p>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 not-prose mt-8">
+    <a href="/docs/quickstart/" class="rounded-xl p-5 no-underline transition-all duration-200"
+       style="background: #111111; border: 1px solid #1F1F1F;"
+       onmouseover="this.style.borderColor='rgba(59,130,246,0.3)'"
+       onmouseout="this.style.borderColor='#1F1F1F'">
+      <div class="text-sm font-semibold text-[#3B82F6] mb-1">Quickstart</div>
+      <p class="text-xs text-[#8B949E] leading-relaxed m-0">
+        Register, create a project, connect the MCP server, and run your first governance command in under 3 minutes.
+      </p>
+    </a>
+
+    <a href="/docs/auth/" class="rounded-xl p-5 no-underline transition-all duration-200"
+       style="background: #111111; border: 1px solid #1F1F1F;"
+       onmouseover="this.style.borderColor='rgba(59,130,246,0.3)'"
+       onmouseout="this.style.borderColor='#1F1F1F'">
+      <div class="text-sm font-semibold text-[#3B82F6] mb-1">Authentication</div>
+      <p class="text-xs text-[#8B949E] leading-relaxed m-0">
+        API key lifecycle, session auth, rate limits, and security best practices.
+      </p>
+    </a>
+
+    <a href="/docs/mcp/" class="rounded-xl p-5 no-underline transition-all duration-200"
+       style="background: #111111; border: 1px solid #1F1F1F;"
+       onmouseover="this.style.borderColor='rgba(59,130,246,0.3)'"
+       onmouseout="this.style.borderColor='#1F1F1F'">
+      <div class="text-sm font-semibold text-[#3B82F6] mb-1">MCP Server</div>
+      <p class="text-xs text-[#8B949E] leading-relaxed m-0">
+        Install and configure the ForgeOS MCP server for Cursor, Claude Code, VS Code, and other MCP-compatible editors.
+      </p>
+    </a>
+
+    <a href="/docs/api/" class="rounded-xl p-5 no-underline transition-all duration-200"
+       style="background: #111111; border: 1px solid #1F1F1F;"
+       onmouseover="this.style.borderColor='rgba(59,130,246,0.3)'"
+       onmouseout="this.style.borderColor='#1F1F1F'">
+      <div class="text-sm font-semibold text-[#3B82F6] mb-1">REST API</div>
+      <p class="text-xs text-[#8B949E] leading-relaxed m-0">
+        Full REST API reference. Auth, projects, initiatives, changesets, reviews, gates, billing, and Shared Mind endpoints.
+      </p>
+    </a>
+  </div>
+</DocsLayout>

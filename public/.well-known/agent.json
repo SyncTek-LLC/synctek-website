@@ -1,0 +1,43 @@
+{
+  "name": "ForgeOS",
+  "description": "Governance OS for agentic teams. Create initiatives, check gates, submit reviews, and enforce engineering governance — all via programmatic API.",
+  "version": "1.0.0",
+  "url": "https://synctek.io",
+  "service_endpoint": "https://api.forgeos.synctek.io",
+  "mcp_endpoint": "https://mcp.forgeos.synctek.io/sse",
+  "registration_endpoint": "https://api.forgeos.synctek.io/auth/register-agent",
+  "capabilities": {
+    "core": [
+      "initiative_management",
+      "gate_governance",
+      "delegation_tracking",
+      "audit_trail",
+      "compliance_reporting",
+      "shared_mind"
+    ],
+    "protocols": ["mcp", "openapi", "a2a"],
+    "integrations": ["claude", "openai", "gemini", "cursor", "windsurf"]
+  },
+  "supported_modalities": ["text", "structured_data"],
+  "authentication": {
+    "type": "api_key",
+    "header": "X-ForgeOS-API-Key",
+    "key_prefix": "fos_",
+    "docs": "https://synctek.io/docs/auth/"
+  },
+  "pricing": {
+    "model": "per_api_call",
+    "docs": "https://synctek.io/forgeos/pricing/",
+    "machine_readable": "https://synctek.io/pricing.json"
+  },
+  "documentation": {
+    "agents_md": "https://synctek.io/agents.md",
+    "llms_txt": "https://synctek.io/llms.txt",
+    "openapi": "https://api.forgeos.synctek.io/openapi.json",
+    "quickstart": "https://synctek.io/docs/quickstart/",
+    "mcp": "https://synctek.io/docs/mcp/",
+    "api": "https://synctek.io/docs/api/",
+    "auth": "https://synctek.io/docs/auth/"
+  },
+  "schema_version": "a2a-1.0"
+}

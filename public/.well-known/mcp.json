@@ -1,0 +1,53 @@
+{
+  "schema_version": "2025-03-26",
+  "name": "forgeos-mcp",
+  "display_name": "ForgeOS MCP Server",
+  "description": "Model Context Protocol server for ForgeOS governance tools. Exposes 13 tools for initiative management, gate checks, reviews, evidence, Shared Mind, and workflow state.",
+  "version": "1.0.0",
+  "package": {
+    "npm": "@synctek/forgeos-mcp",
+    "install": "npx -y @synctek/forgeos-mcp@latest"
+  },
+  "transports": [
+    {
+      "type": "stdio",
+      "description": "Local stdio transport — default for Claude Code, Cursor, VS Code"
+    },
+    {
+      "type": "http_sse",
+      "endpoint": "https://mcp.forgeos.synctek.io/sse",
+      "description": "Remote HTTP/SSE transport — for hosted agents and cloud workflows"
+    }
+  ],
+  "capabilities": {
+    "tools": true,
+    "resources": false,
+    "prompts": false
+  },
+  "tools": [
+    "forge_init",
+    "forge_create_project",
+    "forge_create_initiative",
+    "forge_propose_changeset",
+    "forge_get_profile",
+    "forge_submit_evidence",
+    "forge_submit_review",
+    "forge_check_gates",
+    "forge_promote_gate",
+    "forge_release_check",
+    "forge_query_mind",
+    "forge_observe",
+    "forge_get_workflow"
+  ],
+  "security": {
+    "authentication": "api_key",
+    "header": "X-ForgeOS-API-Key",
+    "key_prefix": "fos_",
+    "scopes": ["read", "write", "admin"],
+    "docs": "https://synctek.io/docs/auth/"
+  },
+  "registry_listings": [
+    "https://registry.modelcontextprotocol.io/servers/forgeos",
+    "https://mcp.so/server/forgeos"
+  ]
+}

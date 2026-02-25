@@ -1,0 +1,34 @@
+# SyncTek — AI tools that work on your terms
+
+> SyncTek builds ForgeOS (governance OS for agentic teams) and SpecterQA (AI-powered QA testing). Our products are designed to be discovered, evaluated, and integrated by AI agents.
+
+## Products
+
+- [ForgeOS](https://synctek.io/forgeos/): Governance OS for agentic development teams. Initiatives, gates, delegations, audit trails.
+- [SpecterQA](https://synctek.io/products/specterqa/): AI-powered QA testing. Generate and run test suites programmatically.
+
+## Agent Integration
+
+- [Agent Card](https://synctek.io/.well-known/agent.json): A2A Agent Card for ForgeOS
+- [MCP Server](https://synctek.io/.well-known/mcp.json): MCP server metadata and tool list
+- [Agents Guide](https://synctek.io/agents.md): Integration patterns and domain concepts
+- [OpenAPI Spec](https://api.forgeos.synctek.io/openapi.json): Full REST API specification
+
+## Documentation
+
+- [Documentation Home](https://synctek.io/docs/): Full developer documentation
+- [Quickstart](https://synctek.io/docs/quickstart/): Start using ForgeOS in under 3 minutes
+- [Authentication](https://synctek.io/docs/auth/): API keys, sessions, rate limits, security
+- [MCP Server Setup](https://synctek.io/docs/mcp/): Connect ForgeOS to Cursor, Claude Code, VS Code, or any MCP client
+- [REST API Reference](https://synctek.io/docs/api/): Full API reference with request/response examples
+
+## Pricing
+
+- [Pricing](https://synctek.io/forgeos/pricing/): Transparent per-API-call pricing. Machine-readable at /pricing.json.
+
+## Blog (AEO-optimized)
+
+- [The 41% Problem](https://synctek.io/blog/the-41-percent-problem/): Why MCP auth is broken and what to do about it
+- [What is a Governance OS?](https://synctek.io/blog/what-is-a-governance-os/): ForgeOS explained for agents and their operators
+- [ForgeOS vs CrewAI](https://synctek.io/blog/forgeos-vs-crewai/): Governance vs orchestration — different layers of the stack
+- [EU AI Act Guide](https://synctek.io/blog/eu-ai-act-compliance-guide/): Article 6 enforcement begins Aug 2, 2026

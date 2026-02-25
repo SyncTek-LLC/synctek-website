@@ -1,0 +1,270 @@
+---
+layout: ../../layouts/DocsLayout.astro
+title: "MCP Server — ForgeOS Documentation"
+description: "Install and configure the ForgeOS MCP server. All 13 governance tools documented with parameters, descriptions, and usage examples."
+---
+
+# MCP Server
+
+ForgeOS exposes 13 governance tools over the Model Context Protocol (MCP). Any MCP-compatible agent — Claude, GPT-4, Gemini, local models — can call gate-check, submit reviews, and query institutional knowledge without custom integration.
+
+## Installation
+
+Install globally:
+
+```bash
+npm install -g @synctek/forgeos-mcp
+```
+
+Or use `npx` for zero-install (recommended):
+
+```bash
+npx -y @synctek/forgeos-mcp@latest
+```
+
+## Configuration
+
+### Cursor
+
+Add to `.cursor/mcp.json` in your project root (or global Cursor settings):
+
+```json
+{
+  "mcpServers": {
+    "forgeos": {
+      "command": "npx",
+      "args": ["-y", "@synctek/forgeos-mcp@latest"],
+      "env": {
+        "FORGEOS_ENGINE_URL": "https://api.forgeos.synctek.io",
+        "FORGEOS_API_KEY": "fos_your_api_key_here"
+      }
+    }
+  }
+}
+```
+
+### Claude Code
+
+Add to `~/.claude/settings.json`:
+
+```json
+{
+  "mcpServers": {
+    "forgeos": {
+      "command": "npx",
+      "args": ["-y", "@synctek/forgeos-mcp@latest"],
+      "env": {
+        "FORGEOS_ENGINE_URL": "https://api.forgeos.synctek.io",
+        "FORGEOS_API_KEY": "fos_your_api_key_here"
+      }
+    }
+  }
+}
+```
+
+### VS Code (Copilot)
+
+Add to your VS Code `settings.json`:
+
+```json
+{
+  "mcp": {
+    "servers": {
+      "forgeos": {
+        "command": "npx",
+        "args": ["-y", "@synctek/forgeos-mcp@latest"],
+        "env": {
+          "FORGEOS_ENGINE_URL": "https://api.forgeos.synctek.io",
+          "FORGEOS_API_KEY": "fos_your_api_key_here"
+        }
+      }
+    }
+  }
+}
+```
+
+### HTTP/SSE transport
+
+For hosted agents and cloud workflows, connect via HTTP/SSE instead of stdio:
+
+```
+Endpoint: https://mcp.forgeos.synctek.io/sse
+Header:   X-ForgeOS-API-Key: fos_your_api_key_here
+```
+
+## Tools reference
+
+ForgeOS provides 13 MCP tools organized by workflow stage.
+
+### Session
+
+#### `forge_init`
+
+Initialize a ForgeOS governance session. Returns project state, active work, governance rules, and workflow runbook. Call this on every session start.
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `project_id` | string | Yes | Project ID to initialize |
+| `developer_id` | string | No | Developer identifier (default: `local`) |
+
+#### `forge_create_project`
+
+Create a new ForgeOS project. Projects are the top-level container for initiatives, changesets, and governance workflows.
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `name` | string | Yes | Project name |
+| `description` | string | No | Project description |
+| `platform` | string | No | Target platform: `web`, `mobile`, `api`, `cli`, `desktop`, or `other` |
+
+### Initiative management
+
+#### `forge_create_initiative`
+
+Create a new initiative to track a piece of work. Returns the initiative with a generated ID.
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `project_id` | string | Yes | Project ID |
+| `title` | string | Yes | Initiative title |
+| `description` | string | Yes | What this initiative accomplishes |
+| `priority` | string | No | `low`, `medium`, `high`, or `critical` |
+
+#### `forge_get_workflow`
+
+Get the current workflow state for an initiative. Shows which step the developer is on, what is needed next, and overall progress.
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `initiative_id` | string | Yes | Initiative ID |
+
+### Changeset lifecycle
+
+#### `forge_propose_changeset`
+
+Propose a changeset for an initiative. The engine computes a risk score and determines required gates, roles, and evidence. Returns the changeset with its risk profile and gate pipeline.
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `project_id` | string | Yes | Project ID |
+| `initiative_id` | string | Yes | Initiative this changeset belongs to |
+| `description` | string | Yes | What changed and why |
+| `files_changed` | string[] | Yes | File paths that changed |
+| `modules_affected` | string[] | Yes | Module/area names affected |
+| `branch` | string | No | Git branch name |
+
+#### `forge_submit_evidence`
+
+Submit evidence (test results, scan outputs, etc.) for a changeset. Auto-populates gate evidence requirements.
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `project_id` | string | Yes | Project ID |
+| `changeset_id` | string | Yes | Changeset ID |
+| `type` | string | Yes | `unit_test`, `coverage`, `lint`, `security_scan`, `benchmark`, `migration_plan`, `ux_snapshot`, `a11y_audit`, or `ai_review` |
+| `summary` | string | Yes | Summary of the evidence |
+| `file_refs` | string[] | No | File references |
+
+### Review
+
+#### `forge_get_profile`
+
+Fetch a reviewer persona profile for local subagent injection. If project context is provided, the profile is enriched with Shared Mind patterns. Use the returned `system_prompt` as the subagent's instructions.
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `role` | string | Yes | `architect`, `qa_test`, `security`, `performance`, `reliability`, `accessibility`, or `docs_release` |
+| `project_id` | string | No | Project ID for contextualization |
+| `team_id` | string | No | Team ID for Shared Mind context (default: `default`) |
+| `modules_affected` | string[] | No | Modules to focus on |
+| `files_changed` | string[] | No | Files to focus on |
+
+#### `forge_submit_review`
+
+Submit a complete review with findings and verdict. Creates and finalizes the review in one call.
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `project_id` | string | Yes | Project ID |
+| `changeset_id` | string | Yes | Changeset ID |
+| `role` | string | Yes | Review role (e.g., `security`, `architect`) |
+| `status` | string | Yes | `approved`, `blocked`, or `pending` |
+| `notes` | string | Yes | Review summary |
+| `findings` | object[] | Yes | Structured findings (each with `category`, `severity`, `observation`, and optional `recommendation`) |
+
+Finding severity values: `pass`, `warning`, `concern`, `fail`.
+
+### Gates
+
+#### `forge_check_gates`
+
+Get the gate pipeline status for a changeset. Shows which gates are passed, pending, or failed, and what is needed to advance.
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `project_id` | string | Yes | Project ID |
+| `changeset_id` | string | Yes | Changeset ID |
+
+#### `forge_promote_gate`
+
+Promote a gate to passed status. Requirements (evidence and roles) must be met. Advances the pipeline to the next gate.
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `project_id` | string | Yes | Project ID |
+| `changeset_id` | string | Yes | Changeset ID |
+| `gate_id` | string | Yes | `intent`, `design`, `implementation`, `verification`, `hardening`, or `release` |
+| `promoted_by` | string | No | Who is promoting (default: `local_agent`) |
+
+#### `forge_release_check`
+
+Check if a changeset is ready to release. Returns `can_release` status and any remaining blockers.
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `project_id` | string | Yes | Project ID |
+| `changeset_id` | string | Yes | Changeset ID |
+
+### Shared Mind
+
+#### `forge_query_mind`
+
+Search the Shared Mind for institutional knowledge. Returns patterns, anti-patterns, and lessons relevant to the context.
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `context` | string | Yes | Search context (keywords, module names, etc.) |
+| `team_id` | string | No | Team ID (default: `default`) |
+| `domain` | string | No | Specific domain to search |
+
+#### `forge_observe`
+
+Record an observation to the Shared Mind. Use when you discover patterns, anti-patterns, or lessons during development.
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `domain` | string | Yes | Knowledge domain (e.g., module name, technology) |
+| `observation_type` | string | Yes | `pattern`, `anti-pattern`, `fix-recipe`, `architecture-decision`, or `lesson` |
+| `content` | string | Yes | What was observed |
+| `team_id` | string | No | Team ID (default: `default`) |
+| `confidence` | number | No | Confidence 0.0-1.0 (default: 0.8) |
+| `tags` | string[] | No | Tags for categorization |
+
+## Typical workflow
+
+```
+1. forge_init(project_id)                        → session context
+2. forge_create_initiative(project_id, title, …)  → initiative created
+3. forge_propose_changeset(project_id, …)         → risk score, gate pipeline
+4. forge_submit_evidence(project_id, cs_id, …)    → evidence attached
+5. forge_get_profile(role="security")             → reviewer prompt
+6. forge_submit_review(project_id, cs_id, …)      → review recorded
+7. forge_check_gates(project_id, cs_id)           → gate status
+8. forge_promote_gate(project_id, cs_id, gate_id) → gate advanced
+9. forge_release_check(project_id, cs_id)         → ready to ship
+```
+
+## Next steps
+
+- [Authentication](/docs/auth/) — API key management and security
+- [REST API](/docs/api/) — Full HTTP endpoint reference for direct integration
