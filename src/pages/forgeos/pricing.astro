@@ -1,0 +1,534 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionDivider from '../../components/SectionDivider.astro';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: 'ForgeOS Pricing',
+  url: 'https://synctek.io/forgeos/pricing',
+  description:
+    'ForgeOS pricing: Pro $49/month, Team $149/month, Enterprise $2,000/month. 14-day free trial. No credit card required.',
+  mainEntity: {
+    '@type': 'Product',
+    name: 'ForgeOS',
+    description:
+      'The governance OS for agentic teams — constitutional enforcement, Ed25519-signed audit trail, and circuit breakers for AI agents in production.',
+    brand: {
+      '@type': 'Brand',
+      name: 'SyncTek LLC',
+    },
+    offers: [
+      {
+        '@type': 'Offer',
+        name: 'Pro',
+        price: '49.00',
+        priceCurrency: 'USD',
+        billingIncrement: 'Month',
+        priceValidUntil: '2026-12-31',
+        availability: 'https://schema.org/InStock',
+        url: 'https://synctek.io/forgeos/pricing',
+        description:
+          '50,000 API calls/month. Gate enforcement, signed ledger, 12 MCP tools, EU AI Act artifacts, email support.',
+      },
+      {
+        '@type': 'Offer',
+        name: 'Team',
+        price: '149.00',
+        priceCurrency: 'USD',
+        billingIncrement: 'Month',
+        priceValidUntil: '2026-12-31',
+        availability: 'https://schema.org/InStock',
+        url: 'https://synctek.io/forgeos/pricing',
+        description:
+          '200,000 API calls/month. Everything in Pro plus team delegation rules.',
+      },
+      {
+        '@type': 'Offer',
+        name: 'Enterprise',
+        price: '2000.00',
+        priceCurrency: 'USD',
+        billingIncrement: 'Month',
+        priceValidUntil: '2026-12-31',
+        availability: 'https://schema.org/InStock',
+        url: 'https://synctek.io/forgeos/pricing',
+        description:
+          'Dedicated tenant. 4h SLA. Security questionnaire support. DPA on request.',
+      },
+    ],
+  },
+};
+
+const faqItems = [
+  {
+    question: 'Does the trial require a credit card?',
+    answer:
+      'No. The 14-day trial is full Pro-tier access with no credit card required. If you decide not to continue, your data is retained for 30 days after trial expiry, then deleted.',
+  },
+  {
+    question: 'What counts as an API call?',
+    answer:
+      'Each call to a ForgeOS MCP tool (gate-check, delegation-validate, audit-query, etc.) counts as one API call. Ledger writes triggered by those calls do not count separately.',
+  },
+  {
+    question: 'What is the Enterprise Compliance tier?',
+    answer:
+      'EU data residency, extended audit retention, and dedicated infrastructure are features we are actively building. Enterprise Compliance pricing is available on request — contact us to discuss your requirements and timeline.',
+  },
+  {
+    question: 'Can I switch plans mid-cycle?',
+    answer:
+      'Yes. Upgrades take effect immediately. Downgrades take effect at the next billing cycle. No penalties, no lock-in on Pro and Team plans.',
+  },
+  {
+    question: 'What is included in the EU AI Act compliance bundle?',
+    answer:
+      'The compliance bundle includes: hash-chained Ed25519-signed ledger export (Article 12), gate artifact chain for conformity assessment (Article 17), circuit breaker + kill switch documentation (Article 14), and A2A Agent Card (Article 13 partial). Enterprise tier adds legal mapping documentation.',
+  },
+  {
+    question: 'Is the governance engine open source?',
+    answer:
+      'Open-sourcing the governance engine core is planned. The CLI client is MIT-licensed. The hosted API and AI components are proprietary. We will announce the open-source timeline publicly.',
+  },
+];
+
+type FeatureValue = boolean | string;
+
+interface FeatureRow {
+  feature: string;
+  pro: FeatureValue;
+  team: FeatureValue;
+  enterprise: FeatureValue;
+  note?: string;
+}
+
+const comparisonRows: FeatureRow[] = [
+  { feature: 'API calls / month', pro: '50,000', team: '200,000', enterprise: 'Dedicated' },
+  { feature: 'Gate enforcement', pro: true, team: true, enterprise: true },
+  { feature: 'Ed25519-signed ledger', pro: true, team: true, enterprise: true },
+  { feature: '12 MCP governance tools', pro: true, team: true, enterprise: true },
+  { feature: 'Self-approval prevention', pro: true, team: true, enterprise: true },
+  { feature: 'Circuit breakers', pro: true, team: true, enterprise: true },
+  { feature: 'Human-in-the-loop gates', pro: true, team: true, enterprise: true },
+  { feature: 'EU AI Act artifacts (Art. 12, 17)', pro: true, team: true, enterprise: true },
+  { feature: 'A2A Agent Card', pro: true, team: true, enterprise: true },
+  { feature: '14-rule forensic scanner', pro: true, team: true, enterprise: true },
+  { feature: 'Team delegation rules', pro: false, team: true, enterprise: true },
+  { feature: 'Email support', pro: true, team: true, enterprise: true },
+  { feature: '4h SLA + custom SLA', pro: false, team: false, enterprise: true },
+  { feature: 'Security questionnaire support', pro: false, team: false, enterprise: true },
+  { feature: 'DPA on request', pro: false, team: false, enterprise: true },
+  { feature: 'EU data residency', pro: false, team: false, enterprise: 'Compliance tier — contact us', note: 'Not yet available — contact us' },
+  { feature: 'Extended audit retention', pro: false, team: false, enterprise: 'Compliance tier — contact us', note: 'Not yet available — contact us' },
+  { feature: 'Dedicated infrastructure', pro: false, team: false, enterprise: true },
+];
+
+function renderValue(val: FeatureValue) {
+  if (val === true) return { type: 'check' };
+  if (val === false) return { type: 'x' };
+  return { type: 'text', text: val };
+}
+---
+
+<BaseLayout
+  title="ForgeOS Pricing — Pro $49, Team $149, Enterprise $2K"
+  description="14-day free trial, no credit card. Pro: $49/month — gate enforcement, signed ledger, 12 MCP tools, EU AI Act artifacts. Team: $149/month. Enterprise: $2,000/month with dedicated tenant and SLA."
+  jsonLd={jsonLd}
+>
+  <!-- Pricing hero -->
+  <section class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-12">
+    <!-- Glow -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+      <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px]"
+           style="background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(59,130,246,0.12) 0%, transparent 70%);">
+      </div>
+    </div>
+
+    <div class="relative z-10 text-center">
+      <!-- Breadcrumb -->
+      <div class="flex items-center justify-center gap-2 text-sm text-[#8B949E] mb-8">
+        <a href="/forgeos" class="no-underline hover:text-[#E6EDF3] transition-colors">ForgeOS</a>
+        <span>/</span>
+        <span class="text-[#E6EDF3]">Pricing</span>
+      </div>
+
+      <p class="text-xs font-semibold tracking-[0.12em] uppercase text-[#3B82F6] mb-4">PRICING</p>
+      <h1 class="text-4xl sm:text-5xl font-bold text-[#E6EDF3] tracking-tight mb-4" style="letter-spacing: -0.02em;">
+        Start in 14 days.<br />Pay only if it works.
+      </h1>
+      <p class="text-lg text-[#9CA3AF] max-w-xl mx-auto">
+        Full Pro-tier access. No credit card required. First gate running in under 10 minutes.
+      </p>
+    </div>
+  </section>
+
+  <!-- Pricing cards -->
+  <section id="trial" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-start">
+
+      <!-- Pro — featured -->
+      <div class="relative rounded-xl p-6 lg:col-span-1" style="background: #111111; border: 1px solid #3B82F6; box-shadow: 0 0 0 1px rgba(59,130,246,0.15), 0 8px 32px rgba(59,130,246,0.08);">
+        <div class="absolute -top-3 left-1/2 -translate-x-1/2 px-3.5 py-1 rounded-full text-xs font-semibold text-white whitespace-nowrap"
+             style="background: #3B82F6;">
+          Most popular
+        </div>
+
+        <div class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold mb-5"
+             style="background: rgba(59,130,246,0.12); color: #3B82F6;">
+          Pro
+        </div>
+
+        <div class="flex items-baseline gap-1 mb-1">
+          <span class="text-5xl font-bold text-[#E6EDF3]">$49</span>
+          <span class="text-sm text-[#8B949E]">/mo</span>
+        </div>
+        <p class="text-xs text-[#8B949E] mb-2">billed monthly · cancel anytime</p>
+        <p class="text-xs text-[#8B949E] mb-6">50,000 API calls/month</p>
+
+        <a
+          href="https://forge-dashboard-production-6bd4.up.railway.app/register?plan=pro"
+          class="block w-full text-center py-3 rounded-md font-medium text-white no-underline transition-all duration-150 mb-6"
+          style="background: #3B82F6;"
+          onmouseover="this.style.background='#2563EB'"
+          onmouseout="this.style.background='#3B82F6'"
+          aria-label="Start 14-day free trial of ForgeOS Pro"
+        >
+          Start 14-day trial
+        </a>
+
+        <ul class="space-y-3 text-sm">
+          <li class="flex items-start gap-2 text-[#E6EDF3]">
+            <svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            Gate enforcement
+          </li>
+          <li class="flex items-start gap-2 text-[#E6EDF3]">
+            <svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            Ed25519-signed ledger
+          </li>
+          <li class="flex items-start gap-2 text-[#E6EDF3]">
+            <svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            12 MCP governance tools
+          </li>
+          <li class="flex items-start gap-2 text-[#E6EDF3]">
+            <svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            Self-approval prevention
+          </li>
+          <li class="flex items-start gap-2 text-[#E6EDF3]">
+            <svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            Circuit breakers
+          </li>
+          <li class="flex items-start gap-2 text-[#E6EDF3]">
+            <svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            EU AI Act artifacts
+          </li>
+          <li class="flex items-start gap-2 text-[#E6EDF3]">
+            <svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            Email support
+          </li>
+          <li class="flex items-start gap-2">
+            <svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="#8B949E" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+            <span class="text-[#8B949E]">Team delegation rules</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Team -->
+      <div class="rounded-xl p-6 lg:col-span-1" style="background: #111111; border: 1px solid #1F1F1F;">
+        <div class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold mb-5"
+             style="background: rgba(16,185,129,0.12); color: #10B981;">
+          Team
+        </div>
+
+        <div class="flex items-baseline gap-1 mb-1">
+          <span class="text-5xl font-bold text-[#E6EDF3]">$149</span>
+          <span class="text-sm text-[#8B949E]">/mo</span>
+        </div>
+        <p class="text-xs text-[#8B949E] mb-2">billed monthly · cancel anytime</p>
+        <p class="text-xs text-[#8B949E] mb-6">200,000 API calls/month</p>
+
+        <a
+          href="https://forge-dashboard-production-6bd4.up.railway.app/register?plan=team"
+          class="block w-full text-center py-3 rounded-md font-medium no-underline transition-all duration-150 mb-6 text-[#E6EDF3]"
+          style="border: 1px solid #1F1F1F;"
+          onmouseover="this.style.borderColor='#8B949E'; this.style.background='rgba(255,255,255,0.04)'"
+          onmouseout="this.style.borderColor='#1F1F1F'; this.style.background='transparent'"
+          aria-label="Start 14-day free trial of ForgeOS Team"
+        >
+          Start 14-day trial
+        </a>
+
+        <ul class="space-y-3 text-sm">
+          <li class="flex items-start gap-2 text-[#E6EDF3]">
+            <svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            Everything in Pro
+          </li>
+          <li class="flex items-start gap-2 text-[#E6EDF3]">
+            <svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            Team delegation rules
+          </li>
+          <li class="flex items-start gap-2 text-[#E6EDF3]">
+            <svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            200,000 API calls/month
+          </li>
+          <li class="flex items-start gap-2 text-[#E6EDF3]">
+            <svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            Email support SLA
+          </li>
+          <li class="flex items-start gap-2">
+            <svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="#8B949E" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+            <span class="text-[#8B949E]">4h SLA</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="#8B949E" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+            <span class="text-[#8B949E]">EU data residency</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Enterprise -->
+      <div class="rounded-xl p-6 lg:col-span-1" style="background: #111111; border: 1px solid #1F1F1F;">
+        <div class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold mb-5"
+             style="background: rgba(139,148,158,0.12); color: #8B949E;">
+          Enterprise
+        </div>
+
+        <div class="flex items-baseline gap-1 mb-1">
+          <span class="text-5xl font-bold text-[#E6EDF3]">$2,000</span>
+          <span class="text-sm text-[#8B949E]">/mo</span>
+        </div>
+        <p class="text-xs text-[#8B949E] mb-2">annual contract · dedicated tenant</p>
+        <p class="text-xs text-[#8B949E] mb-6">Unlimited — dedicated infrastructure</p>
+
+        <a
+          href="mailto:sales@synctek.io"
+          class="block w-full text-center py-3 rounded-md font-medium no-underline transition-all duration-150 mb-6 text-[#E6EDF3]"
+          style="border: 1px solid #1F1F1F;"
+          onmouseover="this.style.borderColor='#8B949E'; this.style.background='rgba(255,255,255,0.04)'"
+          onmouseout="this.style.borderColor='#1F1F1F'; this.style.background='transparent'"
+          aria-label="Contact us about ForgeOS Enterprise"
+        >
+          Contact us
+        </a>
+
+        <ul class="space-y-3 text-sm">
+          <li class="flex items-start gap-2 text-[#E6EDF3]">
+            <svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            Everything in Team
+          </li>
+          <li class="flex items-start gap-2 text-[#E6EDF3]">
+            <svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            Dedicated infrastructure
+          </li>
+          <li class="flex items-start gap-2 text-[#E6EDF3]">
+            <svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            4h SLA + custom
+          </li>
+          <li class="flex items-start gap-2 text-[#E6EDF3]">
+            <svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            Security questionnaire support
+          </li>
+          <li class="flex items-start gap-2 text-[#E6EDF3]">
+            <svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            DPA on request
+          </li>
+          <li class="flex items-start gap-2">
+            <svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="#F59E0B" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" /></svg>
+            <span class="text-[#F59E0B]">EU compliance tier — contact us</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Enterprise Compliance callout -->
+      <div class="rounded-xl p-6 lg:col-span-1" style="background: #111111; border: 1px dashed #1F1F1F;">
+        <div class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold mb-5"
+             style="background: rgba(245,158,11,0.12); color: #F59E0B;">
+          Enterprise Compliance
+        </div>
+
+        <p class="text-xs text-[#8B949E] leading-relaxed mb-6">
+          EU data residency, extended audit retention, and dedicated compliance infrastructure are in active development.
+        </p>
+
+        <p class="text-xs font-semibold text-[#E6EDF3] mb-3">Planned features:</p>
+        <ul class="space-y-2 text-xs text-[#8B949E] mb-6">
+          <li class="flex items-start gap-2">
+            <span class="text-[#F59E0B] mt-0.5">—</span>
+            EU data residency (Germany/Ireland)
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-[#F59E0B] mt-0.5">—</span>
+            Extended 7-year audit retention
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-[#F59E0B] mt-0.5">—</span>
+            Article 43 conformity assessment support
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-[#F59E0B] mt-0.5">—</span>
+            Legal mapping documentation
+          </li>
+        </ul>
+
+        <a
+          href="/contact"
+          class="block w-full text-center py-3 rounded-md font-medium no-underline transition-all duration-150 text-[#F59E0B] text-sm"
+          style="border: 1px solid rgba(245,158,11,0.3);"
+          onmouseover="this.style.background='rgba(245,158,11,0.06)'"
+          onmouseout="this.style.background='transparent'"
+        >
+          Join the waitlist
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <SectionDivider />
+
+  <!-- Feature comparison table -->
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <h2 class="text-2xl font-semibold text-[#E6EDF3] tracking-tight mb-8">Full feature comparison</h2>
+
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm" style="border-collapse: collapse; min-width: 600px;">
+        <thead>
+          <tr style="border-bottom: 2px solid #1F1F1F;">
+            <th class="text-left py-3 pr-6 font-semibold text-[#E6EDF3] w-1/2">Feature</th>
+            <th class="text-center py-3 px-3 font-semibold w-1/6">
+              <span class="text-[#3B82F6]">Pro</span>
+              <div class="text-xs text-[#8B949E] font-normal">$49/mo</div>
+            </th>
+            <th class="text-center py-3 px-3 font-semibold w-1/6">
+              <span class="text-[#10B981]">Team</span>
+              <div class="text-xs text-[#8B949E] font-normal">$149/mo</div>
+            </th>
+            <th class="text-center py-3 px-3 font-semibold w-1/6">
+              <span class="text-[#8B949E]">Enterprise</span>
+              <div class="text-xs text-[#8B949E] font-normal">$2,000/mo</div>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {comparisonRows.map((row) => {
+            const proVal = renderValue(row.pro);
+            const teamVal = renderValue(row.team);
+            const entVal = renderValue(row.enterprise);
+            return (
+              <tr style="border-bottom: 1px solid #1F1F1F;">
+                <td class="py-3 pr-6 text-[#8B949E]">
+                  {row.feature}
+                  {row.note && (
+                    <span class="ml-2 text-xs text-[#F59E0B]" title={row.note}>*</span>
+                  )}
+                </td>
+                <td class="py-3 px-3 text-center">
+                  {proVal.type === 'check' && (
+                    <svg class="w-4 h-4 mx-auto" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2" aria-label="Included"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                  )}
+                  {proVal.type === 'x' && (
+                    <svg class="w-4 h-4 mx-auto" fill="none" stroke="#1F1F1F" viewBox="0 0 24 24" stroke-width="2" aria-label="Not included"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+                  )}
+                  {proVal.type === 'text' && (
+                    <span class="text-[#E6EDF3] text-xs">{proVal.text}</span>
+                  )}
+                </td>
+                <td class="py-3 px-3 text-center">
+                  {teamVal.type === 'check' && (
+                    <svg class="w-4 h-4 mx-auto" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2" aria-label="Included"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                  )}
+                  {teamVal.type === 'x' && (
+                    <svg class="w-4 h-4 mx-auto" fill="none" stroke="#1F1F1F" viewBox="0 0 24 24" stroke-width="2" aria-label="Not included"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+                  )}
+                  {teamVal.type === 'text' && (
+                    <span class="text-[#E6EDF3] text-xs">{teamVal.text}</span>
+                  )}
+                </td>
+                <td class="py-3 px-3 text-center">
+                  {entVal.type === 'check' && (
+                    <svg class="w-4 h-4 mx-auto" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2" aria-label="Included"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                  )}
+                  {entVal.type === 'x' && (
+                    <svg class="w-4 h-4 mx-auto" fill="none" stroke="#1F1F1F" viewBox="0 0 24 24" stroke-width="2" aria-label="Not included"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+                  )}
+                  {entVal.type === 'text' && (
+                    <span class="text-[#F59E0B] text-xs">{entVal.text}</span>
+                  )}
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+
+    <p class="mt-4 text-xs text-[#8B949E]">
+      * Enterprise Compliance features (EU data residency, extended retention) are in development. Contact us to join the waitlist and discuss your requirements.
+    </p>
+  </section>
+
+  <SectionDivider />
+
+  <!-- FAQ -->
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <h2 class="text-2xl font-semibold text-[#E6EDF3] tracking-tight mb-10">Frequently asked questions</h2>
+
+    <div class="max-w-3xl space-y-0">
+      {faqItems.map((item, i) => (
+        <details
+          class="group border-b"
+          style={`border-color: #1F1F1F; ${i === 0 ? 'border-top: 1px solid #1F1F1F;' : ''}`}
+        >
+          <summary class="flex items-center justify-between py-5 cursor-pointer list-none text-[#E6EDF3] font-medium hover:text-white transition-colors">
+            {item.question}
+            <svg
+              class="w-5 h-5 text-[#8B949E] flex-shrink-0 ml-4 transition-transform duration-200 group-open:rotate-180"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              stroke-width="2"
+              aria-hidden="true"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </summary>
+          <div class="pb-5 text-sm text-[#8B949E] leading-relaxed">
+            {item.answer}
+          </div>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <SectionDivider />
+
+  <!-- Final CTA -->
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+    <div class="rounded-xl p-8 sm:p-12 text-center" style="background: #111111; border: 1px solid #1F1F1F;">
+      <h2 class="text-2xl sm:text-3xl font-semibold text-[#E6EDF3] tracking-tight mb-4">
+        No sales call. No credit card. Just ForgeOS.
+      </h2>
+      <p class="text-[#9CA3AF] max-w-xl mx-auto mb-8 text-sm">
+        Pro — $49/month. No sales call. Cancel anytime. First gate running in under 10 minutes. 14 days to decide.
+      </p>
+      <div class="flex flex-wrap gap-4 justify-center">
+        <a
+          href="#trial"
+          class="inline-flex items-center px-8 py-3.5 rounded-md font-medium text-white no-underline transition-all duration-150"
+          style="background: #3B82F6; font-size: 1.125rem;"
+          onmouseover="this.style.background='#2563EB'"
+          onmouseout="this.style.background='#3B82F6'"
+        >
+          Start 14-day trial
+        </a>
+        <a
+          href="/contact"
+          class="inline-flex items-center px-8 py-3.5 rounded-md font-medium no-underline transition-all duration-150 text-[#E6EDF3]"
+          style="border: 1px solid #1F1F1F; font-size: 1.125rem;"
+          onmouseover="this.style.borderColor='#8B949E'; this.style.background='rgba(255,255,255,0.04)'"
+          onmouseout="this.style.borderColor='#1F1F1F'; this.style.background='transparent'"
+        >
+          Talk to us about enterprise &rarr;
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
