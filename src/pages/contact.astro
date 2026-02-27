@@ -32,7 +32,7 @@ const products = [forgeos, specterqa];
           </div>
         </div>
 
-        <!-- GitHub Issues -->
+        <!-- GitHub Issues — per product -->
         <div class="flex items-start gap-4">
           <div class="w-10 h-10 rounded-lg bg-accent-silver/15 flex items-center justify-center flex-shrink-0">
             <svg class="w-5 h-5 text-accent-silver" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
@@ -42,9 +42,17 @@ const products = [forgeos, specterqa];
           <div>
             <h2 class="font-semibold mb-1">GitHub Issues</h2>
             <p class="text-sm text-light-gray-500 dark:text-muted mb-2">Bug reports and feature requests. Fastest path to a fix.</p>
-            <a href="https://github.com/SyncTek-LLC/specterqa/issues" target="_blank" rel="noopener noreferrer" class="text-accent-silver no-underline hover:underline">
-              SyncTek-LLC/specterqa/issues
-            </a>
+            <div class="flex flex-col gap-1.5">
+              {products.map((product) => {
+                const support = 'support' in product ? (product as any).support : null;
+                return support?.github ? (
+                  <a href={`https://github.com/${support.github}/issues`} target="_blank" rel="noopener noreferrer" class="text-accent-silver no-underline hover:underline">
+                    {support.github}/issues
+                    <span class="text-xs text-light-gray-500 dark:text-muted ml-1.5">— {product.name}</span>
+                  </a>
+                ) : null;
+              })}
+            </div>
           </div>
         </div>
 
