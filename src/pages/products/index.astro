@@ -1,9 +1,10 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ProductCard from '../../components/ProductCard.astro';
+import forgeos from '../../data/products/forgeos';
 import specterqa from '../../data/products/specterqa';
 
-const products = [specterqa];
+const products = [forgeos, specterqa];
 ---
 
 <BaseLayout
@@ -26,6 +27,7 @@ const products = [specterqa];
           status={product.status}
           license={product.license}
           accentColor={product.accentColor}
+          href={'href' in product ? product.href : undefined}
         />
       ))}
       <!-- Coming soon placeholder -->

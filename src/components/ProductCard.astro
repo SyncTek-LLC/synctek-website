@@ -9,9 +9,11 @@ interface Props {
   status: string;
   license: string;
   accentColor?: string;
+  href?: string;
 }
 
-const { slug, name, tagline, type, status, license, accentColor = '#B0B0B0' } = Astro.props;
+const { slug, name, tagline, type, status, license, accentColor = '#B0B0B0', href } = Astro.props;
+const cardHref = href ?? `/products/${slug}/`;
 
 const statusVariant = {
   launched: 'silver' as const,
@@ -21,7 +23,7 @@ const statusVariant = {
 ---
 
 <a
-  href={`/products/${slug}/`}
+  href={cardHref}
   class="group block rounded-lg border border-light-border dark:border-border-gray p-6 no-underline card-hover hover:border-accent-silver dark:hover:border-accent-silver"
   style={`border-left: 3px solid ${accentColor}`}
 >
