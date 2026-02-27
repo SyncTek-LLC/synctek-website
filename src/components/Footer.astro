@@ -9,6 +9,11 @@ const footerLinks = [
   { label: 'Contact', href: '/contact/' },
 ];
 
+const legalLinks = [
+  { label: 'Terms of Service', href: '/legal/terms/' },
+  { label: 'Privacy Policy', href: '/legal/privacy/' },
+];
+
 const currentYear = new Date().getFullYear();
 ---
 
@@ -28,6 +33,19 @@ const currentYear = new Date().getFullYear();
       <!-- Nav links -->
       <nav class="flex flex-col gap-2" aria-label="Footer navigation">
         {footerLinks.map((link) => (
+          <a
+            href={link.href}
+            class="text-sm text-light-gray-500 dark:text-muted hover:text-light-text-primary dark:hover:text-terminal-white no-underline transition-colors"
+          >
+            {link.label}
+          </a>
+        ))}
+      </nav>
+
+      <!-- Legal links -->
+      <nav class="flex flex-col gap-2" aria-label="Legal">
+        <p class="text-xs font-semibold tracking-[0.10em] uppercase text-light-gray-400 dark:text-muted mb-1">Legal</p>
+        {legalLinks.map((link) => (
           <a
             href={link.href}
             class="text-sm text-light-gray-500 dark:text-muted hover:text-light-text-primary dark:hover:text-terminal-white no-underline transition-colors"
