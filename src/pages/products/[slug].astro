@@ -68,9 +68,8 @@ const featureIcons: Record<string, string> = {
   code: 'M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4',
 };
 
-const ctaType = 'ctaType' in product ? product.ctaType : undefined;
+const ctaType = ('ctaType' in product ? product.ctaType : undefined) as string | undefined;
 const loginUrl = 'loginUrl' in product ? product.loginUrl : undefined;
-const installCommand = 'installCommand' in product ? product.installCommand : undefined;
 const support = 'support' in product ? product.support : undefined;
 ---
 
