@@ -6,7 +6,7 @@ description: "Full REST API reference for ForgeOS. Auth, projects, initiatives, 
 
 # REST API Reference
 
-Base URL: `https://api.forgeos.synctek.io`
+Base URL: `https://forgeos-api.synctek.io`
 
 All endpoints require authentication unless noted otherwise. Include one of:
 
@@ -26,7 +26,7 @@ Authentication, registration, and session management.
 Create a new user account. **No auth required.**
 
 ```bash
-curl -X POST https://api.forgeos.synctek.io/auth/register \
+curl -X POST https://forgeos-api.synctek.io/auth/register \
   -H "Content-Type: application/json" \
   -d '{"email": "dev@company.com", "password": "secure-password-12"}'
 ```
@@ -58,7 +58,7 @@ curl -X POST https://api.forgeos.synctek.io/auth/register \
 Authenticate and create a session. Sets `forge_session` and `forge_csrf` cookies. **No auth required.**
 
 ```bash
-curl -X POST https://api.forgeos.synctek.io/auth/login \
+curl -X POST https://forgeos-api.synctek.io/auth/login \
   -H "Content-Type: application/json" \
   -d '{"email": "dev@company.com", "password": "secure-password-12"}' \
   -c cookies.txt
@@ -117,7 +117,7 @@ Get the current authenticated user's info.
 Register an autonomous agent identity. **No auth required.** Returns an API key scoped to the agent.
 
 ```bash
-curl -X POST https://api.forgeos.synctek.io/auth/register-agent \
+curl -X POST https://forgeos-api.synctek.io/auth/register-agent \
   -H "Content-Type: application/json" \
   -d '{"agent_name": "ci-agent", "owner_email": "dev@company.com"}'
 ```
@@ -133,7 +133,7 @@ CRUD operations for projects. All endpoints require auth.
 Create a new project. Optionally import an existing codebase by providing `source_directory`.
 
 ```bash
-curl -X POST https://api.forgeos.synctek.io/api/projects \
+curl -X POST https://forgeos-api.synctek.io/api/projects \
   -H "Content-Type: application/json" \
   -H "X-ForgeOS-API-Key: fos_your_key" \
   -d '{
@@ -204,7 +204,7 @@ Track units of work within a project.
 Create a new initiative.
 
 ```bash
-curl -X POST https://api.forgeos.synctek.io/projects/proj_abc/initiatives \
+curl -X POST https://forgeos-api.synctek.io/projects/proj_abc/initiatives \
   -H "Content-Type: application/json" \
   -H "X-ForgeOS-API-Key: fos_your_key" \
   -d '{
@@ -264,7 +264,7 @@ Propose and track code changes with auto-computed risk profiles.
 Propose a new changeset. Automatically computes risk score and creates a gate pipeline.
 
 ```bash
-curl -X POST https://api.forgeos.synctek.io/projects/proj_abc/changesets \
+curl -X POST https://forgeos-api.synctek.io/projects/proj_abc/changesets \
   -H "Content-Type: application/json" \
   -H "X-ForgeOS-API-Key: fos_your_key" \
   -d '{
@@ -316,7 +316,7 @@ Attach artifacts (test results, scans, etc.) to changesets to satisfy gate requi
 Attach evidence to a changeset. Auto-populates gate evidence requirements.
 
 ```bash
-curl -X POST https://api.forgeos.synctek.io/projects/proj_abc/changesets/cs_def/evidence \
+curl -X POST https://forgeos-api.synctek.io/projects/proj_abc/changesets/cs_def/evidence \
   -H "Content-Type: application/json" \
   -H "X-ForgeOS-API-Key: fos_your_key" \
   -d '{
