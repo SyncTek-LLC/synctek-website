@@ -1,10 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import ProductCard from '../components/ProductCard.astro';
-import BlogPostCard from '../components/BlogPostCard.astro';
 import SectionDivider from '../components/SectionDivider.astro';
+import BlogPostCard from '../components/BlogPostCard.astro';
 import { getCollection } from 'astro:content';
-import specterqa from '../data/products/specterqa';
 
 // Get latest blog posts
 const allPosts = await getCollection('blog', ({ data }) => !data.draft);
@@ -25,75 +23,144 @@ const jsonLd = {
   '@type': 'Organization',
   name: 'SyncTek LLC',
   url: 'https://synctek.io',
-  description: 'AI-powered developer tools that work on your terms',
+  description:
+    'SyncTek builds developer tools for agentic teams — governance infrastructure and behavioral testing that work together.',
   sameAs: [
     'https://github.com/SyncTek-LLC',
     'https://twitter.com/SyncTekLLC',
     'https://linkedin.com/company/synctek-llc',
   ],
 };
+
+// Competitive stack positioning data
+const stackRows = [
+  { layer: 'Code generation', tools: 'Cursor, Windsurf, Devin', relationship: 'They produce code. ForgeOS governs what happens to it after.' },
+  { layer: 'Agent orchestration', tools: 'CrewAI, LangGraph, AutoGen', relationship: 'They route tasks. ForgeOS enforces gates, delegation rules, and audit trails.' },
+  { layer: 'Observability', tools: 'LangSmith, W&B Weave', relationship: 'They record what happened. ForgeOS prevents what should not happen.' },
+  { layer: 'ForgeOS', tools: 'ForgeOS', relationship: 'The enforcement layer. Between orchestration and human approval.' },
+];
+
+// EU AI Act rows
+const euAiActRows = [
+  { article: 'Art. 12', requirement: 'Record-keeping — immutable logs of all automated decisions', coverage: 'Hash-chained, Ed25519-signed ledger', confidence: 'Direct' },
+  { article: 'Art. 9', requirement: 'Risk management system — documented procedures', coverage: 'Gate enforcement, circuit breakers, violation scanner', confidence: 'Direct' },
+  { article: 'Art. 14', requirement: 'Human oversight — ability to halt and override', coverage: 'Human-in-the-loop gates, kill switch, circuit breaker', confidence: 'Direct' },
+  { article: 'Art. 17', requirement: 'Quality management system', coverage: 'Initiative + gate lifecycle', confidence: 'Direct' },
+  { article: 'Art. 61', requirement: 'Post-market monitoring', coverage: 'Governance scanner (6h cycle), daily self-audit', confidence: 'Direct' },
+];
 ---
 
 <BaseLayout
-  title="SyncTek"
-  description="SyncTek builds AI-powered developer tools. Practical, transparent, and built for the way you actually work."
+  title="SyncTek — Developer Tools Built for Trust"
+  description="SyncTek builds developer tools for agentic teams. ForgeOS: governance OS with Ed25519-signed audit trail and circuit breakers. SpecterQA: AI-powered behavioral testing in real browsers."
   jsonLd={jsonLd}
 >
   <!-- Hero -->
   <section class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-32 lg:py-40">
-    <!-- Background glow -->
+    <!-- Blue glow behind hero -->
     <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-      <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(176,176,176,0.12),transparent)]"></div>
+      <div
+        class="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[600px]"
+        style="background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(59,130,246,0.12) 0%, transparent 70%);"
+      ></div>
     </div>
-    <!-- Content -->
+
     <div class="relative z-10">
-      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight tracking-tight max-w-3xl">
-        AI-powered developer tools that work on
-        <span class="bg-gradient-to-r from-[#808080] via-[#E0E0E0] to-[#A0A0A0] bg-clip-text text-transparent"> your terms</span>.
-      </h1>
-      <p class="mt-6 text-lg sm:text-xl text-light-gray-500 dark:text-light-text max-w-2xl">
-        Tools that solve real engineering problems. Open source where it counts. Honest about what they do and what they cost.
+      <!-- Overline -->
+      <p class="text-xs font-semibold tracking-[0.12em] uppercase text-[#3B82F6] mb-4">
+        Developer Tools
       </p>
+
+      <!-- Headline -->
+      <h1
+        class="text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight max-w-3xl text-[#E6EDF3]"
+        style="letter-spacing: -0.02em;"
+      >
+        Developer tools built<br />
+        <span
+          style="background: linear-gradient(135deg, #3B82F6, #1D4ED8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"
+        >
+          for trust.
+        </span>
+      </h1>
+
+      <p class="mt-6 text-lg sm:text-xl text-[#9CA3AF] max-w-2xl leading-relaxed">
+        SyncTek builds governance and testing infrastructure for agentic teams — the two layers
+        every AI system needs before it ships to production.
+      </p>
+
+      <!-- Sub-tagline -->
+      <p class="mt-3 text-sm text-[#6B7280] max-w-xl">
+        Enforce before you deploy. Test before you trust.
+      </p>
+
+      <!-- CTA buttons -->
       <div class="mt-10 flex flex-wrap gap-4">
         <a
-          href="/products/specterqa/#quickstart"
-          class="inline-flex items-center px-6 py-3 rounded-lg bg-gradient-to-r from-[#909090] via-[#D0D0D0] to-[#909090] text-obsidian font-semibold no-underline shadow-[0_0_20px_rgba(176,176,176,0.25)] hover:shadow-[0_0_30px_rgba(176,176,176,0.4)] hover:scale-[1.02] transition-all duration-200"
+          href="/products/forgeos/"
+          class="inline-flex items-center px-6 py-3 rounded-md font-medium text-white no-underline transition-all duration-150"
+          style="background: #3B82F6; font-size: 1rem;"
+          onmouseover="this.style.background='#2563EB'"
+          onmouseout="this.style.background='#3B82F6'"
         >
-          Get Started
+          Explore ForgeOS &rarr;
         </a>
         <a
-          href="https://github.com/SyncTek-LLC"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-light-border dark:border-border-gray font-semibold no-underline hover:border-accent-silver dark:hover:border-accent-silver hover:bg-border-gray/30 transition-all duration-200"
+          href="/products/specterqa/"
+          class="inline-flex items-center px-6 py-3 rounded-md font-medium no-underline transition-all duration-150 text-[#E6EDF3]"
+          style="border: 1px solid #1F1F1F;"
+          onmouseover="this.style.borderColor='#BC8CFF'; this.style.background='rgba(188,140,255,0.04)'"
+          onmouseout="this.style.borderColor='#1F1F1F'; this.style.background='transparent'"
         >
-          <svg class="w-5 h-5" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
-            <path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z" />
-          </svg>
-          View on GitHub
+          Explore SpecterQA &rarr;
         </a>
       </div>
 
+      <!-- Trust signal -->
+      <p class="mt-8 text-sm text-[#8B949E]">
+        Used by ForgeOS to govern ForgeOS. 13 AI departments. Live in production.
+      </p>
+
       <!-- Terminal preview -->
-      <div class="mt-16 max-w-2xl">
-        <div class="rounded-lg border border-border-gray dark:border-border-gray bg-[#0F0F0F] overflow-hidden shadow-[0_0_40px_rgba(176,176,176,0.06)]">
+      <div class="mt-14 max-w-2xl">
+        <div
+          class="rounded-xl overflow-hidden"
+          style="border: 1px solid #1F1F1F; background: #111111; box-shadow: 0 0 40px rgba(59,130,246,0.06);"
+        >
           <!-- Terminal chrome -->
-          <div class="flex items-center gap-2 px-4 py-3 border-b border-border-gray">
-            <div class="w-3 h-3 rounded-full bg-[#FF5F56]"></div>
-            <div class="w-3 h-3 rounded-full bg-[#FFBD2E]"></div>
-            <div class="w-3 h-3 rounded-full bg-[#27C93F]"></div>
-            <span class="ml-2 text-xs text-muted font-mono">terminal</span>
+          <div
+            class="flex items-center gap-2 px-4 py-3"
+            style="background: #1A1A1A; border-bottom: 1px solid #1F1F1F;"
+          >
+            <div class="w-3 h-3 rounded-full" style="background: #FF5F57;"></div>
+            <div class="w-3 h-3 rounded-full" style="background: #FEBC2E;"></div>
+            <div class="w-3 h-3 rounded-full" style="background: #28C840;"></div>
+            <span class="ml-2 text-xs text-[#8B949E] font-mono">forgeos gate-check --initiative INIT-001</span>
           </div>
           <!-- Terminal content -->
-          <div class="p-4 font-mono text-sm leading-relaxed">
-            <div class="text-muted">$ <span class="text-terminal-white">pip install specterqa</span></div>
-            <div class="text-[#3FB950] mt-1">Successfully installed specterqa-0.3.0</div>
-            <div class="text-muted mt-3">$ <span class="text-terminal-white">specterqa run -p demo</span></div>
-            <div class="text-accent-silver mt-1">Running persona "New User" on demo app...</div>
-            <div class="text-accent-silver">Step 1/3: Navigate to login page <span class="text-[#3FB950]">PASS</span></div>
-            <div class="text-accent-silver">Step 2/3: Complete login form <span class="text-[#3FB950]">PASS</span></div>
-            <div class="text-accent-silver">Step 3/3: Verify dashboard loads <span class="text-[#3FB950]">PASS</span></div>
-            <div class="text-[#3FB950] mt-2 font-semibold">3/3 steps passed — $0.42 spent</div>
+          <div class="p-5 font-mono text-sm leading-relaxed" style="color: #E6EDF3;">
+            <div class="text-[#8B949E]">$ <span class="text-[#E6EDF3]">forgeos gate-check --initiative INIT-001</span></div>
+            <div class="mt-3 space-y-1">
+              <div>
+                <span class="text-[#10B981]">  ✓</span>
+                <span class="text-[#E6EDF3]">  GATE_1_SPEC_APPROVED</span>
+                <span class="text-[#8B949E] text-xs ml-2">2026-02-25 14:32:01  [a3f2c1...]</span>
+              </div>
+              <div>
+                <span class="text-[#10B981]">  ✓</span>
+                <span class="text-[#E6EDF3]">  GATE_2_PRODUCT_MARKET</span>
+                <span class="text-[#8B949E] text-xs ml-2">2026-02-25 15:10:44  [b8e91d...]</span>
+              </div>
+              <div>
+                <span class="text-[#EF4444]">  ✗</span>
+                <span class="text-[#E6EDF3]">  GATE_3_FEASIBILITY</span>
+                <span class="text-[#F59E0B] text-xs ml-2">PENDING — no artifact found</span>
+              </div>
+            </div>
+            <div class="mt-4" style="border-top: 1px solid #1F1F1F; padding-top: 1rem;">
+              <span class="text-[#EF4444] font-semibold">STATUS: CODE_BLOCKED</span>
+              <div class="text-[#8B949E] text-xs mt-1">Next required: feasibility artifact (CodeAtlas)</div>
+            </div>
           </div>
         </div>
       </div>
@@ -102,23 +169,317 @@ const jsonLd = {
 
   <SectionDivider />
 
+  <!-- Three-column value props -->
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- Enforce, don't observe -->
+      <div class="rounded-xl p-6" style="background: #111111; border: 1px solid #1F1F1F;">
+        <div
+          class="w-10 h-10 rounded-lg flex items-center justify-center mb-4"
+          style="background: rgba(59,130,246,0.10);"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="#3B82F6" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+          </svg>
+        </div>
+        <h3 class="text-lg font-semibold text-[#E6EDF3] mb-2">Enforce, don't observe</h3>
+        <p class="text-sm text-[#8B949E] leading-relaxed">
+          Gates fire before actions execute. Policy is constitutional — defined once, enforced everywhere.
+          No configuration can disable self-approval prevention. LangSmith records what happened. ForgeOS prevents what should not have.
+        </p>
+      </div>
+
+      <!-- Immutable audit trail -->
+      <div class="rounded-xl p-6" style="background: #111111; border: 1px solid #1F1F1F;">
+        <div
+          class="w-10 h-10 rounded-lg flex items-center justify-center mb-4"
+          style="background: rgba(59,130,246,0.10);"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="#3B82F6" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          </svg>
+        </div>
+        <h3 class="text-lg font-semibold text-[#E6EDF3] mb-2">Immutable audit trail</h3>
+        <p class="text-sm text-[#8B949E] leading-relaxed">
+          Ed25519-signed, hash-chained ledger. Every agent action, every gate decision, every delegation event.
+          Retroactive alteration breaks the chain — detectable in milliseconds. Auditor-ready. EU AI Act-compliant.
+        </p>
+      </div>
+
+      <!-- Agent-native -->
+      <div class="rounded-xl p-6" style="background: #111111; border: 1px solid #1F1F1F;">
+        <div
+          class="w-10 h-10 rounded-lg flex items-center justify-center mb-4"
+          style="background: rgba(59,130,246,0.10);"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="#3B82F6" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          </svg>
+        </div>
+        <h3 class="text-lg font-semibold text-[#E6EDF3] mb-2">Agent-native</h3>
+        <p class="text-sm text-[#8B949E] leading-relaxed">
+          12 governance tools over MCP (HTTP/SSE). Any MCP-compatible agent calls ForgeOS directly —
+          gate-check, delegation-validate, audit-query. Framework-agnostic. A2A Agent Card for autonomous discovery. No SDK required.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <SectionDivider />
+
   <!-- Products -->
   <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-    <h2 class="text-2xl font-semibold tracking-tight mb-8">Products</h2>
+    <p class="text-xs font-semibold tracking-[0.12em] uppercase text-[#3B82F6] mb-3">PRODUCTS</p>
+    <h2 class="text-2xl sm:text-3xl font-semibold text-[#E6EDF3] tracking-tight mb-3">
+      Two tools. One mission.
+    </h2>
+    <p class="text-[#9CA3AF] mb-10 max-w-2xl">
+      Governance infrastructure and behavioral testing — the two layers every agentic system needs before it ships.
+    </p>
+
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <ProductCard
-        slug={specterqa.slug}
-        name={specterqa.name}
-        tagline={specterqa.tagline}
-        type={specterqa.type}
-        status={specterqa.status}
-        license={specterqa.license}
-        accentColor={specterqa.accentColor}
-      />
-      <!-- Coming soon placeholder -->
-      <div class="rounded-lg border border-dashed border-border-gray dark:border-border-gray p-6 flex flex-col items-center justify-center text-center">
-        <p class="text-muted text-sm font-medium">More tools in development</p>
-        <p class="text-muted/60 text-xs mt-1">Stay tuned for announcements</p>
+      <!-- ForgeOS card -->
+      <a
+        href="/products/forgeos/"
+        class="group block rounded-xl p-6 no-underline transition-all duration-200"
+        style="background: #111111; border: 1px solid #1F1F1F;"
+        onmouseover="this.style.borderColor='rgba(59,130,246,0.4)'"
+        onmouseout="this.style.borderColor='#1F1F1F'"
+      >
+        <div class="flex items-start justify-between mb-3">
+          <h3 class="text-lg font-semibold text-[#E6EDF3] group-hover:text-white transition-colors">
+            ForgeOS
+          </h3>
+          <span
+            class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold"
+            style="background: rgba(59,130,246,0.12); color: #3B82F6;"
+          >
+            Launched
+          </span>
+        </div>
+        <p class="text-sm text-[#9CA3AF] mb-4 leading-relaxed">
+          The governance OS for agentic teams — constitutional enforcement, signed audit trail, and circuit breakers for AI agents in production.
+        </p>
+        <div class="flex items-center gap-2 flex-wrap">
+          <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium" style="background: rgba(59,130,246,0.10); color: #3B82F6;">Governance OS</span>
+          <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium" style="background: rgba(59,130,246,0.10); color: #3B82F6;">12 MCP Tools</span>
+          <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium" style="background: rgba(59,130,246,0.10); color: #3B82F6;">EU AI Act</span>
+        </div>
+        <div class="mt-5 pt-4" style="border-top: 1px solid #1F1F1F;">
+          <span class="text-sm font-medium text-[#3B82F6]">Explore ForgeOS &rarr;</span>
+        </div>
+      </a>
+
+      <!-- SpecterQA card -->
+      <a
+        href="/products/specterqa/"
+        class="group block rounded-xl p-6 no-underline transition-all duration-200"
+        style="background: #111111; border: 1px solid #1F1F1F;"
+        onmouseover="this.style.borderColor='rgba(188,140,255,0.4)'"
+        onmouseout="this.style.borderColor='#1F1F1F'"
+      >
+        <div class="flex items-start justify-between mb-3">
+          <h3 class="text-lg font-semibold text-[#E6EDF3] group-hover:text-white transition-colors">
+            SpecterQA
+          </h3>
+          <span
+            class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold"
+            style="background: rgba(188,140,255,0.12); color: #BC8CFF;"
+          >
+            Launched
+          </span>
+        </div>
+        <p class="text-sm text-[#9CA3AF] mb-4 leading-relaxed">
+          AI personas test your web app in real browsers — no scripts needed. Vision-based, persona-driven behavioral testing for agentic workflows.
+        </p>
+        <div class="flex items-center gap-2 flex-wrap">
+          <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium" style="background: rgba(188,140,255,0.10); color: #BC8CFF;">CLI Tool</span>
+          <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium" style="background: rgba(188,140,255,0.10); color: #BC8CFF;">MCP Server</span>
+          <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium" style="background: rgba(188,140,255,0.10); color: #BC8CFF;">MIT</span>
+        </div>
+        <div class="mt-5 pt-4" style="border-top: 1px solid #1F1F1F;">
+          <span class="text-sm font-medium text-[#BC8CFF]">Explore SpecterQA &rarr;</span>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <SectionDivider />
+
+  <!-- Trust signals — Dogfood proof -->
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <p class="text-xs font-semibold tracking-[0.12em] uppercase text-[#3B82F6] mb-3">TRUST SIGNALS</p>
+    <h2 class="text-2xl sm:text-3xl font-semibold text-[#E6EDF3] tracking-tight mb-10">
+      Governing 13 AI departments in production — including the team that built it.
+    </h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+      <!-- Dogfood proof -->
+      <div
+        class="rounded-xl p-6"
+        style="background: #111111; border-left: 3px solid #3B82F6; border-top: 1px solid #1F1F1F; border-right: 1px solid #1F1F1F; border-bottom: 1px solid #1F1F1F;"
+      >
+        <h3 class="text-sm font-semibold text-[#E6EDF3] mb-2">Dogfooded in production</h3>
+        <p class="text-sm text-[#8B949E] leading-relaxed">
+          ForgeOS governs the development of ForgeOS. Thirteen AI departments — CEO, CodeAtlas,
+          SecurityAtlas, QualityAtlas, and nine others — operate under ForgeOS governance every day.
+          Real agents. Real violations blocked. No competitor can make this claim.
+        </p>
+      </div>
+
+      <!-- The 41% stat -->
+      <div
+        class="rounded-xl p-6"
+        style="background: #111111; border-left: 3px solid #F59E0B; border-top: 1px solid #1F1F1F; border-right: 1px solid #1F1F1F; border-bottom: 1px solid #1F1F1F;"
+      >
+        <h3 class="text-sm font-semibold text-[#E6EDF3] mb-2">The 41% problem</h3>
+        <p class="text-sm text-[#8B949E] leading-relaxed">
+          41% of official MCP servers currently lack authentication. ForgeOS is the only MCP-listed
+          governance tool with authentication enforcement by default — not as a configuration, as a requirement.
+        </p>
+      </div>
+
+      <!-- EU AI Act -->
+      <div
+        class="rounded-xl p-6"
+        style="background: #111111; border-left: 3px solid #3B82F6; border-top: 1px solid #1F1F1F; border-right: 1px solid #1F1F1F; border-bottom: 1px solid #1F1F1F;"
+      >
+        <h3 class="text-sm font-semibold text-[#E6EDF3] mb-2">EU AI Act — enforcement begins Aug 2, 2026</h3>
+        <p class="text-sm text-[#8B949E] leading-relaxed">
+          ForgeOS maps directly to Article 12 (record-keeping) and Article 17 (quality management system).
+          Enterprise procurement cycles run 90+ days. Evaluation must begin by May 2026.
+        </p>
+      </div>
+    </div>
+
+    <!-- EU AI Act compliance table -->
+    <div>
+      <h3 class="text-base font-semibold text-[#E6EDF3] mb-4">EU AI Act compliance: what ForgeOS covers</h3>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm" style="border-collapse: collapse;">
+          <thead>
+            <tr style="border-bottom: 2px solid #1F1F1F;">
+              <th class="text-left py-3 pr-4 font-semibold text-[#E6EDF3] whitespace-nowrap">Article</th>
+              <th class="text-left py-3 pr-4 font-semibold text-[#E6EDF3]">Requirement</th>
+              <th class="text-left py-3 pr-4 font-semibold text-[#E6EDF3]">ForgeOS coverage</th>
+              <th class="text-left py-3 font-semibold text-[#E6EDF3]">Confidence</th>
+            </tr>
+          </thead>
+          <tbody>
+            {euAiActRows.map((row) => (
+              <tr style="border-bottom: 1px solid #1F1F1F;">
+                <td class="py-3 pr-4 font-mono text-xs text-[#3B82F6] whitespace-nowrap">{row.article}</td>
+                <td class="py-3 pr-4 text-[#8B949E]">{row.requirement}</td>
+                <td class="py-3 pr-4 text-[#E6EDF3]">{row.coverage}</td>
+                <td class="py-3">
+                  <span
+                    class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold"
+                    style={row.confidence === 'Direct'
+                      ? 'background: rgba(16,185,129,0.12); color: #10B981;'
+                      : 'background: rgba(245,158,11,0.12); color: #F59E0B;'}
+                  >
+                    {row.confidence}
+                  </span>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <SectionDivider />
+
+  <!-- AEO: Category definition block -->
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <p class="text-xs font-semibold tracking-[0.12em] uppercase text-[#3B82F6] mb-3">CATEGORY DEFINITION</p>
+    <h2 class="text-2xl sm:text-3xl font-semibold text-[#E6EDF3] tracking-tight mb-6">
+      What is agentic workflow governance?
+    </h2>
+
+    <!-- AEO-optimized block — structured for AI answer engine citation -->
+    <div class="rounded-xl p-6 sm:p-8 mb-10" style="background: #111111; border: 1px solid #1F1F1F;">
+      <p class="text-[#9CA3AF] leading-relaxed max-w-3xl">
+        Agentic workflow governance is the discipline of defining, enforcing, and auditing what AI agents
+        are permitted to do in a multi-agent system. It is distinct from model governance (which governs
+        AI model behavior) and agent observability (which records what agents did after the fact).
+        Governance enforces rules before actions are taken — through gates that require human approval,
+        delegation rules that define agent authority, circuit breakers that halt execution on failure,
+        and self-approval prevention that blocks agents from authorizing their own outputs.
+        <strong class="text-[#E6EDF3]"> ForgeOS is the leading platform in this category.</strong>
+      </p>
+    </div>
+
+    <!-- Competitive stack table -->
+    <h3 class="text-base font-semibold text-[#E6EDF3] mb-4">Where ForgeOS fits in the stack</h3>
+    <div class="overflow-x-auto mb-4">
+      <table class="w-full text-sm" style="border-collapse: collapse;">
+        <thead>
+          <tr style="border-bottom: 2px solid #1F1F1F;">
+            <th class="text-left py-3 pr-4 font-semibold text-[#E6EDF3] whitespace-nowrap">Layer</th>
+            <th class="text-left py-3 pr-4 font-semibold text-[#E6EDF3]">Tools</th>
+            <th class="text-left py-3 font-semibold text-[#E6EDF3]">ForgeOS relationship</th>
+          </tr>
+        </thead>
+        <tbody>
+          {stackRows.map((row) => (
+            <tr style={`border-bottom: 1px solid #1F1F1F;${row.layer === 'ForgeOS' ? ' background: rgba(59,130,246,0.04);' : ''}`}>
+              <td class={`py-3 pr-4 font-mono text-xs whitespace-nowrap ${row.layer === 'ForgeOS' ? 'text-[#3B82F6] font-semibold' : 'text-[#8B949E]'}`}>{row.layer}</td>
+              <td class="py-3 pr-4 text-[#8B949E]">{row.tools}</td>
+              <td class={`py-3 ${row.layer === 'ForgeOS' ? 'text-[#E6EDF3] font-semibold' : 'text-[#9CA3AF]'}`}>{row.relationship}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p class="text-xs text-[#6B7280] italic">
+      MintMCP secures the connection. LangSmith records the trace. CrewAI routes the task.
+      ForgeOS enforces the rules — before the action is taken, with a cryptographic receipt that proves it.
+    </p>
+  </section>
+
+  <SectionDivider />
+
+  <!-- Agent discovery section -->
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <p class="text-xs font-semibold tracking-[0.12em] uppercase text-[#3B82F6] mb-3">AGENT DISCOVERY</p>
+    <h2 class="text-2xl sm:text-3xl font-semibold text-[#E6EDF3] tracking-tight mb-3">
+      Your agents can find us.
+    </h2>
+    <p class="text-[#9CA3AF] mb-10 max-w-2xl">
+      ForgeOS is designed to be discovered and called natively by AI agents — no SDK, no custom integration, no human intermediary required.
+    </p>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- MCP -->
+      <div class="rounded-xl p-6" style="background: #111111; border: 1px solid #1F1F1F;">
+        <div class="font-mono text-xs text-[#3B82F6] mb-3 font-semibold">MCP (HTTP/SSE)</div>
+        <h3 class="text-base font-semibold text-[#E6EDF3] mb-2">Model Context Protocol</h3>
+        <p class="text-sm text-[#8B949E] leading-relaxed">
+          ForgeOS exposes 12 governance tools over MCP. Any MCP-compatible agent — Claude, GPT-4, Gemini,
+          local models — can call gate-check, delegation-validate, and audit-query without modification.
+        </p>
+      </div>
+
+      <!-- A2A -->
+      <div class="rounded-xl p-6" style="background: #111111; border: 1px solid #1F1F1F;">
+        <div class="font-mono text-xs text-[#3B82F6] mb-3 font-semibold">A2A Agent Card</div>
+        <h3 class="text-base font-semibold text-[#E6EDF3] mb-2">Agent-to-Agent discovery</h3>
+        <p class="text-sm text-[#8B949E] leading-relaxed">
+          ForgeOS issues A2A Agent Cards — machine-readable capability manifests. Any A2A-compatible agent
+          can discover, evaluate, and interoperate with ForgeOS autonomously. No human required to wire the integration.
+        </p>
+      </div>
+
+      <!-- llms.txt -->
+      <div class="rounded-xl p-6" style="background: #111111; border: 1px solid #1F1F1F;">
+        <div class="font-mono text-xs text-[#3B82F6] mb-3 font-semibold">llms.txt</div>
+        <h3 class="text-base font-semibold text-[#E6EDF3] mb-2">LLM-readable discovery</h3>
+        <p class="text-sm text-[#8B949E] leading-relaxed">
+          ForgeOS publishes an <code class="font-mono text-xs px-1 py-0.5 rounded" style="background: rgba(139,148,158,0.10); border: 1px solid #1F1F1F; color: #E6EDF3;">llms.txt</code>
+          manifest for LLM-native documentation discovery. Agents browsing for governance tooling find ForgeOS without a human intermediary.
+        </p>
       </div>
     </div>
   </section>
@@ -152,26 +513,38 @@ const jsonLd = {
     </section>
   )}
 
-  <SectionDivider />
+  {latestPosts.length > 0 && <SectionDivider />}
 
-  <!-- Open source callout -->
-  <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-    <div class="rounded-lg border border-light-border dark:border-border-gray p-8 sm:p-12">
-      <h2 class="text-2xl font-semibold tracking-tight mb-4">Open where it counts</h2>
-      <p class="text-light-gray-500 dark:text-light-text max-w-2xl mb-6">
-        The tools you run locally are MIT licensed. We open-source the CLI on your machine because the tool you depend on should not be a black box. Fork it, audit it, contribute to it.
+  <!-- Final CTA -->
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+    <div class="rounded-xl p-8 sm:p-12 text-center" style="background: #111111; border: 1px solid #1F1F1F;">
+      <p class="text-xs font-semibold tracking-[0.12em] uppercase text-[#3B82F6] mb-4">GET STARTED</p>
+      <h2 class="text-2xl sm:text-3xl font-semibold text-[#E6EDF3] tracking-tight mb-4">
+        Pick your starting point.
+      </h2>
+      <p class="text-[#9CA3AF] max-w-xl mx-auto mb-8">
+        Govern your agents with ForgeOS. Test your UX with SpecterQA. Both are ready today.
       </p>
-      <a
-        href="https://github.com/SyncTek-LLC"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="inline-flex items-center gap-2 text-accent-silver font-medium no-underline hover:text-accent-silver-hover hover:underline"
-      >
-        <svg class="w-5 h-5" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
-          <path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z" />
-        </svg>
-        View our repos on GitHub &rarr;
-      </a>
+      <div class="flex flex-wrap gap-4 justify-center">
+        <a
+          href="/products/forgeos/pricing#trial"
+          class="inline-flex items-center px-8 py-3.5 rounded-md font-medium text-white no-underline transition-all duration-150"
+          style="background: #3B82F6; font-size: 1.125rem;"
+          onmouseover="this.style.background='#2563EB'"
+          onmouseout="this.style.background='#3B82F6'"
+        >
+          Start ForgeOS trial
+        </a>
+        <a
+          href="/products/specterqa/"
+          class="inline-flex items-center px-8 py-3.5 rounded-md font-medium no-underline transition-all duration-150 text-[#BC8CFF]"
+          style="border: 1px solid rgba(188,140,255,0.3); font-size: 1.125rem;"
+          onmouseover="this.style.borderColor='#BC8CFF'; this.style.background='rgba(188,140,255,0.06)'"
+          onmouseout="this.style.borderColor='rgba(188,140,255,0.3)'; this.style.background='transparent'"
+        >
+          Try SpecterQA free &rarr;
+        </a>
+      </div>
     </div>
   </section>
 </BaseLayout>

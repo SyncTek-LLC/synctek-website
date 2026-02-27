@@ -9,13 +9,21 @@ export default {
   license_url: 'https://github.com/SyncTek-LLC/specterqa/blob/main/LICENSE',
   accentColor: '#BC8CFF',
 
+  href: '/products/specterqa/',
+
+  ctaType: 'install' as const,
+  installCommand: 'pip install specterqa',
+  support: {
+    email: 'support@synctek.io',
+    github: 'SyncTek-LLC/specterqa',
+    docs: 'https://github.com/SyncTek-LLC/specterqa#readme',
+  },
+
   distribution: {
     pypi: 'specterqa',
     github: 'SyncTek-LLC/specterqa',
     mcp_registry: 'io.github.SyncTekLLC/specterqa',
   },
-
-  install_command: 'pip install specterqa',
 
   badges: [
     { type: 'pypi_version', package: 'specterqa' },

@@ -5,15 +5,18 @@ import BlogPostCard from '../../components/BlogPostCard.astro';
 import SectionDivider from '../../components/SectionDivider.astro';
 import { getCollection } from 'astro:content';
 import specterqa from '../../data/products/specterqa';
+import forgeos from '../../data/products/forgeos';
 
-// Build all product pages from YAML data
-const products: Record<string, typeof specterqa> = {
+// Build all product pages from data
+const products: Record<string, typeof specterqa | typeof forgeos> = {
   specterqa,
+  forgeos,
 };
 
 export function getStaticPaths() {
   return [
     { params: { slug: 'specterqa' } },
+    { params: { slug: 'forgeos' } },
   ];
 }
 
@@ -37,6 +40,9 @@ function getReadingTime(text: string): string {
   return `${minutes} min read`;
 }
 
+const hasVersion = 'version' in product && product.version;
+const hasPypi = 'distribution' in product && 'pypi' in (product as typeof specterqa).distribution;
+
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'SoftwareApplication',
@@ -48,9 +54,9 @@ const jsonLd = {
     price: '0',
     priceCurrency: 'USD',
   },
-  softwareVersion: product.version,
-  downloadUrl: `https://pypi.org/project/${product.distribution.pypi}/`,
-  license: 'https://opensource.org/licenses/MIT',
+  ...(hasVersion ? { softwareVersion: (product as typeof specterqa).version } : {}),
+  ...(hasPypi ? { downloadUrl: `https://pypi.org/project/${(product as typeof specterqa).distribution.pypi}/` } : {}),
+  license: product.license === 'MIT' ? 'https://opensource.org/licenses/MIT' : undefined,
 };
 
 const featureIcons: Record<string, string> = {
@@ -61,6 +67,11 @@ const featureIcons: Record<string, string> = {
   plug: 'M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1',
   code: 'M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4',
 };
+
+const ctaType = 'ctaType' in product ? product.ctaType : undefined;
+const loginUrl = 'loginUrl' in product ? product.loginUrl : undefined;
+const installCommand = 'installCommand' in product ? product.installCommand : undefined;
+const support = 'support' in product ? product.support : undefined;
 ---
 
 <BaseLayout
@@ -81,7 +92,9 @@ const featureIcons: Record<string, string> = {
 
       <!-- Badges -->
       <div class="flex flex-wrap items-center gap-3 mb-8">
-        <Badge text={`v${product.version}`} variant="blue" size="md" />
+        {hasVersion && (
+          <Badge text={`v${(product as typeof specterqa).version}`} variant="blue" size="md" />
+        )}
         <Badge text={product.license} variant="purple" size="md" />
         <Badge text={product.status === 'launched' ? 'Launched' : product.status} variant="silver" size="md" />
         <Badge text={product.type} variant="gray" size="md" />
@@ -89,23 +102,53 @@ const featureIcons: Record<string, string> = {
 
       <!-- CTAs -->
       <div class="flex flex-wrap gap-4">
-        <a
-          href="#quickstart"
-          class="inline-flex items-center px-6 py-3 rounded-lg bg-accent-silver text-obsidian font-semibold no-underline hover:bg-accent-silver-hover transition-colors"
-        >
-          Get Started
-        </a>
-        <a
-          href={`https://github.com/${product.distribution.github}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-light-border dark:border-border-gray font-semibold no-underline hover:border-accent-silver dark:hover:border-accent-silver transition-colors"
-        >
-          <svg class="w-5 h-5" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
-            <path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z" />
-          </svg>
-          View on GitHub
-        </a>
+        {ctaType === 'login' && loginUrl && (
+          <>
+            <a
+              href={loginUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center px-6 py-3 rounded-lg font-semibold no-underline transition-colors"
+              style={`background: ${product.accentColor}; color: #0D1117;`}
+            >
+              Sign In
+            </a>
+            <a
+              href="#overview"
+              class="inline-flex items-center px-6 py-3 rounded-lg border border-light-border dark:border-border-gray font-semibold no-underline hover:border-accent-silver dark:hover:border-accent-silver transition-colors"
+            >
+              Learn more
+            </a>
+          </>
+        )}
+        {ctaType === 'install' && (
+          <>
+            <a
+              href="#quickstart"
+              class="inline-flex items-center px-6 py-3 rounded-lg bg-accent-silver text-obsidian font-semibold no-underline hover:bg-accent-silver-hover transition-colors"
+            >
+              Get Started
+            </a>
+            {'distribution' in product && 'github' in (product as typeof specterqa).distribution && (
+              <a
+                href={`https://github.com/${(product as typeof specterqa).distribution.github}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-light-border dark:border-border-gray font-semibold no-underline hover:border-accent-silver dark:hover:border-accent-silver transition-colors"
+              >
+                <svg class="w-5 h-5" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                  <path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z" />
+                </svg>
+                View on GitHub
+              </a>
+            )}
+          </>
+        )}
+        {ctaType === 'coming-soon' && (
+          <span class="inline-flex items-center px-6 py-3 rounded-lg border border-light-border dark:border-border-gray font-semibold text-light-gray-500 dark:text-muted">
+            Coming soon
+          </span>
+        )}
       </div>
     </div>
   </section>
@@ -113,7 +156,7 @@ const featureIcons: Record<string, string> = {
   <SectionDivider />
 
   <!-- Overview -->
-  <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  <section id="overview" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
     <h2 class="text-2xl font-semibold tracking-tight mb-6">Overview</h2>
     <div class="prose max-w-3xl text-light-gray-500 dark:text-light-text">
       {product.overview.split('\n\n').map((paragraph: string) => (
@@ -142,30 +185,54 @@ const featureIcons: Record<string, string> = {
     </div>
   </section>
 
-  <SectionDivider />
-
-  <!-- Quick start -->
-  <section id="quickstart" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <h2 class="text-2xl font-semibold tracking-tight mb-8">Quick start</h2>
-    <div class="max-w-2xl space-y-4">
-      {product.quickstart.map((step: { command: string; description: string }, i: number) => (
-        <div class="flex items-start gap-4">
-          <span class="flex-shrink-0 w-8 h-8 rounded-full bg-accent-silver/15 text-accent-silver text-sm font-semibold flex items-center justify-center">
-            {i + 1}
-          </span>
-          <div class="flex-1 min-w-0">
-            <p class="text-sm text-light-gray-500 dark:text-muted mb-2">{step.description}</p>
-            <div class="rounded-lg bg-dark-surface dark:bg-dark-surface p-3 font-mono text-sm text-terminal-white overflow-x-auto">
-              <code>$ {step.command}</code>
+  {'quickstart' in product && (product as typeof specterqa).quickstart && (
+    <>
+      <SectionDivider />
+      <section id="quickstart" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <h2 class="text-2xl font-semibold tracking-tight mb-8">Quick start</h2>
+        <div class="max-w-2xl space-y-4">
+          {(product as typeof specterqa).quickstart.map((step: { command: string; description: string }, i: number) => (
+            <div class="flex items-start gap-4">
+              <span class="flex-shrink-0 w-8 h-8 rounded-full bg-accent-silver/15 text-accent-silver text-sm font-semibold flex items-center justify-center">
+                {i + 1}
+              </span>
+              <div class="flex-1 min-w-0">
+                <p class="text-sm text-light-gray-500 dark:text-muted mb-2">{step.description}</p>
+                <div class="rounded-lg bg-dark-surface dark:bg-dark-surface p-3 font-mono text-sm text-terminal-white overflow-x-auto">
+                  <code>$ {step.command}</code>
+                </div>
+              </div>
             </div>
-          </div>
+          ))}
         </div>
-      ))}
-    </div>
-  </section>
+      </section>
+    </>
+  )}
 
-  <!-- Cost transparency -->
-  {product.costs && (
+  {'pricing' in product && (product as typeof forgeos).pricing && (
+    <>
+      <SectionDivider />
+      <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <h2 class="text-2xl font-semibold tracking-tight mb-6">Pricing</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl">
+          {(product as typeof forgeos).pricing!.map((tier: { tier: string; price: string; description: string }) => (
+            <div class="rounded-lg border border-light-border dark:border-border-gray p-6">
+              <h3 class="font-semibold mb-1">{tier.tier}</h3>
+              <p class="text-xl font-bold mb-2" style={`color: ${product.accentColor}`}>{tier.price}</p>
+              <p class="text-sm text-light-gray-500 dark:text-muted">{tier.description}</p>
+            </div>
+          ))}
+        </div>
+        <div class="mt-6">
+          <a href={`/products/${slug}/pricing`} class="text-sm font-medium no-underline hover:underline" style={`color: ${product.accentColor}`}>
+            Full pricing details &rarr;
+          </a>
+        </div>
+      </section>
+    </>
+  )}
+
+  {'costs' in product && (product as typeof specterqa).costs && (
     <>
       <SectionDivider />
       <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -182,7 +249,7 @@ const featureIcons: Record<string, string> = {
               </tr>
             </thead>
             <tbody>
-              {product.costs.map((cost: { type: string; range: string }) => (
+              {(product as typeof specterqa).costs!.map((cost: { type: string; range: string }) => (
                 <tr class="border-b border-light-border dark:border-border-gray">
                   <td class="py-2 text-light-gray-500 dark:text-muted">{cost.type}</td>
                   <td class="py-2 text-right font-mono">{cost.range}</td>
@@ -195,7 +262,6 @@ const featureIcons: Record<string, string> = {
     </>
   )}
 
-  <!-- Tradeoffs -->
   {product.tradeoffs && (
     <>
       <SectionDivider />
@@ -221,24 +287,82 @@ const featureIcons: Record<string, string> = {
   <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
     <h2 class="text-2xl font-semibold tracking-tight mb-6">Documentation</h2>
     <div class="flex flex-wrap gap-4">
-      <a
-        href={`https://github.com/${product.distribution.github}`}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-light-border dark:border-border-gray text-sm font-medium no-underline hover:border-accent-silver dark:hover:border-accent-silver transition-colors"
-      >
-        GitHub README
-      </a>
-      <a
-        href={`https://pypi.org/project/${product.distribution.pypi}/`}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-light-border dark:border-border-gray text-sm font-medium no-underline hover:border-accent-silver dark:hover:border-accent-silver transition-colors"
-      >
-        PyPI
-      </a>
+      {'distribution' in product && 'github' in (product as typeof specterqa).distribution && (
+        <a
+          href={`https://github.com/${(product as typeof specterqa).distribution.github}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-light-border dark:border-border-gray text-sm font-medium no-underline hover:border-accent-silver dark:hover:border-accent-silver transition-colors"
+        >
+          GitHub README
+        </a>
+      )}
+      {hasPypi && (
+        <a
+          href={`https://pypi.org/project/${(product as typeof specterqa).distribution.pypi}/`}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-light-border dark:border-border-gray text-sm font-medium no-underline hover:border-accent-silver dark:hover:border-accent-silver transition-colors"
+        >
+          PyPI
+        </a>
+      )}
+      {support?.docs && (
+        <a
+          href={support.docs}
+          class="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-light-border dark:border-border-gray text-sm font-medium no-underline hover:border-accent-silver dark:hover:border-accent-silver transition-colors"
+        >
+          Docs
+        </a>
+      )}
     </div>
   </section>
+
+  {support && (
+    <>
+      <SectionDivider />
+      <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <h2 class="text-2xl font-semibold tracking-tight mb-6">Support</h2>
+        <div class="flex flex-wrap gap-4">
+          {support.email && (
+            <a
+              href={`mailto:${support.email}`}
+              class="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-light-border dark:border-border-gray text-sm font-medium no-underline hover:border-accent-silver dark:hover:border-accent-silver transition-colors"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+              {support.email}
+            </a>
+          )}
+          {support.github && (
+            <a
+              href={`https://github.com/${support.github}/issues`}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-light-border dark:border-border-gray text-sm font-medium no-underline hover:border-accent-silver dark:hover:border-accent-silver transition-colors"
+            >
+              <svg class="w-4 h-4" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                <path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z" />
+              </svg>
+              GitHub Issues
+            </a>
+          )}
+          {support.docs && (
+            <a
+              href={support.docs}
+              class="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-light-border dark:border-border-gray text-sm font-medium no-underline hover:border-accent-silver dark:hover:border-accent-silver transition-colors"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+              Documentation
+            </a>
+          )}
+        </div>
+      </section>
+    </>
+  )}
 
   <!-- Related blog posts -->
   {relatedPosts.length > 0 && (

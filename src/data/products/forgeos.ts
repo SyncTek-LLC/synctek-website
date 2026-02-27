@@ -7,7 +7,16 @@ export default {
   license: 'Commercial',
   accentColor: '#FF8255',
 
-  href: '/forgeos/',
+  href: '/products/forgeos/',
+
+  ctaType: 'login' as const,
+  loginUrl: 'https://forgeos.synctek.io/login',
+  dashboardUrl: 'https://forgeos.synctek.io',
+  support: {
+    email: 'support@synctek.io',
+    github: 'SyncTek-LLC/forgeos',
+    docs: '/docs/forgeos/',
+  },
 
   distribution: {
     dashboard: 'https://forgeos.synctek.io',

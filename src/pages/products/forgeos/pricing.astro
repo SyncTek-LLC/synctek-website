@@ -1,12 +1,12 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import SectionDivider from '../../components/SectionDivider.astro';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import SectionDivider from '../../../components/SectionDivider.astro';
 
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'WebPage',
   name: 'ForgeOS Pricing',
-  url: 'https://synctek.io/forgeos/pricing',
+  url: 'https://synctek.io/products/forgeos/pricing',
   description:
     'ForgeOS pricing: Pro $49/month, Team $149/month, Enterprise $2,000/month. 14-day free trial. No credit card required.',
   mainEntity: {
@@ -27,7 +27,7 @@ const jsonLd = {
         billingIncrement: 'Month',
         priceValidUntil: '2026-12-31',
         availability: 'https://schema.org/InStock',
-        url: 'https://synctek.io/forgeos/pricing',
+        url: 'https://synctek.io/products/forgeos/pricing',
         description:
           '50,000 API calls/month. Gate enforcement, signed ledger, 12 MCP tools, EU AI Act artifacts, email support.',
       },
@@ -39,7 +39,7 @@ const jsonLd = {
         billingIncrement: 'Month',
         priceValidUntil: '2026-12-31',
         availability: 'https://schema.org/InStock',
-        url: 'https://synctek.io/forgeos/pricing',
+        url: 'https://synctek.io/products/forgeos/pricing',
         description:
           '200,000 API calls/month. Everything in Pro plus team delegation rules.',
       },
@@ -51,7 +51,7 @@ const jsonLd = {
         billingIncrement: 'Month',
         priceValidUntil: '2026-12-31',
         availability: 'https://schema.org/InStock',
-        url: 'https://synctek.io/forgeos/pricing',
+        url: 'https://synctek.io/products/forgeos/pricing',
         description:
           'Dedicated tenant. 4h SLA. Security questionnaire support. DPA on request.',
       },
@@ -147,7 +147,7 @@ function renderValue(val: FeatureValue) {
     <div class="relative z-10 text-center">
       <!-- Breadcrumb -->
       <div class="flex items-center justify-center gap-2 text-sm text-[#8B949E] mb-8">
-        <a href="/forgeos" class="no-underline hover:text-[#E6EDF3] transition-colors">ForgeOS</a>
+        <a href="/products/forgeos/" class="no-underline hover:text-[#E6EDF3] transition-colors">ForgeOS</a>
         <span>/</span>
         <span class="text-[#E6EDF3]">Pricing</span>
       </div>
@@ -186,7 +186,7 @@ function renderValue(val: FeatureValue) {
         <p class="text-xs text-[#8B949E] mb-6">50,000 API calls/month</p>
 
         <a
-          href="https://forge-dashboard-production-6bd4.up.railway.app/register?plan=pro"
+          href="https://forgeos.synctek.io/register?plan=pro"
           class="block w-full text-center py-3 rounded-md font-medium text-white no-underline transition-all duration-150 mb-6"
           style="background: #3B82F6;"
           onmouseover="this.style.background='#2563EB'"
@@ -247,7 +247,7 @@ function renderValue(val: FeatureValue) {
         <p class="text-xs text-[#8B949E] mb-6">200,000 API calls/month</p>
 
         <a
-          href="https://forge-dashboard-production-6bd4.up.railway.app/register?plan=team"
+          href="https://forgeos.synctek.io/register?plan=team"
           class="block w-full text-center py-3 rounded-md font-medium no-underline transition-all duration-150 mb-6 text-[#E6EDF3]"
           style="border: 1px solid #1F1F1F;"
           onmouseover="this.style.borderColor='#8B949E'; this.style.background='rgba(255,255,255,0.04)'"

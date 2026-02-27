@@ -10,9 +10,12 @@ interface Props {
   license: string;
   accentColor?: string;
   href?: string;
+  ctaType?: 'login' | 'install' | 'coming-soon';
+  loginUrl?: string;
+  installCommand?: string;
 }
 
-const { slug, name, tagline, type, status, license, accentColor = '#B0B0B0', href } = Astro.props;
+const { slug, name, tagline, type, status, license, accentColor = '#B0B0B0', href, ctaType, loginUrl, installCommand } = Astro.props;
 const cardHref = href ?? `/products/${slug}/`;
 
 const statusVariant = {
@@ -34,8 +37,23 @@ const statusVariant = {
     <Badge text={status === 'coming-soon' ? 'Coming Soon' : status.charAt(0).toUpperCase() + status.slice(1)} variant={statusVariant[status as keyof typeof statusVariant] || 'gray'} />
   </div>
   <p class="text-sm text-light-gray-500 dark:text-muted mb-4">{tagline}</p>
-  <div class="flex items-center gap-2">
+  <div class="flex items-center gap-2 mb-4">
     <Badge text={type} variant="blue" />
     <Badge text={license} variant="purple" />
   </div>
+  {ctaType === 'login' && (
+    <div class="mt-2 pt-3 border-t border-light-border dark:border-border-gray">
+      <span class="text-sm font-medium" style={`color: ${accentColor}`}>Sign In &rarr;</span>
+    </div>
+  )}
+  {ctaType === 'install' && installCommand && (
+    <div class="mt-2 pt-3 border-t border-light-border dark:border-border-gray">
+      <code class="text-xs font-mono text-light-gray-500 dark:text-muted">{installCommand}</code>
+    </div>
+  )}
+  {ctaType === 'coming-soon' && (
+    <div class="mt-2 pt-3 border-t border-light-border dark:border-border-gray">
+      <span class="text-sm text-light-gray-500 dark:text-muted">Coming soon</span>
+    </div>
+  )}
 </a>
