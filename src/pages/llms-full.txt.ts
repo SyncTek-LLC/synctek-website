@@ -61,11 +61,11 @@ Note the id in the response (e.g., proj_a1b2c3d4).
 
 ### 4. Install the MCP server
 
-npm install -g @synctek/forgeos-mcp
+npm install -g @synctek/forgeos
 
 Or use npx for zero-install:
 
-npx -y @synctek/forgeos-mcp@latest
+npx -y @synctek/forgeos@latest
 
 ### 5. Configure your editor
 
@@ -75,7 +75,7 @@ Cursor — .cursor/mcp.json:
   "mcpServers": {
     "forgeos": {
       "command": "npx",
-      "args": ["-y", "@synctek/forgeos-mcp@latest"],
+      "args": ["-y", "@synctek/forgeos@latest"],
       "env": {
         "FORGEOS_ENGINE_URL": "https://forgeos-api.synctek.io",
         "FORGEOS_API_KEY": "fos_your_api_key_here"
@@ -90,7 +90,7 @@ Claude Code — ~/.claude/settings.json:
   "mcpServers": {
     "forgeos": {
       "command": "npx",
-      "args": ["-y", "@synctek/forgeos-mcp@latest"],
+      "args": ["-y", "@synctek/forgeos@latest"],
       "env": {
         "FORGEOS_ENGINE_URL": "https://forgeos-api.synctek.io",
         "FORGEOS_API_KEY": "fos_your_api_key_here"
@@ -106,7 +106,7 @@ VS Code (Copilot) — settings.json:
     "servers": {
       "forgeos": {
         "command": "npx",
-        "args": ["-y", "@synctek/forgeos-mcp@latest"],
+        "args": ["-y", "@synctek/forgeos@latest"],
         "env": {
           "FORGEOS_ENGINE_URL": "https://forgeos-api.synctek.io",
           "FORGEOS_API_KEY": "fos_your_api_key_here"
@@ -540,8 +540,8 @@ Get current workflow state for an initiative. Returns current step, next actions
 
 ## MCP Server — 13 Governance Tools
 
-Install: npm install -g @synctek/forgeos-mcp
-NPX: npx -y @synctek/forgeos-mcp@latest
+Install: npm install -g @synctek/forgeos
+NPX: npx -y @synctek/forgeos@latest
 HTTP/SSE endpoint: https://mcp.forgeos.synctek.io/sse
 
 ### Session tools

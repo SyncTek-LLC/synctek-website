@@ -28,8 +28,8 @@ The MCP server exposes 13 governance tools any MCP-compatible agent (Claude, GPT
 
 ## MCP server
 
-Install: npm install -g @synctek/forgeos-mcp
-NPX: npx -y @synctek/forgeos-mcp@latest
+Install: npm install -g @synctek/forgeos
+NPX: npx -y @synctek/forgeos@latest
 HTTP/SSE endpoint: https://mcp.forgeos.synctek.io/sse
 
 ## Auth

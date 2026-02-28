@@ -10,7 +10,7 @@ export const GET: APIRoute = () => {
     docs_url: 'https://forgeos-api.synctek.io/docs',
     openapi_url: 'https://forgeos-api.synctek.io/openapi.json',
     mcp_sse_url: 'https://mcp.forgeos.synctek.io/sse',
-    mcp_package: '@synctek/forgeos-mcp',
+    mcp_package: '@synctek/forgeos',
     full_docs_text: 'https://synctek.io/llms-full.txt',
     auth: {
       methods: [

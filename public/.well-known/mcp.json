@@ -5,8 +5,8 @@
   "description": "Model Context Protocol server for ForgeOS governance tools. Exposes 13 tools for initiative management, gate checks, reviews, evidence, Shared Mind, and workflow state.",
   "version": "1.0.0",
   "package": {
-    "npm": "@synctek/forgeos-mcp",
-    "install": "npx -y @synctek/forgeos-mcp@latest"
+    "npm": "@synctek/forgeos",
+    "install": "npx -y @synctek/forgeos"
   },
   "transports": [
     {
