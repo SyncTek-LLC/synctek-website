@@ -50,19 +50,48 @@ API keys are the recommended auth method for MCP and programmatic access. Genera
 
 Your API key will have the prefix `fos_` and is shown only once. Store it securely.
 
-## 5. Install the MCP server
+## 5. Install the package
 
-The ForgeOS MCP server connects your editor's AI agent directly to governance tools. No SDK required.
+ForgeOS ships as a single npm package — `@synctek/forgeos` — which includes:
+- The **MCP server**: connects your editor's AI agent directly to 21 governance tools
+- The **`forge` CLI**: 14 command groups, 40+ subcommands for terminal-first workflows
+- **SharedMind**: institutional memory that persists patterns and lessons across sessions
+- **Trust ledger**: Ed25519-signed, hash-chained audit trail — all local, source code never leaves your machine
+
+Install globally:
 
 ```bash
-npm install -g @synctek/forgeos-mcp
+npm install -g @synctek/forgeos
 ```
 
-Or use `npx` for zero-install:
+Or use `npx` for zero-install (MCP server):
 
 ```bash
-npx -y @synctek/forgeos-mcp@latest
+npx -y @synctek/forgeos@latest
 ```
+
+### 5a. CLI quickstart (optional)
+
+If you prefer working from the terminal, the `forge` CLI is available after global install:
+
+```bash
+# Check your setup
+forge scorecard
+
+# Initialize a project
+forge project create --name my-app
+
+# Run a full governance cycle in seconds
+forge quickstart
+
+# Query SharedMind for institutional knowledge
+forge mind query --context "authentication patterns"
+
+# Check gate status for a changeset
+forge gates check --changeset cs_abc123
+```
+
+The CLI and MCP server share the same ForgeOS instance — you can use both together.
 
 ## 6. Configure your editor
 
@@ -75,7 +104,7 @@ Add to your Cursor MCP settings (`.cursor/mcp.json` in your project, or global s
   "mcpServers": {
     "forgeos": {
       "command": "npx",
-      "args": ["-y", "@synctek/forgeos-mcp@latest"],
+      "args": ["-y", "@synctek/forgeos@latest"],
       "env": {
         "FORGEOS_ENGINE_URL": "https://forgeos-api.synctek.io",
         "FORGEOS_API_KEY": "fos_your_api_key_here"
@@ -94,7 +123,7 @@ Add to `~/.claude/settings.json`:
   "mcpServers": {
     "forgeos": {
       "command": "npx",
-      "args": ["-y", "@synctek/forgeos-mcp@latest"],
+      "args": ["-y", "@synctek/forgeos@latest"],
       "env": {
         "FORGEOS_ENGINE_URL": "https://forgeos-api.synctek.io",
         "FORGEOS_API_KEY": "fos_your_api_key_here"
@@ -114,7 +143,7 @@ Add to your VS Code `settings.json`:
     "servers": {
       "forgeos": {
         "command": "npx",
-        "args": ["-y", "@synctek/forgeos-mcp@latest"],
+        "args": ["-y", "@synctek/forgeos@latest"],
         "env": {
           "FORGEOS_ENGINE_URL": "https://forgeos-api.synctek.io",
           "FORGEOS_API_KEY": "fos_your_api_key_here"
@@ -132,7 +161,7 @@ Any MCP-compatible client works. Set these environment variables:
 - `FORGEOS_ENGINE_URL` = `https://forgeos-api.synctek.io`
 - `FORGEOS_API_KEY` = your API key
 
-Then run the MCP server via stdio: `npx -y @synctek/forgeos-mcp@latest`
+Then run the MCP server via stdio: `npx -y @synctek/forgeos@latest`
 
 ## 7. Run your first governance command
 
@@ -151,5 +180,5 @@ The agent calls `forge_create_initiative`, creating a tracked initiative with a 
 ## Next steps
 
 - [Authentication](/docs/auth/) — API key management, rate limits, and security
-- [MCP Server](/docs/mcp/) — All 13 governance tools with parameters and examples
+- [MCP Server](/docs/mcp/) — All 21 governance tools with parameters and examples
 - [REST API](/docs/api/) — Full HTTP endpoint reference

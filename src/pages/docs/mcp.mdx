@@ -1,25 +1,25 @@
 ---
 layout: ../../layouts/DocsLayout.astro
 title: "MCP Server — ForgeOS Documentation"
-description: "Install and configure the ForgeOS MCP server. All 13 governance tools documented with parameters, descriptions, and usage examples."
+description: "Install and configure the ForgeOS MCP server. All 21 governance tools documented with parameters, descriptions, and usage examples."
 ---
 
 # MCP Server
 
-ForgeOS exposes 13 governance tools over the Model Context Protocol (MCP). Any MCP-compatible agent — Claude, GPT-4, Gemini, local models — can call gate-check, submit reviews, and query institutional knowledge without custom integration.
+ForgeOS exposes 21 governance tools over the Model Context Protocol (MCP). Any MCP-compatible agent — Claude, GPT-4, Gemini, local models — can call gate-check, submit reviews, and query institutional knowledge without custom integration. No API keys required from ForgeOS; your own AI provides the judgment. Source code never leaves your machine.
 
 ## Installation
 
 Install globally:
 
 ```bash
-npm install -g @synctek/forgeos-mcp
+npm install -g @synctek/forgeos
 ```
 
 Or use `npx` for zero-install (recommended):
 
 ```bash
-npx -y @synctek/forgeos-mcp@latest
+npx -y @synctek/forgeos@latest
 ```
 
 ## Configuration
@@ -33,7 +33,7 @@ Add to `.cursor/mcp.json` in your project root (or global Cursor settings):
   "mcpServers": {
     "forgeos": {
       "command": "npx",
-      "args": ["-y", "@synctek/forgeos-mcp@latest"],
+      "args": ["-y", "@synctek/forgeos@latest"],
       "env": {
         "FORGEOS_ENGINE_URL": "https://forgeos-api.synctek.io",
         "FORGEOS_API_KEY": "fos_your_api_key_here"
@@ -52,7 +52,7 @@ Add to `~/.claude/settings.json`:
   "mcpServers": {
     "forgeos": {
       "command": "npx",
-      "args": ["-y", "@synctek/forgeos-mcp@latest"],
+      "args": ["-y", "@synctek/forgeos@latest"],
       "env": {
         "FORGEOS_ENGINE_URL": "https://forgeos-api.synctek.io",
         "FORGEOS_API_KEY": "fos_your_api_key_here"
@@ -72,7 +72,7 @@ Add to your VS Code `settings.json`:
     "servers": {
       "forgeos": {
         "command": "npx",
-        "args": ["-y", "@synctek/forgeos-mcp@latest"],
+        "args": ["-y", "@synctek/forgeos@latest"],
         "env": {
           "FORGEOS_ENGINE_URL": "https://forgeos-api.synctek.io",
           "FORGEOS_API_KEY": "fos_your_api_key_here"
@@ -94,7 +94,7 @@ Header:   X-ForgeOS-API-Key: fos_your_api_key_here
 
 ## Tools reference
 
-ForgeOS provides 13 MCP tools organized by workflow stage.
+ForgeOS provides 21 MCP tools organized by workflow stage.
 
 ### Session
 
@@ -250,18 +250,91 @@ Record an observation to the Shared Mind. Use when you discover patterns, anti-p
 | `confidence` | number | No | Confidence 0.0-1.0 (default: 0.8) |
 | `tags` | string[] | No | Tags for categorization |
 
+### Setup and discovery
+
+#### `forge_quickstart`
+
+Create a sandbox project and run a complete governance cycle in seconds. Perfect for first-time setup and testing. Returns the full report including project, initiative, changeset, gates, and next steps. Takes no parameters.
+
+#### `forge_scorecard`
+
+Check your ForgeOS setup completeness. Shows which onboarding steps are done and what to do next. Use this to verify your environment is fully configured. Takes no parameters.
+
+#### `forge_discover`
+
+Analyze your repository and get a recommended governance configuration based on your tech stack. Returns recommended preset, template, evidence mapping, and CI hints.
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `languages` | string[] | No | Programming languages detected (e.g. `["typescript", "python"]`) |
+| `ci_tools` | string[] | No | CI/CD tools in use (e.g. `["github-actions"]`) |
+| `test_frameworks` | string[] | No | Testing frameworks detected |
+| `team_size` | number | No | Approximate team headcount |
+| `repo_type` | string | No | Type of repository: `monorepo`, `service`, `library`, `mobile-app` |
+
+#### `forge_get_presets`
+
+List available governance presets (Startup, Enterprise, Regulated, Mobile Release QA). Returns all presets with descriptions so you can choose the right gate template. Takes no parameters.
+
+#### `forge_configure_project_gates`
+
+Configure the governance gate template for a project using a preset or custom template.
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `project_id` | string | Yes | Project ID |
+| `preset` | string | No | Preset name: `startup`, `enterprise`, `regulated`, `mobile_release_qa` |
+| `custom_template` | object | No | Custom gate template object |
+
+`preset` and `custom_template` are mutually exclusive.
+
+#### `forge_recommend_gates`
+
+Get a gate recommendation for a changeset based on risk analysis. Returns risk analysis, recommended gates, minimum gates, and rationale.
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `project_id` | string | Yes | Project ID |
+| `changeset_id` | string | Yes | Changeset ID to analyse |
+
+#### `forge_workflow_template`
+
+Get copy-paste workflow templates for common scenarios (bugfix, feature, hotfix, release candidate).
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `template_id` | string | No | Template: `bugfix`, `feature`, `hotfix`, `release_candidate`. Omit to list all. |
+
+#### `forge_get_context`
+
+Get comprehensive context for a changeset including SharedMind patterns, quality warnings, past regressions, and relevant lessons. Call this before submitting evidence or reviews to make informed decisions.
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `project_id` | string | Yes | Project ID |
+| `changeset_id` | string | Yes | Changeset ID |
+
 ## Typical workflow
 
 ```
-1. forge_init(project_id)                        → session context
-2. forge_create_initiative(project_id, title, …)  → initiative created
-3. forge_propose_changeset(project_id, …)         → risk score, gate pipeline
-4. forge_submit_evidence(project_id, cs_id, …)    → evidence attached
-5. forge_get_profile(role="security")             → reviewer prompt
-6. forge_submit_review(project_id, cs_id, …)      → review recorded
-7. forge_check_gates(project_id, cs_id)           → gate status
-8. forge_promote_gate(project_id, cs_id, gate_id) → gate advanced
-9. forge_release_check(project_id, cs_id)         → ready to ship
+# First time: set up your project
+forge_scorecard()                                 → setup completeness check
+forge_discover(languages, ci_tools, …)            → recommended preset
+forge_create_project(name, description, platform) → project created
+forge_configure_project_gates(project_id, preset) → gate template applied
+
+# Each feature or fix
+forge_init(project_id)                            → session context + SharedMind state
+forge_create_initiative(project_id, title, …)     → initiative created
+forge_propose_changeset(project_id, …)            → risk score, gate pipeline
+forge_recommend_gates(project_id, cs_id)          → gate recommendation
+forge_get_context(project_id, cs_id)              → SharedMind patterns + past lessons
+forge_submit_evidence(project_id, cs_id, …)       → evidence attached
+forge_get_profile(role="security")                → reviewer prompt (enriched by SharedMind)
+forge_submit_review(project_id, cs_id, …)         → review recorded
+forge_check_gates(project_id, cs_id)              → gate status
+forge_promote_gate(project_id, cs_id, gate_id)    → gate advanced
+forge_release_check(project_id, cs_id)            → ready to ship
 ```
 
 ## Next steps

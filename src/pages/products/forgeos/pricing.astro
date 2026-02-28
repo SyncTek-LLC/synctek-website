@@ -29,7 +29,7 @@ const jsonLd = {
         availability: 'https://schema.org/InStock',
         url: 'https://synctek.io/products/forgeos/pricing',
         description:
-          '50,000 API calls/month. Gate enforcement, signed ledger, 12 MCP tools, EU AI Act artifacts, email support.',
+          '50,000 API calls/month. Gate enforcement, signed ledger, 21 MCP tools, EU AI Act artifacts, email support.',
       },
       {
         '@type': 'Offer',
@@ -106,7 +106,9 @@ const comparisonRows: FeatureRow[] = [
   { feature: 'API calls / month', pro: '50,000', team: '200,000', enterprise: 'Dedicated' },
   { feature: 'Gate enforcement', pro: true, team: true, enterprise: true },
   { feature: 'Ed25519-signed ledger', pro: true, team: true, enterprise: true },
-  { feature: '12 MCP governance tools', pro: true, team: true, enterprise: true },
+  { feature: '21 MCP governance tools', pro: true, team: true, enterprise: true },
+  { feature: 'forge CLI (14 command groups)', pro: true, team: true, enterprise: true },
+  { feature: 'SharedMind (institutional memory)', pro: true, team: true, enterprise: true },
   { feature: 'Self-approval prevention', pro: true, team: true, enterprise: true },
   { feature: 'Circuit breakers', pro: true, team: true, enterprise: true },
   { feature: 'Human-in-the-loop gates', pro: true, team: true, enterprise: true },
@@ -132,7 +134,7 @@ function renderValue(val: FeatureValue) {
 
 <BaseLayout
   title="ForgeOS Pricing — Pro $49, Team $149, Enterprise $2K"
-  description="14-day free trial, no credit card. Pro: $49/month — gate enforcement, signed ledger, 12 MCP tools, EU AI Act artifacts. Team: $149/month. Enterprise: $2,000/month with dedicated tenant and SLA."
+  description="14-day free trial, no credit card. Pro: $49/month — gate enforcement, signed ledger, 21 MCP tools, EU AI Act artifacts. Team: $149/month. Enterprise: $2,000/month with dedicated tenant and SLA."
   jsonLd={jsonLd}
 >
   <!-- Pricing hero -->
@@ -156,9 +158,17 @@ function renderValue(val: FeatureValue) {
       <h1 class="text-4xl sm:text-5xl font-bold text-[#E6EDF3] tracking-tight mb-4" style="letter-spacing: -0.02em;">
         Start in 14 days.<br />Pay only if it works.
       </h1>
-      <p class="text-lg text-[#9CA3AF] max-w-xl mx-auto">
+      <p class="text-lg text-[#9CA3AF] max-w-xl mx-auto mb-4">
         Full Pro-tier access. No credit card required. First gate running in under 10 minutes.
       </p>
+      <!-- Founding customer program -->
+      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium"
+           style="background: rgba(245,158,11,0.10); border: 1px solid rgba(245,158,11,0.25); color: #F59E0B;">
+        <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+        </svg>
+        Founding customer program — 40% lifetime discount, 5 slots remaining. <a href="/contact" class="underline ml-1">Apply</a>
+      </div>
     </div>
   </section>
 
@@ -207,7 +217,15 @@ function renderValue(val: FeatureValue) {
           </li>
           <li class="flex items-start gap-2 text-[#E6EDF3]">
             <svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-            12 MCP governance tools
+            21 MCP governance tools
+          </li>
+          <li class="flex items-start gap-2 text-[#E6EDF3]">
+            <svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            forge CLI (14 command groups)
+          </li>
+          <li class="flex items-start gap-2 text-[#E6EDF3]">
+            <svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            SharedMind institutional memory
           </li>
           <li class="flex items-start gap-2 text-[#E6EDF3]">
             <svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>

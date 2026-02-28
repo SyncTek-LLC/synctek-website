@@ -22,7 +22,7 @@ export default {
     dashboard: 'https://forgeos.synctek.io',
     api: 'https://forgeos-api.synctek.io',
     mcp: 'https://mcp.synctek.io',
-    npm: '@synctek/forgeos-mcp',
+    npm: '@synctek/forgeos',
   },
 
   pricing: [
@@ -43,9 +43,24 @@ export default {
       icon: 'code',
     },
     {
-      title: 'MCP server (12 tools)',
-      description: 'Drop ForgeOS into Claude Desktop, Cursor, or any MCP-compatible agent in minutes.',
+      title: 'MCP server (21 tools)',
+      description: 'Drop ForgeOS into Claude Desktop, Cursor, or any MCP-compatible agent in minutes. Works with Claude, GPT, Gemini, and local models — no API keys required from ForgeOS.',
       icon: 'plug',
+    },
+    {
+      title: 'forge CLI',
+      description: '14 command groups, 40+ subcommands. Run gate checks, query SharedMind, manage projects, and inspect the trust ledger directly from your terminal.',
+      icon: 'code',
+    },
+    {
+      title: 'SharedMind',
+      description: 'Institutional memory that persists across sessions. Patterns, anti-patterns, and lessons are stored and surfaced automatically — your AI agents learn from past work.',
+      icon: 'workflow',
+    },
+    {
+      title: 'Federation',
+      description: 'Protocol-based interfaces let multiple teams and products share governance infrastructure. Improvements propagate across all layers.',
+      icon: 'shield',
     },
     {
       title: 'Agent-to-agent signals',
@@ -65,7 +80,7 @@ export default {
   ],
 
   overview:
-    'ForgeOS is the operating system layer for teams running agentic software pipelines. It sits between your agents and your infrastructure, enforcing governance gates before every consequential action.\n\nEvery commit, every deploy, every inter-agent delegation passes through a configurable gate. Gates require artifacts — architecture approvals, QA sign-offs, security reviews — before the next phase unlocks. No artifact, no execution.\n\nThe audit ledger is Ed25519-signed and hash-chained. Every action is attributed, ordered, and tamper-evident. When something goes wrong, you trace it in seconds, not hours.\n\nShips as an MCP server (12 tools), a REST API, and a CLI. Your agents connect once and inherit full governance. Your human operators get a dashboard, Telegram alerts, and a signal queue.',
+    'ForgeOS is the governance OS for teams running agentic software pipelines. It is not an AI — it is the persistent enforcement, memory, and trust layer that sits between your AI agents and your infrastructure.\n\nEvery commit, every deploy, every inter-agent delegation passes through a configurable gate. Gates require artifacts — architecture approvals, QA sign-offs, security reviews — before the next phase unlocks. No artifact, no execution.\n\nThe audit ledger is Ed25519-signed and hash-chained. Every action is attributed, ordered, and tamper-evident. When something goes wrong, you trace it in seconds, not hours.\n\nSharedMind is the institutional memory layer — patterns, anti-patterns, and lessons persist across sessions and are surfaced automatically to any agent that connects. Your AI agents get smarter every cycle, without manual curation.\n\nShips as an MCP server (21 tools), a CLI (forge — 14 command groups, 40+ subcommands), and a REST API. Works with any MCP-compatible agent: Claude, GPT, Gemini, or local models. No API keys required from ForgeOS. Source code never leaves your machine.',
 
   tradeoffs: [
     'Commercial license — not free. Governance infrastructure has real costs.',
