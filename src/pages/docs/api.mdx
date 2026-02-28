@@ -45,7 +45,11 @@ curl -X POST https://forgeos-api.synctek.io/auth/register \
   "user_id": "usr_a1b2c3d4",
   "email": "dev@company.com",
   "role": "user",
-  "created_at": "2026-02-25T10:00:00Z"
+  "created_at": "2026-02-25T10:00:00Z",
+  "trial_activated": true,
+  "plan": "pro",
+  "plan_status": "trialing",
+  "plan_expires_at": "2026-03-11T10:00:00Z"
 }
 ```
 
@@ -119,8 +123,19 @@ Register an autonomous agent identity. **No auth required.** Returns an API key 
 ```bash
 curl -X POST https://forgeos-api.synctek.io/auth/register-agent \
   -H "Content-Type: application/json" \
-  -d '{"agent_name": "ci-agent", "owner_email": "dev@company.com"}'
+  -d '{
+    "email": "ci-agent@company.com",
+    "password": "secure-agent-password"
+  }'
 ```
+
+**Request body:**
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `email` | string | Yes | Agent's email address |
+| `password` | string | Yes | 12-128 characters |
+| `org_name` | string | No | Organization name |
 
 ---
 
@@ -446,7 +461,7 @@ Promote a gate to passed. All required evidence and role reviews must be satisfi
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `promoted_by` | string | Who is promoting (default: `local`) |
+| `promoted_by` | string | Who is promoting (default: `"local"` via API, `"local_agent"` via MCP) |
 
 **Errors:** `400` requirements not met.
 
@@ -526,7 +541,20 @@ Create a Stripe Checkout session for plan upgrade. Returns a `checkout_url` for 
 
 ### `POST /api/billing/portal`
 
-Create a Stripe Customer Portal session for subscription management.
+Create a Stripe Customer Portal session for subscription management. Returns a `portal_url` for browser redirect.
+
+```bash
+curl -X POST https://forgeos-api.synctek.io/api/billing/portal \
+  -H "Content-Type: application/json" \
+  -H "X-ForgeOS-API-Key: fos_your_key" \
+  -d '{"return_url": "https://your-app.com/billing"}'
+```
+
+**Request body:**
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `return_url` | string | Yes | URL to redirect back to after the portal session |
 
 ---
 
@@ -592,6 +620,12 @@ Query relevant knowledge for a context.
 
 Trigger consolidation of raw observations into structured knowledge nodes.
 
+**Request body:**
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `domain` | string | Yes | Knowledge domain to consolidate |
+
 ---
 
 ### `GET /api/shared-mind/{team_id}/stats`
@@ -640,9 +674,15 @@ Get session details, including associated tasks and duration.
 
 ---
 
-### `POST /api/sessions/{session_id}/end`
+### `PATCH /api/sessions/{session_id}`
 
-End a session and finalize its duration record.
+Update a session record, for example to set its status to `ended` and finalize its duration.
+
+**Request body:**
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `status` | string | No | Session status (e.g., `ended`) |
 
 ---
 
@@ -657,3 +697,5 @@ Add a task log entry to a session. Useful for tracking granular steps within a w
 ### `GET /api/workflow/{initiative_id}`
 
 Get current workflow state for an initiative. Returns current step, next actions, blockers, and progress percentage.
+
+> **Note:** This endpoint path may change in a future release. Confirm the current path against the [MCP `forge_get_workflow` tool](/docs/mcp/) if you encounter routing issues.

@@ -5,7 +5,7 @@ export const GET: APIRoute = () => {
     name: 'ForgeOS',
     description:
       'A governance engine for AI agents. Enforces constitutional rules, gate-based change pipelines, Ed25519-signed audit trails, and circuit breakers so AI agents can ship code safely.',
-    version: '1.0',
+    version: '2.0.0',
     base_url: 'https://forgeos-api.synctek.io',
     docs_url: 'https://forgeos-api.synctek.io/docs',
     openapi_url: 'https://forgeos-api.synctek.io/openapi.json',
@@ -163,6 +163,14 @@ export const GET: APIRoute = () => {
       { name: 'forge_release_check', category: 'gates', description: 'Check if a changeset is ready to release.' },
       { name: 'forge_query_mind', category: 'shared_mind', description: 'Search the Shared Mind for institutional knowledge.' },
       { name: 'forge_observe', category: 'shared_mind', description: 'Record an observation to the Shared Mind.' },
+      { name: 'forge_quickstart', category: 'setup_discovery', description: 'Create a sandbox project and run a complete governance cycle in seconds. Perfect for first-time setup and testing. Takes no parameters.' },
+      { name: 'forge_discover', category: 'setup_discovery', description: 'Analyze your repository and get a recommended governance configuration based on your tech stack. Returns recommended preset, template, evidence mapping, and CI hints.' },
+      { name: 'forge_get_context', category: 'setup_discovery', description: 'Get comprehensive context for a changeset including Shared Mind patterns, quality warnings, past regressions, and relevant lessons.' },
+      { name: 'forge_get_presets', category: 'setup_discovery', description: 'List available governance presets (Startup, Enterprise, Regulated, Mobile Release QA). Takes no parameters.' },
+      { name: 'forge_configure_project_gates', category: 'setup_discovery', description: 'Configure the governance gate template for a project using a preset or custom template.' },
+      { name: 'forge_recommend_gates', category: 'setup_discovery', description: 'Get a gate recommendation for a changeset based on risk analysis. Returns risk analysis, recommended gates, minimum gates, and rationale.' },
+      { name: 'forge_scorecard', category: 'setup_discovery', description: 'Check your ForgeOS setup completeness. Shows which onboarding steps are done and what to do next. Takes no parameters.' },
+      { name: 'forge_workflow_template', category: 'setup_discovery', description: 'Get copy-paste workflow templates for common scenarios (bugfix, feature, hotfix, release candidate).' },
     ],
   };
 

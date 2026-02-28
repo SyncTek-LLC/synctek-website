@@ -1,11 +1,11 @@
 {
   "name": "ForgeOS",
   "description": "Governance OS for agentic teams. Create initiatives, check gates, submit reviews, and enforce engineering governance — all via programmatic API.",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "url": "https://synctek.io",
-  "service_endpoint": "https://api.forgeos.synctek.io",
+  "service_endpoint": "https://forgeos-api.synctek.io",
   "mcp_endpoint": "https://mcp.forgeos.synctek.io/sse",
-  "registration_endpoint": "https://api.forgeos.synctek.io/auth/register-agent",
+  "registration_endpoint": "https://forgeos-api.synctek.io/auth/register-agent",
   "capabilities": {
     "core": [
       "initiative_management",
@@ -27,13 +27,13 @@
   },
   "pricing": {
     "model": "per_api_call",
-    "docs": "https://synctek.io/forgeos/pricing/",
+    "docs": "https://synctek.io/products/forgeos/pricing/",
     "machine_readable": "https://synctek.io/pricing.json"
   },
   "documentation": {
     "agents_md": "https://synctek.io/agents.md",
     "llms_txt": "https://synctek.io/llms.txt",
-    "openapi": "https://api.forgeos.synctek.io/openapi.json",
+    "openapi": "https://forgeos-api.synctek.io/openapi.json",
     "quickstart": "https://synctek.io/docs/quickstart/",
     "mcp": "https://synctek.io/docs/mcp/",
     "api": "https://synctek.io/docs/api/",

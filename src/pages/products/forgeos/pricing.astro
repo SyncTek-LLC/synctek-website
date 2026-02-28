@@ -8,7 +8,7 @@ const jsonLd = {
   name: 'ForgeOS Pricing',
   url: 'https://synctek.io/products/forgeos/pricing',
   description:
-    'ForgeOS pricing: Pro $49/month, Team $149/month, Enterprise $2,000/month. 14-day free trial. No credit card required.',
+    'ForgeOS pricing: Pro $49/month, Enterprise $2,000/month. 14-day free trial. No credit card required.',
   mainEntity: {
     '@type': 'Product',
     name: 'ForgeOS',
@@ -30,18 +30,6 @@ const jsonLd = {
         url: 'https://synctek.io/products/forgeos/pricing',
         description:
           '50,000 API calls/month. Gate enforcement, signed ledger, 21 MCP tools, EU AI Act artifacts, email support.',
-      },
-      {
-        '@type': 'Offer',
-        name: 'Team',
-        price: '149.00',
-        priceCurrency: 'USD',
-        billingIncrement: 'Month',
-        priceValidUntil: '2026-12-31',
-        availability: 'https://schema.org/InStock',
-        url: 'https://synctek.io/products/forgeos/pricing',
-        description:
-          '200,000 API calls/month. Everything in Pro plus team delegation rules.',
       },
       {
         '@type': 'Offer',
@@ -78,7 +66,7 @@ const faqItems = [
   {
     question: 'Can I switch plans mid-cycle?',
     answer:
-      'Yes. Upgrades take effect immediately. Downgrades take effect at the next billing cycle. No penalties, no lock-in on Pro and Team plans.',
+      'Yes. Upgrades take effect immediately. Downgrades take effect at the next billing cycle. No penalties, no lock-in on the Pro plan.',
   },
   {
     question: 'What is included in the EU AI Act compliance bundle?',
@@ -97,32 +85,30 @@ type FeatureValue = boolean | string;
 interface FeatureRow {
   feature: string;
   pro: FeatureValue;
-  team: FeatureValue;
   enterprise: FeatureValue;
   note?: string;
 }
 
 const comparisonRows: FeatureRow[] = [
-  { feature: 'API calls / month', pro: '50,000', team: '200,000', enterprise: 'Dedicated' },
-  { feature: 'Gate enforcement', pro: true, team: true, enterprise: true },
-  { feature: 'Ed25519-signed ledger', pro: true, team: true, enterprise: true },
-  { feature: '21 MCP governance tools', pro: true, team: true, enterprise: true },
-  { feature: 'forge CLI (18 command groups)', pro: true, team: true, enterprise: true },
-  { feature: 'SharedMind (institutional memory)', pro: true, team: true, enterprise: true },
-  { feature: 'Self-approval prevention', pro: true, team: true, enterprise: true },
-  { feature: 'Circuit breakers', pro: true, team: true, enterprise: true },
-  { feature: 'Human-in-the-loop gates', pro: true, team: true, enterprise: true },
-  { feature: 'EU AI Act artifacts (Art. 12, 17)', pro: true, team: true, enterprise: true },
-  { feature: 'A2A Agent Card', pro: true, team: true, enterprise: true },
-  { feature: 'Forensic violation scanner', pro: true, team: true, enterprise: true },
-  { feature: 'Team delegation rules', pro: false, team: true, enterprise: true },
-  { feature: 'Email support', pro: true, team: true, enterprise: true },
-  { feature: '4h SLA + custom SLA', pro: false, team: false, enterprise: true },
-  { feature: 'Security questionnaire support', pro: false, team: false, enterprise: true },
-  { feature: 'DPA on request', pro: false, team: false, enterprise: true },
-  { feature: 'EU data residency', pro: false, team: false, enterprise: 'Compliance tier — contact us', note: 'Not yet available — contact us' },
-  { feature: 'Extended audit retention', pro: false, team: false, enterprise: 'Compliance tier — contact us', note: 'Not yet available — contact us' },
-  { feature: 'Dedicated infrastructure', pro: false, team: false, enterprise: true },
+  { feature: 'API calls / month', pro: '50,000', enterprise: 'Dedicated' },
+  { feature: 'Gate enforcement', pro: true, enterprise: true },
+  { feature: 'Ed25519-signed ledger', pro: true, enterprise: true },
+  { feature: '21 MCP governance tools', pro: true, enterprise: true },
+  { feature: 'forge CLI (18 command groups)', pro: true, enterprise: true },
+  { feature: 'SharedMind (institutional memory)', pro: true, enterprise: true },
+  { feature: 'Self-approval prevention', pro: true, enterprise: true },
+  { feature: 'Circuit breakers', pro: true, enterprise: true },
+  { feature: 'Human-in-the-loop gates', pro: true, enterprise: true },
+  { feature: 'EU AI Act artifacts (Art. 12, 17)', pro: true, enterprise: true },
+  { feature: 'A2A Agent Card', pro: true, enterprise: true },
+  { feature: 'Forensic violation scanner', pro: true, enterprise: true },
+  { feature: 'Email support', pro: true, enterprise: true },
+  { feature: '4h SLA + custom SLA', pro: false, enterprise: true },
+  { feature: 'Security questionnaire support', pro: false, enterprise: true },
+  { feature: 'DPA on request', pro: false, enterprise: true },
+  { feature: 'EU data residency', pro: false, enterprise: 'Compliance tier — contact us', note: 'Not yet available — contact us' },
+  { feature: 'Extended audit retention', pro: false, enterprise: 'Compliance tier — contact us', note: 'Not yet available — contact us' },
+  { feature: 'Dedicated infrastructure', pro: false, enterprise: true },
 ];
 
 function renderValue(val: FeatureValue) {
@@ -133,8 +119,8 @@ function renderValue(val: FeatureValue) {
 ---
 
 <BaseLayout
-  title="ForgeOS Pricing — Pro $49, Team $149, Enterprise $2K"
-  description="14-day free trial, no credit card. Pro: $49/month — gate enforcement, signed ledger, 21 MCP tools, EU AI Act artifacts. Team: $149/month. Enterprise: $2,000/month with dedicated tenant and SLA."
+  title="ForgeOS Pricing — Pro $49, Enterprise $2K"
+  description="14-day free trial, no credit card. Pro: $49/month — gate enforcement, signed ledger, 21 MCP tools, EU AI Act artifacts. Enterprise: $2,000/month with dedicated tenant and SLA."
   jsonLd={jsonLd}
 >
   <!-- Pricing hero -->
@@ -174,7 +160,7 @@ function renderValue(val: FeatureValue) {
 
   <!-- Pricing cards -->
   <section id="trial" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-start">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-start">
 
       <!-- Pro — featured -->
       <div class="relative rounded-xl p-6 lg:col-span-1" style="background: #111111; border: 1px solid #3B82F6; box-shadow: 0 0 0 1px rgba(59,130,246,0.15), 0 8px 32px rgba(59,130,246,0.08);">
@@ -250,59 +236,6 @@ function renderValue(val: FeatureValue) {
         </ul>
       </div>
 
-      <!-- Team -->
-      <div class="rounded-xl p-6 lg:col-span-1" style="background: #111111; border: 1px solid #1F1F1F;">
-        <div class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold mb-5"
-             style="background: rgba(16,185,129,0.12); color: #10B981;">
-          Team
-        </div>
-
-        <div class="flex items-baseline gap-1 mb-1">
-          <span class="text-5xl font-bold text-[#E6EDF3]">$149</span>
-          <span class="text-sm text-[#8B949E]">/mo</span>
-        </div>
-        <p class="text-xs text-[#8B949E] mb-2">billed monthly · cancel anytime</p>
-        <p class="text-xs text-[#8B949E] mb-6">200,000 API calls/month</p>
-
-        <a
-          href="https://forgeos.synctek.io/register?plan=team"
-          class="block w-full text-center py-3 rounded-md font-medium no-underline transition-all duration-150 mb-6 text-[#E6EDF3]"
-          style="border: 1px solid #1F1F1F;"
-          onmouseover="this.style.borderColor='#8B949E'; this.style.background='rgba(255,255,255,0.04)'"
-          onmouseout="this.style.borderColor='#1F1F1F'; this.style.background='transparent'"
-          aria-label="Start 14-day free trial of ForgeOS Team"
-        >
-          Start 14-day trial
-        </a>
-
-        <ul class="space-y-3 text-sm">
-          <li class="flex items-start gap-2 text-[#E6EDF3]">
-            <svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-            Everything in Pro
-          </li>
-          <li class="flex items-start gap-2 text-[#E6EDF3]">
-            <svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-            Team delegation rules
-          </li>
-          <li class="flex items-start gap-2 text-[#E6EDF3]">
-            <svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-            200,000 API calls/month
-          </li>
-          <li class="flex items-start gap-2 text-[#E6EDF3]">
-            <svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-            Email support SLA
-          </li>
-          <li class="flex items-start gap-2">
-            <svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="#8B949E" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
-            <span class="text-[#8B949E]">4h SLA</span>
-          </li>
-          <li class="flex items-start gap-2">
-            <svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="#8B949E" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
-            <span class="text-[#8B949E]">EU data residency</span>
-          </li>
-        </ul>
-      </div>
-
       <!-- Enterprise -->
       <div class="rounded-xl p-6 lg:col-span-1" style="background: #111111; border: 1px solid #1F1F1F;">
         <div class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold mb-5"
@@ -331,7 +264,7 @@ function renderValue(val: FeatureValue) {
         <ul class="space-y-3 text-sm">
           <li class="flex items-start gap-2 text-[#E6EDF3]">
             <svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-            Everything in Team
+            Everything in Pro
           </li>
           <li class="flex items-start gap-2 text-[#E6EDF3]">
             <svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
@@ -411,15 +344,11 @@ function renderValue(val: FeatureValue) {
         <thead>
           <tr style="border-bottom: 2px solid #1F1F1F;">
             <th class="text-left py-3 pr-6 font-semibold text-[#E6EDF3] w-1/2">Feature</th>
-            <th class="text-center py-3 px-3 font-semibold w-1/6">
+            <th class="text-center py-3 px-3 font-semibold w-1/4">
               <span class="text-[#3B82F6]">Pro</span>
               <div class="text-xs text-[#8B949E] font-normal">$49/mo</div>
             </th>
-            <th class="text-center py-3 px-3 font-semibold w-1/6">
-              <span class="text-[#10B981]">Team</span>
-              <div class="text-xs text-[#8B949E] font-normal">$149/mo</div>
-            </th>
-            <th class="text-center py-3 px-3 font-semibold w-1/6">
+            <th class="text-center py-3 px-3 font-semibold w-1/4">
               <span class="text-[#8B949E]">Enterprise</span>
               <div class="text-xs text-[#8B949E] font-normal">$2,000/mo</div>
             </th>
@@ -428,7 +357,6 @@ function renderValue(val: FeatureValue) {
         <tbody>
           {comparisonRows.map((row) => {
             const proVal = renderValue(row.pro);
-            const teamVal = renderValue(row.team);
             const entVal = renderValue(row.enterprise);
             return (
               <tr style="border-bottom: 1px solid #1F1F1F;">
@@ -447,17 +375,6 @@ function renderValue(val: FeatureValue) {
                   )}
                   {proVal.type === 'text' && (
                     <span class="text-[#E6EDF3] text-xs">{proVal.text}</span>
-                  )}
-                </td>
-                <td class="py-3 px-3 text-center">
-                  {teamVal.type === 'check' && (
-                    <svg class="w-4 h-4 mx-auto" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2" aria-label="Included"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
-                  )}
-                  {teamVal.type === 'x' && (
-                    <svg class="w-4 h-4 mx-auto" fill="none" stroke="#1F1F1F" viewBox="0 0 24 24" stroke-width="2" aria-label="Not included"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
-                  )}
-                  {teamVal.type === 'text' && (
-                    <span class="text-[#E6EDF3] text-xs">{teamVal.text}</span>
                   )}
                 </td>
                 <td class="py-3 px-3 text-center">

@@ -82,7 +82,7 @@ forge project create --name my-app
 forge mind query --context "authentication patterns"
 
 # Check gate status for a changeset
-forge gate status cs_abc123
+forge gate status --changeset cs_abc123
 ```
 
 > **Note:** `forge scorecard` and `forge quickstart` are MCP tools, not CLI commands. Run them from your AI agent via the MCP server.
@@ -155,7 +155,7 @@ Add to your VS Code `settings.json`:
 Any MCP-compatible client works. Set these environment variables:
 
 - `FORGEOS_ENGINE_URL` = `https://forgeos-api.synctek.io`
-- `FORGEOS_API_KEY` = your API key
+- `FORGEOS_API_KEY` = your ForgeOS API key (obtained from the [ForgeOS dashboard](https://forgeos.synctek.io))
 
 Then run the MCP server via stdio: `npx -y @synctek/forgeos@latest`
 

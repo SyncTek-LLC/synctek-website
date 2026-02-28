@@ -6,7 +6,7 @@ description: "Install and configure the ForgeOS MCP server. All 21 governance to
 
 # MCP Server
 
-ForgeOS exposes 21 governance tools over the Model Context Protocol (MCP). Any MCP-compatible agent — Claude, GPT-4, Gemini, local models — can call gate-check, submit reviews, and query institutional knowledge without custom integration. No API keys required from ForgeOS; your own AI provides the judgment. Raw source code stays local — only project metadata (file structure, languages, dependencies) is sent to ForgeOS.
+ForgeOS exposes 21 governance tools over the Model Context Protocol (MCP). Any MCP-compatible agent — Claude, GPT-4, Gemini, local models — can call gate-check, submit reviews, and query institutional knowledge without custom integration. Your AI provides the intelligence — ForgeOS provides the governance. Connect via MCP with your ForgeOS API key. Raw source code stays local — only project metadata (file structure, languages, dependencies) is sent to ForgeOS.
 
 ## Installation
 
@@ -40,6 +40,8 @@ The ForgeOS MCP server runs via stdio using `npx`. The config block is the same 
   }
 }
 ```
+
+> **Note:** `FORGEOS_API_KEY` is your ForgeOS API key. Get it from the [ForgeOS dashboard](https://forgeos.synctek.io) after registering. The `FORGEOS_ENGINE_URL` and `FORGEOS_API_KEY` env vars are read directly by the MCP server (distinct from the `X-ForgeOS-API-Key` HTTP header used by direct REST calls).
 
 - **Cursor** — add to `.cursor/mcp.json` (project root or global Cursor settings) using the `"mcpServers"` key as shown above
 - **Claude Code** — add to `~/.claude/settings.json` using the `"mcpServers"` key as shown above

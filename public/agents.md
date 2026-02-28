@@ -34,6 +34,14 @@ ForgeOS governance into their workflows.
 | `forge_query_mind` | Search Shared Mind for institutional knowledge | read |
 | `forge_observe` | Record an observation to the Shared Mind | write |
 | `forge_get_workflow` | Get current workflow state for an initiative | read |
+| `forge_quickstart` | Create a sandbox project and run a complete governance cycle in seconds — for first-time setup and testing | none |
+| `forge_discover` | Analyze your repository and get a recommended governance configuration based on your tech stack | read |
+| `forge_get_context` | Get comprehensive context for a changeset including Shared Mind patterns, quality warnings, past regressions, and lessons | read |
+| `forge_get_presets` | List available governance presets (Startup, Enterprise, Regulated, Mobile Release QA) | read |
+| `forge_configure_project_gates` | Configure the governance gate template for a project using a preset or custom template | write |
+| `forge_recommend_gates` | Get a gate recommendation for a changeset based on risk analysis | read |
+| `forge_scorecard` | Check your ForgeOS setup completeness and onboarding progress | read |
+| `forge_workflow_template` | Get copy-paste workflow templates for common scenarios (bugfix, feature, hotfix, release candidate) | read |
 
 ## Integration Patterns
 
@@ -113,5 +121,5 @@ programmatically, designed to integrate with agent-driven development pipelines.
 - [Full Documentation](https://synctek.io/docs/): Quickstart, MCP setup, API reference
 - [MCP Server Metadata](https://synctek.io/.well-known/mcp.json): Transport options, tool list
 - [A2A Agent Card](https://synctek.io/.well-known/agent.json): Google A2A discovery
-- [Pricing](https://synctek.io/forgeos/pricing/): Per-API-call pricing
+- [Pricing](https://synctek.io/products/forgeos/pricing/): Per-API-call pricing
 - [Quickstart](https://synctek.io/docs/quickstart/): First governance command in 3 minutes

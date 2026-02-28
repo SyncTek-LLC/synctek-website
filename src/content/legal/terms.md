@@ -51,8 +51,8 @@ We offer the following paid subscription tiers:
 
 | Plan | Price | Description |
 |------|-------|-------------|
-| Pro | $29/month | Individual developers — full platform access |
-| Team | $99/month | Up to 10 seats — collaborative governance workflows |
+| Pro | $49/month | Individual developers — full platform access |
+| Team | $149/month | Up to 10 seats — collaborative governance workflows |
 
 Pricing is subject to change with 30 days' notice as described in Section 14.
 

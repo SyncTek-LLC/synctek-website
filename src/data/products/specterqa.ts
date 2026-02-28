@@ -85,8 +85,8 @@ export default {
   ],
 
   tradeoffs: [
-    'Every run costs money (Anthropic API). No free tier — budget accordingly.',
-    'Claude-only — requires Anthropic\'s Claude vision models. No support for GPT-4V, Gemini, or local models yet.',
+    'Every run costs money — initial assessment and complex actions require the Anthropic API. Budget accordingly.',
+    'Primarily Claude-powered — GPT-4V and Gemini are not supported. Experimental Ollama (llava:13b) support exists for simple navigation but is not the default.',
     'Playwright-only — no support for Selenium, Puppeteer, or other browser automation backends.',
     'Vision models can misinterpret UI elements.',
     'Alpha software (v0.3.0). The API may change.',

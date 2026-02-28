@@ -57,12 +57,14 @@ For autonomous agents that need their own identity:
 curl -X POST https://forgeos-api.synctek.io/auth/register-agent \
   -H "Content-Type: application/json" \
   -d '{
-    "agent_name": "my-ci-agent",
-    "owner_email": "you@company.com"
+    "email": "ci-agent@company.com",
+    "password": "secure-agent-password"
   }'
 ```
 
 Agent registration returns an API key scoped to the agent identity.
+
+New accounts receive a 14-day Pro trial. After the trial, accounts revert to the Free tier. See [pricing](/products/forgeos/pricing) for paid plans.
 
 ## Authentication methods supported
 
@@ -70,16 +72,15 @@ ForgeOS supports two authentication methods: **session cookies** (for browser-ba
 
 ## Rate limits
 
-Rate limits are enforced per API key or session, depending on your plan.
+Rate limits are enforced per API key.
 
-| Tier | Requests/month | Requests/minute | AI review limit |
-|------|---------------|-----------------|-----------------|
-| Free | 1,000 | 20 | None |
-| Pro ($49/mo) | 50,000 | 100 | 10/min |
-| Team ($149/mo) | 200,000 | 200 | 20/min |
-| Enterprise | Custom | Custom | Custom |
+| Endpoint Type | Rate Limit |
+|---|---|
+| Standard API | 100 requests/minute |
+| AI endpoints (reviews, scoring) | 10 requests/minute |
+| Authentication | 5 requests/minute |
 
-> The Free tier is available for evaluation. See [pricing](/products/forgeos/pricing) for paid plans.
+> Rate limits are per API key. Contact sales@synctek.io for custom limits on Enterprise plans.
 
 When rate-limited, the API returns `429 Too Many Requests` with a `Retry-After` header. Respect this header and use exponential backoff. Maximum 3 retries before surfacing to a human operator.
 
@@ -87,7 +88,7 @@ When rate-limited, the API returns `429 Too Many Requests` with a `Retry-After` 
 
 | Code | Meaning | Recovery |
 |------|---------|----------|
-| `401` | Invalid or missing API key / session | Check your `FORGEOS_API_KEY` or re-authenticate |
+| `401` | Invalid or missing API key / session | Check your API key in the `X-ForgeOS-API-Key` header, or re-authenticate |
 | `402` | AI spend cap exceeded | Upgrade plan or wait for monthly reset |
 | `403` | Insufficient scope or access denied | Check plan tier and project ownership |
 | `409` | Conflict (e.g., email already registered) | Use a different email or log in |
