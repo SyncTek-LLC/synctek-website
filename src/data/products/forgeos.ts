@@ -78,6 +78,6 @@ export default {
     'MCP server requires a running ForgeOS instance (cloud-hosted).',
     'Full enforcement mode blocks non-compliant actions — intentional, but plan for it.',
     'Cloud-connected — governance operations require network access to the ForgeOS API. No offline mode.',
-    'API call volume scales with team size — each gate check, evidence submission, and mind query counts against your plan limit.',
+    'Rate limits apply per plan tier — higher tiers unlock more API throughput for larger teams.',
   ],
 } as const;
