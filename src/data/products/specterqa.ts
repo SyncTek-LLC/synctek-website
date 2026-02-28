@@ -85,8 +85,9 @@ export default {
   ],
 
   tradeoffs: [
-    'Requires an Anthropic API key. No free tier.',
-    'Every run costs money. Budget accordingly.',
+    'Every run costs money (Anthropic API). No free tier — budget accordingly.',
+    'Claude-only — requires Anthropic\'s Claude vision models. No support for GPT-4V, Gemini, or local models yet.',
+    'Playwright-only — no support for Selenium, Puppeteer, or other browser automation backends.',
     'Vision models can misinterpret UI elements.',
     'Alpha software (v0.3.0). The API may change.',
     'Supplements unit/integration tests, doesn\'t replace them.',

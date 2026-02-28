@@ -6,7 +6,7 @@ description: "Install and configure the ForgeOS MCP server. All 21 governance to
 
 # MCP Server
 
-ForgeOS exposes 21 governance tools over the Model Context Protocol (MCP). Any MCP-compatible agent — Claude, GPT-4, Gemini, local models — can call gate-check, submit reviews, and query institutional knowledge without custom integration. No API keys required from ForgeOS; your own AI provides the judgment. Source code never leaves your machine.
+ForgeOS exposes 21 governance tools over the Model Context Protocol (MCP). Any MCP-compatible agent — Claude, GPT-4, Gemini, local models — can call gate-check, submit reviews, and query institutional knowledge without custom integration. No API keys required from ForgeOS; your own AI provides the judgment. Raw source code stays local — only project metadata (file structure, languages, dependencies) is sent to ForgeOS.
 
 ## Installation
 
@@ -24,9 +24,7 @@ npx -y @synctek/forgeos@latest
 
 ## Configuration
 
-### Cursor
-
-Add to `.cursor/mcp.json` in your project root (or global Cursor settings):
+The ForgeOS MCP server runs via stdio using `npx`. The config block is the same across editors — only the outer key differs.
 
 ```json
 {
@@ -43,54 +41,13 @@ Add to `.cursor/mcp.json` in your project root (or global Cursor settings):
 }
 ```
 
-### Claude Code
-
-Add to `~/.claude/settings.json`:
-
-```json
-{
-  "mcpServers": {
-    "forgeos": {
-      "command": "npx",
-      "args": ["-y", "@synctek/forgeos@latest"],
-      "env": {
-        "FORGEOS_ENGINE_URL": "https://forgeos-api.synctek.io",
-        "FORGEOS_API_KEY": "fos_your_api_key_here"
-      }
-    }
-  }
-}
-```
-
-### VS Code (Copilot)
-
-Add to your VS Code `settings.json`:
-
-```json
-{
-  "mcp": {
-    "servers": {
-      "forgeos": {
-        "command": "npx",
-        "args": ["-y", "@synctek/forgeos@latest"],
-        "env": {
-          "FORGEOS_ENGINE_URL": "https://forgeos-api.synctek.io",
-          "FORGEOS_API_KEY": "fos_your_api_key_here"
-        }
-      }
-    }
-  }
-}
-```
+- **Cursor** — add to `.cursor/mcp.json` (project root or global Cursor settings) using the `"mcpServers"` key as shown above
+- **Claude Code** — add to `~/.claude/settings.json` using the `"mcpServers"` key as shown above
+- **VS Code (Copilot)** — add to `settings.json` using `"mcp": { "servers": { ... } }` instead of `"mcpServers"`
 
 ### HTTP/SSE transport
 
-For hosted agents and cloud workflows, connect via HTTP/SSE instead of stdio:
-
-```
-Endpoint: https://mcp.forgeos.synctek.io/sse
-Header:   X-ForgeOS-API-Key: fos_your_api_key_here
-```
+HTTP/SSE transport for hosted agents is coming soon.
 
 ## Tools reference
 

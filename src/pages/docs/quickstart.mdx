@@ -54,9 +54,9 @@ Your API key will have the prefix `fos_` and is shown only once. Store it secure
 
 ForgeOS ships as a single npm package — `@synctek/forgeos` — which includes:
 - The **MCP server**: connects your editor's AI agent directly to 21 governance tools
-- The **`forge` CLI**: 14 command groups, 40+ subcommands for terminal-first workflows
-- **SharedMind**: institutional memory that persists patterns and lessons across sessions
-- **Trust ledger**: Ed25519-signed, hash-chained audit trail — all local, source code never leaves your machine
+- The **`forge` CLI**: 18 command groups, 44 subcommands for terminal-first workflows
+- **SharedMind**: institutional memory that persists patterns and lessons across sessions, backed by the ForgeOS cloud API
+- **Trust ledger**: hash-chained audit trail for local governance decisions
 
 Install globally:
 
@@ -75,21 +75,17 @@ npx -y @synctek/forgeos@latest
 If you prefer working from the terminal, the `forge` CLI is available after global install:
 
 ```bash
-# Check your setup
-forge scorecard
-
 # Initialize a project
 forge project create --name my-app
-
-# Run a full governance cycle in seconds
-forge quickstart
 
 # Query SharedMind for institutional knowledge
 forge mind query --context "authentication patterns"
 
 # Check gate status for a changeset
-forge gates check --changeset cs_abc123
+forge gate status cs_abc123
 ```
+
+> **Note:** `forge scorecard` and `forge quickstart` are MCP tools, not CLI commands. Run them from your AI agent via the MCP server.
 
 The CLI and MCP server share the same ForgeOS instance — you can use both together.
 

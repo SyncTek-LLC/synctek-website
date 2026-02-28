@@ -9,7 +9,7 @@ export const GET: APIRoute = () => {
 
 ForgeOS sits between your AI agent and your codebase. Every change goes through a pipeline of gates — intent, design, implementation, verification, hardening, release — with required evidence and reviews at each stage. The engine computes a risk score for every changeset and determines which gates, reviewer roles, and evidence types are required.
 
-The MCP server exposes 13 governance tools any MCP-compatible agent (Claude, GPT-4, Gemini, local models) can call natively. No custom SDK required.
+The MCP server exposes 21 governance tools any MCP-compatible agent (Claude, GPT-4, Gemini, local models) can call natively. No custom SDK required.
 
 ## Quick links
 
@@ -38,7 +38,7 @@ All API requests require either:
 - X-ForgeOS-API-Key: fos_your_key header
 - forge_session cookie (set by POST /auth/login)
 
-No-auth endpoints: /health, /auth/login, /auth/register, /auth/register-agent
+Authentication and registration endpoints are public. All other endpoints require authentication.
 `;
 
   return new Response(content, {

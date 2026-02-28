@@ -20,7 +20,7 @@ and
 **SyncTek LLC** (the "**Processor**"):
 
 > Registered in: United States
-> Registered Address: [ADDRESS TO BE INSERTED]
+> Registered Address: Contact legal@synctek.io
 > Contact Email: legal@synctek.io
 > Website: synctek.io
 

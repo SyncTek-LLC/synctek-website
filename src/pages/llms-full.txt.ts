@@ -14,7 +14,7 @@ OpenAPI spec: https://forgeos-api.synctek.io/openapi.json
 
 ForgeOS is a governance engine for AI agents. It enforces constitutional rules, gate-based change pipelines, Ed25519-signed audit trails, and circuit breakers so AI agents can ship code safely without human babysitting.
 
-ForgeOS exposes 13 governance tools over the Model Context Protocol (MCP). Any MCP-compatible agent — Claude, GPT-4, Gemini, local models — can call gate-check, submit reviews, and query institutional knowledge without custom integration.
+ForgeOS exposes 21 governance tools over the Model Context Protocol (MCP). Any MCP-compatible agent — Claude, GPT-4, Gemini, local models — can call gate-check, submit reviews, and query institutional knowledge without custom integration.
 
 Every change goes through a pipeline of gates:
 
@@ -154,7 +154,7 @@ Header: X-ForgeOS-API-Key: fos_your_key_here
 Security rules:
 - Keys are shown once at creation time. Store them immediately.
 - Maximum 10 keys per user. Delete unused keys before creating new ones.
-- Keys are stored as SHA-256 hashes. ForgeOS cannot recover a lost key.
+- Keys are stored as one-way hashes. ForgeOS cannot recover a lost key. Store it immediately.
 - Never commit keys to version control. Use environment variables.
 
 ### Agent registration
@@ -168,10 +168,7 @@ Returns an API key scoped to the agent identity.
 
 ### Auth check order
 
-1. Exempt paths (/health, /auth/login, /auth/register, /auth/register-agent) — no auth required
-2. Session cookie — validated server-side
-3. API key (X-ForgeOS-API-Key header) — SHA-256 hash lookup
-4. No auth — returns 401 Unauthorized
+Authentication and registration endpoints are public. All other endpoints require authentication.
 
 ### Rate limits
 
@@ -538,7 +535,7 @@ Get current workflow state for an initiative. Returns current step, next actions
 
 ---
 
-## MCP Server — 13 Governance Tools
+## MCP Server — 21 Governance Tools
 
 Install: npm install -g @synctek/forgeos
 NPX: npx -y @synctek/forgeos@latest

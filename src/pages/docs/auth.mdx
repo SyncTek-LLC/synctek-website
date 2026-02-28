@@ -46,7 +46,7 @@ X-ForgeOS-API-Key: fos_your_key_here
 
 - Keys are shown **once** at creation time. Store them immediately.
 - Maximum **10 keys per user**. Delete unused keys before creating new ones.
-- Keys are stored as SHA-256 hashes. ForgeOS cannot recover a lost key.
+- Only a one-way hash of your key is stored — ForgeOS cannot recover a lost key. Store it immediately.
 - Never commit keys to version control. Use environment variables.
 
 ### Agent registration
@@ -64,14 +64,9 @@ curl -X POST https://forgeos-api.synctek.io/auth/register-agent \
 
 Agent registration returns an API key scoped to the agent identity.
 
-## Auth check order
+## Authentication methods supported
 
-The ForgeOS middleware checks authentication in this order:
-
-1. **Exempt paths** (`/health`, `/auth/login`, `/auth/register`, `/auth/register-agent`) — no auth required
-2. **Session cookie** — validated server-side
-3. **API key** (`X-ForgeOS-API-Key` header) — SHA-256 hash lookup
-4. **No auth** — returns `401 Unauthorized`
+ForgeOS supports two authentication methods: **session cookies** (for browser-based access) and **API keys** (for programmatic access via the `X-ForgeOS-API-Key` header). Public endpoints like login and registration do not require authentication.
 
 ## Rate limits
 
@@ -83,6 +78,8 @@ Rate limits are enforced per API key or session, depending on your plan.
 | Pro ($49/mo) | 50,000 | 100 | 10/min |
 | Team ($149/mo) | 200,000 | 200 | 20/min |
 | Enterprise | Custom | Custom | Custom |
+
+> The Free tier is available for evaluation. See [pricing](/products/forgeos/pricing) for paid plans.
 
 When rate-limited, the API returns `429 Too Many Requests` with a `Retry-After` header. Respect this header and use exponential backoff. Maximum 3 retries before surfacing to a human operator.
 

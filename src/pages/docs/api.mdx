@@ -199,12 +199,12 @@ Delete a project. The governance ledger is preserved for audit trail.
 
 Track units of work within a project.
 
-### `POST /projects/{project_id}/initiatives`
+### `POST /api/projects/{project_id}/initiatives`
 
 Create a new initiative.
 
 ```bash
-curl -X POST https://forgeos-api.synctek.io/projects/proj_abc/initiatives \
+curl -X POST https://forgeos-api.synctek.io/api/projects/proj_abc/initiatives \
   -H "Content-Type: application/json" \
   -H "X-ForgeOS-API-Key: fos_your_key" \
   -d '{
@@ -226,7 +226,7 @@ curl -X POST https://forgeos-api.synctek.io/projects/proj_abc/initiatives \
 
 ---
 
-### `GET /projects/{project_id}/initiatives`
+### `GET /api/projects/{project_id}/initiatives`
 
 List all initiatives for a project, optionally filtered by status.
 
@@ -236,13 +236,13 @@ List all initiatives for a project, optionally filtered by status.
 
 ---
 
-### `GET /projects/{project_id}/initiatives/{init_id}`
+### `GET /api/projects/{project_id}/initiatives/{init_id}`
 
 Retrieve a single initiative.
 
 ---
 
-### `PATCH /projects/{project_id}/initiatives/{init_id}`
+### `PATCH /api/projects/{project_id}/initiatives/{init_id}`
 
 Update an initiative's status or priority.
 
@@ -259,12 +259,12 @@ Update an initiative's status or priority.
 
 Propose and track code changes with auto-computed risk profiles.
 
-### `POST /projects/{project_id}/changesets`
+### `POST /api/projects/{project_id}/changesets`
 
 Propose a new changeset. Automatically computes risk score and creates a gate pipeline.
 
 ```bash
-curl -X POST https://forgeos-api.synctek.io/projects/proj_abc/changesets \
+curl -X POST https://forgeos-api.synctek.io/api/projects/proj_abc/changesets \
   -H "Content-Type: application/json" \
   -H "X-ForgeOS-API-Key: fos_your_key" \
   -d '{
@@ -289,19 +289,19 @@ curl -X POST https://forgeos-api.synctek.io/projects/proj_abc/changesets \
 
 ---
 
-### `GET /projects/{project_id}/changesets`
+### `GET /api/projects/{project_id}/changesets`
 
 List all changesets for a project. Optional `status` filter.
 
 ---
 
-### `GET /projects/{project_id}/changesets/{cs_id}`
+### `GET /api/projects/{project_id}/changesets/{cs_id}`
 
 Retrieve a changeset with its risk profile and gate pipeline.
 
 ---
 
-### `PATCH /projects/{project_id}/changesets/{cs_id}`
+### `PATCH /api/projects/{project_id}/changesets/{cs_id}`
 
 Update a changeset's status.
 
@@ -311,12 +311,12 @@ Update a changeset's status.
 
 Attach artifacts (test results, scans, etc.) to changesets to satisfy gate requirements.
 
-### `POST /projects/{project_id}/changesets/{cs_id}/evidence`
+### `POST /api/projects/{project_id}/changesets/{cs_id}/evidence`
 
 Attach evidence to a changeset. Auto-populates gate evidence requirements.
 
 ```bash
-curl -X POST https://forgeos-api.synctek.io/projects/proj_abc/changesets/cs_def/evidence \
+curl -X POST https://forgeos-api.synctek.io/api/projects/proj_abc/changesets/cs_def/evidence \
   -H "Content-Type: application/json" \
   -H "X-ForgeOS-API-Key: fos_your_key" \
   -d '{
@@ -337,7 +337,7 @@ curl -X POST https://forgeos-api.synctek.io/projects/proj_abc/changesets/cs_def/
 
 ---
 
-### `GET /projects/{project_id}/changesets/{cs_id}/evidence`
+### `GET /api/projects/{project_id}/changesets/{cs_id}/evidence`
 
 List all evidence for a changeset.
 
@@ -347,7 +347,7 @@ List all evidence for a changeset.
 
 Request and submit quality reviews on changesets. Reviews gate progression.
 
-### `POST /projects/{project_id}/changesets/{cs_id}/reviews`
+### `POST /api/projects/{project_id}/changesets/{cs_id}/reviews`
 
 Request a human review for a changeset.
 
@@ -359,7 +359,7 @@ Request a human review for a changeset.
 
 ---
 
-### `POST /projects/{project_id}/changesets/{cs_id}/reviews/ai`
+### `POST /api/projects/{project_id}/changesets/{cs_id}/reviews/ai`
 
 Request an AI-powered review. Uses Claude to analyze the changeset against the role's quality criteria. If approved, auto-satisfies the gate role requirement.
 
@@ -369,7 +369,7 @@ Request an AI-powered review. Uses Claude to analyze the changeset against the r
 
 ---
 
-### `POST /projects/{project_id}/changesets/{cs_id}/reviews/complete`
+### `POST /api/projects/{project_id}/changesets/{cs_id}/reviews/complete`
 
 Combined create and submit review in one call. Designed for MCP convenience.
 
@@ -389,13 +389,13 @@ Combined create and submit review in one call. Designed for MCP convenience.
 
 ---
 
-### `GET /projects/{project_id}/changesets/{cs_id}/reviews`
+### `GET /api/projects/{project_id}/changesets/{cs_id}/reviews`
 
 List all reviews for a changeset.
 
 ---
 
-### `PATCH /projects/{project_id}/changesets/{cs_id}/reviews/{rev_id}`
+### `PATCH /api/projects/{project_id}/changesets/{cs_id}/reviews/{rev_id}`
 
 Submit a decision on an existing review.
 
@@ -405,7 +405,7 @@ Submit a decision on an existing review.
 
 Inspect and advance the governance gate pipeline for changesets.
 
-### `GET /projects/{project_id}/changesets/{cs_id}/gates`
+### `GET /api/projects/{project_id}/changesets/{cs_id}/gates`
 
 Get the full gate pipeline. Shows all gates, their requirements, completion status, and the current active gate.
 
@@ -436,7 +436,7 @@ Get the full gate pipeline. Shows all gates, their requirements, completion stat
 
 ---
 
-### `POST /projects/{project_id}/changesets/{cs_id}/gates/{gate_id}/promote`
+### `POST /api/projects/{project_id}/changesets/{cs_id}/gates/{gate_id}/promote`
 
 Promote a gate to passed. All required evidence and role reviews must be satisfied.
 
@@ -452,7 +452,7 @@ Promote a gate to passed. All required evidence and role reviews must be satisfi
 
 ---
 
-### `POST /projects/{project_id}/changesets/{cs_id}/gates/{gate_id}/reject`
+### `POST /api/projects/{project_id}/changesets/{cs_id}/gates/{gate_id}/reject`
 
 Reject a gate with a reason.
 
@@ -465,13 +465,13 @@ Reject a gate with a reason.
 
 ---
 
-### `POST /projects/{project_id}/changesets/{cs_id}/gates/{gate_id}/skip`
+### `POST /api/projects/{project_id}/changesets/{cs_id}/gates/{gate_id}/skip`
 
 Skip a gate with a waiver. Only allowed for low-risk changesets (risk score 50 or below).
 
 ---
 
-### `GET /projects/{project_id}/changesets/{cs_id}/release-check`
+### `GET /api/projects/{project_id}/changesets/{cs_id}/release-check`
 
 Check if a changeset is ready for release.
 
@@ -614,28 +614,46 @@ Get consolidated knowledge for a specific domain. Returns patterns, anti-pattern
 
 ## Sessions
 
-Developer work sessions linking tasks to initiatives.
+Developer work sessions link a period of active work to a project and initiative. Sessions help attribute governance events (evidence submissions, reviews, gate promotions) to a specific developer context.
 
-### `POST /projects/{project_id}/sessions`
+> Sessions API documentation is being expanded. The endpoints below are available; full parameter and response schemas will be added in an upcoming documentation update.
+
+### `POST /api/sessions`
 
 Start a new work session.
 
-### `GET /projects/{project_id}/sessions/{session_id}`
+**Request body:**
 
-Get session details.
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `project_id` | string | Yes | Project this session belongs to |
+| `developer_id` | string | No | Developer identifier (default: `local`) |
+| `initiative_id` | string | No | Active initiative for this session |
 
-### `POST /projects/{project_id}/sessions/{session_id}/end`
+**Response** `201`: Session object with generated `session_id`.
 
-End a session.
+---
 
-### `POST /projects/{project_id}/sessions/{session_id}/tasks`
+### `GET /api/sessions/{session_id}`
 
-Add a task to a session.
+Get session details, including associated tasks and duration.
+
+---
+
+### `POST /api/sessions/{session_id}/end`
+
+End a session and finalize its duration record.
+
+---
+
+### `POST /api/sessions/{session_id}/tasks`
+
+Add a task log entry to a session. Useful for tracking granular steps within a work session.
 
 ---
 
 ## Workflow
 
-### `GET /workflow/{initiative_id}`
+### `GET /api/workflow/{initiative_id}`
 
 Get current workflow state for an initiative. Returns current step, next actions, blockers, and progress percentage.

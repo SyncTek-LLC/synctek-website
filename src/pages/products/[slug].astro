@@ -43,6 +43,16 @@ function getReadingTime(text: string): string {
 const hasVersion = 'version' in product && product.version;
 const hasPypi = 'distribution' in product && 'pypi' in (product as typeof specterqa).distribution;
 
+const hasPricing = 'pricing' in product && (product as typeof forgeos).pricing && (product as typeof forgeos).pricing!.length > 0;
+const lowestPrice = hasPricing
+  ? (() => {
+      const raw = (product as typeof forgeos).pricing![0].price;
+      // Extract numeric value from price strings like "$49/mo"
+      const match = raw.replace(/,/g, '').match(/[\d.]+/);
+      return match ? match[0] : '0';
+    })()
+  : '0';
+
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'SoftwareApplication',
@@ -51,7 +61,7 @@ const jsonLd = {
   operatingSystem: 'Cross-platform',
   offers: {
     '@type': 'Offer',
-    price: '0',
+    price: lowestPrice,
     priceCurrency: 'USD',
   },
   ...(hasVersion ? { softwareVersion: (product as typeof specterqa).version } : {}),

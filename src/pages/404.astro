@@ -3,38 +3,71 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout
-  title="Page not found"
+  title="Page not found — SyncTek"
   description="The page you're looking for doesn't exist or has been moved."
 >
-  <section class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-24 text-center">
-    <!-- Background glow -->
+  <section class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-32">
+    <!-- Blue glow — matches hero pattern -->
     <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-[radial-gradient(ellipse_80%_80%_at_50%_50%,rgba(176,176,176,0.08),transparent)]"></div>
+      <div
+        class="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[500px]"
+        style="background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(59,130,246,0.08) 0%, transparent 70%);"
+      ></div>
     </div>
-    <div class="relative z-10">
-      <p class="text-7xl sm:text-8xl font-bold bg-gradient-to-b from-[#808080] via-[#D0D0D0] to-[#505050] bg-clip-text text-transparent mb-4 select-none">404</p>
-      <h1 class="text-2xl sm:text-3xl font-bold tracking-tight mb-4">Page not found</h1>
-      <p class="text-light-gray-500 dark:text-muted mb-8 max-w-md mx-auto">
-        The page you are looking for does not exist or has been moved. Check the URL or navigate back home.
+
+    <div class="relative z-10 max-w-xl">
+      <!-- Overline — matches site pattern -->
+      <p class="text-xs font-semibold tracking-[0.12em] uppercase text-[#3B82F6] mb-4">
+        404 — Not Found
       </p>
-      <div class="flex flex-wrap justify-center gap-4">
+
+      <!-- Large 404 numeral -->
+      <p
+        class="text-8xl sm:text-9xl font-bold leading-none mb-6 select-none"
+        style="background: linear-gradient(135deg, #1F1F1F, #3B3B3B, #222222); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"
+        aria-hidden="true"
+      >
+        404
+      </p>
+
+      <!-- Headline -->
+      <h1 class="text-2xl sm:text-3xl font-bold tracking-tight text-[#E6EDF3] mb-4" style="letter-spacing: -0.02em;">
+        This page doesn't exist.
+      </h1>
+
+      <!-- Body -->
+      <p class="text-[#8B949E] leading-relaxed mb-10 max-w-md">
+        The URL may have changed, the page may have been removed, or you may have followed a broken link.
+      </p>
+
+      <!-- Nav links — primary + secondary, matches site button styles -->
+      <div class="flex flex-wrap gap-3">
         <a
           href="/"
-          class="inline-flex items-center px-6 py-3 rounded-lg bg-accent-silver text-obsidian font-semibold no-underline hover:bg-accent-silver-hover transition-colors"
+          class="inline-flex items-center px-6 py-3 rounded-md font-medium text-white no-underline transition-all duration-150"
+          style="background: #3B82F6; font-size: 0.9375rem;"
+          onmouseover="this.style.background='#2563EB'"
+          onmouseout="this.style.background='#3B82F6'"
         >
-          Go home
+          Back to home
+        </a>
+        <a
+          href="/docs/"
+          class="inline-flex items-center px-6 py-3 rounded-md font-medium no-underline transition-all duration-150 text-[#E6EDF3]"
+          style="border: 1px solid #1F1F1F; font-size: 0.9375rem;"
+          onmouseover="this.style.borderColor='#3B82F6'; this.style.background='rgba(59,130,246,0.06)'"
+          onmouseout="this.style.borderColor='#1F1F1F'; this.style.background='transparent'"
+        >
+          Browse docs
         </a>
         <a
           href="/products/"
-          class="inline-flex items-center px-6 py-3 rounded-lg border border-light-border dark:border-border-gray font-semibold no-underline hover:border-accent-silver dark:hover:border-accent-silver transition-colors"
+          class="inline-flex items-center px-6 py-3 rounded-md font-medium no-underline transition-all duration-150 text-[#E6EDF3]"
+          style="border: 1px solid #1F1F1F; font-size: 0.9375rem;"
+          onmouseover="this.style.borderColor='#3B82F6'; this.style.background='rgba(59,130,246,0.06)'"
+          onmouseout="this.style.borderColor='#1F1F1F'; this.style.background='transparent'"
         >
           View products
-        </a>
-        <a
-          href="/blog/"
-          class="inline-flex items-center px-6 py-3 rounded-lg border border-light-border dark:border-border-gray font-semibold no-underline hover:border-accent-silver dark:hover:border-accent-silver transition-colors"
-        >
-          Read the blog
         </a>
       </div>
     </div>

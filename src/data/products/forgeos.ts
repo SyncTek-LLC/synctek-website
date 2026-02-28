@@ -15,7 +15,7 @@ export default {
   support: {
     email: 'support@synctek.io',
     github: 'SyncTek-LLC/forgeos',
-    docs: '/docs/forgeos/',
+    docs: '/docs/',
   },
 
   distribution: {
@@ -27,8 +27,8 @@ export default {
 
   pricing: [
     { tier: 'Pro', price: '$49/mo', description: 'Single operator, full enforcement suite' },
-    { tier: 'Team', price: '$149/mo', description: 'Up to 10 agents, shared audit ledger' },
-    { tier: 'Enterprise', price: '$2,000/mo', description: 'Unlimited agents, SLA, custom domains' },
+    { tier: 'Team', price: '$149/mo', description: 'Multi-operator, shared audit ledger, team delegation rules' },
+    { tier: 'Enterprise', price: '$2,000/mo', description: 'Unlimited operators, dedicated tenant, SLA, DPA, security questionnaire' },
   ],
 
   features: [
@@ -49,7 +49,7 @@ export default {
     },
     {
       title: 'forge CLI',
-      description: '14 command groups, 40+ subcommands. Run gate checks, query SharedMind, manage projects, and inspect the trust ledger directly from your terminal.',
+      description: '18 command groups, 44 subcommands. Run gate checks, query SharedMind, manage projects, and inspect the trust ledger directly from your terminal.',
       icon: 'code',
     },
     {
@@ -63,16 +63,6 @@ export default {
       icon: 'shield',
     },
     {
-      title: 'Agent-to-agent signals',
-      description: 'Priority-tiered inter-agent communication with SLA tracking and auto-escalation to human operators.',
-      icon: 'workflow',
-    },
-    {
-      title: 'Circuit breakers',
-      description: 'Autonomous execution safety: consecutive failure detection halts runaway agents before damage spreads.',
-      icon: 'eye',
-    },
-    {
       title: 'Stripe billing built in',
       description: 'Per-seat and usage-based billing enforced at the gate layer. No payment gate, no deployment.',
       icon: 'user',
@@ -80,12 +70,14 @@ export default {
   ],
 
   overview:
-    'ForgeOS is the governance OS for teams running agentic software pipelines. It is not an AI — it is the persistent enforcement, memory, and trust layer that sits between your AI agents and your infrastructure.\n\nEvery commit, every deploy, every inter-agent delegation passes through a configurable gate. Gates require artifacts — architecture approvals, QA sign-offs, security reviews — before the next phase unlocks. No artifact, no execution.\n\nThe audit ledger is Ed25519-signed and hash-chained. Every action is attributed, ordered, and tamper-evident. When something goes wrong, you trace it in seconds, not hours.\n\nSharedMind is the institutional memory layer — patterns, anti-patterns, and lessons persist across sessions and are surfaced automatically to any agent that connects. Your AI agents get smarter every cycle, without manual curation.\n\nShips as an MCP server (21 tools), a CLI (forge — 14 command groups, 40+ subcommands), and a REST API. Works with any MCP-compatible agent: Claude, GPT, Gemini, or local models. No API keys required from ForgeOS. Source code never leaves your machine.',
+    'ForgeOS is the governance OS for teams running agentic software pipelines. It is not an AI — it is the persistent enforcement, memory, and trust layer that sits between your AI agents and your infrastructure.\n\nEvery commit, every deploy, every inter-agent delegation passes through a configurable gate. Gates require artifacts — architecture approvals, QA sign-offs, security reviews — before the next phase unlocks. No artifact, no execution.\n\nThe audit ledger is Ed25519-signed and hash-chained. Every action is attributed, ordered, and tamper-evident. When something goes wrong, you trace it in seconds, not hours.\n\nSharedMind is the institutional memory layer — patterns, anti-patterns, and lessons persist across sessions and are surfaced automatically to any agent that connects. Your AI agents get smarter every cycle, without manual curation.\n\nShips as an MCP server (21 tools), a CLI (forge — 18 command groups, 44 subcommands), and a REST API. Works with any MCP-compatible agent: Claude, GPT, Gemini, or local models. No API keys required from ForgeOS. Raw source code stays local — ForgeOS analyzes project metadata (file structure, languages, dependencies) but never uploads file contents.',
 
   tradeoffs: [
     'Commercial license — not free. Governance infrastructure has real costs.',
     'Requires integrating gate checks into your agent workflow.',
-    'MCP server requires a running ForgeOS instance (cloud or self-hosted).',
+    'MCP server requires a running ForgeOS instance (cloud-hosted).',
     'Full enforcement mode blocks non-compliant actions — intentional, but plan for it.',
+    'Cloud-connected — governance operations require network access to the ForgeOS API. No offline mode.',
+    'API call volume scales with team size — each gate check, evidence submission, and mind query counts against your plan limit.',
   ],
 } as const;

@@ -65,7 +65,7 @@ Circuit breakers bound the damage a failing agent can cause before a human inter
 
 Beyond real-time enforcement at gates, a governance OS runs a periodic forensic scanner over the full ledger. The scanner detects patterns that individual gate checks cannot: self-approval across sessions, gate gaps in an initiative's history, ledger integrity failures, budget overruns, stale jobs with no resolution, and credential exposure patterns.
 
-ForgeOS runs a 14-rule forensic scanner every six hours. Violations are classified by severity, signed, and written to the violation ledger. A daily self-audit produces a summary of system health with specific items flagged for review.
+ForgeOS runs a comprehensive forensic scanner on a scheduled cycle. Violations are classified by severity, signed, and written to the violation ledger. A daily self-audit produces a summary of system health with specific items flagged for review.
 
 ## What a Governance OS Is Not
 
@@ -113,7 +113,7 @@ The following checklist identifies the signals that indicate a governance layer 
 
 ## ForgeOS as the Governance OS
 
-ForgeOS is the governance OS for agentic teams. We built it to govern our own 13-department AI company — CEO, CodeAtlas, SecurityAtlas, QualityAtlas, and nine other departments operating under ForgeOS governance in production.
+ForgeOS is the governance OS for agentic teams. We built it to govern our own 13-department AI company — engineering, security, quality, and ten other specialized departments operating under ForgeOS governance in production.
 
 The decision to build rather than buy was straightforward: no existing tool provided pre-execution enforcement, a signed audit ledger, and self-approval prevention in a single governance layer. We needed all three. So we built them.
 

@@ -26,7 +26,7 @@ export const GET: APIRoute = () => {
           description: 'Set by POST /auth/login. For browser-based access.',
         },
       ],
-      exempt_paths: ['/health', '/auth/login', '/auth/register', '/auth/register-agent'],
+      auth_note: 'Public endpoints: login, registration. All other endpoints require API key or session.',
     },
     rate_limits: [
       { tier: 'free', requests_per_month: 1000, requests_per_minute: 20, ai_review_limit: null },
