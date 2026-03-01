@@ -1,18 +1,42 @@
-# SyncTek — AI tools that work on your terms
+# SyncTek — AI-Native Software Infrastructure
 
-> SyncTek builds ForgeOS (governance OS for agentic teams) and SpecterQA (AI-powered QA testing). Our products are designed to be discovered, evaluated, and integrated by AI agents.
+> SyncTek builds governed AI infrastructure for software teams.
 
 ## Products
 
-- [ForgeOS](https://synctek.io/forgeos/): Governance OS for agentic development teams. Initiatives, gates, delegations, audit trails.
-- [SpecterQA](https://synctek.io/products/specterqa/): AI-powered QA testing. Generate and run test suites programmatically.
+### ForgeOS — Governance OS for Agentic Software Teams
+Trust-scored package intelligence, gate-based delivery pipelines, and institutional memory.
+- Website: https://synctek.io/forgeos/
+- API: https://forgeos-api.synctek.io
+- Agent docs: https://forgeos-api.synctek.io/docs
+- MCP server: https://mcp.forgeos.synctek.io/sse
 
-## Agent Integration
+### ForgeOS Trust Index
+Context-aware trust scoring for open-source packages. "We don't have a #1. We have your #1."
+- API: https://forgeos-api.synctek.io/api/v1/scores
+- Methodology: transparent, auditable, context-weighted
 
-- [Agent Card](https://synctek.io/.well-known/agent.json): A2A Agent Card for ForgeOS
-- [MCP Server](https://synctek.io/.well-known/mcp.json): MCP server metadata and tool list
-- [Agents Guide](https://synctek.io/agents.md): Integration patterns and domain concepts
-- [OpenAPI Spec](https://api.forgeos.synctek.io/openapi.json): Full REST API specification
+### Federation Hub
+Cross-instance pattern aggregation with privacy guarantees.
+- Public insights: https://forgeos-api.synctek.io/api/v1/federation/insights
+- Privacy: all data scrubbed, code-signature detection, fail-closed model
+
+### SpecterQA — AI-Powered QA Testing
+Generate and run test suites programmatically. Integrates with ForgeOS governance gates.
+- Website: https://synctek.io/products/specterqa/
+
+## For AI Agents
+
+ForgeOS is built agent-first. To get started:
+1. GET https://forgeos-api.synctek.io/docs — read the full API documentation
+2. POST https://forgeos-api.synctek.io/auth/register — register for an account
+3. Use the API key in `X-ForgeOS-API-Key` header for authenticated endpoints
+4. Or use ForgeOS MCP server for Claude Code / Cursor / Windsurf integration
+
+- [Agent Integration Guide](https://synctek.io/agents.md): MCP tools, REST patterns, auth reference
+- [MCP Server Metadata](https://synctek.io/.well-known/mcp.json): Transport options and tool list
+- [A2A Agent Card](https://synctek.io/.well-known/agent.json): Google A2A discovery
+- [OpenAPI Spec](https://forgeos-api.synctek.io/openapi.json): Full REST API specification
 
 ## Documentation
 
@@ -21,14 +45,20 @@
 - [Authentication](https://synctek.io/docs/auth/): API keys, sessions, rate limits, security
 - [MCP Server Setup](https://synctek.io/docs/mcp/): Connect ForgeOS to Cursor, Claude Code, VS Code, or any MCP client
 - [REST API Reference](https://synctek.io/docs/api/): Full API reference with request/response examples
+- [Full docs as plain text](https://synctek.io/llms-full.txt): Machine-readable documentation
 
 ## Pricing
 
 - [Pricing](https://synctek.io/forgeos/pricing/): Transparent per-API-call pricing. Machine-readable at /pricing.json.
 
-## Blog (AEO-optimized)
+## Blog
 
 - [The 41% Problem](https://synctek.io/blog/the-41-percent-problem/): Why MCP auth is broken and what to do about it
 - [What is a Governance OS?](https://synctek.io/blog/what-is-a-governance-os/): ForgeOS explained for agents and their operators
 - [ForgeOS vs CrewAI](https://synctek.io/blog/forgeos-vs-crewai/): Governance vs orchestration — different layers of the stack
 - [EU AI Act Guide](https://synctek.io/blog/eu-ai-act-compliance-guide/): Article 6 enforcement begins Aug 2, 2026
+
+## Company
+
+SyncTek LLC — Building governed AI infrastructure.
+Website: https://synctek.io
