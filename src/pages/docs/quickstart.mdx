@@ -54,7 +54,7 @@ Your API key will have the prefix `fos_` and is shown only once. Store it secure
 
 ForgeOS ships as a single npm package — `@synctek/forgeos` — which includes:
 - The **MCP server**: connects your editor's AI agent directly to 21 governance tools
-- The **`forge` CLI**: 18 command groups, 44 subcommands for terminal-first workflows
+- The **`forge` CLI**: 18 command groups, 49 subcommands for terminal-first workflows
 - **SharedMind**: institutional memory that persists patterns and lessons across sessions, backed by the ForgeOS cloud API
 - **Trust ledger**: hash-chained audit trail for local governance decisions
 
@@ -155,7 +155,7 @@ Add to your VS Code `settings.json`:
 Any MCP-compatible client works. Set these environment variables:
 
 - `FORGEOS_ENGINE_URL` = `https://forgeos-api.synctek.io`
-- `FORGEOS_API_KEY` = your ForgeOS API key (obtained from the [ForgeOS dashboard](https://forgeos.synctek.io))
+- `FORGEOS_API_KEY` = your ForgeOS API key (obtained from the [ForgeOS dashboard](https://app.synctek.io))
 
 Then run the MCP server via stdio: `npx -y @synctek/forgeos@latest`
 

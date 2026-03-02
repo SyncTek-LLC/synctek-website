@@ -22,15 +22,13 @@ The MCP server exposes 21 governance tools any MCP-compatible agent (Claude, GPT
 
 ## Engine API
 
-- Interactive docs: https://forgeos-api.synctek.io/docs
-- OpenAPI spec: https://forgeos-api.synctek.io/openapi.json
 - Base URL: https://forgeos-api.synctek.io
 
 ## MCP server
 
 Install: npm install -g @synctek/forgeos
 NPX: npx -y @synctek/forgeos@latest
-HTTP/SSE endpoint: https://mcp.forgeos.synctek.io/sse
+HTTP/SSE endpoint: https://mcp.synctek.io/mcp
 
 ## Auth
 

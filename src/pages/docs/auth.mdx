@@ -80,7 +80,7 @@ Rate limits are enforced per API key.
 | AI endpoints (reviews, scoring) | 10 requests/minute |
 | Authentication | 5 requests/minute |
 
-> Rate limits are per API key. Contact sales@synctek.io for custom limits on Enterprise plans.
+> Rate limits are per API key. Contact info@synctek.io for custom limits on Enterprise plans.
 
 When rate-limited, the API returns `429 Too Many Requests` with a `Retry-After` header. Respect this header and use exponential backoff. Maximum 3 retries before surfacing to a human operator.
 

@@ -13,7 +13,7 @@
   },
   "api": {
     "type": "openapi",
-    "url": "https://forgeos-api.synctek.io/openapi.json"
+    "url": "https://synctek.io/docs.json"
   },
   "logo_url": "https://synctek.io/images/forgeos-logo.png",
   "contact_email": "support@synctek.io",

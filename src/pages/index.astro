@@ -143,23 +143,23 @@ const euAiActRows = [
             <div class="mt-3 space-y-1">
               <div>
                 <span class="text-[#10B981]">  ✓</span>
-                <span class="text-[#E6EDF3]">  GATE_1_SPEC_APPROVED</span>
+                <span class="text-[#E6EDF3]">  intent</span>
                 <span class="text-[#8B949E] text-xs ml-2">2026-02-25 14:32:01  [a3f2c1...]</span>
               </div>
               <div>
                 <span class="text-[#10B981]">  ✓</span>
-                <span class="text-[#E6EDF3]">  GATE_2_PRODUCT_MARKET</span>
+                <span class="text-[#E6EDF3]">  design</span>
                 <span class="text-[#8B949E] text-xs ml-2">2026-02-25 15:10:44  [b8e91d...]</span>
               </div>
               <div>
                 <span class="text-[#EF4444]">  ✗</span>
-                <span class="text-[#E6EDF3]">  GATE_3_FEASIBILITY</span>
-                <span class="text-[#F59E0B] text-xs ml-2">PENDING — no artifact found</span>
+                <span class="text-[#E6EDF3]">  implementation</span>
+                <span class="text-[#F59E0B] text-xs ml-2">PENDING — architect review required</span>
               </div>
             </div>
             <div class="mt-4" style="border-top: 1px solid #1F1F1F; padding-top: 1rem;">
-              <span class="text-[#EF4444] font-semibold">STATUS: CODE_BLOCKED</span>
-              <div class="text-[#8B949E] text-xs mt-1">Next required: feasibility artifact (architecture review required)</div>
+              <span class="text-[#EF4444] font-semibold">STATUS: BLOCKED</span>
+              <div class="text-[#8B949E] text-xs mt-1">Next required: architect review + unit_test evidence</div>
             </div>
           </div>
         </div>
@@ -334,7 +334,7 @@ const euAiActRows = [
       >
         <h3 class="text-sm font-semibold text-[#E6EDF3] mb-2">The 41% problem</h3>
         <p class="text-sm text-[#8B949E] leading-relaxed">
-          41% of official MCP servers currently lack authentication. ForgeOS is the only MCP-listed
+          41% of official MCP servers currently lack authentication (SyncTek MCP Registry Analysis, 2026). ForgeOS is the only MCP-listed
           governance tool with authentication enforcement by default — not as a configuration, as a requirement.
         </p>
       </div>

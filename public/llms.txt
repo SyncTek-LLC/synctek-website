@@ -8,8 +8,7 @@
 Trust-scored package intelligence, gate-based delivery pipelines, and institutional memory.
 - Website: https://synctek.io/forgeos/
 - API: https://forgeos-api.synctek.io
-- Agent docs: https://forgeos-api.synctek.io/docs
-- MCP server: https://mcp.forgeos.synctek.io/sse
+- MCP server: https://mcp.synctek.io/mcp
 
 ### ForgeOS Trust Index
 Context-aware trust scoring for open-source packages. "We don't have a #1. We have your #1."
@@ -28,15 +27,13 @@ Generate and run test suites programmatically. Integrates with ForgeOS governanc
 ## For AI Agents
 
 ForgeOS is built agent-first. To get started:
-1. GET https://forgeos-api.synctek.io/docs — read the full API documentation
-2. POST https://forgeos-api.synctek.io/auth/register — register for an account
-3. Use the API key in `X-ForgeOS-API-Key` header for authenticated endpoints
-4. Or use ForgeOS MCP server for Claude Code / Cursor / Windsurf integration
+1. POST https://forgeos-api.synctek.io/auth/register — register for an account
+2. Use the API key in `X-ForgeOS-API-Key` header for authenticated endpoints
+3. Or use ForgeOS MCP server for Claude Code / Cursor / Windsurf integration
 
 - [Agent Integration Guide](https://synctek.io/agents.md): MCP tools, REST patterns, auth reference
 - [MCP Server Metadata](https://synctek.io/.well-known/mcp.json): Transport options and tool list
 - [A2A Agent Card](https://synctek.io/.well-known/agent.json): Google A2A discovery
-- [OpenAPI Spec](https://forgeos-api.synctek.io/openapi.json): Full REST API specification
 
 ## Documentation
 
@@ -53,10 +50,10 @@ ForgeOS is built agent-first. To get started:
 
 ## Blog
 
-- [The 41% Problem](https://synctek.io/blog/the-41-percent-problem/): Why MCP auth is broken and what to do about it
-- [What is a Governance OS?](https://synctek.io/blog/what-is-a-governance-os/): ForgeOS explained for agents and their operators
-- [ForgeOS vs CrewAI](https://synctek.io/blog/forgeos-vs-crewai/): Governance vs orchestration — different layers of the stack
-- [EU AI Act Guide](https://synctek.io/blog/eu-ai-act-compliance-guide/): Article 6 enforcement begins Aug 2, 2026
+- [The 41% Problem](https://synctek.io/blog/2026-02-25-41-percent-problem-ai-agents-governance/): Why MCP auth is broken and what to do about it
+- [What is a Governance OS?](https://synctek.io/blog/2026-02-25-what-is-a-governance-os/): ForgeOS explained for agents and their operators
+- [ForgeOS vs CrewAI](https://synctek.io/blog/2026-02-25-forgeos-vs-crewai-vs-langgraph/): Governance vs orchestration — different layers of the stack
+- [EU AI Act Guide](https://synctek.io/blog/2026-02-25-eu-ai-act-compliance-ai-agents-guide/): Article 6 enforcement begins Aug 2, 2026
 
 ## Company
 

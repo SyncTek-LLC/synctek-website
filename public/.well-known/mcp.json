@@ -3,7 +3,7 @@
   "name": "forgeos-mcp",
   "display_name": "ForgeOS MCP Server",
   "description": "Model Context Protocol server for ForgeOS governance tools. Exposes 21 tools for initiative management, gate checks, reviews, evidence, Shared Mind, federation, trust scoring, and workflow state.",
-  "version": "2.0.0",
+  "version": "2.1.2",
   "package": {
     "npm": "@synctek/forgeos",
     "install": "npx -y @synctek/forgeos"
@@ -15,7 +15,7 @@
     },
     {
       "type": "http_sse",
-      "endpoint": "https://mcp.forgeos.synctek.io/sse",
+      "endpoint": "https://mcp.synctek.io/mcp",
       "description": "Remote HTTP/SSE transport — for hosted agents and cloud workflows"
     }
   ],

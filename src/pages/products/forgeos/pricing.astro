@@ -8,7 +8,7 @@ const jsonLd = {
   name: 'ForgeOS Pricing',
   url: 'https://synctek.io/products/forgeos/pricing',
   description:
-    'ForgeOS pricing: Pro $49/month, Enterprise $2,000/month. 14-day free trial. No credit card required.',
+    'ForgeOS pricing: Pro $49/month, Enterprise custom pricing. 14-day free trial. No credit card required.',
   mainEntity: {
     '@type': 'Product',
     name: 'ForgeOS',
@@ -34,10 +34,10 @@ const jsonLd = {
       {
         '@type': 'Offer',
         name: 'Enterprise',
-        price: '2000.00',
-        priceCurrency: 'USD',
-        billingIncrement: 'Month',
-        priceValidUntil: '2026-12-31',
+        priceSpecification: {
+          '@type': 'PriceSpecification',
+          description: 'Custom pricing — contact us',
+        },
         availability: 'https://schema.org/InStock',
         url: 'https://synctek.io/products/forgeos/pricing',
         description:
@@ -119,8 +119,8 @@ function renderValue(val: FeatureValue) {
 ---
 
 <BaseLayout
-  title="ForgeOS Pricing — Pro $49, Enterprise $2K"
-  description="14-day free trial, no credit card. Pro: $49/month — gate enforcement, signed ledger, 21 MCP tools, EU AI Act artifacts. Enterprise: $2,000/month with dedicated tenant and SLA."
+  title="ForgeOS Pricing — Pro $49, Enterprise Custom"
+  description="14-day free trial, no credit card. Pro: $49/month — gate enforcement, signed ledger, 21 MCP tools, EU AI Act artifacts. Enterprise: custom pricing with dedicated tenant and SLA."
   jsonLd={jsonLd}
 >
   <!-- Pricing hero -->
@@ -147,14 +147,6 @@ function renderValue(val: FeatureValue) {
       <p class="text-lg text-[#9CA3AF] max-w-xl mx-auto mb-4">
         Full Pro-tier access. No credit card required. First gate running in under 10 minutes.
       </p>
-      <!-- Founding customer program -->
-      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium"
-           style="background: rgba(245,158,11,0.10); border: 1px solid rgba(245,158,11,0.25); color: #F59E0B;">
-        <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
-        </svg>
-        Founding customer program — 40% lifetime discount, limited spots available. <a href="/contact" class="underline ml-1">Apply</a>
-      </div>
     </div>
   </section>
 
@@ -182,7 +174,7 @@ function renderValue(val: FeatureValue) {
         <p class="text-xs text-[#8B949E] mb-6">50,000 API calls/month</p>
 
         <a
-          href="https://forgeos.synctek.io/register?plan=pro"
+          href="https://app.synctek.io/register?plan=pro"
           class="block w-full text-center py-3 rounded-md font-medium text-white no-underline transition-all duration-150 mb-6"
           style="background: #3B82F6;"
           onmouseover="this.style.background='#2563EB'"
@@ -244,14 +236,13 @@ function renderValue(val: FeatureValue) {
         </div>
 
         <div class="flex items-baseline gap-1 mb-1">
-          <span class="text-5xl font-bold text-[#E6EDF3]">$2,000</span>
-          <span class="text-sm text-[#8B949E]">/mo</span>
+          <span class="text-5xl font-bold text-[#E6EDF3]">Custom</span>
         </div>
         <p class="text-xs text-[#8B949E] mb-2">annual contract · dedicated tenant</p>
         <p class="text-xs text-[#8B949E] mb-6">Unlimited — dedicated infrastructure</p>
 
         <a
-          href="mailto:sales@synctek.io"
+          href="mailto:info@synctek.io"
           class="block w-full text-center py-3 rounded-md font-medium no-underline transition-all duration-150 mb-6 text-[#E6EDF3]"
           style="border: 1px solid #1F1F1F;"
           onmouseover="this.style.borderColor='#8B949E'; this.style.background='rgba(255,255,255,0.04)'"
@@ -350,7 +341,7 @@ function renderValue(val: FeatureValue) {
             </th>
             <th class="text-center py-3 px-3 font-semibold w-1/4">
               <span class="text-[#8B949E]">Enterprise</span>
-              <div class="text-xs text-[#8B949E] font-normal">$2,000/mo</div>
+              <div class="text-xs text-[#8B949E] font-normal">Custom pricing</div>
             </th>
           </tr>
         </thead>

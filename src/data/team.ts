@@ -1,7 +1,7 @@
 export default {
   members: [
     {
-      name: 'Maurice',
+      name: 'SyncTek Team',
       role: 'Founder & CEO',
       bio: 'Founder and CEO of SyncTek LLC. Building AI-powered developer tools.',
       links: {

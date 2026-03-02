@@ -4,9 +4,7 @@ export const GET: APIRoute = () => {
   const content = `# ForgeOS Documentation — Full Reference
 
 Base URL: https://forgeos-api.synctek.io
-MCP server: https://mcp.forgeos.synctek.io/sse
-Interactive API docs: https://forgeos-api.synctek.io/docs
-OpenAPI spec: https://forgeos-api.synctek.io/openapi.json
+MCP server: https://mcp.synctek.io/mcp
 
 ---
 
@@ -117,7 +115,7 @@ VS Code (Copilot) — settings.json:
 }
 
 HTTP/SSE transport (hosted agents, cloud workflows):
-Endpoint: https://mcp.forgeos.synctek.io/sse
+Endpoint: https://mcp.synctek.io/mcp
 Header: X-ForgeOS-API-Key: fos_your_api_key_here
 
 ### 6. Run your first governance command
@@ -162,7 +160,7 @@ Security rules:
 POST https://forgeos-api.synctek.io/auth/register-agent
 Content-Type: application/json
 
-{"agent_name": "my-ci-agent", "owner_email": "you@company.com"}
+{"email": "ci-agent@company.com", "password": "secure-agent-password"}
 
 Returns an API key scoped to the agent identity.
 
@@ -175,7 +173,6 @@ Authentication and registration endpoints are public. All other endpoints requir
 Tier | Requests/month | Requests/minute | AI review limit
 Free | 1,000 | 20 | None
 Pro ($49/mo) | 50,000 | 100 | 10/min
-Team ($149/mo) | 200,000 | 200 | 20/min
 Enterprise | Custom | Custom | Custom
 
 429 Too Many Requests includes Retry-After header. Use exponential backoff. Maximum 3 retries.
@@ -243,8 +240,9 @@ Response 200:
 Register an autonomous agent identity. No auth required. Returns an API key scoped to the agent.
 
 Request body:
-- agent_name (string, required)
-- owner_email (string, required)
+- email (string, required) — Agent email address
+- password (string, required) — 12-128 characters
+- org_name (string, optional) — Organization name
 
 ---
 
@@ -512,19 +510,19 @@ Get consolidated knowledge for a specific domain. Returns patterns, anti-pattern
 
 ### Sessions
 
-Developer work sessions linking tasks to initiatives.
+Developer work sessions link a period of active work to a project and initiative. Sessions help attribute governance events to a specific developer context.
 
-#### POST /projects/{project_id}/sessions
+#### POST /api/sessions
 Start a new work session.
 
-#### GET /projects/{project_id}/sessions/{session_id}
-Get session details.
+#### GET /api/sessions/{session_id}
+Get session details, including associated tasks and duration.
 
-#### POST /projects/{project_id}/sessions/{session_id}/end
-End a session.
+#### PATCH /api/sessions/{session_id}
+Update a session record, for example to set its status to ended and finalize its duration.
 
-#### POST /projects/{project_id}/sessions/{session_id}/tasks
-Add a task to a session.
+#### POST /api/sessions/{session_id}/tasks
+Add a task log entry to a session.
 
 ---
 
@@ -539,7 +537,7 @@ Get current workflow state for an initiative. Returns current step, next actions
 
 Install: npm install -g @synctek/forgeos
 NPX: npx -y @synctek/forgeos@latest
-HTTP/SSE endpoint: https://mcp.forgeos.synctek.io/sse
+HTTP/SSE endpoint: https://mcp.synctek.io/mcp
 
 ### Session tools
 

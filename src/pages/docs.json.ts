@@ -5,11 +5,9 @@ export const GET: APIRoute = () => {
     name: 'ForgeOS',
     description:
       'A governance engine for AI agents. Enforces constitutional rules, gate-based change pipelines, Ed25519-signed audit trails, and circuit breakers so AI agents can ship code safely.',
-    version: '2.0.0',
+    version: '2.1.2',
     base_url: 'https://forgeos-api.synctek.io',
-    docs_url: 'https://forgeos-api.synctek.io/docs',
-    openapi_url: 'https://forgeos-api.synctek.io/openapi.json',
-    mcp_sse_url: 'https://mcp.forgeos.synctek.io/sse',
+    mcp_sse_url: 'https://mcp.synctek.io/mcp',
     mcp_package: '@synctek/forgeos',
     full_docs_text: 'https://synctek.io/llms-full.txt',
     auth: {
@@ -31,8 +29,7 @@ export const GET: APIRoute = () => {
     rate_limits: [
       { tier: 'free', requests_per_month: 1000, requests_per_minute: 20, ai_review_limit: null },
       { tier: 'pro', price_usd_per_month: 49, requests_per_month: 50000, requests_per_minute: 100, ai_review_limit: '10/min' },
-      { tier: 'team', price_usd_per_month: 149, requests_per_month: 200000, requests_per_minute: 200, ai_review_limit: '20/min' },
-      { tier: 'enterprise', requests_per_month: 'custom', requests_per_minute: 'custom', ai_review_limit: 'custom' },
+{ tier: 'enterprise', requests_per_month: 'custom', requests_per_minute: 'custom', ai_review_limit: 'custom' },
     ],
     categories: [
       {
