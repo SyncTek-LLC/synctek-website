@@ -4,7 +4,7 @@ export default {
   tagline: 'AI personas test your web app in real browsers -- no scripts needed',
   type: 'CLI Tool + MCP Server',
   status: 'launched',
-  version: '0.3.0',
+  version: '0.4.0',
   license: 'MIT',
   license_url: 'https://github.com/SyncTek-LLC/specterqa/blob/main/LICENSE',
   accentColor: '#BC8CFF',
@@ -89,7 +89,7 @@ export default {
     'Primarily Claude-powered — GPT-4V and Gemini are not supported. Experimental Ollama (llava:13b) support exists for simple navigation but is not the default.',
     'Playwright-only — no support for Selenium, Puppeteer, or other browser automation backends.',
     'Vision models can misinterpret UI elements.',
-    'Alpha software (v0.3.0). The API may change.',
+    'Beta software (v0.4.0). Security-hardened. The API may change.',
     'Supplements unit/integration tests, doesn\'t replace them.',
   ],
 } as const;
