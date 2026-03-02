@@ -383,27 +383,28 @@ function getTierColor(score: number): string {
     <div class="mb-10">
       <p class="text-xs font-semibold tracking-[0.12em] uppercase text-[#58A6FF] mb-2">API ACCESS</p>
       <h2 class="text-2xl font-semibold text-[#E6EDF3] tracking-tight">Check any package</h2>
-      <p class="text-[#9CA3AF] mt-2 max-w-xl">Query trust profiles via REST or embed live badges directly in your README or internal docs.</p>
+      <p class="text-[#9CA3AF] mt-2 max-w-xl">Badges are public — no key needed. Trust profiles require your ForgeOS API key (found in your <a href="https://forgeos.synctek.io/settings" class="text-[#58A6FF] hover:underline">dashboard settings</a>).</p>
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-      <!-- Trust profile query -->
+      <!-- Badge embed (public, no key) -->
       <div class="rounded-xl overflow-hidden" style="border: 1px solid #1F1F1F;">
         <div class="px-4 py-2.5 flex items-center justify-between" style="background: #0D1117; border-bottom: 1px solid #1F1F1F;">
-          <span class="text-xs font-mono text-[#8B949E]">Trust profile — REST</span>
-          <Badge text="GET" variant="blue" />
-        </div>
-        <pre class="px-4 py-5 text-xs font-mono text-[#E6EDF3] overflow-x-auto leading-relaxed" style="background: #0A0A0A; margin: 0;"><code>curl -H "X-API-Key: YOUR_KEY" \
-  https://forgeos-api.synctek.io/v1/trust/pypi/requests</code></pre>
-      </div>
-
-      <!-- Badge embed -->
-      <div class="rounded-xl overflow-hidden" style="border: 1px solid #1F1F1F;">
-        <div class="px-4 py-2.5 flex items-center justify-between" style="background: #0D1117; border-bottom: 1px solid #1F1F1F;">
-          <span class="text-xs font-mono text-[#8B949E]">Embed badge — Markdown</span>
-          <Badge text="README" variant="gray" />
+          <span class="text-xs font-mono text-[#8B949E]">Embed badge — no API key needed</span>
+          <Badge text="PUBLIC" variant="green" />
         </div>
         <pre class="px-4 py-5 text-xs font-mono text-[#E6EDF3] overflow-x-auto leading-relaxed" style="background: #0A0A0A; margin: 0;"><code>![FTI](https://forgeos-api.synctek.io/v1/badge/pypi/requests/shield)</code></pre>
+      </div>
+
+      <!-- Trust profile query (requires API key) -->
+      <div class="rounded-xl overflow-hidden" style="border: 1px solid #1F1F1F;">
+        <div class="px-4 py-2.5 flex items-center justify-between" style="background: #0D1117; border-bottom: 1px solid #1F1F1F;">
+          <span class="text-xs font-mono text-[#8B949E]">Trust profile — requires ForgeOS API key</span>
+          <Badge text="AUTH" variant="blue" />
+        </div>
+        <pre class="px-4 py-5 text-xs font-mono text-[#E6EDF3] overflow-x-auto leading-relaxed" style="background: #0A0A0A; margin: 0;"><code># Your API key is in ForgeOS Dashboard → Settings
+curl -H "X-API-Key: fos_live_abc123..." \
+  https://forgeos-api.synctek.io/v1/trust/pypi/requests</code></pre>
       </div>
     </div>
 
