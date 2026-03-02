@@ -2,6 +2,7 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import SectionDivider from '../../../components/SectionDivider.astro';
 import Badge from '../../../components/Badge.astro';
+import Callout from '../../../components/Callout.astro';
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -24,48 +25,74 @@ const dimensions = [
   {
     name: 'Security',
     icon: 'shield',
+    score: 86,
+    color: '#10B981',
     description:
       'CVE count, dependency audit, code security patterns, signing status, and SBOM presence.',
   },
   {
     name: 'Maintainability',
     icon: 'code',
+    score: 73,
+    color: '#58A6FF',
     description:
       'Complexity metrics, test coverage, PR merge velocity, code churn rate, and type safety adoption.',
   },
   {
     name: 'Documentation',
     icon: 'doc',
+    score: 67,
+    color: '#58A6FF',
     description:
       'README completeness, API doc coverage, changelog hygiene, contributing guide, and tutorials.',
   },
   {
     name: 'Community Health',
     icon: 'users',
+    score: 47,
+    color: '#D97706',
     description:
       'Contributor count (bus factor), issue response time, PR review time, and governance documentation.',
   },
   {
     name: 'Supply Chain',
     icon: 'chain',
+    score: 74,
+    color: '#58A6FF',
     description:
       'Dependency count, vulnerable transitive deps, license conflicts, signing status, and provenance.',
   },
   {
     name: 'Improvement Velocity',
     icon: 'trend',
+    score: 50,
+    color: '#D97706',
     description:
       'Score trajectory over 30, 90, and 180 days — is this package trending better or worse?',
   },
 ];
 
 const tiers = [
-  { name: 'Platinum', range: '90–100', color: '#3B82F6', label: 'blue' },
-  { name: 'Gold', range: '75–89', color: '#F59E0B', label: 'gold' },
-  { name: 'Silver', range: '60–74', color: '#9CA3AF', label: 'silver' },
-  { name: 'Bronze', range: '40–59', color: '#D97706', label: 'bronze' },
-  { name: 'Unrated', range: '0–39', color: '#4B5563', label: 'gray' },
+  { name: 'Platinum', range: '90–100', color: '#3B82F6', description: 'Production-grade. Ship with confidence.' },
+  { name: 'Gold', range: '75–89', color: '#F59E0B', description: 'Strong trust posture. Minor gaps.' },
+  { name: 'Silver', range: '60–74', color: '#9CA3AF', description: 'Acceptable. Improvement recommended.' },
+  { name: 'Bronze', range: '40–59', color: '#D97706', description: 'Notable risks. Review before shipping.' },
+  { name: 'Unrated', range: '0–39', color: '#EF4444', description: 'Significant concerns. Avoid or remediate.' },
 ];
+
+// Score circle math: circumference = 2π × 52 ≈ 326.7
+// For score 69: dashoffset = 327 × (1 - 0.69) ≈ 101
+const SCORE = 69;
+const CIRCUMFERENCE = 326.7;
+const DASHOFFSET = Math.round(CIRCUMFERENCE * (1 - SCORE / 100));
+
+function getTierColor(score: number): string {
+  if (score >= 90) return '#3B82F6';
+  if (score >= 75) return '#F59E0B';
+  if (score >= 60) return '#9CA3AF';
+  if (score >= 40) return '#D97706';
+  return '#EF4444';
+}
 ---
 
 <BaseLayout
@@ -74,48 +101,141 @@ const tiers = [
   jsonLd={jsonLd}
 >
   <!-- Hero -->
-  <section class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-12">
+  <section class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-16 sm:pt-32 sm:pb-20">
     <!-- Glow -->
     <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
       <div
-        class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px]"
+        class="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[500px]"
         style="background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(59,130,246,0.12) 0%, transparent 70%);"
       ></div>
     </div>
 
-    <div class="relative z-10 text-center">
+    <div class="relative z-10">
       <!-- Breadcrumb -->
-      <div class="flex items-center justify-center gap-2 text-sm text-[#8B949E] mb-8">
+      <div class="flex items-center gap-2 text-sm text-[#8B949E] mb-8">
         <a href="/products/forgeos/" class="no-underline hover:text-[#E6EDF3] transition-colors">ForgeOS</a>
         <span>/</span>
         <span class="text-[#E6EDF3]">Trust Index</span>
       </div>
 
-      <p class="text-xs font-semibold tracking-[0.12em] uppercase text-[#3B82F6] mb-4">FORGEOS TRUST INDEX</p>
-      <h1 class="text-4xl sm:text-5xl font-bold text-[#E6EDF3] tracking-tight mb-4" style="letter-spacing: -0.02em;">
-        Know what you're shipping.
-      </h1>
-      <p class="text-lg text-[#9CA3AF] max-w-2xl mx-auto mb-8">
-        Transparent, deterministic trust scoring for every package in your stack. No guesswork, no LLMs at query time — just evidence.
-      </p>
+      <!-- Two-column layout: text left, score visual right -->
+      <div class="flex flex-col lg:flex-row lg:items-center lg:gap-16">
+        <!-- Left: text content -->
+        <div class="flex-1 min-w-0">
+          <!-- Definition line -->
+          <p class="font-mono text-sm text-[#8B949E] mb-3">
+            ForgeOS Trust Index — a 0-100 package trust score across six dimensions.
+          </p>
 
-      <!-- Live badge -->
-      <div class="flex flex-col items-center gap-3">
-        <span class="text-xs text-[#8B949E] uppercase tracking-wider">Live FTI score — @synctek/forgeos</span>
-        <a
-          href="https://forgeos-api.synctek.io/v1/trust/npm/@synctek/forgeos"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="no-underline inline-flex"
-          aria-label="View ForgeOS FTI trust profile"
-        >
-          <img
-            src="https://forgeos-api.synctek.io/v1/badge/npm/synctek/forgeos/shield"
-            alt="FTI Score — @synctek/forgeos"
-            height="20"
-            style="height: 20px;"
-          />
-        </a>
+          <p class="text-xs font-semibold tracking-[0.12em] uppercase text-[#58A6FF] mb-4">FORGEOS TRUST INDEX</p>
+          <h1 class="text-4xl sm:text-5xl font-bold text-[#E6EDF3] tracking-tight mb-4" style="letter-spacing: -0.02em;">
+            Know what you're shipping.
+          </h1>
+          <p class="text-lg text-[#9CA3AF] max-w-2xl mb-5">
+            Transparent, deterministic trust scoring for every package in your stack. No guesswork, no LLMs at query time — just evidence.
+          </p>
+
+          <!-- Dogfood trust signal -->
+          <p class="text-sm text-[#8B949E] mb-8">
+            All SyncTek packages are scored by FTI. Scores are public.
+            <a href="#our-packages" class="text-[#58A6FF] no-underline hover:text-[#79B8FF] transition-colors ml-1 inline-flex items-center gap-1">
+              See our scores
+              <svg class="w-3.5 h-3.5 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+              </svg>
+            </a>
+          </p>
+
+          <!-- Live badge frame -->
+          <div class="inline-block rounded-xl p-4" style="background: #111111; border: 1px solid #1A2535; max-width: fit-content;">
+            <div class="flex items-center gap-2 mb-3">
+              <span class="inline-block w-2 h-2 rounded-full flex-shrink-0" style="background: #10B981; box-shadow: 0 0 6px rgba(16,185,129,0.6);" aria-hidden="true"></span>
+              <span class="text-xs font-mono text-[#8B949E]">@synctek/forgeos · Live score</span>
+            </div>
+            <a
+              href="https://forgeos-api.synctek.io/v1/trust/npm/@synctek/forgeos"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="no-underline inline-flex"
+              aria-label="View ForgeOS FTI trust profile"
+            >
+              <img
+                src="https://forgeos-api.synctek.io/v1/badge/npm/synctek/forgeos/shield"
+                alt="FTI Score — @synctek/forgeos"
+                height="20"
+                loading="lazy"
+                style="height: 20px;"
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-flex';"
+              />
+              <span
+                class="hidden items-center gap-1.5 px-2.5 py-1 rounded text-xs font-mono"
+                style="display: none; background: rgba(217,119,6,0.12); border: 1px solid rgba(217,119,6,0.3); color: #D97706;"
+              >
+                <span>FTI · Bronze · 69</span>
+              </span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Right: score visualization card -->
+        <div class="mt-12 lg:mt-0 lg:flex-shrink-0 lg:w-72">
+          <div class="rounded-xl p-6" style="background: #111111; border: 1px solid #1A2535; box-shadow: 0 0 40px rgba(217,119,6,0.06);">
+            <!-- Score circle -->
+            <div class="flex flex-col items-center mb-5">
+              <div class="relative" style="width: 120px; height: 120px;">
+                <svg width="120" height="120" viewBox="0 0 120 120" aria-label="FTI composite score: 69 — Bronze tier">
+                  <!-- Track -->
+                  <circle
+                    cx="60" cy="60" r="52"
+                    fill="none"
+                    stroke="#1F1F1F"
+                    stroke-width="8"
+                  />
+                  <!-- Score arc — rotated so 0° is top -->
+                  <circle
+                    cx="60" cy="60" r="52"
+                    fill="none"
+                    stroke="#D97706"
+                    stroke-width="8"
+                    stroke-linecap="round"
+                    stroke-dasharray={`${CIRCUMFERENCE}`}
+                    stroke-dashoffset={`${DASHOFFSET}`}
+                    transform="rotate(-90 60 60)"
+                    style="transition: stroke-dashoffset 0.8s ease;"
+                  />
+                  <!-- Score text -->
+                  <text x="60" y="56" text-anchor="middle" dominant-baseline="middle" fill="#E6EDF3" font-size="28" font-weight="700" font-family="Inter, system-ui, sans-serif">{SCORE}</text>
+                  <text x="60" y="76" text-anchor="middle" dominant-baseline="middle" fill="#D97706" font-size="11" font-weight="600" font-family="Inter, system-ui, sans-serif" letter-spacing="0.05em">BRONZE</text>
+                </svg>
+              </div>
+              <p class="text-xs text-[#8B949E] mt-2 font-mono">@synctek/forgeos</p>
+            </div>
+
+            <!-- Dimension mini bars -->
+            <div class="space-y-2.5">
+              {dimensions.map((dim) => (
+                <div>
+                  <div class="flex items-center justify-between mb-1">
+                    <span class="text-xs text-[#8B949E]">{dim.name}</span>
+                    <span class="text-xs font-mono" style={`color: ${dim.color};`}>{dim.score}</span>
+                  </div>
+                  <div class="h-1 w-full rounded-full" style="background: rgba(255,255,255,0.06);">
+                    <div
+                      class="h-1 rounded-full"
+                      style={`width: ${dim.score}%; background: ${dim.color}; opacity: 0.85;`}
+                    ></div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <!-- Signature line -->
+            <p class="mt-4 text-[10px] font-mono text-[#8B949E] leading-snug" style="word-break: break-all;">
+              Ed25519 sig: sha256:aaf8e233…
+              <span class="text-[#10B981] ml-1">[verified]</span>
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -133,7 +253,7 @@ const tiers = [
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8">
           <div class="rounded-lg p-4" style="background: #111111; border: 1px solid #1F1F1F;">
             <div class="flex items-start gap-3">
-              <svg class="w-4 h-4 flex-shrink-0 mt-0.5 text-[#3B82F6]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+              <svg class="w-4 h-4 flex-shrink-0 mt-0.5 text-[#58A6FF]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
               <div>
                 <p class="text-sm font-medium text-[#E6EDF3] mb-1">Deterministic</p>
                 <p class="text-xs text-[#8B949E]">Same input always produces the same score. No randomness, no LLM at query time.</p>
@@ -142,7 +262,7 @@ const tiers = [
           </div>
           <div class="rounded-lg p-4" style="background: #111111; border: 1px solid #1F1F1F;">
             <div class="flex items-start gap-3">
-              <svg class="w-4 h-4 flex-shrink-0 mt-0.5 text-[#3B82F6]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+              <svg class="w-4 h-4 flex-shrink-0 mt-0.5 text-[#58A6FF]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
               <div>
                 <p class="text-sm font-medium text-[#E6EDF3] mb-1">Cryptographically signed</p>
                 <p class="text-xs text-[#8B949E]">Every score is Ed25519-signed. Tamper-evident — verify the score matches what we computed.</p>
@@ -151,7 +271,7 @@ const tiers = [
           </div>
           <div class="rounded-lg p-4" style="background: #111111; border: 1px solid #1F1F1F;">
             <div class="flex items-start gap-3">
-              <svg class="w-4 h-4 flex-shrink-0 mt-0.5 text-[#3B82F6]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
+              <svg class="w-4 h-4 flex-shrink-0 mt-0.5 text-[#58A6FF]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
               <div>
                 <p class="text-sm font-medium text-[#E6EDF3] mb-1">Updated nightly</p>
                 <p class="text-xs text-[#8B949E]">Live data from package registries, GitHub, and CVE databases. Scores reflect current reality.</p>
@@ -160,7 +280,7 @@ const tiers = [
           </div>
           <div class="rounded-lg p-4" style="background: #111111; border: 1px solid #1F1F1F;">
             <div class="flex items-start gap-3">
-              <svg class="w-4 h-4 flex-shrink-0 mt-0.5 text-[#3B82F6]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+              <svg class="w-4 h-4 flex-shrink-0 mt-0.5 text-[#58A6FF]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
               <div>
                 <p class="text-sm font-medium text-[#E6EDF3] mb-1">Fully explainable</p>
                 <p class="text-xs text-[#8B949E]">Every dimension is broken down. Know exactly why a package scored what it scored.</p>
@@ -172,12 +292,38 @@ const tiers = [
     </div>
   </section>
 
+  <!-- FTI vs npm audit callout -->
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+    <div class="rounded-xl p-6" style="background: #111111; border-left: 3px solid #58A6FF; border-top: 1px solid #1F1F1F; border-right: 1px solid #1F1F1F; border-bottom: 1px solid #1F1F1F;">
+      <div class="flex items-start gap-3 mb-4">
+        <svg class="w-5 h-5 flex-shrink-0 mt-0.5" fill="none" stroke="#58A6FF" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <p class="text-sm font-semibold text-[#E6EDF3]">How FTI differs from npm audit</p>
+      </div>
+      <ul class="space-y-2.5 text-sm text-[#9CA3AF] leading-relaxed ml-8">
+        <li class="flex items-start gap-2">
+          <span class="text-[#58A6FF] flex-shrink-0 mt-0.5">—</span>
+          <span><span class="text-[#E6EDF3] font-medium">npm audit covers CVEs only.</span> FTI scores Security, Maintainability, Supply Chain, Documentation, Community, and Velocity — six independent dimensions in one composite signal.</span>
+        </li>
+        <li class="flex items-start gap-2">
+          <span class="text-[#58A6FF] flex-shrink-0 mt-0.5">—</span>
+          <span><span class="text-[#E6EDF3] font-medium">npm audit results change each run.</span> FTI is deterministic — same data, same score, always. You can diff scores across deploys and point to exact regressions.</span>
+        </li>
+        <li class="flex items-start gap-2">
+          <span class="text-[#58A6FF] flex-shrink-0 mt-0.5">—</span>
+          <span><span class="text-[#E6EDF3] font-medium">npm audit can't be embedded as a badge, verified cryptographically, or tracked over time.</span> FTI badges are live, scores are Ed25519-signed, and score history is queryable via API.</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
   <SectionDivider />
 
   <!-- Six Dimensions -->
   <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
     <div class="mb-10">
-      <p class="text-xs font-semibold tracking-[0.12em] uppercase text-[#3B82F6] mb-2">SCORING MODEL</p>
+      <p class="text-xs font-semibold tracking-[0.12em] uppercase text-[#58A6FF] mb-2">SCORING MODEL</p>
       <h2 class="text-2xl font-semibold text-[#E6EDF3] tracking-tight">Six dimensions. One score.</h2>
       <p class="text-[#9CA3AF] mt-2 max-w-xl">Each dimension is independently measured. The final score is a deterministic composite — cryptographically signed and fully auditable.</p>
     </div>
@@ -187,8 +333,18 @@ const tiers = [
         <div class="rounded-xl p-5" style="background: #111111; border: 1px solid #1A2535;">
           <div class="flex items-start justify-between mb-3">
             <span class="text-sm font-semibold text-[#E6EDF3]">{dim.name}</span>
+            <span class="text-sm font-mono font-semibold" style={`color: ${getTierColor(dim.score)};`}>{dim.score}</span>
           </div>
-          <p class="text-xs text-[#8B949E] leading-relaxed">{dim.description}</p>
+          <p class="text-xs text-[#8B949E] leading-relaxed mb-4">{dim.description}</p>
+          <!-- Progress bar -->
+          <div>
+            <div class="h-1 w-full rounded-full" style="background: rgba(59,130,246,0.15);">
+              <div
+                class="h-1 rounded-full transition-all"
+                style={`width: ${dim.score}%; background: ${getTierColor(dim.score)};`}
+              ></div>
+            </div>
+          </div>
         </div>
       ))}
     </div>
@@ -196,44 +352,29 @@ const tiers = [
 
   <SectionDivider />
 
-  <!-- Trust Tiers -->
+  <!-- Trust Tiers — visual cards -->
   <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
     <div class="mb-10">
-      <p class="text-xs font-semibold tracking-[0.12em] uppercase text-[#3B82F6] mb-2">TRUST TIERS</p>
+      <p class="text-xs font-semibold tracking-[0.12em] uppercase text-[#58A6FF] mb-2">TRUST TIERS</p>
       <h2 class="text-2xl font-semibold text-[#E6EDF3] tracking-tight">What the score means</h2>
       <p class="text-[#9CA3AF] mt-2 max-w-xl">Scores map to five tiers. Badges update automatically as the nightly rescore runs.</p>
     </div>
 
-    <div class="overflow-x-auto">
-      <table class="w-full text-sm" style="border-collapse: collapse; min-width: 420px;">
-        <thead>
-          <tr style="border-bottom: 2px solid #1F1F1F;">
-            <th class="text-left py-3 pr-6 font-semibold text-[#E6EDF3]" style="width: 30%;">Tier</th>
-            <th class="text-left py-3 px-3 font-semibold text-[#E6EDF3]" style="width: 25%;">Score range</th>
-            <th class="text-left py-3 px-3 font-semibold text-[#E6EDF3]" style="width: 45%;">Badge color</th>
-          </tr>
-        </thead>
-        <tbody>
-          {tiers.map((tier) => (
-            <tr style="border-bottom: 1px solid #1F1F1F;">
-              <td class="py-3 pr-6 font-medium text-[#E6EDF3]">{tier.name}</td>
-              <td class="py-3 px-3 font-mono text-xs text-[#8B949E]">{tier.range}</td>
-              <td class="py-3 px-3">
-                <span
-                  class="inline-flex items-center gap-1.5 text-xs font-medium"
-                >
-                  <span
-                    class="inline-block w-2.5 h-2.5 rounded-full flex-shrink-0"
-                    style={`background: ${tier.color};`}
-                    aria-hidden="true"
-                  ></span>
-                  <span style={`color: ${tier.color};`}>{tier.label.charAt(0).toUpperCase() + tier.label.slice(1)}</span>
-                </span>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <!-- Tier cards — horizontal scroll on mobile -->
+    <div class="flex gap-4 overflow-x-auto pb-2" style="-webkit-overflow-scrolling: touch;">
+      {tiers.map((tier) => (
+        <div
+          class="flex-shrink-0 rounded-xl p-5"
+          style={`background: #111111; border: 1px solid #1F1F1F; border-left: 3px solid ${tier.color}; min-width: 180px; max-width: 220px;`}
+        >
+          <div class="flex items-center gap-2 mb-2">
+            <span class="inline-block w-2.5 h-2.5 rounded-full flex-shrink-0" style={`background: ${tier.color};`} aria-hidden="true"></span>
+            <span class="text-sm font-semibold text-[#E6EDF3]">{tier.name}</span>
+          </div>
+          <p class="font-mono text-xs mb-2" style={`color: ${tier.color};`}>{tier.range}</p>
+          <p class="text-xs text-[#8B949E] leading-relaxed">{tier.description}</p>
+        </div>
+      ))}
     </div>
   </section>
 
@@ -242,12 +383,12 @@ const tiers = [
   <!-- Check Any Package -->
   <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
     <div class="mb-10">
-      <p class="text-xs font-semibold tracking-[0.12em] uppercase text-[#3B82F6] mb-2">API ACCESS</p>
+      <p class="text-xs font-semibold tracking-[0.12em] uppercase text-[#58A6FF] mb-2">API ACCESS</p>
       <h2 class="text-2xl font-semibold text-[#E6EDF3] tracking-tight">Check any package</h2>
       <p class="text-[#9CA3AF] mt-2 max-w-xl">Query trust profiles via REST or embed live badges directly in your README or internal docs.</p>
     </div>
 
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
       <!-- Trust profile query -->
       <div class="rounded-xl overflow-hidden" style="border: 1px solid #1F1F1F;">
         <div class="px-4 py-2.5 flex items-center justify-between" style="background: #0D1117; border-bottom: 1px solid #1F1F1F;">
@@ -268,10 +409,31 @@ const tiers = [
       </div>
     </div>
 
-    <div class="mt-6">
+    <!-- Sample JSON response -->
+    <div class="rounded-xl overflow-hidden mb-6" style="border: 1px solid #1F1F1F;">
+      <div class="px-4 py-2.5 flex items-center justify-between" style="background: #0D1117; border-bottom: 1px solid #1F1F1F;">
+        <span class="text-xs font-mono text-[#8B949E]">Sample response — JSON</span>
+        <Badge text="200 OK" variant="green" />
+      </div>
+      <pre class="px-4 py-5 text-xs font-mono overflow-x-auto leading-relaxed" style="background: #0A0A0A; margin: 0; color: #E6EDF3;"><code><span style="color: #8B949E;">{"{"}
+</span>  <span style="color: #58A6FF;">"package"</span><span style="color: #8B949E;">:</span> <span style="color: #3FB950;">"npm:@synctek/forgeos"</span><span style="color: #8B949E;">,</span>
+  <span style="color: #58A6FF;">"composite"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">69.35</span><span style="color: #8B949E;">,</span>
+  <span style="color: #58A6FF;">"dimensions"</span><span style="color: #8B949E;">: {"{"}</span>
+    <span style="color: #58A6FF;">"security"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">86.15</span><span style="color: #8B949E;">,</span>
+    <span style="color: #58A6FF;">"maintainability"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">73.21</span><span style="color: #8B949E;">,</span>
+    <span style="color: #58A6FF;">"documentation"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">66.75</span><span style="color: #8B949E;">,</span>
+    <span style="color: #58A6FF;">"community_health"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">47.05</span><span style="color: #8B949E;">,</span>
+    <span style="color: #58A6FF;">"supply_chain"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">74.00</span>
+  <span style="color: #8B949E;">{"}"}</span><span style="color: #8B949E;">,</span>
+  <span style="color: #58A6FF;">"algorithm_version"</span><span style="color: #8B949E;">:</span> <span style="color: #3FB950;">"fti-v1.0.0"</span><span style="color: #8B949E;">,</span>
+  <span style="color: #58A6FF;">"signature"</span><span style="color: #8B949E;">:</span> <span style="color: #3FB950;">"sha256:aaf8e233..."</span>
+<span style="color: #8B949E;">{"}"}</span></code></pre>
+    </div>
+
+    <div class="mt-2">
       <a
         href="/docs/api"
-        class="inline-flex items-center gap-1.5 text-sm text-[#3B82F6] no-underline hover:text-[#60A5FA] transition-colors"
+        class="inline-flex items-center gap-1.5 text-sm text-[#58A6FF] no-underline hover:text-[#79B8FF] transition-colors"
       >
         View full API documentation
         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true">
@@ -284,49 +446,65 @@ const tiers = [
   <SectionDivider />
 
   <!-- Our Packages -->
-  <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+  <section id="our-packages" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
     <div class="mb-10">
-      <p class="text-xs font-semibold tracking-[0.12em] uppercase text-[#3B82F6] mb-2">OUR PACKAGES</p>
+      <p class="text-xs font-semibold tracking-[0.12em] uppercase text-[#58A6FF] mb-2">OUR PACKAGES</p>
       <h2 class="text-2xl font-semibold text-[#E6EDF3] tracking-tight">We eat our own cooking</h2>
       <p class="text-[#9CA3AF] mt-2 max-w-xl">Every SyncTek package is scored by FTI. We publish the scores publicly — no exceptions.</p>
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
       <!-- ForgeOS -->
-      <div class="rounded-xl p-5 flex flex-col gap-4" style="background: #111111; border: 1px solid #1A2535;">
+      <div class="rounded-xl p-5 flex flex-col gap-4" style="background: #111111; border: 1px solid #1F1F1F;">
         <div class="flex items-start justify-between">
           <div>
             <p class="text-sm font-semibold text-[#E6EDF3]">ForgeOS CLI</p>
             <p class="text-xs text-[#8B949E] font-mono mt-0.5">npm · @synctek/forgeos</p>
           </div>
-          <a href="/products/forgeos/" class="text-xs text-[#3B82F6] no-underline hover:text-[#60A5FA] transition-colors">View product &rarr;</a>
+          <a href="/products/forgeos/" class="text-xs text-[#58A6FF] no-underline hover:text-[#79B8FF] transition-colors">View product &rarr;</a>
         </div>
         <div>
           <img
             src="https://forgeos-api.synctek.io/v1/badge/npm/synctek/forgeos/shield"
             alt="FTI Score — @synctek/forgeos"
             height="20"
+            loading="lazy"
             style="height: 20px;"
+            onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-flex';"
           />
+          <span
+            class="hidden items-center gap-1.5 px-2.5 py-1 rounded text-xs font-mono"
+            style="display: none; background: rgba(217,119,6,0.12); border: 1px solid rgba(217,119,6,0.3); color: #D97706;"
+          >
+            FTI · Bronze · 69
+          </span>
         </div>
       </div>
 
       <!-- SpecterQA -->
-      <div class="rounded-xl p-5 flex flex-col gap-4" style="background: #111111; border: 1px solid #1A2535;">
+      <div class="rounded-xl p-5 flex flex-col gap-4" style="background: #111111; border: 1px solid #1F1F1F;">
         <div class="flex items-start justify-between">
           <div>
             <p class="text-sm font-semibold text-[#E6EDF3]">SpecterQA</p>
             <p class="text-xs text-[#8B949E] font-mono mt-0.5">pypi · specterqa</p>
           </div>
-          <a href="/products/specterqa/" class="text-xs text-[#3B82F6] no-underline hover:text-[#60A5FA] transition-colors">View product &rarr;</a>
+          <a href="/products/specterqa/" class="text-xs text-[#58A6FF] no-underline hover:text-[#79B8FF] transition-colors">View product &rarr;</a>
         </div>
         <div>
           <img
             src="https://forgeos-api.synctek.io/v1/badge/pypi/specterqa/shield"
             alt="FTI Score — SpecterQA"
             height="20"
+            loading="lazy"
             style="height: 20px;"
+            onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-flex';"
           />
+          <span
+            class="hidden items-center gap-1.5 px-2.5 py-1 rounded text-xs font-mono"
+            style="display: none; background: rgba(217,119,6,0.12); border: 1px solid rgba(217,119,6,0.3); color: #D97706;"
+          >
+            FTI · Score pending
+          </span>
         </div>
       </div>
     </div>
@@ -337,7 +515,7 @@ const tiers = [
   <!-- Footer CTA -->
   <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
     <div class="rounded-xl p-8 sm:p-12 text-center" style="background: #111111; border: 1px solid #1F1F1F;">
-      <p class="text-xs font-semibold tracking-[0.12em] uppercase text-[#3B82F6] mb-4">GET STARTED</p>
+      <p class="text-xs font-semibold tracking-[0.12em] uppercase text-[#58A6FF] mb-4">GET STARTED</p>
       <h2 class="text-2xl sm:text-3xl font-semibold text-[#E6EDF3] tracking-tight mb-4">
         Get started with ForgeOS
       </h2>
