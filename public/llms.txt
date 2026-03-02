@@ -11,7 +11,7 @@ Trust-scored package intelligence, gate-based delivery pipelines, and institutio
 - MCP server: https://mcp.synctek.io/mcp
 
 ### ForgeOS Trust Index
-Context-aware trust scoring for open-source packages. "We don't have a #1. We have your #1."
+Context-aware trust scoring for every package in your stack, open-source or commercial. "We don't have a #1. We have your #1."
 - API: https://forgeos-api.synctek.io/api/v1/scores
 - Methodology: transparent, auditable, context-weighted
 
