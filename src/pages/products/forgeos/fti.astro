@@ -23,42 +23,36 @@ const jsonLd = {
 const dimensions = [
   {
     name: 'Security',
-    weight: '25%',
     icon: 'shield',
     description:
       'CVE count, dependency audit, code security patterns, signing status, and SBOM presence.',
   },
   {
     name: 'Maintainability',
-    weight: '20%',
     icon: 'code',
     description:
       'Complexity metrics, test coverage, PR merge velocity, code churn rate, and type safety adoption.',
   },
   {
     name: 'Documentation',
-    weight: '15%',
     icon: 'doc',
     description:
       'README completeness, API doc coverage, changelog hygiene, contributing guide, and tutorials.',
   },
   {
     name: 'Community Health',
-    weight: '15%',
     icon: 'users',
     description:
       'Contributor count (bus factor), issue response time, PR review time, and governance documentation.',
   },
   {
     name: 'Supply Chain',
-    weight: '15%',
     icon: 'chain',
     description:
       'Dependency count, vulnerable transitive deps, license conflicts, signing status, and provenance.',
   },
   {
     name: 'Improvement Velocity',
-    weight: '10%',
     icon: 'trend',
     description:
       'Score trajectory over 30, 90, and 180 days — is this package trending better or worse?',
@@ -185,7 +179,7 @@ const tiers = [
     <div class="mb-10">
       <p class="text-xs font-semibold tracking-[0.12em] uppercase text-[#3B82F6] mb-2">SCORING MODEL</p>
       <h2 class="text-2xl font-semibold text-[#E6EDF3] tracking-tight">Six dimensions. One score.</h2>
-      <p class="text-[#9CA3AF] mt-2 max-w-xl">Each dimension is independently measured and weighted. The final score is a deterministic weighted sum — nothing hidden.</p>
+      <p class="text-[#9CA3AF] mt-2 max-w-xl">Each dimension is independently measured. The final score is a deterministic composite — cryptographically signed and fully auditable.</p>
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -193,12 +187,6 @@ const tiers = [
         <div class="rounded-xl p-5" style="background: #111111; border: 1px solid #1A2535;">
           <div class="flex items-start justify-between mb-3">
             <span class="text-sm font-semibold text-[#E6EDF3]">{dim.name}</span>
-            <span
-              class="inline-flex items-center px-2 py-0.5 rounded text-xs font-mono font-semibold"
-              style="background: rgba(59,130,246,0.12); color: #3B82F6;"
-            >
-              {dim.weight}
-            </span>
           </div>
           <p class="text-xs text-[#8B949E] leading-relaxed">{dim.description}</p>
         </div>
