@@ -41,7 +41,7 @@ The ForgeOS MCP server runs via stdio using `npx`. The config block is the same 
 }
 ```
 
-> **Note:** `FORGEOS_API_KEY` is your ForgeOS API key. Get it from the [ForgeOS dashboard](https://app.synctek.io) after registering. The `FORGEOS_ENGINE_URL` and `FORGEOS_API_KEY` env vars are read directly by the MCP server (distinct from the `X-ForgeOS-API-Key` HTTP header used by direct REST calls).
+> **Note:** `FORGEOS_API_KEY` is your ForgeOS API key. Get it from the [ForgeOS dashboard](https://forgeos.synctek.io) after registering. The `FORGEOS_ENGINE_URL` and `FORGEOS_API_KEY` env vars are read directly by the MCP server (distinct from the `X-ForgeOS-API-Key` HTTP header used by direct REST calls).
 
 - **Cursor** — add to `.cursor/mcp.json` (project root or global Cursor settings) using the `"mcpServers"` key as shown above
 - **Claude Code** — add to `~/.claude/settings.json` using the `"mcpServers"` key as shown above

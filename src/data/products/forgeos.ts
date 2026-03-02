@@ -10,8 +10,8 @@ export default {
   href: '/products/forgeos/',
 
   ctaType: 'login' as const,
-  loginUrl: 'https://app.synctek.io/login',
-  dashboardUrl: 'https://app.synctek.io',
+  loginUrl: 'https://forgeos.synctek.io/login',
+  dashboardUrl: 'https://forgeos.synctek.io',
   support: {
     email: 'support@synctek.io',
     github: 'SyncTek-LLC/forgeos',
@@ -19,7 +19,7 @@ export default {
   },
 
   distribution: {
-    dashboard: 'https://app.synctek.io',
+    dashboard: 'https://forgeos.synctek.io',
     api: 'https://forgeos-api.synctek.io',
     mcp: 'https://mcp.synctek.io/mcp',
     npm: '@synctek/forgeos',
@@ -27,7 +27,7 @@ export default {
 
   fti: {
     badgeUrl: 'https://forgeos-api.synctek.io/v1/badge/npm/@synctek/forgeos/shield',
-    trustProfileUrl: 'https://forgeos-api.synctek.io/v1/trust/npm/@synctek/forgeos',
+    trustProfileUrl: '/products/forgeos/',
   },
 
   pricing: [
@@ -38,7 +38,7 @@ export default {
       price: '$29/seat/mo',
       description: '3-seat minimum. 200,000 API requests/month. Shared projects, role-based access.',
       cta: 'Start free trial',
-      ctaUrl: 'https://app.synctek.io/register?plan=team',
+      ctaUrl: 'https://forgeos.synctek.io/register?plan=team',
     },
     { tier: 'Enterprise', price: 'Custom', description: 'Unlimited requests, dedicated tenant, SLA, DPA, security questionnaire' },
   ],
