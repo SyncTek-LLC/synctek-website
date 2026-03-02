@@ -32,6 +32,11 @@ export default {
     { type: 'ci_status', repo: 'SyncTek-LLC/specterqa' },
   ],
 
+  fti: {
+    badgeUrl: 'https://forgeos-api.synctek.io/v1/badge/pypi/specterqa/shield',
+    trustProfileUrl: 'https://forgeos-api.synctek.io/v1/trust/pypi/specterqa',
+  },
+
   features: [
     {
       title: 'Vision-based navigation',

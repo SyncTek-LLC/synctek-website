@@ -25,6 +25,11 @@ export default {
     npm: '@synctek/forgeos',
   },
 
+  fti: {
+    badgeUrl: 'https://forgeos-api.synctek.io/v1/badge/npm/@synctek/forgeos/shield',
+    trustProfileUrl: 'https://forgeos-api.synctek.io/v1/trust/npm/@synctek/forgeos',
+  },
+
   pricing: [
     { tier: 'Free', price: '$0', description: '1,000 API requests/month, 20 req/min — get started with ForgeOS governance' },
     { tier: 'Pro', price: '$49/mo', description: '50,000 API requests/month, 100 req/min, 10 AI reviews/min — full enforcement suite' },

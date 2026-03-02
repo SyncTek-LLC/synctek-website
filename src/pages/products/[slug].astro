@@ -81,6 +81,7 @@ const featureIcons: Record<string, string> = {
 const ctaType = ('ctaType' in product ? product.ctaType : undefined) as string | undefined;
 const loginUrl = 'loginUrl' in product ? product.loginUrl : undefined;
 const support = 'support' in product ? product.support : undefined;
+const fti = 'fti' in product ? (product as typeof specterqa).fti : undefined;
 ---
 
 <BaseLayout
@@ -108,6 +109,29 @@ const support = 'support' in product ? product.support : undefined;
         <Badge text={product.status === 'launched' ? 'Launched' : product.status} variant="silver" size="md" />
         <Badge text={product.type} variant="gray" size="md" />
       </div>
+
+      <!-- FTI Trust Badge -->
+      {fti && (
+        <div class="flex items-center gap-3 mb-8">
+          <a
+            href={fti.trustProfileUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 no-underline group"
+            title="ForgeOS Trust Index — view full trust profile"
+          >
+            <img
+              src={fti.badgeUrl}
+              alt="ForgeOS Trust Index"
+              class="h-5"
+              loading="lazy"
+            />
+            <span class="text-xs text-light-gray-500 dark:text-muted group-hover:text-light-gray-700 dark:group-hover:text-light-text transition-colors">
+              ForgeOS Trust Index
+            </span>
+          </a>
+        </div>
+      )}
 
       <!-- CTAs -->
       <div class="flex flex-wrap gap-4">

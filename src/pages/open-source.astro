@@ -14,9 +14,28 @@ import reposData from '../data/repos';
     <p class="text-lg text-light-gray-500 dark:text-light-text max-w-2xl mb-4">
       We open-source the tools developers run locally. The CLI on your machine is yours -- MIT licensed, forkable, community-driven. We are selective about what we open-source, not dogmatic. What matters is that the tool you depend on is not a black box.
     </p>
-    <p class="text-light-gray-500 dark:text-light-text max-w-2xl mb-12">
+    <p class="text-light-gray-500 dark:text-light-text max-w-2xl mb-8">
       We welcome contributors at every level. Check each repo's CONTRIBUTING.md for guidelines, or start with issues labeled "good first issue."
     </p>
+
+    <!-- FTI callout -->
+    <div class="inline-flex items-center gap-3 mb-12 px-4 py-3 rounded-lg border border-light-border dark:border-border-gray bg-light-surface dark:bg-dark-surface">
+      <svg class="w-4 h-4 text-accent-silver flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+      </svg>
+      <span class="text-sm text-light-gray-500 dark:text-muted">
+        Our packages are monitored by the{' '}
+        <a
+          href="https://forgeos-api.synctek.io/v1/trust/pypi/specterqa"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="font-medium text-light-gray-700 dark:text-light-text hover:underline"
+        >
+          ForgeOS Trust Index
+        </a>
+        {' '}— live dependency health, license compliance, and security posture, updated continuously.
+      </span>
+    </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
       {reposData.repos.map((repo: any) => (
