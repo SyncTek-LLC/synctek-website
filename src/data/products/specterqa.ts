@@ -34,7 +34,7 @@ export default {
 
   fti: {
     badgeUrl: 'https://forgeos-api.synctek.io/v1/badge/pypi/specterqa/shield',
-    trustProfileUrl: '/products/specterqa/',
+    trustProfileUrl: '/products/forgeos/fti/',
   },
 
   features: [

@@ -28,7 +28,7 @@ export default {
   fti: {
     shieldBadgeUrl: 'https://forgeos-api.synctek.io/v1/badge/npm/@synctek/forgeos/shield',
     flatBadgeUrl: 'https://forgeos-api.synctek.io/v1/badge/npm/@synctek/forgeos/flat',
-    trustProfileUrl: '/fti/npm/@synctek/forgeos',
+    trustProfileUrl: '/products/forgeos/fti/',
     scores: {
       security: 88.0,
       supplyChain: 77.3,

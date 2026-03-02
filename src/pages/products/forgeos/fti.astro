@@ -1,0 +1,381 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import SectionDivider from '../../../components/SectionDivider.astro';
+import Badge from '../../../components/Badge.astro';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: 'ForgeOS Trust Index (FTI)',
+  url: 'https://synctek.io/products/forgeos/fti',
+  description:
+    'The ForgeOS Trust Index (FTI) provides deterministic, cryptographically signed trust scores (0–100) for open-source packages across six dimensions: Security, Maintainability, Documentation, Community Health, Supply Chain, and Improvement Velocity.',
+  mainEntity: {
+    '@type': 'SoftwareApplication',
+    name: 'ForgeOS Trust Index',
+    description:
+      'Transparent, deterministic trust scoring for every package in your stack.',
+    applicationCategory: 'DeveloperApplication',
+    operatingSystem: 'Cross-platform',
+  },
+};
+
+const dimensions = [
+  {
+    name: 'Security',
+    weight: '25%',
+    icon: 'shield',
+    description:
+      'CVE count, dependency audit, code security patterns, signing status, and SBOM presence.',
+  },
+  {
+    name: 'Maintainability',
+    weight: '20%',
+    icon: 'code',
+    description:
+      'Complexity metrics, test coverage, PR merge velocity, code churn rate, and type safety adoption.',
+  },
+  {
+    name: 'Documentation',
+    weight: '15%',
+    icon: 'doc',
+    description:
+      'README completeness, API doc coverage, changelog hygiene, contributing guide, and tutorials.',
+  },
+  {
+    name: 'Community Health',
+    weight: '15%',
+    icon: 'users',
+    description:
+      'Contributor count (bus factor), issue response time, PR review time, and governance documentation.',
+  },
+  {
+    name: 'Supply Chain',
+    weight: '15%',
+    icon: 'chain',
+    description:
+      'Dependency count, vulnerable transitive deps, license conflicts, signing status, and provenance.',
+  },
+  {
+    name: 'Improvement Velocity',
+    weight: '10%',
+    icon: 'trend',
+    description:
+      'Score trajectory over 30, 90, and 180 days — is this package trending better or worse?',
+  },
+];
+
+const tiers = [
+  { name: 'Platinum', range: '90–100', color: '#3B82F6', label: 'blue' },
+  { name: 'Gold', range: '75–89', color: '#F59E0B', label: 'gold' },
+  { name: 'Silver', range: '60–74', color: '#9CA3AF', label: 'silver' },
+  { name: 'Bronze', range: '40–59', color: '#D97706', label: 'bronze' },
+  { name: 'Unrated', range: '0–39', color: '#4B5563', label: 'gray' },
+];
+---
+
+<BaseLayout
+  title="ForgeOS Trust Index (FTI) — Deterministic Package Trust Scoring"
+  description="The ForgeOS Trust Index scores open-source packages 0–100 across six dimensions: Security, Maintainability, Documentation, Community Health, Supply Chain, and Improvement Velocity. Every score is deterministic and Ed25519-signed."
+  jsonLd={jsonLd}
+>
+  <!-- Hero -->
+  <section class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-12">
+    <!-- Glow -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+      <div
+        class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px]"
+        style="background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(59,130,246,0.12) 0%, transparent 70%);"
+      ></div>
+    </div>
+
+    <div class="relative z-10 text-center">
+      <!-- Breadcrumb -->
+      <div class="flex items-center justify-center gap-2 text-sm text-[#8B949E] mb-8">
+        <a href="/products/forgeos/" class="no-underline hover:text-[#E6EDF3] transition-colors">ForgeOS</a>
+        <span>/</span>
+        <span class="text-[#E6EDF3]">Trust Index</span>
+      </div>
+
+      <p class="text-xs font-semibold tracking-[0.12em] uppercase text-[#3B82F6] mb-4">FORGEOS TRUST INDEX</p>
+      <h1 class="text-4xl sm:text-5xl font-bold text-[#E6EDF3] tracking-tight mb-4" style="letter-spacing: -0.02em;">
+        Know what you're shipping.
+      </h1>
+      <p class="text-lg text-[#9CA3AF] max-w-2xl mx-auto mb-8">
+        Transparent, deterministic trust scoring for every package in your stack. No guesswork, no LLMs at query time — just evidence.
+      </p>
+
+      <!-- Live badge -->
+      <div class="flex flex-col items-center gap-3">
+        <span class="text-xs text-[#8B949E] uppercase tracking-wider">Live FTI score — @synctek/forgeos</span>
+        <a
+          href="https://forgeos-api.synctek.io/v1/trust/npm/@synctek/forgeos"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="no-underline inline-flex"
+          aria-label="View ForgeOS FTI trust profile"
+        >
+          <img
+            src="https://forgeos-api.synctek.io/v1/badge/npm/@synctek/forgeos/shield"
+            alt="FTI Score — @synctek/forgeos"
+            height="20"
+            style="height: 20px;"
+          />
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <SectionDivider />
+
+  <!-- What is FTI? -->
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div class="max-w-3xl">
+      <h2 class="text-2xl font-semibold text-[#E6EDF3] tracking-tight mb-6">What is FTI?</h2>
+      <div class="space-y-4 text-[#9CA3AF] leading-relaxed">
+        <p>
+          The ForgeOS Trust Index (FTI) is a package trust scoring system that produces a single score from 0 to 100 for any open-source package. It is built for engineering teams that need an objective, auditable signal about what they're pulling into their stack.
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8">
+          <div class="rounded-lg p-4" style="background: #111111; border: 1px solid #1F1F1F;">
+            <div class="flex items-start gap-3">
+              <svg class="w-4 h-4 flex-shrink-0 mt-0.5 text-[#3B82F6]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+              <div>
+                <p class="text-sm font-medium text-[#E6EDF3] mb-1">Deterministic</p>
+                <p class="text-xs text-[#8B949E]">Same input always produces the same score. No randomness, no LLM at query time.</p>
+              </div>
+            </div>
+          </div>
+          <div class="rounded-lg p-4" style="background: #111111; border: 1px solid #1F1F1F;">
+            <div class="flex items-start gap-3">
+              <svg class="w-4 h-4 flex-shrink-0 mt-0.5 text-[#3B82F6]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+              <div>
+                <p class="text-sm font-medium text-[#E6EDF3] mb-1">Cryptographically signed</p>
+                <p class="text-xs text-[#8B949E]">Every score is Ed25519-signed. Tamper-evident — verify the score matches what we computed.</p>
+              </div>
+            </div>
+          </div>
+          <div class="rounded-lg p-4" style="background: #111111; border: 1px solid #1F1F1F;">
+            <div class="flex items-start gap-3">
+              <svg class="w-4 h-4 flex-shrink-0 mt-0.5 text-[#3B82F6]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
+              <div>
+                <p class="text-sm font-medium text-[#E6EDF3] mb-1">Updated nightly</p>
+                <p class="text-xs text-[#8B949E]">Live data from package registries, GitHub, and CVE databases. Scores reflect current reality.</p>
+              </div>
+            </div>
+          </div>
+          <div class="rounded-lg p-4" style="background: #111111; border: 1px solid #1F1F1F;">
+            <div class="flex items-start gap-3">
+              <svg class="w-4 h-4 flex-shrink-0 mt-0.5 text-[#3B82F6]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+              <div>
+                <p class="text-sm font-medium text-[#E6EDF3] mb-1">Fully explainable</p>
+                <p class="text-xs text-[#8B949E]">Every dimension is broken down. Know exactly why a package scored what it scored.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <SectionDivider />
+
+  <!-- Six Dimensions -->
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div class="mb-10">
+      <p class="text-xs font-semibold tracking-[0.12em] uppercase text-[#3B82F6] mb-2">SCORING MODEL</p>
+      <h2 class="text-2xl font-semibold text-[#E6EDF3] tracking-tight">Six dimensions. One score.</h2>
+      <p class="text-[#9CA3AF] mt-2 max-w-xl">Each dimension is independently measured and weighted. The final score is a deterministic weighted sum — nothing hidden.</p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      {dimensions.map((dim) => (
+        <div class="rounded-xl p-5" style="background: #111111; border: 1px solid #1A2535;">
+          <div class="flex items-start justify-between mb-3">
+            <span class="text-sm font-semibold text-[#E6EDF3]">{dim.name}</span>
+            <span
+              class="inline-flex items-center px-2 py-0.5 rounded text-xs font-mono font-semibold"
+              style="background: rgba(59,130,246,0.12); color: #3B82F6;"
+            >
+              {dim.weight}
+            </span>
+          </div>
+          <p class="text-xs text-[#8B949E] leading-relaxed">{dim.description}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <SectionDivider />
+
+  <!-- Trust Tiers -->
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div class="mb-10">
+      <p class="text-xs font-semibold tracking-[0.12em] uppercase text-[#3B82F6] mb-2">TRUST TIERS</p>
+      <h2 class="text-2xl font-semibold text-[#E6EDF3] tracking-tight">What the score means</h2>
+      <p class="text-[#9CA3AF] mt-2 max-w-xl">Scores map to five tiers. Badges update automatically as the nightly rescore runs.</p>
+    </div>
+
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm" style="border-collapse: collapse; min-width: 420px;">
+        <thead>
+          <tr style="border-bottom: 2px solid #1F1F1F;">
+            <th class="text-left py-3 pr-6 font-semibold text-[#E6EDF3]" style="width: 30%;">Tier</th>
+            <th class="text-left py-3 px-3 font-semibold text-[#E6EDF3]" style="width: 25%;">Score range</th>
+            <th class="text-left py-3 px-3 font-semibold text-[#E6EDF3]" style="width: 45%;">Badge color</th>
+          </tr>
+        </thead>
+        <tbody>
+          {tiers.map((tier) => (
+            <tr style="border-bottom: 1px solid #1F1F1F;">
+              <td class="py-3 pr-6 font-medium text-[#E6EDF3]">{tier.name}</td>
+              <td class="py-3 px-3 font-mono text-xs text-[#8B949E]">{tier.range}</td>
+              <td class="py-3 px-3">
+                <span
+                  class="inline-flex items-center gap-1.5 text-xs font-medium"
+                >
+                  <span
+                    class="inline-block w-2.5 h-2.5 rounded-full flex-shrink-0"
+                    style={`background: ${tier.color};`}
+                    aria-hidden="true"
+                  ></span>
+                  <span style={`color: ${tier.color};`}>{tier.label.charAt(0).toUpperCase() + tier.label.slice(1)}</span>
+                </span>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <SectionDivider />
+
+  <!-- Check Any Package -->
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div class="mb-10">
+      <p class="text-xs font-semibold tracking-[0.12em] uppercase text-[#3B82F6] mb-2">API ACCESS</p>
+      <h2 class="text-2xl font-semibold text-[#E6EDF3] tracking-tight">Check any package</h2>
+      <p class="text-[#9CA3AF] mt-2 max-w-xl">Query trust profiles via REST or embed live badges directly in your README or internal docs.</p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <!-- Trust profile query -->
+      <div class="rounded-xl overflow-hidden" style="border: 1px solid #1F1F1F;">
+        <div class="px-4 py-2.5 flex items-center justify-between" style="background: #0D1117; border-bottom: 1px solid #1F1F1F;">
+          <span class="text-xs font-mono text-[#8B949E]">Trust profile — REST</span>
+          <Badge text="GET" variant="blue" />
+        </div>
+        <pre class="px-4 py-5 text-xs font-mono text-[#E6EDF3] overflow-x-auto leading-relaxed" style="background: #0A0A0A; margin: 0;"><code>curl -H "X-API-Key: YOUR_KEY" \
+  https://forgeos-api.synctek.io/v1/trust/pypi/requests</code></pre>
+      </div>
+
+      <!-- Badge embed -->
+      <div class="rounded-xl overflow-hidden" style="border: 1px solid #1F1F1F;">
+        <div class="px-4 py-2.5 flex items-center justify-between" style="background: #0D1117; border-bottom: 1px solid #1F1F1F;">
+          <span class="text-xs font-mono text-[#8B949E]">Embed badge — Markdown</span>
+          <Badge text="README" variant="gray" />
+        </div>
+        <pre class="px-4 py-5 text-xs font-mono text-[#E6EDF3] overflow-x-auto leading-relaxed" style="background: #0A0A0A; margin: 0;"><code>![FTI](https://forgeos-api.synctek.io/v1/badge/pypi/requests/shield)</code></pre>
+      </div>
+    </div>
+
+    <div class="mt-6">
+      <a
+        href="/docs/api"
+        class="inline-flex items-center gap-1.5 text-sm text-[#3B82F6] no-underline hover:text-[#60A5FA] transition-colors"
+      >
+        View full API documentation
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+        </svg>
+      </a>
+    </div>
+  </section>
+
+  <SectionDivider />
+
+  <!-- Our Packages -->
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div class="mb-10">
+      <p class="text-xs font-semibold tracking-[0.12em] uppercase text-[#3B82F6] mb-2">OUR PACKAGES</p>
+      <h2 class="text-2xl font-semibold text-[#E6EDF3] tracking-tight">We eat our own cooking</h2>
+      <p class="text-[#9CA3AF] mt-2 max-w-xl">Every SyncTek package is scored by FTI. We publish the scores publicly — no exceptions.</p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <!-- ForgeOS -->
+      <div class="rounded-xl p-5 flex flex-col gap-4" style="background: #111111; border: 1px solid #1A2535;">
+        <div class="flex items-start justify-between">
+          <div>
+            <p class="text-sm font-semibold text-[#E6EDF3]">ForgeOS CLI</p>
+            <p class="text-xs text-[#8B949E] font-mono mt-0.5">npm · @synctek/forgeos</p>
+          </div>
+          <a href="/products/forgeos/" class="text-xs text-[#3B82F6] no-underline hover:text-[#60A5FA] transition-colors">View product &rarr;</a>
+        </div>
+        <div>
+          <img
+            src="https://forgeos-api.synctek.io/v1/badge/npm/@synctek/forgeos/shield"
+            alt="FTI Score — @synctek/forgeos"
+            height="20"
+            style="height: 20px;"
+          />
+        </div>
+      </div>
+
+      <!-- SpecterQA -->
+      <div class="rounded-xl p-5 flex flex-col gap-4" style="background: #111111; border: 1px solid #1A2535;">
+        <div class="flex items-start justify-between">
+          <div>
+            <p class="text-sm font-semibold text-[#E6EDF3]">SpecterQA</p>
+            <p class="text-xs text-[#8B949E] font-mono mt-0.5">pypi · specterqa</p>
+          </div>
+          <a href="/products/specterqa/" class="text-xs text-[#3B82F6] no-underline hover:text-[#60A5FA] transition-colors">View product &rarr;</a>
+        </div>
+        <div>
+          <img
+            src="https://forgeos-api.synctek.io/v1/badge/pypi/specterqa/shield"
+            alt="FTI Score — SpecterQA"
+            height="20"
+            style="height: 20px;"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <SectionDivider />
+
+  <!-- Footer CTA -->
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+    <div class="rounded-xl p-8 sm:p-12 text-center" style="background: #111111; border: 1px solid #1F1F1F;">
+      <p class="text-xs font-semibold tracking-[0.12em] uppercase text-[#3B82F6] mb-4">GET STARTED</p>
+      <h2 class="text-2xl sm:text-3xl font-semibold text-[#E6EDF3] tracking-tight mb-4">
+        Get started with ForgeOS
+      </h2>
+      <p class="text-[#9CA3AF] max-w-xl mx-auto mb-8 text-sm">
+        FTI is one piece of the ForgeOS governance stack. Gate enforcement, signed audit ledgers, SharedMind, and 21 MCP tools ship together — first gate running in under 10 minutes.
+      </p>
+      <div class="flex flex-wrap gap-4 justify-center">
+        <a
+          href="/docs/quickstart"
+          class="inline-flex items-center px-8 py-3.5 rounded-md font-medium text-white no-underline transition-all duration-150"
+          style="background: #3B82F6; font-size: 1rem;"
+          onmouseover="this.style.background='#2563EB'"
+          onmouseout="this.style.background='#3B82F6'"
+        >
+          Quickstart guide
+        </a>
+        <a
+          href="/products/forgeos/"
+          class="inline-flex items-center px-8 py-3.5 rounded-md font-medium no-underline transition-all duration-150 text-[#E6EDF3]"
+          style="border: 1px solid #1F1F1F; font-size: 1rem;"
+          onmouseover="this.style.borderColor='#8B949E'; this.style.background='rgba(255,255,255,0.04)'"
+          onmouseout="this.style.borderColor='#1F1F1F'; this.style.background='transparent'"
+        >
+          Explore ForgeOS &rarr;
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
