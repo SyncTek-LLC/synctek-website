@@ -26,8 +26,16 @@ export default {
   },
 
   fti: {
-    badgeUrl: 'https://forgeos-api.synctek.io/v1/badge/npm/@synctek/forgeos/shield',
-    trustProfileUrl: '/products/forgeos/',
+    shieldBadgeUrl: 'https://forgeos-api.synctek.io/v1/badge/npm/@synctek/forgeos/shield',
+    flatBadgeUrl: 'https://forgeos-api.synctek.io/v1/badge/npm/@synctek/forgeos/flat',
+    trustProfileUrl: '/fti/npm/@synctek/forgeos',
+    scores: {
+      security: 88.0,
+      supplyChain: 77.3,
+      documentation: 73.5,
+      community: 47.1,
+      maintainability: 55.6,
+    },
   },
 
   pricing: [

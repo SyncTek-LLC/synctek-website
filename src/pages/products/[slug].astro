@@ -81,7 +81,32 @@ const featureIcons: Record<string, string> = {
 const ctaType = ('ctaType' in product ? product.ctaType : undefined) as string | undefined;
 const loginUrl = 'loginUrl' in product ? product.loginUrl : undefined;
 const support = 'support' in product ? product.support : undefined;
-const fti = 'fti' in product ? (product as typeof specterqa).fti : undefined;
+const fti = 'fti' in product ? (product as any).fti as Record<string, unknown> : undefined;
+
+// FTI derived values — computed in frontmatter to avoid generic-type parse errors in JSX
+const ftiShieldBadgeUrl = fti && 'shieldBadgeUrl' in fti ? fti.shieldBadgeUrl as string : undefined;
+const ftiFlatBadgeUrl = fti && 'flatBadgeUrl' in fti ? fti.flatBadgeUrl as string : undefined;
+const ftiBadgeUrl = fti && !ftiShieldBadgeUrl && 'badgeUrl' in fti ? fti.badgeUrl as string : undefined;
+const ftiTrustProfileUrl = fti ? fti.trustProfileUrl as string : undefined;
+
+type FtiScore = { key: string; label: string; value: number; colorClass: string };
+const ftiScores: FtiScore[] = (() => {
+  if (!fti || !('scores' in fti) || !fti.scores) return [];
+  const raw = fti.scores as Record<string, number>;
+  const labels: Record<string, string> = {
+    security: 'Security',
+    supplyChain: 'Supply Chain',
+    documentation: 'Documentation',
+    community: 'Community',
+    maintainability: 'Maintainability',
+  };
+  return Object.entries(raw).map(([key, value]) => ({
+    key,
+    label: labels[key] ?? key,
+    value,
+    colorClass: value >= 80 ? 'text-[#3FB950]' : value >= 60 ? 'text-warning-amber' : 'text-error-red',
+  }));
+})();
 ---
 
 <BaseLayout
@@ -110,26 +135,62 @@ const fti = 'fti' in product ? (product as typeof specterqa).fti : undefined;
         <Badge text={product.type} variant="gray" size="md" />
       </div>
 
-      <!-- FTI Trust Badge -->
+      <!-- FTI Trust Score Card -->
       {fti && (
-        <div class="flex items-center gap-3 mb-8">
-          <a
-            href={fti.trustProfileUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="inline-flex items-center gap-2 no-underline group"
-            title="ForgeOS Trust Index — view full trust profile"
-          >
-            <img
-              src={fti.badgeUrl}
-              alt="ForgeOS Trust Index"
-              class="h-5"
-              loading="lazy"
-            />
-            <span class="text-xs text-light-gray-500 dark:text-muted group-hover:text-light-gray-700 dark:group-hover:text-light-text transition-colors">
-              ForgeOS Trust Index
-            </span>
-          </a>
+        <div class="bg-gray-900/50 border border-gray-800 rounded-xl p-6 mb-8 max-w-2xl">
+          <!-- Header row: badges + label -->
+          <div class="flex flex-wrap items-center gap-4 mb-5">
+            <div class="flex items-center gap-3">
+              {ftiShieldBadgeUrl && (
+                <img
+                  src={ftiShieldBadgeUrl}
+                  alt="ForgeOS Trust Index shield badge"
+                  class="h-8"
+                  loading="lazy"
+                />
+              )}
+              {ftiBadgeUrl && (
+                <img
+                  src={ftiBadgeUrl}
+                  alt="ForgeOS Trust Index badge"
+                  class="h-8"
+                  loading="lazy"
+                />
+              )}
+              {ftiFlatBadgeUrl && (
+                <img
+                  src={ftiFlatBadgeUrl}
+                  alt="ForgeOS Trust Index flat badge"
+                  class="h-8"
+                  loading="lazy"
+                />
+              )}
+            </div>
+            {ftiTrustProfileUrl && (
+              <a
+                href={ftiTrustProfileUrl}
+                class="text-sm font-medium text-light-gray-500 dark:text-muted hover:text-light-gray-700 dark:hover:text-light-text no-underline transition-colors"
+              >
+                Verified by ForgeOS Trust Index &rarr;
+              </a>
+            )}
+          </div>
+
+          <!-- Dimensional score breakdown -->
+          {ftiScores.length > 0 && (
+            <div class="flex flex-wrap gap-x-6 gap-y-3">
+              {ftiScores.map((score) => (
+                <div class="flex flex-col gap-0.5 min-w-[72px]">
+                  <span class="text-xs text-gray-400 uppercase tracking-wider whitespace-nowrap">
+                    {score.label}
+                  </span>
+                  <span class:list={['text-lg font-bold', score.colorClass]}>
+                    {score.value.toFixed(1)}
+                  </span>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       )}
 
