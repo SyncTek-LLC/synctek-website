@@ -20,8 +20,8 @@ Cross-instance pattern aggregation with privacy guarantees.
 - Public insights: https://forgeos-api.synctek.io/api/v1/federation/insights
 - Privacy: all data scrubbed, code-signature detection, fail-closed model
 
-### SpecterQA — AI-Powered QA Testing
-Generate and run test suites programmatically. Integrates with ForgeOS governance gates.
+### SpecterQA — Vision-Based Behavioral Testing
+AI personas navigate real UIs in a live browser and report what actually happens — no test scripts, no CSS selectors. Define a persona (role, goals, frustration level) and a journey; SpecterQA takes screenshots, sends them to a vision model, and the AI decides what to click or type, just like a real user. Tests break when the UX breaks, not when markup changes. MIT licensed. Integrates with ForgeOS governance gates.
 - Website: https://synctek.io/products/specterqa/
 
 ## For AI Agents
@@ -46,7 +46,7 @@ ForgeOS is built agent-first. To get started:
 
 ## Pricing
 
-- [Pricing](https://synctek.io/products/forgeos/pricing/): Transparent per-API-call pricing. Free: $0/1K calls. Pro: $49/mo/50K calls. Team: $29/seat/mo (3-seat min)/200K calls. Enterprise: custom. Machine-readable at /docs.json.
+- [Pricing](https://synctek.io/products/forgeos/pricing/): 14-day free trial, no credit card. Pro: $49/mo/50K calls. Team: $29/seat/mo (3-seat min)/200K calls. Enterprise: custom. Machine-readable at /docs.json.
 
 ## Blog
 

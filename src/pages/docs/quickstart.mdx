@@ -8,7 +8,17 @@ description: "Get ForgeOS running in under 3 minutes. Register, create a project
 
 Get ForgeOS running in under 3 minutes. By the end of this guide, your AI agent will be calling governance tools before every action.
 
-## 1. Register an account
+## 1. Create an account
+
+The fastest way to get started is through the ForgeOS dashboard:
+
+**[Sign up at forgeos.synctek.io/register](https://forgeos.synctek.io/register)** — no credit card required. 14-day free trial, full Pro-tier access.
+
+After registering, you will be taken straight to your dashboard where you can create a project and generate an API key.
+
+### Alternative: register via curl
+
+If you prefer to stay in the terminal:
 
 ```bash
 curl -X POST https://forgeos-api.synctek.io/auth/register \
@@ -16,9 +26,7 @@ curl -X POST https://forgeos-api.synctek.io/auth/register \
   -d '{"email": "you@company.com", "password": "your-secure-password"}'
 ```
 
-You will receive a `user_id` in the response. Save it.
-
-## 2. Log in and get a session
+You will receive a `user_id` in the response. Log in to get a session:
 
 ```bash
 curl -X POST https://forgeos-api.synctek.io/auth/login \
@@ -27,9 +35,13 @@ curl -X POST https://forgeos-api.synctek.io/auth/login \
   -c cookies.txt
 ```
 
-This sets a `forge_session` cookie. Use `-b cookies.txt` on subsequent requests, or use an API key (see [Authentication](/docs/auth/)).
+This sets a `forge_session` cookie. Use `-b cookies.txt` on subsequent requests.
 
-## 3. Create a project
+## 2. Create a project
+
+From the dashboard, click **New Project**, give it a name, and select your platform. The project ID (e.g., `proj_a1b2c3d4`) appears in the project settings — you will need it when configuring the MCP server.
+
+### Alternative: create a project via curl
 
 ```bash
 curl -X POST https://forgeos-api.synctek.io/api/projects \
@@ -42,15 +54,11 @@ curl -X POST https://forgeos-api.synctek.io/api/projects \
   }'
 ```
 
-Note the `id` in the response (e.g., `proj_a1b2c3d4`). You will use this as your `project_id`.
+## 3. Generate an API key
 
-## 4. Generate an API key
+From the dashboard, go to **Settings → API Keys** and generate a new key. Your key will have the prefix `fos_` and is shown only once — store it securely. This key is required for the MCP server and CLI.
 
-API keys are the recommended auth method for MCP and programmatic access. Generate one from the dashboard or via API after logging in.
-
-Your API key will have the prefix `fos_` and is shown only once. Store it securely.
-
-## 5. Install the package
+## 4. Install the package
 
 ForgeOS ships as a single npm package — `@synctek/forgeos` — which includes:
 - The **MCP server**: connects your editor's AI agent directly to 21 governance tools
@@ -70,7 +78,7 @@ Or use `npx` for zero-install (MCP server):
 npx -y @synctek/forgeos@latest
 ```
 
-### 5a. CLI quickstart (optional)
+### 4a. CLI quickstart (optional)
 
 If you prefer working from the terminal, the `forge` CLI is available after global install:
 
@@ -89,7 +97,7 @@ forge gate status --changeset cs_abc123
 
 The CLI and MCP server share the same ForgeOS instance — you can use both together.
 
-## 6. Configure your editor
+## 5. Configure your editor
 
 ### Cursor
 
@@ -159,7 +167,7 @@ Any MCP-compatible client works. Set these environment variables:
 
 Then run the MCP server via stdio: `npx -y @synctek/forgeos@latest`
 
-## 7. Run your first governance command
+## 6. Run your first governance command
 
 Open your editor and ask your AI agent:
 
