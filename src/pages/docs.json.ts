@@ -29,7 +29,8 @@ export const GET: APIRoute = () => {
     rate_limits: [
       { tier: 'free', requests_per_month: 1000, requests_per_minute: 20, ai_review_limit: null },
       { tier: 'pro', price_usd_per_month: 49, requests_per_month: 50000, requests_per_minute: 100, ai_review_limit: '10/min' },
-{ tier: 'enterprise', requests_per_month: 'custom', requests_per_minute: 'custom', ai_review_limit: 'custom' },
+      { tier: 'team', price_usd_per_seat_per_month: 29, minimum_seats: 3, requests_per_month: 200000, requests_per_minute: 100, ai_review_limit: '10/min' },
+      { tier: 'enterprise', requests_per_month: 'custom', requests_per_minute: 'custom', ai_review_limit: 'custom' },
     ],
     categories: [
       {

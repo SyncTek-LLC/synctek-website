@@ -33,6 +33,13 @@ export default {
   pricing: [
     { tier: 'Free', price: '$0', description: '1,000 API requests/month, 20 req/min — get started with ForgeOS governance' },
     { tier: 'Pro', price: '$49/mo', description: '50,000 API requests/month, 100 req/min, 10 AI reviews/min — full enforcement suite' },
+    {
+      tier: 'Team',
+      price: '$29/seat/mo',
+      description: '3-seat minimum. 200,000 API requests/month. Shared projects, role-based access.',
+      cta: 'Start free trial',
+      ctaUrl: 'https://app.synctek.io/register?plan=team',
+    },
     { tier: 'Enterprise', price: 'Custom', description: 'Unlimited requests, dedicated tenant, SLA, DPA, security questionnaire' },
   ],
 

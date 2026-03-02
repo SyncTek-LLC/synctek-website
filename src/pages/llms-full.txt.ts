@@ -173,6 +173,7 @@ Authentication and registration endpoints are public. All other endpoints requir
 Tier | Requests/month | Requests/minute | AI review limit
 Free | 1,000 | 20 | None
 Pro ($49/mo) | 50,000 | 100 | 10/min
+Team ($29/seat/mo, 3-seat min) | 200,000 | 100 | 10/min
 Enterprise | Custom | Custom | Custom
 
 429 Too Many Requests includes Retry-After header. Use exponential backoff. Maximum 3 retries.

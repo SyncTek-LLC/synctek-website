@@ -46,7 +46,7 @@ ForgeOS is built agent-first. To get started:
 
 ## Pricing
 
-- [Pricing](https://synctek.io/forgeos/pricing/): Transparent per-API-call pricing. Machine-readable at /pricing.json.
+- [Pricing](https://synctek.io/products/forgeos/pricing/): Transparent per-API-call pricing. Free: $0/1K calls. Pro: $49/mo/50K calls. Team: $29/seat/mo (3-seat min)/200K calls. Enterprise: custom. Machine-readable at /docs.json.
 
 ## Blog
 
