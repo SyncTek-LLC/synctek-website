@@ -1,7 +1,7 @@
 # Terms of Service
 
 **Effective Date:** February 27, 2026
-**Last Updated:** February 27, 2026
+**Last Updated:** March 2, 2026
 
 These Terms of Service ("Terms") govern your access to and use of ForgeOS, the AI-powered software governance platform operated by SyncTek LLC ("SyncTek," "we," "us," or "our"), available at synctek.io and forgeos.synctek.io. By creating an account or using ForgeOS, you ("User," "you," or "your") agree to be bound by these Terms. If you are accepting on behalf of an organization, you represent that you have authority to bind that organization.
 
@@ -47,14 +47,28 @@ The Free Tier provides access to local code analysis and trust scoring features 
 
 ### 4.2 Paid Subscription Plans
 
-We offer the following paid subscription tiers:
+We offer the following paid subscription tiers for the ForgeOS governance platform:
 
 | Plan | Price | Description |
 |------|-------|-------------|
-| Pro | $49/month | Individual developers — full platform access |
-| Team | $149/month | Up to 10 seats — collaborative governance workflows |
+| Free | $0/month | 1,000 API requests/month — local analysis and trust scoring |
+| Pro | $49/month | Individual developers — full platform access, 50,000 API calls/month |
+| Team | $29/seat/month (3-seat minimum, $87/month base) | Collaborative governance workflows, 200,000 API calls/month |
+| Enterprise | Custom pricing | Dedicated tenant, 4h SLA, security questionnaire support, DPA on request |
 
 Pricing is subject to change with 30 days' notice as described in Section 14.
+
+### 4.2a ForgeOS Trust Index (FTI) Subscription Plans
+
+The ForgeOS Trust Index (FTI) is available as a standalone product with the following pricing:
+
+| Plan | Price | Description |
+|------|-------|-------------|
+| FTI Free | $0 | 1,000 API calls/month — badges are always free and require no API key |
+| FTI Pro | $99/year (equivalent to approximately $12/month) | 10,000 API calls/month — full trust profile access, priority scoring |
+| FTI Enterprise | Custom pricing | Unlimited API calls, SLA, private registry scoring, dedicated support |
+
+FTI badge embeds are and will remain permanently free with no API key required. FTI Pro and Enterprise plans govern authenticated trust profile API access.
 
 ### 4.3 Auto-Renewal
 
@@ -410,4 +424,4 @@ For legal notices: info@synctek.io
 
 ---
 
-*These Terms of Service were last updated on February 27, 2026. Previous versions are available upon request.*
+*These Terms of Service were last updated on March 2, 2026. Previous versions are available upon request.*

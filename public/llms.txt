@@ -46,7 +46,8 @@ ForgeOS is built agent-first. To get started:
 
 ## Pricing
 
-- [Pricing](https://synctek.io/products/forgeos/pricing/): 14-day free trial, no credit card. Pro: $49/mo/50K calls. Team: $29/seat/mo (3-seat min)/200K calls. Enterprise: custom. Machine-readable at /docs.json.
+- [ForgeOS Pricing](https://synctek.io/products/forgeos/pricing/): 14-day free trial, no credit card. Free: $0/1K API calls. Pro: $49/mo/50K calls. Team: $29/seat/mo (3-seat min, $87/mo base)/200K calls. Enterprise: custom. Machine-readable at /docs.json.
+- [FTI Pricing](https://synctek.io/products/forgeos/fti/): Badges always free, no API key required. FTI Pro: $99/year (10K API calls/month). FTI Enterprise: custom pricing.
 
 ## Blog
 
