@@ -386,6 +386,30 @@ function getTierColor(score: number): string {
       <p class="text-[#9CA3AF] mt-2 max-w-xl">Badges are public — no key needed. Trust profiles require your ForgeOS API key (found in your <a href="https://forgeos.synctek.io/settings" class="text-[#58A6FF] hover:underline">dashboard settings</a>).</p>
     </div>
 
+    <!-- Live Scoreboard CTA -->
+    <div class="mb-8 rounded-xl p-6" style="background: linear-gradient(135deg, rgba(88,166,255,0.08) 0%, rgba(16,185,129,0.04) 100%); border: 1px solid rgba(88,166,255,0.2);">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <p class="text-sm font-semibold text-[#E6EDF3] mb-1">Explore the live scoreboard</p>
+          <p class="text-sm text-[#9CA3AF]">284K packages scored across PyPI, npm, Cargo, and Go.</p>
+        </div>
+        <a
+          href="https://forgeos.synctek.io/fti"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center px-6 py-2.5 rounded-md font-medium text-white no-underline transition-all duration-150 flex-shrink-0"
+          style="background: #10B981;"
+          onmouseover="this.style.background='#059669'"
+          onmouseout="this.style.background='#10B981'"
+        >
+          Open scoreboard
+          <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+          </svg>
+        </a>
+      </div>
+    </div>
+
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
       <!-- Badge embed (public, no key) -->
       <div class="rounded-xl overflow-hidden" style="border: 1px solid #1F1F1F;">
