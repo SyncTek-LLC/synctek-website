@@ -1,0 +1,227 @@
+---
+title: "Ship Your First Governed Project in 5 Minutes"
+description: "Install ForgeOS, initialize governance, create an initiative, pass a gate, and verify your trust ledger — real commands, real output, under 5 minutes."
+date: 2026-03-03
+author: "SyncTek Team"
+category: tutorials
+tags: ["forgeos", "tutorial", "getting-started", "cli"]
+product: forgeos
+draft: false
+---
+
+Five minutes. That's how long it takes to go from zero to a governed project with a cryptographic audit trail and your first gate enforced.
+
+This is the real sequence — real commands, real output, no abstractions. By the end of this post, you'll have initialized governance infrastructure, created an initiative, hit your first gate block, passed it, and verified your ledger.
+
+## What you need
+
+- Node.js 18+ (check with `node --version`)
+- An AI coding tool: Claude Code, Cursor, or any MCP-compatible agent
+- A terminal
+
+That's it. No database. No infrastructure to stand up. ForgeOS is API-first — the CLI connects to the hosted enforcement layer and you're running in seconds.
+
+## Step 1: Install (30 seconds)
+
+```bash
+npm install -g @synctek/forgeos
+forge --version
+# 2.1.2
+```
+
+The `forge` CLI is MIT-licensed and open source. It connects to the ForgeOS API where the enforcement engine and audit ledger live.
+
+## Step 2: Initialize governance (30 seconds)
+
+Navigate to your project directory:
+
+```bash
+cd your-project
+forge init
+```
+
+Output:
+
+```
+Initializing ForgeOS governance...
+✓ Ed25519 keypair generated (project identity)
+✓ Governance pathway loaded (standard — 10 gates)
+✓ Audit ledger opened (genesis entry written)
+
+Project ID: proj_k8x2m9p1
+Keypair fingerprint: sha256:4a7f...c3e2
+Ledger: https://forgeos.synctek.io/ledger/proj_k8x2m9p1
+
+Governance infrastructure ready. No code has been written.
+```
+
+Three things just happened before your agents touched anything:
+
+1. An Ed25519 keypair was generated and bound to this project. Every authorized action going forward is signed with it.
+2. A 10-gate governance pathway was loaded. Gates define what evidence is required before each stage of work can proceed.
+3. An append-only, hash-chained audit ledger was opened. Every gate decision, artifact, and violation goes here. The chain can't be silently edited.
+
+## Step 3: Create an initiative (30 seconds)
+
+All work in ForgeOS happens inside an initiative. An initiative is the governed unit — the thing the gate system actually understands and enforces.
+
+```bash
+forge initiative create \
+  --name "User Authentication" \
+  --type standard
+```
+
+Output:
+
+```
+Initiative created: INIT-2026-001
+Pathway: standard (10 gates)
+Current gate: GATE_1_INTENT
+Status: In progress
+
+Next required artifacts:
+  - scope_doc (scoping document)
+  - exec_spec (executive specification)
+```
+
+Every meaningful change — new feature, significant refactor, infrastructure upgrade — starts with an initiative. Ad-hoc changes have no place in a governed system. The initiative is how ForgeOS knows what's in flight and what stage it's at.
+
+## Step 4: Hit your first gate block
+
+This is the important part. Try to check whether your agent is authorized to write code:
+
+```bash
+forge gate-check \
+  --initiative-id INIT-2026-001 \
+  --work-type code
+```
+
+Output:
+
+```
+CODE_BLOCKED
+
+Reason: architecture gate not yet approved
+Required gate: GATE_4_ARCH_APPROVED
+Missing artifacts:
+  - architecture_doc
+  - exec_spec
+  - board_review (if pathway: standard)
+
+Your agent cannot proceed with code work until this gate is approved.
+```
+
+This is enforcement. `CODE_BLOCKED` is not a warning — it's a hard stop. Your agent receives this signal and cannot proceed. The gate doesn't care that the feature is urgent. It cares that the architecture was reviewed.
+
+This is the central guarantee of governance-first development: agents can't act until the required conditions are met.
+
+## Step 5: Pass the intent gate
+
+Work through gates by submitting the required artifacts and approving:
+
+```bash
+# Submit your scoping document as evidence
+forge gate approve \
+  --initiative-id INIT-2026-001 \
+  --gate intent \
+  --evidence "Scope defined in docs/auth-requirements.md. Auth via JWT, refresh tokens, session management."
+```
+
+Output:
+
+```
+✓ GATE_1_INTENT approved
+Approved by: proj_k8x2m9p1 (Ed25519)
+Timestamp: 2026-03-03T14:22:11Z
+Ledger entry: #2 (hash: 7f3a...d8c1)
+
+Next gate: GATE_4_ARCH_APPROVED
+Required artifacts:
+  - architecture_doc
+  - exec_spec
+```
+
+The gate approval is signed with your project keypair and written to the ledger. This entry now exists cryptographically — it can't be removed without breaking the hash chain.
+
+Continue through the architecture gate the same way, submitting your architecture doc and exec spec as evidence. Once `GATE_4_ARCH_APPROVED` is cleared:
+
+```bash
+forge gate-check \
+  --initiative-id INIT-2026-001 \
+  --work-type code
+# → CODE_AUTHORIZED
+# Your agents can proceed.
+```
+
+## Step 6: Verify your ledger
+
+After working through the gates, verify the integrity of your audit trail:
+
+```bash
+forge verify-ledger --initiative-id INIT-2026-001
+```
+
+Output:
+
+```
+Chain intact. 5 entries. 100% signature verification.
+
+Entry #1: 2026-03-03T14:01:33Z — genesis
+Entry #2: 2026-03-03T14:22:11Z — gate approved: GATE_1_INTENT
+Entry #3: 2026-03-03T14:31:04Z — artifact submitted: architecture_doc
+Entry #4: 2026-03-03T14:35:22Z — artifact submitted: exec_spec
+Entry #5: 2026-03-03T14:36:01Z — gate approved: GATE_4_ARCH_APPROVED
+
+Keypair: sha256:4a7f...c3e2
+Ledger signature: valid
+```
+
+Every gate decision, every artifact submission is in the ledger. The hash chain means tampering with any entry invalidates everything that follows. If the chain is intact, the record is complete.
+
+## Step 7: Connect your AI agent via MCP
+
+ForgeOS ships as an MCP server with 21 governance tools. Add it to your MCP config:
+
+```json
+{
+  "mcpServers": {
+    "forgeos": {
+      "command": "npx",
+      "args": ["-y", "@synctek/forgeos-mcp"],
+      "env": {
+        "FORGEOS_API_KEY": "your-key"
+      }
+    }
+  }
+}
+```
+
+Your API key is in the dashboard at [forgeos.synctek.io](https://forgeos.synctek.io).
+
+Once connected, your agent has the full governance layer in its toolset:
+
+- `forge_gate_check` — called automatically before any code action
+- `forge_initiative_status` — surface the current gate and what's needed to advance
+- `forge_gate_approve` — submit artifacts and advance a gate
+- `forge_verify_ledger` — check chain integrity on demand
+- `forge_fti_score` — query trust scores for dependency decisions
+
+When ForgeOS is connected via MCP, gate checks happen automatically. Your agent doesn't need to remember to call them. The enforcement is part of the toolchain.
+
+## What you just built
+
+You have a governed project. Every change is tracked. Every gate is enforced. Your ledger is tamper-evident and growing.
+
+When someone asks "what happened and who authorized it?" — the answer is in the ledger. Not a log file you hope was capturing the right things. A cryptographically verifiable sequence of every governance action taken on the project.
+
+That answer took five minutes to set up. It will pay back for the entire lifecycle of the system.
+
+---
+
+**Where to go next:**
+
+- **Dashboard:** [forgeos.synctek.io](https://forgeos.synctek.io) — visualize your initiative pipeline, inspect the ledger, manage team projects and API keys
+- **API docs:** [forgeos-api.synctek.io](https://forgeos-api.synctek.io) — 135+ endpoints for building governance into your own tooling
+- **FTI trust score:** Check your project's trust score under the Trust tab in the dashboard
+
+[Start the 14-day trial →](/forgeos)

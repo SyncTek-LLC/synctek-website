@@ -1,0 +1,159 @@
+---
+title: "ForgeOS Trust Index: A Credit Score for Software"
+description: "We scored 599 packages. FTI measures 6 dimensions of software trustworthiness — not just stars and downloads. Context-aware, agent-native, Ed25519-signed."
+date: 2026-03-03
+author: "SyncTek Team"
+category: releases
+tags: ["fti", "trust-index", "forgeos", "open-source"]
+product: forgeos
+draft: false
+---
+
+Stars lie. Downloads can be gamed. Vulnerability scanners tell you about known CVEs — nothing about the package's future.
+
+When an AI agent is selecting dependencies, choosing which API vendor to call, or deciding which tool to delegate work to, it needs a trust signal it can actually build policy on. Not a proxy metric. A trust score.
+
+That's what ForgeOS Trust Index (FTI) is. We scored 599 packages to build it. Here's how it works.
+
+## What FTI Measures
+
+FTI evaluates software packages and AI agents across six dimensions. Each is scored 0–100. The aggregate produces a single trust score, also 0–100.
+
+| Dimension | What it measures |
+|-----------|-----------------|
+| Security posture | Vulnerability history, dependency exposure, patch response time |
+| Maintainability | Code churn, test coverage, dependency freshness |
+| Documentation quality | Completeness, accuracy, update recency |
+| Community health | Contributor diversity, issue response rate, governance signals |
+| Supply chain integrity | Provenance, signing, reproducible builds |
+| Improvement velocity | Release cadence, resolved issues, regression trends |
+
+The score is deterministic. Given the same inputs, FTI always produces the same result. There is no LLM making judgment calls at query time. The computation is defined, auditable, and reproducible. This is a feature, not a limitation. A score that varies with model temperature is not a signal you can build policy on.
+
+## Why Stars and Downloads Fail
+
+A package with 50,000 weekly downloads might have a maintainer who last responded to an issue two years ago. A GitHub star count reflects enthusiasm at a point in time — it doesn't update when a project is abandoned. A package can have zero known CVEs and still score poorly on supply chain integrity because it has no verifiable provenance chain.
+
+These are not edge cases. They are common patterns.
+
+The problem is that stars and downloads are not designed to answer the question "should my system trust this?" They answer "is this popular?" Popularity and trustworthiness are correlated at best, uncorrelated at worst.
+
+FTI is built for a different question. Not "what do people like?" but "what would I trust in a compliance-sensitive production environment, verified by someone who looked at the actual evidence?"
+
+## The Fit-Over-Rank Philosophy
+
+FTI does not produce a global ranked list. It produces a trust score — and trust is contextual.
+
+A solo developer building a weekend CLI tool and a bank's compliance engineering team have different trust requirements. The weekend developer cares mostly about documentation quality and maintenance velocity. The bank cares deeply about supply chain integrity, security posture, and whether there's a CVE remediation SLA.
+
+FTI supports context parameters that shift which dimensions are weighted most heavily.
+
+```bash
+# Query with context
+curl https://forgeos-api.synctek.io/fti/score \
+  -H "Authorization: Bearer $FTI_TOKEN" \
+  -d '{"package": "axios", "registry": "npm", "context": "compliance"}'
+```
+
+The response you get for `context: compliance` weights supply chain integrity and security posture higher than it would for `context: prototype`. Same package. Different context. Different recommendation.
+
+This is fit-over-rank: your top choice for your specific requirements, not THE top choice on an undifferentiated global list. A package that's Platinum for a startup's prototype might be Silver for a fintech's production system. That's not a flaw — it's the point.
+
+## Ed25519 Signed Scores
+
+Every FTI response is signed with Ed25519.
+
+```json
+{
+  "package": "axios",
+  "version": "1.6.7",
+  "score": 84,
+  "tier": "gold",
+  "dimensions": {
+    "security": 91,
+    "maintainability": 88,
+    "documentation": 79,
+    "community_health": 85,
+    "supply_chain": 82,
+    "improvement_velocity": 77
+  },
+  "context": "compliance",
+  "signature": "ed25519:3045022100...",
+  "timestamp": "2026-03-03T14:22:00Z"
+}
+```
+
+The score is not just a number. It is a cryptographic artifact. You can verify the response was produced by the FTI service and has not been tampered with since it was issued.
+
+When an agent queries FTI at runtime and gets a score, it receives a verifiable attestation — not a dashboard value you hope is current, but a signed record tied to a specific version at a specific timestamp. That attestation can be logged, audited, and held as evidence of due diligence.
+
+For compliance teams: this is the difference between "we checked the score" and "we have a signed attestation of the score at decision time."
+
+## The Tiering System
+
+| Tier | Score range | What it means |
+|------|------------|---------------|
+| Platinum | 90–100 | Exceptional across all dimensions |
+| Gold | 80–89 | Strong with minor gaps |
+| Silver | 70–79 | Adequate for most contexts |
+| Bronze | 60–69 | Use with awareness of gaps |
+| Unrated | Below 60 | Insufficient signal for recommendation |
+
+The tiers make the score actionable without requiring every consumer to write their own threshold logic. An agent can be configured to auto-approve Platinum, warn on Bronze, and block Unrated — without writing a single line of threshold comparison code. The tier is the decision boundary.
+
+## How We Got to 599 Packages
+
+FTI launched with 599 packages scored across npm, PyPI, and GitHub. The initial corpus covers:
+
+- The top 200 npm packages by download volume
+- The top 150 PyPI packages by monthly installs
+- 100 MCP servers from the official registry
+- 149 packages across AI agent tooling, orchestration frameworks, and governance tools
+
+The corpus is growing. Package owners can request scoring via the API. Community contributors can submit packages for inclusion. The roadmap includes automated corpus expansion based on dependency graphs — if your project uses a package, we'll score its dependencies too.
+
+## Agent-Native via MCP
+
+FTI ships as an MCP tool, which means any MCP-compatible agent can query trust scores as part of its decision-making — without human involvement.
+
+```json
+{
+  "mcpServers": {
+    "forgeos": {
+      "command": "npx",
+      "args": ["-y", "@synctek/forgeos-mcp"],
+      "env": {
+        "FORGEOS_API_KEY": "your-key"
+      }
+    }
+  }
+}
+```
+
+Once connected, your agent has `forge_fti_score` in its toolset. When it encounters a package selection decision, it can query FTI, receive a signed score, compare it against its configured threshold for the current context, and make a documented trust determination — all within a single action.
+
+The trust decision is logged. The signed attestation is stored. The audit trail is complete. No human needed in the loop for routine selections. Human review triggered for anything that falls below threshold.
+
+This is what "agent-native" actually means: not a UI that agents can theoretically use, but a protocol interface that agents can call as part of their natural decision-making.
+
+## We Scored Ourselves
+
+ForgeOS scored 69. Bronze.
+
+We publish this. You can verify it:
+
+```
+GET https://forgeos-api.synctek.io/v1/trust/npm/synctek/forgeos
+```
+
+The code quality is not the issue — 2,779 tests, 95% coverage, A+ static analysis. Bronze because the score reflects reality: low community adoption (new product), limited third-party reviews, public documentation that doesn't yet match our internal depth.
+
+A trust index that only produces scores you want to see is not a trust index. It's marketing. We built FTI to be honest. That applies to us.
+
+The score will improve as adoption grows and documentation catches up. That's how it should work.
+
+---
+
+Check your package's trust score at [forgeos-api.synctek.io](https://forgeos-api.synctek.io). Badge embeds available for READMEs and documentation pages.
+
+[Start the 14-day trial →](/forgeos)

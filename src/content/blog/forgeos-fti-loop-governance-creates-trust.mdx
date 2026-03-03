@@ -1,0 +1,119 @@
+---
+title: "The ForgeOS + FTI Loop: How Governance Creates Trust"
+description: "ForgeOS enforces governance. Governance produces evidence. FTI measures that evidence. The score improves. No competitor has this loop."
+date: 2026-03-03
+author: "SyncTek Team"
+category: engineering
+tags: ["forgeos", "fti", "governance", "trust"]
+product: forgeos
+draft: false
+---
+
+Most software quality signals are lagging indicators. Stars accumulate after adoption. Downloads reflect decisions made weeks ago. Vulnerability scores update when CVEs are published — not when the vulnerability is introduced.
+
+FTI is designed to be a leading indicator. It measures the conditions that produce trustworthy software, not just the reputation that follows.
+
+But FTI and ForgeOS are not independent tools. They are two parts of a loop. Understanding how the loop works explains why teams using ForgeOS naturally produce higher trust scores — and why no competing governance tool can replicate this.
+
+## The Loop, Stated Simply
+
+ForgeOS enforces governance. Governance produces evidence. FTI measures that evidence. Higher evidence scores mean higher trust scores. Higher trust scores feed back into the decisions that teams make about which tools to adopt. Adoption accelerates the feedback.
+
+That's the loop. Now let's go through each step.
+
+## Step 1: ForgeOS Enforces Governance
+
+When a ForgeOS-governed project runs, gate enforcement is structural.
+
+Before any agent writes code, it must pass the architecture gate. Before any agent deploys to production, it must pass the verification and security gates. Before any gate is passed, required artifacts must be submitted. The artifacts must be signed by an authorized identity.
+
+There is no override. There is no "we'll document this later." The gate exists before the agent acts. The artifact is produced or the action is blocked.
+
+What this means in practice: every ForgeOS-governed project, by virtue of operating under the system, produces a continuous stream of governance artifacts.
+
+- Architecture documents, with timestamps and approver signatures
+- Security reviews, linked to the specific code they reviewed
+- QA sign-offs, with coverage data attached
+- Deployment records, with the authorization chain that led to them
+- Violations, when enforcement was triggered, and how they were resolved
+
+The artifacts are not optional. They are the mechanism by which gates open. ForgeOS does not let you move forward without them.
+
+## Step 2: Governance Produces Evidence
+
+The artifacts don't just live in a project folder. They go into the audit ledger.
+
+The ledger is append-only and hash-chained. Each entry references the hash of the previous entry, so the chain is self-evidencing. Tampering with any record invalidates every record that follows. The ledger is signed with the project's Ed25519 keypair.
+
+What accumulates over time is not documentation. It is cryptographically verifiable evidence.
+
+Evidence of architecture reviews: `"This code was not written until this architecture was reviewed and approved by this identity on this date."`
+
+Evidence of security posture: `"This deployment passed security review. Here is the review artifact, here is the reviewer identity, here is the timestamp."`
+
+Evidence of improvement velocity: `"This project has closed 23 issues in the last 90 days. Each closure is in the ledger with resolution artifacts."`
+
+Evidence of supply chain integrity: `"Every dependency selection in this project was made against a signed FTI score above the configured threshold."`
+
+Each of these is a dimension FTI measures. And every one of them is produced automatically by a team operating under ForgeOS governance — not because they're trying to score well, but because governance requires the artifacts.
+
+## Step 3: FTI Measures the Evidence
+
+FTI pulls from multiple data sources when computing a score. Public signals — GitHub activity, npm metadata, release cadence — form one layer. For ForgeOS-governed projects, FTI also pulls from the ledger.
+
+When FTI scores a ForgeOS-governed project, it can answer questions that no amount of GitHub star-counting can address:
+
+- Does this project have a documented architecture review for every significant change?
+- Does this project have a verifiable security review before every production deployment?
+- When this project found a vulnerability, how fast was it resolved and documented?
+- Can you show me the authorization chain for the last deployment?
+
+For a non-governed project, the answers to these questions are either "no" or "we have logs somewhere." For a ForgeOS-governed project, the answers are in the ledger, signed, and verifiable.
+
+That evidence gap directly translates to a score gap. Teams using ForgeOS don't game FTI. They just generate the evidence that FTI is designed to measure.
+
+## Step 4: The Score Improves
+
+The compound effect matters here.
+
+A project's FTI score improves over time as governance evidence accumulates. The first gate passed adds to the ledger. The first security review adds to the ledger. The first production deployment adds to the ledger. Each addition strengthens the dimensions FTI measures.
+
+This is different from how most reputation systems work. A GitHub star is a one-time event. FTI's evidence dimensions are continuous. A project with 90 days of consistent gate-passing, security reviews, and resolved issues scores higher than a project with one spectacular launch and three months of silence.
+
+The trajectory of the score reflects the health of the project's governance. An improving score is evidence that governance is active. A plateauing or declining score is a signal that governance cadence has slipped.
+
+## Step 5: The Score Feeds Back
+
+FTI scores are queryable at agent decision time. When an agent is selecting a dependency, it can query FTI and receive a signed score. The trust determination becomes part of the agent's decision process.
+
+This creates the second half of the loop.
+
+Teams with high FTI scores get selected by agents operating under trust-enforcing policies. Those teams continue operating under ForgeOS governance, which continues producing evidence, which continues improving the score. The adoption signal strengthens the community health dimension — one of the six FTI measures — which further improves the score.
+
+Teams that don't govern their projects don't accumulate ledger evidence. Their scores reflect only public signals — download counts, star counts, vulnerability history. Against a ForgeOS-governed competitor, those signals are weaker on the dimensions that matter most for compliance-sensitive and high-stakes contexts.
+
+## Why No Competitor Has This Loop
+
+Governance tools and trust scoring tools exist separately. They are not designed to feed each other.
+
+A typical governance tool produces reports. Those reports may be stored as PDFs or exported as CSVs. They are not cryptographically verifiable. They are not structured for machine consumption. FTI cannot read them.
+
+A typical trust scoring tool pulls from public registries. It may include vulnerability scanning results. It does not know what governance process produced the code it is evaluating. It cannot distinguish between a deployment that went through six gates of review and one that was pushed directly to main.
+
+ForgeOS and FTI are built to be the same system. The ledger format that ForgeOS writes is the format that FTI reads. The evidence categories that ForgeOS mandates are the dimensions that FTI scores. The signatures that ForgeOS requires are the attestations that FTI verifies.
+
+This is not an integration. It is a design.
+
+## What This Means for Teams
+
+If you're building software that agents will use — libraries, APIs, tooling — your FTI score is a commercial signal. Agents operating under trust-enforcing policies will select higher-scored packages over lower-scored alternatives, all else equal.
+
+If you're building agents that select and use software — orchestration frameworks, dependency managers, code generators — FTI scores give your agents a verified trust basis for selection decisions that you can audit and document.
+
+ForgeOS produces the governance evidence that FTI needs. FTI provides the trust signal that governed projects earn. The loop runs automatically for any project operating under ForgeOS governance.
+
+You don't have to think about the loop to benefit from it. You just have to run `forge init`.
+
+---
+
+[Start the 14-day trial →](/forgeos) — governance infrastructure in 30 seconds, trust signal that compounds over time.
