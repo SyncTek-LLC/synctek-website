@@ -80,6 +80,24 @@ const tiers = [
   { name: 'Unrated', range: '0–39', color: '#EF4444', description: 'Significant concerns. Avoid or remediate.' },
 ];
 
+// Fetch live package count from public stats endpoint (no auth required)
+let packagesIndexed: number | null = null;
+try {
+  const statsRes = await fetch('https://forgeos-api.synctek.io/v1/stats');
+  if (statsRes.ok) {
+    const stats = await statsRes.json();
+    packagesIndexed = typeof stats.packages_indexed === 'number' ? stats.packages_indexed : null;
+  }
+} catch {
+  // Build-time fetch failed — fall back to generic copy
+}
+
+function formatPackageCount(n: number): string {
+  if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M`;
+  if (n >= 1_000) return `${(n / 1_000).toFixed(0)}K`;
+  return n.toLocaleString();
+}
+
 // Score circle math: circumference = 2π × 52 ≈ 326.7
 // For score 69: dashoffset = 327 × (1 - 0.69) ≈ 101
 const SCORE = 69;
@@ -391,7 +409,11 @@ function getTierColor(score: number): string {
       <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <p class="text-sm font-semibold text-[#E6EDF3] mb-1">Explore the live scoreboard</p>
-          <p class="text-sm text-[#9CA3AF]">284K packages scored across PyPI, npm, Cargo, and Go.</p>
+          <p class="text-sm text-[#9CA3AF]">
+            {packagesIndexed !== null
+              ? `${formatPackageCount(packagesIndexed)} packages scored across PyPI, npm, Cargo, and Go.`
+              : 'Packages scored across PyPI, npm, Cargo, and Go.'}
+          </p>
         </div>
         <a
           href="https://forgeos.synctek.io/fti"
