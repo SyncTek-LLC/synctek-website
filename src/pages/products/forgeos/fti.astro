@@ -116,6 +116,7 @@ function getTierColor(score: number): string {
 <BaseLayout
   title="ForgeOS Trust Index (FTI) — Deterministic Package Trust Scoring"
   description="The ForgeOS Trust Index scores any package in your stack 0–100 across six dimensions: Security, Maintainability, Documentation, Community Health, Supply Chain, and Improvement Velocity. Every score is deterministic and Ed25519-signed."
+  ogImage="/images/fti-trust-viz.png"
   jsonLd={jsonLd}
 >
   <!-- Hero -->
@@ -253,6 +254,21 @@ function getTierColor(score: number): string {
           </div>
         </div>
       </div>
+    </div>
+  </section>
+
+  <SectionDivider />
+
+  <!-- FTI trust network visualization -->
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div class="rounded-xl overflow-hidden flex items-center justify-center" style="background: #0A0A0A; border: 1px solid #1A2535;">
+      <img
+        src="/images/fti-trust-viz.png"
+        alt="FTI shield-shaped trust network visualization showing interconnected package trust relationships"
+        class="w-full h-auto block"
+        style="max-height: 380px; object-fit: contain;"
+        loading="lazy"
+      />
     </div>
   </section>
 

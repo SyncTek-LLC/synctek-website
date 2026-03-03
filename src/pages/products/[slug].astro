@@ -163,6 +163,7 @@ const finalFtiScores = liveFtiScores.length > 0 ? liveFtiScores : ftiScores;
 <BaseLayout
   title={product.name}
   description={product.tagline}
+  ogImage={slug === 'forgeos' ? '/images/forgeos-hero-nb2.png' : undefined}
   jsonLd={jsonLd}
 >
   <!-- Product header -->
@@ -304,6 +305,19 @@ const finalFtiScores = liveFtiScores.length > 0 ? liveFtiScores : ftiScores;
         )}
       </div>
     </div>
+
+    <!-- ForgeOS product hero image -->
+    {slug === 'forgeos' && (
+      <div class="mt-12 rounded-xl overflow-hidden" style="border: 1px solid #1F1F1F;">
+        <img
+          src="/images/forgeos-hero-nb2.png"
+          alt="ForgeOS trust score dashboard visualization"
+          class="w-full h-auto block"
+          style="max-height: 420px; object-fit: cover; object-position: center top;"
+          loading="lazy"
+        />
+      </div>
+    )}
   </section>
 
   <SectionDivider />
