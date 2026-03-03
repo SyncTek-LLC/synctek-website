@@ -96,9 +96,14 @@ const ftiScores: FtiScore[] = (() => {
   const labels: Record<string, string> = {
     security: 'Security',
     supplyChain: 'Supply Chain',
+    supply_chain: 'Supply Chain',
     documentation: 'Documentation',
     community: 'Community',
+    community_health: 'Community',
     maintainability: 'Maintainability',
+    improvement_velocity: 'Velocity',
+    operational: 'Operational',
+    governance: 'Governance',
   };
   return Object.entries(raw).map(([key, value]) => ({
     key,
@@ -107,6 +112,52 @@ const ftiScores: FtiScore[] = (() => {
     colorClass: value >= 80 ? 'text-[#3FB950]' : value >= 60 ? 'text-warning-amber' : 'text-error-red',
   }));
 })();
+
+// Fetch live FTI scores at build time from the ForgeOS Trust Index API.
+// The API returns a TrustProfile: { composite_score: number, dimensions: Record<string, number>, ... }
+let liveFtiScores: FtiScore[] = [];
+let ftiCompositeScore: number | null = null;
+const ftiApiUrl = fti && 'apiScoreUrl' in fti ? fti.apiScoreUrl as string : undefined;
+if (ftiApiUrl) {
+  try {
+    const res = await fetch(ftiApiUrl, {
+      headers: { 'Accept': 'application/json' },
+      signal: AbortSignal.timeout(5000),
+    });
+    if (res.ok) {
+      const data = await res.json();
+      const dimensionLabels: Record<string, string> = {
+        security: 'Security',
+        maintainability: 'Maintainability',
+        documentation: 'Documentation',
+        community_health: 'Community',
+        community: 'Community',
+        supply_chain: 'Supply Chain',
+        improvement_velocity: 'Velocity',
+        operational: 'Operational',
+        governance: 'Governance',
+      };
+      // Capture composite score from TrustProfile.composite_score
+      if (typeof data.composite_score === 'number') {
+        ftiCompositeScore = data.composite_score;
+      }
+      // API returns dimensions as Record<string, number> (flat dict of scores)
+      if (data.dimensions && typeof data.dimensions === 'object') {
+        liveFtiScores = Object.entries(data.dimensions as Record<string, number>).map(([key, score]) => ({
+          key,
+          label: dimensionLabels[key] ?? key,
+          value: typeof score === 'number' ? score : 0,
+          colorClass: score >= 80 ? 'text-[#3FB950]' : score >= 60 ? 'text-warning-amber' : 'text-error-red',
+        }));
+      }
+    }
+  } catch (e) {
+    // Build-time fetch failed — fall back to static scores if present
+    console.warn('FTI API fetch failed at build time:', e);
+  }
+}
+// Use live scores if available, fall back to static
+const finalFtiScores = liveFtiScores.length > 0 ? liveFtiScores : ftiScores;
 ---
 
 <BaseLayout
@@ -176,10 +227,18 @@ const ftiScores: FtiScore[] = (() => {
             )}
           </div>
 
+          <!-- Composite score (live API only) -->
+          {ftiCompositeScore !== null && (
+            <div class="flex items-baseline gap-2 mb-4">
+              <span class="text-3xl font-bold">{ftiCompositeScore.toFixed(1)}</span>
+              <span class="text-sm text-gray-400">/ 100</span>
+            </div>
+          )}
+
           <!-- Dimensional score breakdown -->
-          {ftiScores.length > 0 && (
+          {finalFtiScores.length > 0 && (
             <div class="flex flex-wrap gap-x-6 gap-y-3">
-              {ftiScores.map((score) => (
+              {finalFtiScores.map((score) => (
                 <div class="flex flex-col gap-0.5 min-w-[72px]">
                   <span class="text-xs text-gray-400 uppercase tracking-wider whitespace-nowrap">
                     {score.label}

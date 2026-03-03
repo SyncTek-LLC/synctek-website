@@ -29,13 +29,7 @@ export default {
     shieldBadgeUrl: 'https://forgeos-api.synctek.io/v1/badge/npm/synctek/forgeos/shield',
     flatBadgeUrl: 'https://forgeos-api.synctek.io/v1/badge/npm/synctek/forgeos/flat',
     trustProfileUrl: '/products/forgeos/fti/',
-    scores: {
-      security: 86.2,
-      supplyChain: 74.0,
-      documentation: 66.8,
-      community: 47.1,
-      maintainability: 73.2,
-    },
+    apiScoreUrl: 'https://forgeos-api.synctek.io/v1/trust/npm/synctek/forgeos',
   },
 
   pricing: [
