@@ -10,7 +10,7 @@ export default {
   href: '/products/forgeos/',
 
   ctaType: 'login' as const,
-  loginUrl: 'https://forgeos.synctek.io/login',
+  loginUrl: 'https://forgeos.synctek.io/',
   dashboardUrl: 'https://forgeos.synctek.io',
   support: {
     email: 'support@synctek.io',
