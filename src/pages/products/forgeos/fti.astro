@@ -31,12 +31,13 @@ function getScoreColor(score: number): string {
 // dimensions is defined after liveDimensions is populated by the live fetch below.
 // Dimensions array is constructed post-fetch so scores reflect live API data (or fallback).
 
+// Tier system — MUST match the ForgeOS engine (ScoreGauge.jsx, badge API)
 const tiers = [
-  { name: 'Platinum', range: '90–100', color: '#e2e8f0', description: 'Production-grade. Ship with confidence.' },
-  { name: 'Gold', range: '75–89', color: '#eab308', description: 'Strong trust posture. Minor gaps.' },
-  { name: 'Silver', range: '60–74', color: '#9ca3af', description: 'Acceptable. Improvement recommended.' },
-  { name: 'Bronze', range: '40–59', color: '#cd7f32', description: 'Notable risks. Review before shipping.' },
-  { name: 'Unrated', range: '0–39', color: '#ef4444', description: 'Significant concerns. Avoid or remediate.' },
+  { name: 'Exemplary', range: '95–100', color: '#e2e8f0', description: 'Production-grade. Ship with confidence.' },
+  { name: 'Trusted', range: '85–94', color: '#d97706', description: 'Strong trust posture. Minor gaps.' },
+  { name: 'Verified', range: '70–84', color: '#16a34a', description: 'Meets trust baseline. Safe to ship.' },
+  { name: 'Standard', range: '50–69', color: '#3b82f6', description: 'Acceptable. Improvement recommended.' },
+  { name: 'Risky', range: '0–49', color: '#ef4444', description: 'Significant concerns. Review before shipping.' },
 ];
 
 // Fetch live package count from public stats endpoint (no auth required)
@@ -57,20 +58,30 @@ function formatPackageCount(n: number): string {
   return n.toLocaleString();
 }
 
+// Tier labels — MUST match the ForgeOS engine (ScoreGauge.jsx, badge API)
 function getTierLabel(score: number): string {
-  if (score >= 90) return 'PLATINUM';
-  if (score >= 75) return 'GOLD';
-  if (score >= 60) return 'SILVER';
-  if (score >= 40) return 'BRONZE';
-  return 'UNRATED';
+  if (score >= 95) return 'EXEMPLARY';
+  if (score >= 85) return 'TRUSTED';
+  if (score >= 70) return 'VERIFIED';
+  if (score >= 50) return 'STANDARD';
+  return 'RISKY';
 }
 
 function getTierLabelMixed(score: number): string {
-  if (score >= 90) return 'Platinum';
-  if (score >= 75) return 'Gold';
-  if (score >= 60) return 'Silver';
-  if (score >= 40) return 'Bronze';
-  return 'Unrated';
+  if (score >= 95) return 'Exemplary';
+  if (score >= 85) return 'Trusted';
+  if (score >= 70) return 'Verified';
+  if (score >= 50) return 'Standard';
+  return 'Risky';
+}
+
+// Tier color for composite gauge ring — matches engine ScoreGauge
+function getTierColor(score: number): string {
+  if (score >= 95) return '#e2e8f0';
+  if (score >= 85) return '#d97706';
+  if (score >= 70) return '#16a34a';
+  if (score >= 50) return '#3b82f6';
+  return '#ef4444';
 }
 
 // Fetch live self-score for @synctek/forgeos (public endpoint, no auth required)
@@ -112,13 +123,6 @@ const CIRCUMFERENCE = 326.7;
 const DASHOFFSET = Math.round(CIRCUMFERENCE * (1 - SCORE / 100));
 const TIER_LABEL = getTierLabel(SCORE);
 const TIER_LABEL_MIXED = getTierLabelMixed(SCORE);
-
-function getTierColor(score: number): string {
-  if (score >= 80) return '#22c55e';
-  if (score >= 60) return '#6366f1';
-  if (score >= 40) return '#f59e0b';
-  return '#ef4444';
-}
 
 const dimensions = [
   {
@@ -271,7 +275,7 @@ const dimensions = [
                   <circle
                     cx="60" cy="60" r="52"
                     fill="none"
-                    stroke={getScoreColor(SCORE)}
+                    stroke={getTierColor(SCORE)}
                     stroke-width="8"
                     stroke-linecap="round"
                     stroke-dasharray={`${CIRCUMFERENCE}`}
@@ -281,7 +285,7 @@ const dimensions = [
                   />
                   <!-- Score text -->
                   <text x="60" y="56" text-anchor="middle" dominant-baseline="middle" fill="#E6EDF3" font-size="28" font-weight="700" font-family="Inter, system-ui, sans-serif">{SCORE}</text>
-                  <text x="60" y="76" text-anchor="middle" dominant-baseline="middle" fill={getScoreColor(SCORE)} font-size="11" font-weight="600" font-family="Inter, system-ui, sans-serif" letter-spacing="0.05em">{TIER_LABEL}</text>
+                  <text x="60" y="76" text-anchor="middle" dominant-baseline="middle" fill={getTierColor(SCORE)} font-size="11" font-weight="600" font-family="Inter, system-ui, sans-serif" letter-spacing="0.05em">{TIER_LABEL}</text>
                 </svg>
               </div>
               <p class="text-xs text-[#8B949E] mt-2 font-mono">@synctek/forgeos</p>
