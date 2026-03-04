@@ -23,8 +23,8 @@ jobs:
             const pr = context.payload.pull_request;
             const sha = pr.head.sha;
             const required = [
-              'PR Governance Gates / governance-gates',
-              'Deploy to Cloudflare Pages / build-and-deploy'
+              'governance-gates',
+              'build-and-deploy'
             ];
 
             const checks = await github.paginate(github.rest.checks.listForRef, {
