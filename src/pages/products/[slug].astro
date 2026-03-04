@@ -109,7 +109,7 @@ const ftiScores: FtiScore[] = (() => {
     key,
     label: labels[key] ?? key,
     value,
-    colorClass: value >= 80 ? 'text-[#3FB950]' : value >= 60 ? 'text-warning-amber' : 'text-error-red',
+    colorClass: value >= 80 ? 'text-[#22c55e]' : value >= 60 ? 'text-[#6366f1]' : value >= 40 ? 'text-[#f59e0b]' : 'text-[#ef4444]',
   }));
 })();
 
@@ -147,7 +147,7 @@ if (ftiApiUrl) {
           key,
           label: dimensionLabels[key] ?? key,
           value: typeof score === 'number' ? score : 0,
-          colorClass: score >= 80 ? 'text-[#3FB950]' : score >= 60 ? 'text-warning-amber' : 'text-error-red',
+          colorClass: score >= 80 ? 'text-[#22c55e]' : score >= 60 ? 'text-[#6366f1]' : score >= 40 ? 'text-[#f59e0b]' : 'text-[#ef4444]',
         }));
       }
     }
