@@ -28,56 +28,8 @@ function getScoreColor(score: number): string {
   return '#ef4444';
 }
 
-const dimensions = [
-  {
-    name: 'Security',
-    icon: 'shield',
-    score: 86,
-    color: getScoreColor(86),
-    description:
-      'CVE count, dependency audit, code security patterns, signing status, and SBOM presence.',
-  },
-  {
-    name: 'Maintainability',
-    icon: 'code',
-    score: 73,
-    color: getScoreColor(73),
-    description:
-      'Complexity metrics, test coverage, PR merge velocity, code churn rate, and type safety adoption.',
-  },
-  {
-    name: 'Documentation',
-    icon: 'doc',
-    score: 67,
-    color: getScoreColor(67),
-    description:
-      'README completeness, API doc coverage, changelog hygiene, contributing guide, and tutorials.',
-  },
-  {
-    name: 'Community Health',
-    icon: 'users',
-    score: 47,
-    color: getScoreColor(47),
-    description:
-      'Contributor count (bus factor), issue response time, PR review time, and governance documentation.',
-  },
-  {
-    name: 'Supply Chain',
-    icon: 'chain',
-    score: 74,
-    color: getScoreColor(74),
-    description:
-      'Dependency count, vulnerable transitive deps, license conflicts, signing status, and provenance.',
-  },
-  {
-    name: 'Improvement Velocity',
-    icon: 'trend',
-    score: 50,
-    color: getScoreColor(50),
-    description:
-      'Score trajectory over 30, 90, and 180 days — is this package trending better or worse?',
-  },
-];
+// dimensions is defined after liveDimensions is populated by the live fetch below.
+// Dimensions array is constructed post-fetch so scores reflect live API data (or fallback).
 
 const tiers = [
   { name: 'Platinum', range: '90–100', color: '#e2e8f0', description: 'Production-grade. Ship with confidence.' },
@@ -105,11 +57,61 @@ function formatPackageCount(n: number): string {
   return n.toLocaleString();
 }
 
+function getTierLabel(score: number): string {
+  if (score >= 90) return 'PLATINUM';
+  if (score >= 75) return 'GOLD';
+  if (score >= 60) return 'SILVER';
+  if (score >= 40) return 'BRONZE';
+  return 'UNRATED';
+}
+
+function getTierLabelMixed(score: number): string {
+  if (score >= 90) return 'Platinum';
+  if (score >= 75) return 'Gold';
+  if (score >= 60) return 'Silver';
+  if (score >= 40) return 'Bronze';
+  return 'Unrated';
+}
+
+// Fetch live self-score for @synctek/forgeos (public endpoint, no auth required)
+// Fallback values match the last known good score in case the API is unreachable at build time.
+let SCORE = 69;
+const FALLBACK_DIMENSIONS: Record<string, number> = {
+  security: 86,
+  maintainability: 73,
+  documentation: 67,
+  community_health: 47,
+  supply_chain: 74,
+  improvement_velocity: 50,
+};
+let liveDimensions: Record<string, number> = { ...FALLBACK_DIMENSIONS };
+try {
+  const selfRes = await fetch('https://forgeos-api.synctek.io/v1/trust/npm/synctek/forgeos');
+  if (selfRes.ok) {
+    const selfData = await selfRes.json();
+    if (typeof selfData.composite_score === 'number') {
+      SCORE = Math.round(selfData.composite_score);
+    }
+    if (selfData.dimensions && typeof selfData.dimensions === 'object') {
+      liveDimensions = {
+        security: Math.round(selfData.dimensions.security ?? FALLBACK_DIMENSIONS.security),
+        maintainability: Math.round(selfData.dimensions.maintainability ?? FALLBACK_DIMENSIONS.maintainability),
+        documentation: Math.round(selfData.dimensions.documentation ?? FALLBACK_DIMENSIONS.documentation),
+        community_health: Math.round(selfData.dimensions.community_health ?? FALLBACK_DIMENSIONS.community_health),
+        supply_chain: Math.round(selfData.dimensions.supply_chain ?? FALLBACK_DIMENSIONS.supply_chain),
+        improvement_velocity: Math.round(selfData.dimensions.improvement_velocity ?? FALLBACK_DIMENSIONS.improvement_velocity),
+      };
+    }
+  }
+} catch {
+  // Build-time fetch failed — fall back to last known good values
+}
+
 // Score circle math: circumference = 2π × 52 ≈ 326.7
-// For score 69: dashoffset = 327 × (1 - 0.69) ≈ 101
-const SCORE = 69;
 const CIRCUMFERENCE = 326.7;
 const DASHOFFSET = Math.round(CIRCUMFERENCE * (1 - SCORE / 100));
+const TIER_LABEL = getTierLabel(SCORE);
+const TIER_LABEL_MIXED = getTierLabelMixed(SCORE);
 
 function getTierColor(score: number): string {
   if (score >= 80) return '#22c55e';
@@ -117,6 +119,57 @@ function getTierColor(score: number): string {
   if (score >= 40) return '#f59e0b';
   return '#ef4444';
 }
+
+const dimensions = [
+  {
+    name: 'Security',
+    icon: 'shield',
+    score: liveDimensions.security,
+    color: getScoreColor(liveDimensions.security),
+    description:
+      'CVE count, dependency audit, code security patterns, signing status, and SBOM presence.',
+  },
+  {
+    name: 'Maintainability',
+    icon: 'code',
+    score: liveDimensions.maintainability,
+    color: getScoreColor(liveDimensions.maintainability),
+    description:
+      'Complexity metrics, test coverage, PR merge velocity, code churn rate, and type safety adoption.',
+  },
+  {
+    name: 'Documentation',
+    icon: 'doc',
+    score: liveDimensions.documentation,
+    color: getScoreColor(liveDimensions.documentation),
+    description:
+      'README completeness, API doc coverage, changelog hygiene, contributing guide, and tutorials.',
+  },
+  {
+    name: 'Community Health',
+    icon: 'users',
+    score: liveDimensions.community_health,
+    color: getScoreColor(liveDimensions.community_health),
+    description:
+      'Contributor count (bus factor), issue response time, PR review time, and governance documentation.',
+  },
+  {
+    name: 'Supply Chain',
+    icon: 'chain',
+    score: liveDimensions.supply_chain,
+    color: getScoreColor(liveDimensions.supply_chain),
+    description:
+      'Dependency count, vulnerable transitive deps, license conflicts, signing status, and provenance.',
+  },
+  {
+    name: 'Improvement Velocity',
+    icon: 'trend',
+    score: liveDimensions.improvement_velocity,
+    color: getScoreColor(liveDimensions.improvement_velocity),
+    description:
+      'Score trajectory over 30, 90, and 180 days — is this package trending better or worse?',
+  },
+];
 ---
 
 <BaseLayout
@@ -194,7 +247,7 @@ function getTierColor(score: number): string {
                 class="hidden items-center gap-1.5 px-2.5 py-1 rounded text-xs font-mono"
                 style="display: none; background: rgba(217,119,6,0.12); border: 1px solid rgba(217,119,6,0.3); color: #D97706;"
               >
-                <span>FTI · Bronze · 69</span>
+                <span>FTI · {TIER_LABEL_MIXED} · {SCORE}</span>
               </span>
             </a>
           </div>
@@ -206,7 +259,7 @@ function getTierColor(score: number): string {
             <!-- Score circle -->
             <div class="flex flex-col items-center mb-5">
               <div class="relative" style="width: 120px; height: 120px;">
-                <svg width="120" height="120" viewBox="0 0 120 120" aria-label="FTI composite score: 69 — Bronze tier">
+                <svg width="120" height="120" viewBox="0 0 120 120" aria-label={`FTI composite score: ${SCORE} — ${TIER_LABEL_MIXED} tier`}>
                   <!-- Track -->
                   <circle
                     cx="60" cy="60" r="52"
@@ -228,7 +281,7 @@ function getTierColor(score: number): string {
                   />
                   <!-- Score text -->
                   <text x="60" y="56" text-anchor="middle" dominant-baseline="middle" fill="#E6EDF3" font-size="28" font-weight="700" font-family="Inter, system-ui, sans-serif">{SCORE}</text>
-                  <text x="60" y="76" text-anchor="middle" dominant-baseline="middle" fill={getScoreColor(SCORE)} font-size="11" font-weight="600" font-family="Inter, system-ui, sans-serif" letter-spacing="0.05em">BRONZE</text>
+                  <text x="60" y="76" text-anchor="middle" dominant-baseline="middle" fill={getScoreColor(SCORE)} font-size="11" font-weight="600" font-family="Inter, system-ui, sans-serif" letter-spacing="0.05em">{TIER_LABEL}</text>
                 </svg>
               </div>
               <p class="text-xs text-[#8B949E] mt-2 font-mono">@synctek/forgeos</p>
@@ -543,7 +596,7 @@ curl -H "X-API-Key: fos_live_abc123..." \
             class="hidden items-center gap-1.5 px-2.5 py-1 rounded text-xs font-mono"
             style="display: none; background: rgba(217,119,6,0.12); border: 1px solid rgba(217,119,6,0.3); color: #D97706;"
           >
-            FTI · Bronze · 69
+            FTI · {TIER_LABEL_MIXED} · {SCORE}
           </span>
         </div>
       </div>
