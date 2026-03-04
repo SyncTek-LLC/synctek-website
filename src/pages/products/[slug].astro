@@ -174,7 +174,19 @@ const finalFtiScores = liveFtiScores.length > 0 ? liveFtiScores : ftiScores;
     </div>
     <!-- Content -->
     <div class="relative z-10">
-      <h1 class="text-3xl sm:text-4xl font-bold tracking-tight mb-2">{product.name}</h1>
+      <div class="flex items-center gap-3 mb-2">
+        {slug === 'forgeos' && (
+          <img
+            src="/images/forge-anvil-icon.png"
+            alt="ForgeOS"
+            width="56"
+            height="56"
+            loading="lazy"
+            style="width: 56px; height: 56px; border-radius: 10px; flex-shrink: 0;"
+          />
+        )}
+        <h1 class="text-3xl sm:text-4xl font-bold tracking-tight">{product.name}</h1>
+      </div>
       <p class="text-lg text-light-gray-500 dark:text-light-text mb-6">{product.tagline}</p>
 
       <!-- Badges -->

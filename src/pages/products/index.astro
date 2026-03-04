@@ -28,6 +28,7 @@ const products = [forgeos, specterqa];
           license={product.license}
           accentColor={product.accentColor}
           href={'href' in product ? product.href : undefined}
+          icon={product.slug === 'forgeos' ? '/images/forge-anvil-icon.png' : undefined}
         />
       ))}
       <!-- Coming soon placeholder -->
