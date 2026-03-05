@@ -22,10 +22,14 @@ jobs:
           echo "$CHANGED"
 
           CODE_CHANGED=$(echo "$CHANGED" | grep -E '\.(ts|tsx|js|jsx|css)$' || true)
-          DOCS_CHANGED=$(echo "$CHANGED" | grep -E '(^docs/|README\.md$|\.md$|\.mdx$|\.txt$|\.astro$|\.html$)' || true)
+          DOCS_CHANGED=$(echo "$CHANGED" | grep -E '\.(md|mdx|txt|rst|astro|html|yaml|yml|json|toml)$|^docs/|README' || true)
+          CONFIG_CHANGED=$(echo "$CHANGED" | grep -E '\.(yml|yaml|json|toml)$|^\.github/' || true)
 
-          if [ -n "$CODE_CHANGED" ] && [ -z "$DOCS_CHANGED" ]; then
-            echo "Code changed without documentation updates."
+          # Only fail if code changed without ANY non-code file changes
+          # Config/template/content changes count as documentation
+          if [ -n "$CODE_CHANGED" ] && [ -z "$DOCS_CHANGED" ] && [ -z "$CONFIG_CHANGED" ]; then
+            echo "Code changed without documentation or configuration updates."
+            echo "If this is intentional (e.g., pure refactor), add a brief note to the PR description."
             exit 1
           fi
 

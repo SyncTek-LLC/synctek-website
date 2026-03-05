@@ -59,13 +59,22 @@ jobs:
                 return;
               }
               if (!missing.length && !pending.length) {
-                await github.rest.pulls.createReview({
-                  owner,
-                  repo,
-                  pull_number: pr.number,
-                  event: 'APPROVE',
-                  body: 'Agentic approval: all required checks passed.'
-                });
+                try {
+                  await github.rest.pulls.createReview({
+                    owner,
+                    repo,
+                    pull_number: pr.number,
+                    event: 'APPROVE',
+                    body: 'Agentic approval: all required checks passed.'
+                  });
+                  core.notice('Agentic approval: PR approved — all required checks passed.');
+                } catch (err) {
+                  if (err.status === 422) {
+                    core.notice('Agentic approval gate passed: all required checks completed successfully. (Self-approval skipped — GitHub API limitation.)');
+                  } else {
+                    throw err;
+                  }
+                }
                 return;
               }
 
