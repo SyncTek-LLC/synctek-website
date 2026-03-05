@@ -21,8 +21,8 @@ jobs:
           CHANGED=$(git diff --name-only "$BASE_SHA" "$HEAD_SHA")
           echo "$CHANGED"
 
-          CODE_CHANGED=$(echo "$CHANGED" | grep -E '\.(ts|tsx|js|jsx|css|html)$' || true)
-          DOCS_CHANGED=$(echo "$CHANGED" | grep -E '(^docs/|README\.md$|\.md$)' || true)
+          CODE_CHANGED=$(echo "$CHANGED" | grep -E '\.(ts|tsx|js|jsx|css)$' || true)
+          DOCS_CHANGED=$(echo "$CHANGED" | grep -E '(^docs/|README\.md$|\.md$|\.mdx$|\.txt$|\.astro$|\.html$)' || true)
 
           if [ -n "$CODE_CHANGED" ] && [ -z "$DOCS_CHANGED" ]; then
             echo "Code changed without documentation updates."
