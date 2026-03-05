@@ -21,6 +21,15 @@ const jsonLd = {
     offers: [
       {
         '@type': 'Offer',
+        name: 'Free',
+        price: '0',
+        priceCurrency: 'USD',
+        availability: 'https://schema.org/InStock',
+        url: 'https://synctek.io/products/forgeos/pricing',
+        description: 'Free tier: 1,000 API calls/month, 20 req/min. Gate enforcement, Ed25519-signed ledger, forge CLI.',
+      },
+      {
+        '@type': 'Offer',
         name: 'Pro',
         price: '49.00',
         priceCurrency: 'USD',
@@ -89,12 +98,18 @@ const faqItems = [
     answer:
       'Open-sourcing the governance engine core is planned. The CLI client is MIT-licensed. The hosted API and AI components are proprietary. We will announce the open-source timeline publicly.',
   },
+  {
+    question: 'What is included in the Free plan?',
+    answer:
+      'The Free plan includes gate enforcement, Ed25519-signed ledger, forge CLI, FTI badge embeds, and SharedMind in read-only mode. You get 1,000 API calls/month at 20 req/min. MCP tools are limited to 5 of 21. Upgrade to Pro for the full suite.',
+  },
 ];
 
 type FeatureValue = boolean | string;
 
 interface FeatureRow {
   feature: string;
+  free: FeatureValue;
   pro: FeatureValue;
   team: FeatureValue;
   enterprise: FeatureValue;
@@ -102,29 +117,29 @@ interface FeatureRow {
 }
 
 const comparisonRows: FeatureRow[] = [
-  { feature: 'API calls / month', pro: '50,000', team: '200,000', enterprise: 'Dedicated' },
-  { feature: 'Seats', pro: '1', team: '3+ (min.)', enterprise: 'Unlimited' },
-  { feature: 'Gate enforcement', pro: true, team: true, enterprise: true },
-  { feature: 'Ed25519-signed ledger', pro: true, team: true, enterprise: true },
-  { feature: '21 MCP governance tools', pro: true, team: true, enterprise: true },
-  { feature: 'forge CLI (18 command groups)', pro: true, team: true, enterprise: true },
-  { feature: 'SharedMind (institutional memory)', pro: true, team: true, enterprise: true },
-  { feature: 'Self-approval prevention', pro: true, team: true, enterprise: true },
-  { feature: 'Circuit breakers', pro: true, team: true, enterprise: true },
-  { feature: 'Human-in-the-loop gates', pro: true, team: true, enterprise: true },
-  { feature: 'EU AI Act artifacts (Art. 12, 17)', pro: true, team: true, enterprise: true },
-  { feature: 'A2A Agent Card', pro: true, team: true, enterprise: true },
-  { feature: 'Forensic violation scanner', pro: true, team: true, enterprise: true },
-  { feature: 'Email support', pro: true, team: true, enterprise: true },
-  { feature: 'Team dashboard', pro: false, team: true, enterprise: true },
-  { feature: 'Shared projects', pro: false, team: true, enterprise: true },
-  { feature: 'Role-based access control', pro: false, team: true, enterprise: true },
-  { feature: '4h SLA + custom SLA', pro: false, team: false, enterprise: true },
-  { feature: 'Security questionnaire support', pro: false, team: false, enterprise: true },
-  { feature: 'DPA on request', pro: false, team: false, enterprise: true },
-  { feature: 'EU data residency', pro: false, team: false, enterprise: 'Compliance tier — contact us', note: 'Not yet available — contact us' },
-  { feature: 'Extended audit retention', pro: false, team: false, enterprise: 'Compliance tier — contact us', note: 'Not yet available — contact us' },
-  { feature: 'Dedicated infrastructure', pro: false, team: false, enterprise: true },
+  { feature: 'API calls / month', free: '1,000', pro: '50,000', team: '200,000', enterprise: 'Dedicated' },
+  { feature: 'Seats', free: '1', pro: '1', team: '3+ (min.)', enterprise: 'Unlimited' },
+  { feature: 'Gate enforcement', free: true, pro: true, team: true, enterprise: true },
+  { feature: 'Ed25519-signed ledger', free: true, pro: true, team: true, enterprise: true },
+  { feature: '21 MCP governance tools', free: '5 of 21', pro: true, team: true, enterprise: true },
+  { feature: 'forge CLI (18 command groups)', free: true, pro: true, team: true, enterprise: true },
+  { feature: 'SharedMind (institutional memory)', free: 'Read-only', pro: true, team: true, enterprise: true },
+  { feature: 'Self-approval prevention', free: true, pro: true, team: true, enterprise: true },
+  { feature: 'Circuit breakers', free: true, pro: true, team: true, enterprise: true },
+  { feature: 'Human-in-the-loop gates', free: true, pro: true, team: true, enterprise: true },
+  { feature: 'EU AI Act artifacts (Art. 12, 17)', free: false, pro: true, team: true, enterprise: true },
+  { feature: 'A2A Agent Card', free: false, pro: true, team: true, enterprise: true },
+  { feature: 'Forensic violation scanner', free: false, pro: true, team: true, enterprise: true },
+  { feature: 'Email support', free: false, pro: true, team: true, enterprise: true },
+  { feature: 'Team dashboard', free: false, pro: false, team: true, enterprise: true },
+  { feature: 'Shared projects', free: false, pro: false, team: true, enterprise: true },
+  { feature: 'Role-based access control', free: false, pro: false, team: true, enterprise: true },
+  { feature: '4h SLA + custom SLA', free: false, pro: false, team: false, enterprise: true },
+  { feature: 'Security questionnaire support', free: false, pro: false, team: false, enterprise: true },
+  { feature: 'DPA on request', free: false, pro: false, team: false, enterprise: true },
+  { feature: 'EU data residency', free: false, pro: false, team: false, enterprise: 'Compliance tier — contact us', note: 'Not yet available — contact us' },
+  { feature: 'Extended audit retention', free: false, pro: false, team: false, enterprise: 'Compliance tier — contact us', note: 'Not yet available — contact us' },
+  { feature: 'Dedicated infrastructure', free: false, pro: false, team: false, enterprise: true },
 ];
 
 function renderValue(val: FeatureValue) {
@@ -168,7 +183,59 @@ function renderValue(val: FeatureValue) {
 
   <!-- Pricing cards -->
   <section id="trial" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 items-start mb-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-start mb-4">
+
+      <!-- Free -->
+      <div class="rounded-xl p-6" style="background: #111111; border: 1px solid #1F1F1F;">
+        <div class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold mb-5"
+             style="background: rgba(139,148,158,0.12); color: #8B949E;">
+          Free
+        </div>
+
+        <div class="flex items-baseline gap-1 mb-1">
+          <span class="text-5xl font-bold text-[#E6EDF3]">$0</span>
+        </div>
+        <p class="text-xs text-[#8B949E] mb-2">no credit card required</p>
+        <p class="text-xs text-[#8B949E] mb-6">1,000 API calls/month · 20 req/min</p>
+
+        <a
+          href="https://forgeos.synctek.io/register?plan=free"
+          class="block w-full text-center py-3 rounded-md font-medium no-underline transition-all duration-150 mb-6 text-[#E6EDF3]"
+          style="border: 1px solid #1F1F1F;"
+          onmouseover="this.style.borderColor='#8B949E'; this.style.background='rgba(255,255,255,0.04)'"
+          onmouseout="this.style.borderColor='#1F1F1F'; this.style.background='transparent'"
+          aria-label="Sign up for ForgeOS Free"
+        >
+          Get started
+        </a>
+
+        <ul class="space-y-3 text-sm">
+          <li class="flex items-start gap-2 text-[#E6EDF3]">
+            <svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            Gate enforcement
+          </li>
+          <li class="flex items-start gap-2 text-[#E6EDF3]">
+            <svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            Ed25519-signed ledger
+          </li>
+          <li class="flex items-start gap-2 text-[#E6EDF3]">
+            <svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            forge CLI
+          </li>
+          <li class="flex items-start gap-2 text-[#E6EDF3]">
+            <svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            FTI badge embeds
+          </li>
+          <li class="flex items-start gap-2">
+            <svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="#8B949E" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+            <span class="text-[#8B949E]">MCP tools (5 of 21)</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="#8B949E" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+            <span class="text-[#8B949E]">SharedMind (read-only)</span>
+          </li>
+        </ul>
+      </div>
 
       <!-- Pro -->
       <div class="relative rounded-xl p-6" style="background: #111111; border: 1px solid #3B82F6; box-shadow: 0 0 0 1px rgba(59,130,246,0.15), 0 8px 32px rgba(59,130,246,0.08);">
@@ -389,15 +456,19 @@ function renderValue(val: FeatureValue) {
     <h2 class="text-2xl font-semibold text-[#E6EDF3] tracking-tight mb-8">Full feature comparison</h2>
 
     <div class="overflow-x-auto">
-      <table class="w-full text-sm" style="border-collapse: collapse; min-width: 680px;">
+      <table class="w-full text-sm" style="border-collapse: collapse; min-width: 860px;">
         <thead>
           <tr style="border-bottom: 2px solid #1F1F1F;">
-            <th class="text-left py-3 pr-6 font-semibold text-[#E6EDF3]" style="width: 40%;">Feature</th>
-            <th class="text-center py-3 px-3 font-semibold" style="width: 20%;">
+            <th class="text-left py-3 pr-6 font-semibold text-[#E6EDF3]" style="width: 35%;">Feature</th>
+            <th class="text-center py-3 px-3 font-semibold" style="width: 15%;">
+              <span class="text-[#8B949E]">Free</span>
+              <div class="text-xs text-[#8B949E] font-normal">$0</div>
+            </th>
+            <th class="text-center py-3 px-3 font-semibold" style="width: 15%;">
               <span class="text-[#3B82F6]">Pro</span>
               <div class="text-xs text-[#8B949E] font-normal">$49/mo</div>
             </th>
-            <th class="text-center py-3 px-3 font-semibold" style="width: 20%;">
+            <th class="text-center py-3 px-3 font-semibold" style="width: 15%;">
               <span class="text-[#818CF8]">Team</span>
               <div class="text-xs text-[#8B949E] font-normal">$29/seat/mo</div>
             </th>
@@ -409,6 +480,7 @@ function renderValue(val: FeatureValue) {
         </thead>
         <tbody>
           {comparisonRows.map((row) => {
+            const freeVal = renderValue(row.free);
             const proVal = renderValue(row.pro);
             const teamVal = renderValue(row.team);
             const entVal = renderValue(row.enterprise);
@@ -418,6 +490,17 @@ function renderValue(val: FeatureValue) {
                   {row.feature}
                   {row.note && (
                     <span class="ml-2 text-xs text-[#F59E0B]" title={row.note}>*</span>
+                  )}
+                </td>
+                <td class="py-3 px-3 text-center">
+                  {freeVal.type === 'check' && (
+                    <svg class="w-4 h-4 mx-auto" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2" aria-label="Included"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                  )}
+                  {freeVal.type === 'x' && (
+                    <svg class="w-4 h-4 mx-auto" fill="none" stroke="#1F1F1F" viewBox="0 0 24 24" stroke-width="2" aria-label="Not included"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+                  )}
+                  {freeVal.type === 'text' && (
+                    <span class="text-[#8B949E] text-xs">{freeVal.text}</span>
                   )}
                 </td>
                 <td class="py-3 px-3 text-center">
