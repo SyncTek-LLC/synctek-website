@@ -31,7 +31,7 @@ function getScoreColor(score: number): string {
 // dimensions is defined after liveDimensions is populated by the live fetch below.
 // Dimensions array is constructed post-fetch so scores reflect live API data (or fallback).
 
-// Tier system — MUST match the ForgeOS engine (ScoreGauge.jsx, badge API)
+// Tier system — MUST match the ForgeOS engine tier definitions
 const tiers = [
   { name: 'Exemplary', range: '95–100', color: '#e2e8f0', description: 'Production-grade. Ship with confidence.' },
   { name: 'Trusted', range: '85–94', color: '#d97706', description: 'Strong trust posture. Minor gaps.' },
@@ -58,7 +58,7 @@ function formatPackageCount(n: number): string {
   return n.toLocaleString();
 }
 
-// Tier labels — MUST match the ForgeOS engine (ScoreGauge.jsx, badge API)
+// Tier labels — MUST match the ForgeOS engine tier definitions
 function getTierLabel(score: number): string {
   if (score >= 95) return 'EXEMPLARY';
   if (score >= 85) return 'TRUSTED';
@@ -75,7 +75,7 @@ function getTierLabelMixed(score: number): string {
   return 'Risky';
 }
 
-// Tier color for composite gauge ring — matches engine ScoreGauge
+// Tier color for composite gauge ring — matches engine tier definitions
 function getTierColor(score: number): string {
   if (score >= 95) return '#e2e8f0';
   if (score >= 85) return '#d97706';
@@ -589,7 +589,10 @@ curl -H "X-API-Key: fos_live_abc123..." \
     <span style="color: #58A6FF;">"maintainability"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">73.21</span><span style="color: #8B949E;">,</span>
     <span style="color: #58A6FF;">"documentation"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">66.75</span><span style="color: #8B949E;">,</span>
     <span style="color: #58A6FF;">"community_health"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">47.05</span><span style="color: #8B949E;">,</span>
-    <span style="color: #58A6FF;">"supply_chain"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">74.00</span>
+    <span style="color: #58A6FF;">"supply_chain"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">74.00</span><span style="color: #8B949E;">,</span>
+    <span style="color: #58A6FF;">"improvement_velocity"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">50.00</span><span style="color: #8B949E;">,</span>
+    <span style="color: #58A6FF;">"governance"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">83.40</span><span style="color: #8B949E;">,</span>
+    <span style="color: #58A6FF;">"operational"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">65.20</span>
   <span style="color: #8B949E;">{"}"}</span><span style="color: #8B949E;">,</span>
   <span style="color: #58A6FF;">"algorithm_version"</span><span style="color: #8B949E;">:</span> <span style="color: #3FB950;">"fti-v1.0.0"</span><span style="color: #8B949E;">,</span>
   <span style="color: #58A6FF;">"signature"</span><span style="color: #8B949E;">:</span> <span style="color: #3FB950;">"sha256:aaf8e233..."</span>
@@ -606,6 +609,180 @@ curl -H "X-API-Key: fos_live_abc123..." \
           <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
         </svg>
       </a>
+    </div>
+  </section>
+
+  <SectionDivider />
+
+  <!-- FTI Pricing -->
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div class="mb-10">
+      <p class="text-xs font-semibold tracking-[0.12em] uppercase text-[#58A6FF] mb-2">FTI PRICING</p>
+      <h2 class="text-2xl font-semibold text-[#E6EDF3] tracking-tight">Score any package. Pay for what you need.</h2>
+      <p class="text-[#9CA3AF] mt-2 max-w-xl">Badge embeds are always free. API access scales with your usage.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-start">
+
+      <!-- Free -->
+      <div class="rounded-xl p-6" style="background: #111111; border: 1px solid #1F1F1F;">
+        <div class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold mb-5"
+             style="background: rgba(139,148,158,0.12); color: #8B949E;">
+          Free
+        </div>
+        <div class="flex items-baseline gap-1 mb-1">
+          <span class="text-4xl font-bold text-[#E6EDF3]">$0</span>
+          <span class="text-sm text-[#8B949E]">/mo</span>
+        </div>
+        <p class="text-xs text-[#8B949E] mb-6">1,000 API calls/month. Badge embeds unlimited.</p>
+        <a
+          href="https://forgeos.synctek.io/register?plan=free"
+          class="block w-full text-center py-2.5 rounded-md font-medium no-underline transition-all duration-150 text-[#E6EDF3] text-sm mb-5"
+          style="border: 1px solid #1F1F1F;"
+          onmouseover="this.style.borderColor='#8B949E'; this.style.background='rgba(255,255,255,0.04)'"
+          onmouseout="this.style.borderColor='#1F1F1F'; this.style.background='transparent'"
+        >
+          Get started
+        </a>
+        <ul class="space-y-2 text-xs text-[#8B949E]">
+          <li class="flex items-start gap-2">
+            <svg class="w-3.5 h-3.5 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+            Single-package lookups
+          </li>
+          <li class="flex items-start gap-2">
+            <svg class="w-3.5 h-3.5 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+            Badge embeds (unlimited)
+          </li>
+          <li class="flex items-start gap-2">
+            <svg class="w-3.5 h-3.5 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+            Public trust profiles
+          </li>
+        </ul>
+      </div>
+
+      <!-- Pro -->
+      <div class="rounded-xl p-6" style="background: #111111; border: 1px solid #58A6FF; box-shadow: 0 0 0 1px rgba(88,166,255,0.15);">
+        <div class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold mb-5"
+             style="background: rgba(88,166,255,0.12); color: #58A6FF;">
+          Pro
+        </div>
+        <div class="flex items-baseline gap-1 mb-1">
+          <span class="text-4xl font-bold text-[#E6EDF3]">$99</span>
+          <span class="text-sm text-[#8B949E]">/year</span>
+        </div>
+        <p class="text-xs text-[#8B949E] mb-6">Unlimited API calls. Score history. Webhooks.</p>
+        <a
+          href="https://forgeos.synctek.io/register?plan=fti-pro"
+          class="block w-full text-center py-2.5 rounded-md font-medium text-white no-underline transition-all duration-150 text-sm mb-5"
+          style="background: #58A6FF;"
+          onmouseover="this.style.background='#3B82F6'"
+          onmouseout="this.style.background='#58A6FF'"
+        >
+          Start free trial
+        </a>
+        <ul class="space-y-2 text-xs text-[#8B949E]">
+          <li class="flex items-start gap-2">
+            <svg class="w-3.5 h-3.5 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+            Unlimited API calls
+          </li>
+          <li class="flex items-start gap-2">
+            <svg class="w-3.5 h-3.5 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+            Bulk queries
+          </li>
+          <li class="flex items-start gap-2">
+            <svg class="w-3.5 h-3.5 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+            Score history
+          </li>
+          <li class="flex items-start gap-2">
+            <svg class="w-3.5 h-3.5 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+            Webhook notifications
+          </li>
+        </ul>
+      </div>
+
+      <!-- Agent Pro -->
+      <div class="relative rounded-xl p-6" style="background: #111111; border: 1px solid #10B981; box-shadow: 0 0 0 1px rgba(16,185,129,0.15);">
+        <div class="absolute -top-3 left-1/2 -translate-x-1/2 px-3.5 py-1 rounded-full text-xs font-semibold text-white whitespace-nowrap"
+             style="background: #10B981;">
+          Best for CI/CD
+        </div>
+        <div class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold mb-5"
+             style="background: rgba(16,185,129,0.12); color: #10B981;">
+          Agent Pro
+        </div>
+        <div class="flex items-baseline gap-1 mb-1">
+          <span class="text-4xl font-bold text-[#E6EDF3]">$29</span>
+          <span class="text-sm text-[#8B949E]">/mo</span>
+        </div>
+        <p class="text-xs text-[#8B949E] mb-6">Bulk scoring. Priority queue. 10K calls/min.</p>
+        <a
+          href="https://forgeos.synctek.io/register?plan=fti-agent-pro"
+          class="block w-full text-center py-2.5 rounded-md font-medium text-white no-underline transition-all duration-150 text-sm mb-5"
+          style="background: #10B981;"
+          onmouseover="this.style.background='#059669'"
+          onmouseout="this.style.background='#10B981'"
+        >
+          Start free trial
+        </a>
+        <ul class="space-y-2 text-xs text-[#8B949E]">
+          <li class="flex items-start gap-2">
+            <svg class="w-3.5 h-3.5 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+            Bulk scoring endpoints
+          </li>
+          <li class="flex items-start gap-2">
+            <svg class="w-3.5 h-3.5 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+            Priority queue
+          </li>
+          <li class="flex items-start gap-2">
+            <svg class="w-3.5 h-3.5 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+            10K calls/min rate limit
+          </li>
+          <li class="flex items-start gap-2">
+            <svg class="w-3.5 h-3.5 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+            CI/CD integration
+          </li>
+        </ul>
+      </div>
+
+      <!-- Enterprise -->
+      <div class="rounded-xl p-6" style="background: #111111; border: 1px solid #1F1F1F;">
+        <div class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold mb-5"
+             style="background: rgba(139,148,158,0.12); color: #8B949E;">
+          Enterprise
+        </div>
+        <div class="flex items-baseline gap-1 mb-1">
+          <span class="text-4xl font-bold text-[#E6EDF3]">Custom</span>
+        </div>
+        <p class="text-xs text-[#8B949E] mb-6">$10,000+/year. Dedicated infrastructure. SLA.</p>
+        <a
+          href="mailto:info@synctek.io"
+          class="block w-full text-center py-2.5 rounded-md font-medium no-underline transition-all duration-150 text-[#E6EDF3] text-sm mb-5"
+          style="border: 1px solid #1F1F1F;"
+          onmouseover="this.style.borderColor='#8B949E'; this.style.background='rgba(255,255,255,0.04)'"
+          onmouseout="this.style.borderColor='#1F1F1F'; this.style.background='transparent'"
+        >
+          Contact us
+        </a>
+        <ul class="space-y-2 text-xs text-[#8B949E]">
+          <li class="flex items-start gap-2">
+            <svg class="w-3.5 h-3.5 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+            Custom SLA
+          </li>
+          <li class="flex items-start gap-2">
+            <svg class="w-3.5 h-3.5 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+            Dedicated scoring infra
+          </li>
+          <li class="flex items-start gap-2">
+            <svg class="w-3.5 h-3.5 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+            Private registry support
+          </li>
+          <li class="flex items-start gap-2">
+            <svg class="w-3.5 h-3.5 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+            On-prem option
+          </li>
+        </ul>
+      </div>
+
     </div>
   </section>
 
