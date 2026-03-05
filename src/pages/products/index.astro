@@ -2,9 +2,10 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ProductCard from '../../components/ProductCard.astro';
 import forgeos from '../../data/products/forgeos';
+import fti from '../../data/products/fti';
 import specterqa from '../../data/products/specterqa';
 
-const products = [forgeos, specterqa];
+const products = [forgeos, fti, specterqa];
 ---
 
 <BaseLayout
@@ -17,7 +18,7 @@ const products = [forgeos, specterqa];
       We build developer tools that solve real problems. Every tool ships with cost controls built in and gives you full ownership of your workflow. Standard outputs, open formats, no lock-in.
     </p>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {products.map((product) => (
         <ProductCard
           slug={product.slug}

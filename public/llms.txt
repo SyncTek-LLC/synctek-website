@@ -16,9 +16,9 @@ Context-aware trust scoring for every package in your stack, open-source or comm
 - Methodology: transparent, auditable, context-weighted
 
 ### Federation Hub
-Cross-instance pattern aggregation with privacy guarantees.
+Cross-instance pattern sharing for ForgeOS deployments.
 - Public insights: https://forgeos-api.synctek.io/api/v1/federation/insights
-- Privacy: all data scrubbed, code-signature detection, fail-closed model
+- Privacy: all shared data is scrubbed and anonymized
 
 ### SpecterQA — Vision-Based Behavioral Testing
 AI personas navigate real UIs in a live browser and report what actually happens — no test scripts, no CSS selectors. Define a persona (role, goals, frustration level) and a journey; SpecterQA takes screenshots, sends them to a vision model, and the AI decides what to click or type, just like a real user. Tests break when the UX breaks, not when markup changes. MIT licensed. Integrates with ForgeOS governance gates.
@@ -42,7 +42,7 @@ ForgeOS is built agent-first. To get started:
 - [Authentication](https://synctek.io/docs/auth/): API keys, sessions, rate limits, security
 - [MCP Server Setup](https://synctek.io/docs/mcp/): Connect ForgeOS to Cursor, Claude Code, VS Code, or any MCP client
 - [REST API Reference](https://synctek.io/docs/api/): Full API reference with request/response examples
-- [Full docs as plain text](https://synctek.io/llms-full.txt): Machine-readable documentation
+- [Full docs as plain text](https://synctek.io/docs/): Machine-readable documentation
 
 ## Pricing
 
