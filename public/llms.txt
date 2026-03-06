@@ -35,6 +35,16 @@ ForgeOS is built agent-first. To get started:
 - [MCP Server Metadata](https://synctek.io/.well-known/mcp.json): Transport options and tool list
 - [A2A Agent Card](https://synctek.io/.well-known/agent.json): Google A2A discovery
 
+### FTI API (Trust Scoring for Agents)
+
+Agents can query trust scores without a ForgeOS subscription via the standalone metered FTI API:
+- POST https://forgeos-api.synctek.io/v1/score — Score a package ($0.003/call). Auth: X-FTI-API-Key.
+- POST https://forgeos-api.synctek.io/v1/recommend — Get recommendations for a package ($0.005/call).
+- POST https://forgeos-api.synctek.io/v1/compare — Compare packages side-by-side ($0.008/call).
+- GET https://forgeos-api.synctek.io/v1/methodology — Dimension definitions and scoring weights (free, no auth required).
+
+Scores are Ed25519-signed and include all 8 dimensions: security, maintainability, documentation, community_health, supply_chain, improvement_velocity, governance, operational.
+
 ## Documentation
 
 - [Documentation Home](https://synctek.io/docs/): Full developer documentation
@@ -47,7 +57,7 @@ ForgeOS is built agent-first. To get started:
 ## Pricing
 
 - [ForgeOS Pricing](https://synctek.io/products/forgeos/pricing/): 14-day free trial, no credit card. Free: $0/1K API calls. Pro: $49/mo/50K calls. Team: $29/seat/mo (3-seat min, $87/mo base)/200K calls. Enterprise: custom. Machine-readable at /docs.json.
-- [FTI Pricing](https://synctek.io/products/forgeos/fti/): Badges always free, no API key required. FTI Pro: $99/year (10K API calls/month). FTI Enterprise: custom pricing.
+- [FTI Pricing](https://synctek.io/products/forgeos/fti/): FTI is bundled with ForgeOS (Free: 5 scores/day; Pro/Team/Enterprise: unlimited). Standalone metered API for agents: $0.003/score, $0.005/recommendation, $0.008/comparison. GET /v1/methodology is free and public. Badge embeds always free, no API key required.
 
 ## Blog
 

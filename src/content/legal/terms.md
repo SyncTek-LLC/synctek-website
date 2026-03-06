@@ -1,7 +1,7 @@
 # Terms of Service
 
 **Effective Date:** February 27, 2026
-**Last Updated:** March 2, 2026
+**Last Updated:** March 5, 2026
 
 These Terms of Service ("Terms") govern your access to and use of ForgeOS, the AI-powered software governance platform operated by SyncTek LLC ("SyncTek," "we," "us," or "our"), available at synctek.io and forgeos.synctek.io. By creating an account or using ForgeOS, you ("User," "you," or "your") agree to be bound by these Terms. If you are accepting on behalf of an organization, you represent that you have authority to bind that organization.
 
@@ -58,17 +58,31 @@ We offer the following paid subscription tiers for the ForgeOS governance platfo
 
 Pricing is subject to change with 30 days' notice as described in Section 14.
 
-### 4.2a ForgeOS Trust Index (FTI) Subscription Plans
+### 4.2a ForgeOS Trust Index (FTI) Access
 
-The ForgeOS Trust Index (FTI) is available as a standalone product with the following pricing:
+The ForgeOS Trust Index (FTI) is bundled with all ForgeOS subscription plans. FTI scoring is available at the following levels depending on your ForgeOS plan:
 
-| Plan | Price | Description |
-|------|-------|-------------|
-| FTI Free | $0 | 1,000 API calls/month — badges are always free and require no API key |
-| FTI Pro | $99/year (equivalent to approximately $12/month) | 10,000 API calls/month — full trust profile access, priority scoring |
-| FTI Enterprise | Custom pricing | Unlimited API calls, SLA, private registry scoring, dedicated support |
+| ForgeOS Plan | FTI Scoring | FTI Recommendations & Comparisons |
+|-------------|-------------|-----------------------------------|
+| Free | 5 scores/day | Not included |
+| Pro | Unlimited | Included |
+| Team | Unlimited | Included |
+| Enterprise | Unlimited | Included |
 
-FTI badge embeds are and will remain permanently free with no API key required. FTI Pro and Enterprise plans govern authenticated trust profile API access.
+FTI badge embeds are and will remain permanently free with no API key required.
+
+**Standalone FTI API (Metered Access)**
+
+For AI agents, CI/CD pipelines, and external integrations that require FTI access without a ForgeOS subscription, a standalone metered API is available:
+
+| Endpoint | Price per call |
+|----------|---------------|
+| POST /v1/score — Basic trust score | $0.003 |
+| POST /v1/recommend — Recommendations | $0.005 |
+| POST /v1/compare — Comparative analysis | $0.008 |
+| GET /v1/methodology — Dimension definitions | Free (public) |
+
+Standalone API access requires API key authentication and usage-based billing via Stripe. Usage is billed monthly based on actual calls made. Volume discounts are available at 100,000+ scores per month — contact us for pricing.
 
 ### 4.3 Auto-Renewal
 
@@ -124,7 +138,7 @@ You retain all ownership rights in the source code, configuration files, and oth
 
 ### 6.1 Autonomous Agent Functionality
 
-ForgeOS includes autonomous software agents ("Agents") that may perform actions including: evaluating and advancing governance gates, modifying governance ledgers, generating and classifying artifacts, dispatching tasks to department workflows, and coordinating multi-step execution pipelines.
+ForgeOS includes autonomous software agents ("Agents") that may perform actions including: evaluating and advancing governance gates, modifying governance ledgers, generating and classifying artifacts, dispatching tasks to specialized workflows, and coordinating multi-step execution pipelines.
 
 ### 6.2 Software Tool — Not Professional Services
 
@@ -424,4 +438,4 @@ For legal notices: info@synctek.io
 
 ---
 
-*These Terms of Service were last updated on March 2, 2026. Previous versions are available upon request.*
+*These Terms of Service were last updated on March 5, 2026. Previous versions are available upon request.*
