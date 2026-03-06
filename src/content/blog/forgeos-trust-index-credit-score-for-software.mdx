@@ -1,6 +1,6 @@
 ---
 title: "ForgeOS Trust Index: A Credit Score for Software"
-description: "We scored 599 packages. FTI measures 6 dimensions of software trustworthiness — not just stars and downloads. Context-aware, agent-native, Ed25519-signed."
+description: "We scored 599 packages. FTI measures 8 dimensions of software trustworthiness — not just stars and downloads. Context-aware, agent-native, Ed25519-signed."
 date: 2026-03-03
 author: "SyncTek Team"
 category: releases
@@ -17,7 +17,7 @@ That's what ForgeOS Trust Index (FTI) is. We scored 599 packages to build it. He
 
 ## What FTI Measures
 
-FTI evaluates software packages and AI agents across six dimensions. Each is scored 0–100. The aggregate produces a single trust score, also 0–100.
+FTI evaluates software packages and AI agents across eight dimensions. Each is scored 0–100. The aggregate produces a single trust score, also 0–100.
 
 | Dimension | What it measures |
 |-----------|-----------------|
@@ -27,6 +27,8 @@ FTI evaluates software packages and AI agents across six dimensions. Each is sco
 | Community health | Contributor diversity, issue response rate, governance signals |
 | Supply chain integrity | Provenance, signing, reproducible builds |
 | Improvement velocity | Release cadence, resolved issues, regression trends |
+| Governance | Gate enforcement, audit trail completeness, process adherence |
+| Operational | Deployment reliability, incident response, runtime health |
 
 The score is deterministic. Given the same inputs, FTI always produces the same result. There is no LLM making judgment calls at query time. The computation is defined, auditable, and reproducible. This is a feature, not a limitation. A score that varies with model temperature is not a signal you can build policy on.
 
@@ -75,7 +77,9 @@ Every FTI response is signed with Ed25519.
     "documentation": 79,
     "community_health": 85,
     "supply_chain": 82,
-    "improvement_velocity": 77
+    "improvement_velocity": 77,
+    "governance": 89,
+    "operational": 80
   },
   "context": "compliance",
   "signature": "ed25519:3045022100...",

@@ -618,11 +618,12 @@ curl -H "X-API-Key: fos_live_abc123..." \
   <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
     <div class="mb-10">
       <p class="text-xs font-semibold tracking-[0.12em] uppercase text-[#58A6FF] mb-2">FTI PRICING</p>
-      <h2 class="text-2xl font-semibold text-[#E6EDF3] tracking-tight">Score any package. Pay for what you need.</h2>
-      <p class="text-[#9CA3AF] mt-2 max-w-xl">Badge embeds are always free. API access scales with your usage.</p>
+      <h2 class="text-2xl font-semibold text-[#E6EDF3] tracking-tight">FTI is part of ForgeOS.</h2>
+      <p class="text-[#9CA3AF] mt-2 max-w-xl">FTI scoring is bundled with every ForgeOS plan. Badge embeds are always free. A standalone metered API is available for AI agents that don't need a full ForgeOS subscription.</p>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-start">
+    <!-- Bundled tiers -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-start mb-6">
 
       <!-- Free -->
       <div class="rounded-xl p-6" style="background: #111111; border: 1px solid #1F1F1F;">
@@ -634,7 +635,7 @@ curl -H "X-API-Key: fos_live_abc123..." \
           <span class="text-4xl font-bold text-[#E6EDF3]">$0</span>
           <span class="text-sm text-[#8B949E]">/mo</span>
         </div>
-        <p class="text-xs text-[#8B949E] mb-6">1,000 API calls/month. Badge embeds unlimited.</p>
+        <p class="text-xs text-[#8B949E] mb-6">5 FTI scores/day. Badge embeds unlimited.</p>
         <a
           href="https://forgeos.synctek.io/register?plan=free"
           class="block w-full text-center py-2.5 rounded-md font-medium no-underline transition-all duration-150 text-[#E6EDF3] text-sm mb-5"
@@ -647,7 +648,7 @@ curl -H "X-API-Key: fos_live_abc123..." \
         <ul class="space-y-2 text-xs text-[#8B949E]">
           <li class="flex items-start gap-2">
             <svg class="w-3.5 h-3.5 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
-            Single-package lookups
+            5 FTI scores/day
           </li>
           <li class="flex items-start gap-2">
             <svg class="w-3.5 h-3.5 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
@@ -657,89 +658,85 @@ curl -H "X-API-Key: fos_live_abc123..." \
             <svg class="w-3.5 h-3.5 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
             Public trust profiles
           </li>
+          <li class="flex items-start gap-2">
+            <svg class="w-3.5 h-3.5 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+            GET /v1/methodology (free, public)
+          </li>
         </ul>
       </div>
 
       <!-- Pro -->
-      <div class="rounded-xl p-6" style="background: #111111; border: 1px solid #58A6FF; box-shadow: 0 0 0 1px rgba(88,166,255,0.15);">
+      <div class="rounded-xl p-6" style="background: #111111; border: 1px solid #3B82F6; box-shadow: 0 0 0 1px rgba(59,130,246,0.15);">
         <div class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold mb-5"
-             style="background: rgba(88,166,255,0.12); color: #58A6FF;">
+             style="background: rgba(59,130,246,0.12); color: #3B82F6;">
           Pro
         </div>
         <div class="flex items-baseline gap-1 mb-1">
-          <span class="text-4xl font-bold text-[#E6EDF3]">$99</span>
-          <span class="text-sm text-[#8B949E]">/year</span>
+          <span class="text-4xl font-bold text-[#E6EDF3]">$49</span>
+          <span class="text-sm text-[#8B949E]">/mo</span>
         </div>
-        <p class="text-xs text-[#8B949E] mb-6">Unlimited API calls. Score history. Webhooks.</p>
+        <p class="text-xs text-[#8B949E] mb-6">Unlimited FTI scoring. Full 8-dimension breakdown.</p>
         <a
-          href="https://forgeos.synctek.io/register?plan=fti-pro"
+          href="https://forgeos.synctek.io/register?plan=pro"
           class="block w-full text-center py-2.5 rounded-md font-medium text-white no-underline transition-all duration-150 text-sm mb-5"
-          style="background: #58A6FF;"
-          onmouseover="this.style.background='#3B82F6'"
-          onmouseout="this.style.background='#58A6FF'"
+          style="background: #3B82F6;"
+          onmouseover="this.style.background='#2563EB'"
+          onmouseout="this.style.background='#3B82F6'"
         >
           Start free trial
         </a>
         <ul class="space-y-2 text-xs text-[#8B949E]">
           <li class="flex items-start gap-2">
             <svg class="w-3.5 h-3.5 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
-            Unlimited API calls
+            Unlimited FTI scores
           </li>
           <li class="flex items-start gap-2">
             <svg class="w-3.5 h-3.5 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
-            Bulk queries
+            Recommendations
           </li>
           <li class="flex items-start gap-2">
             <svg class="w-3.5 h-3.5 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
-            Score history
+            Comparative analysis
           </li>
           <li class="flex items-start gap-2">
             <svg class="w-3.5 h-3.5 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
-            Webhook notifications
+            Score history &amp; webhooks
           </li>
         </ul>
       </div>
 
-      <!-- Agent Pro -->
-      <div class="relative rounded-xl p-6" style="background: #111111; border: 1px solid #10B981; box-shadow: 0 0 0 1px rgba(16,185,129,0.15);">
-        <div class="absolute -top-3 left-1/2 -translate-x-1/2 px-3.5 py-1 rounded-full text-xs font-semibold text-white whitespace-nowrap"
-             style="background: #10B981;">
-          Best for CI/CD
-        </div>
+      <!-- Team -->
+      <div class="relative rounded-xl p-6" style="background: #111111; border: 1px solid #818CF8; box-shadow: 0 0 0 1px rgba(99,102,241,0.15);">
         <div class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold mb-5"
-             style="background: rgba(16,185,129,0.12); color: #10B981;">
-          Agent Pro
+             style="background: rgba(99,102,241,0.12); color: #818CF8;">
+          Team
         </div>
         <div class="flex items-baseline gap-1 mb-1">
           <span class="text-4xl font-bold text-[#E6EDF3]">$29</span>
-          <span class="text-sm text-[#8B949E]">/mo</span>
+          <span class="text-sm text-[#8B949E]">/seat/mo</span>
         </div>
-        <p class="text-xs text-[#8B949E] mb-6">Bulk scoring. Priority queue. 10K calls/min.</p>
+        <p class="text-xs text-[#8B949E] mb-6">Unlimited FTI. 3-seat min. Shared projects.</p>
         <a
-          href="https://forgeos.synctek.io/register?plan=fti-agent-pro"
+          href="https://forgeos.synctek.io/register?plan=team"
           class="block w-full text-center py-2.5 rounded-md font-medium text-white no-underline transition-all duration-150 text-sm mb-5"
-          style="background: #10B981;"
-          onmouseover="this.style.background='#059669'"
-          onmouseout="this.style.background='#10B981'"
+          style="background: #6366F1;"
+          onmouseover="this.style.background='#4F46E5'"
+          onmouseout="this.style.background='#6366F1'"
         >
           Start free trial
         </a>
         <ul class="space-y-2 text-xs text-[#8B949E]">
           <li class="flex items-start gap-2">
             <svg class="w-3.5 h-3.5 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
-            Bulk scoring endpoints
+            Everything in Pro
           </li>
           <li class="flex items-start gap-2">
             <svg class="w-3.5 h-3.5 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
-            Priority queue
+            Shared FTI dashboard
           </li>
           <li class="flex items-start gap-2">
             <svg class="w-3.5 h-3.5 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
-            10K calls/min rate limit
-          </li>
-          <li class="flex items-start gap-2">
-            <svg class="w-3.5 h-3.5 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
-            CI/CD integration
+            Team trust policy config
           </li>
         </ul>
       </div>
@@ -753,7 +750,7 @@ curl -H "X-API-Key: fos_live_abc123..." \
         <div class="flex items-baseline gap-1 mb-1">
           <span class="text-4xl font-bold text-[#E6EDF3]">Custom</span>
         </div>
-        <p class="text-xs text-[#8B949E] mb-6">$10,000+/year. Dedicated infrastructure. SLA.</p>
+        <p class="text-xs text-[#8B949E] mb-6">Dedicated infrastructure. Private registry. SLA.</p>
         <a
           href="mailto:info@synctek.io"
           class="block w-full text-center py-2.5 rounded-md font-medium no-underline transition-all duration-150 text-[#E6EDF3] text-sm mb-5"
@@ -766,15 +763,15 @@ curl -H "X-API-Key: fos_live_abc123..." \
         <ul class="space-y-2 text-xs text-[#8B949E]">
           <li class="flex items-start gap-2">
             <svg class="w-3.5 h-3.5 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+            Everything in Team
+          </li>
+          <li class="flex items-start gap-2">
+            <svg class="w-3.5 h-3.5 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+            Private registry scoring
+          </li>
+          <li class="flex items-start gap-2">
+            <svg class="w-3.5 h-3.5 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
             Custom SLA
-          </li>
-          <li class="flex items-start gap-2">
-            <svg class="w-3.5 h-3.5 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
-            Dedicated scoring infra
-          </li>
-          <li class="flex items-start gap-2">
-            <svg class="w-3.5 h-3.5 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
-            Private registry support
           </li>
           <li class="flex items-start gap-2">
             <svg class="w-3.5 h-3.5 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
@@ -783,6 +780,60 @@ curl -H "X-API-Key: fos_live_abc123..." \
         </ul>
       </div>
 
+    </div>
+
+    <!-- Standalone metered API callout -->
+    <div class="rounded-xl p-6" style="background: #111111; border: 1px solid #10B981; box-shadow: 0 0 0 1px rgba(16,185,129,0.1);">
+      <div class="flex flex-col sm:flex-row sm:items-start gap-6">
+        <div class="flex-1">
+          <div class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold mb-3"
+               style="background: rgba(16,185,129,0.12); color: #10B981;">
+            Standalone FTI API — for AI agents
+          </div>
+          <p class="text-sm text-[#E6EDF3] font-medium mb-1">No ForgeOS subscription required.</p>
+          <p class="text-xs text-[#8B949E] leading-relaxed mb-4">
+            AI agents, CI/CD pipelines, and external tools can query FTI directly via metered API. Pay only for what you use. API key authentication. Billed monthly via Stripe.
+          </p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+            <div class="flex items-center gap-3 py-1.5 px-3 rounded-md" style="background: rgba(16,185,129,0.06); border: 1px solid rgba(16,185,129,0.15);">
+              <span class="font-mono text-[#10B981]">POST /v1/score</span>
+              <span class="text-[#8B949E] ml-auto">$0.003/call</span>
+            </div>
+            <div class="flex items-center gap-3 py-1.5 px-3 rounded-md" style="background: rgba(16,185,129,0.06); border: 1px solid rgba(16,185,129,0.15);">
+              <span class="font-mono text-[#10B981]">POST /v1/recommend</span>
+              <span class="text-[#8B949E] ml-auto">$0.005/call</span>
+            </div>
+            <div class="flex items-center gap-3 py-1.5 px-3 rounded-md" style="background: rgba(16,185,129,0.06); border: 1px solid rgba(16,185,129,0.15);">
+              <span class="font-mono text-[#10B981]">POST /v1/compare</span>
+              <span class="text-[#8B949E] ml-auto">$0.008/call</span>
+            </div>
+            <div class="flex items-center gap-3 py-1.5 px-3 rounded-md" style="background: rgba(16,185,129,0.06); border: 1px solid rgba(16,185,129,0.15);">
+              <span class="font-mono text-[#10B981]">GET /v1/methodology</span>
+              <span class="text-[#8B949E] ml-auto">Free · public</span>
+            </div>
+          </div>
+        </div>
+        <div class="sm:flex-shrink-0 flex flex-col gap-2">
+          <a
+            href="https://forgeos.synctek.io/register?plan=fti-api"
+            class="inline-flex items-center justify-center px-6 py-3 rounded-md font-medium text-white no-underline transition-all duration-150 text-sm whitespace-nowrap"
+            style="background: #10B981;"
+            onmouseover="this.style.background='#059669'"
+            onmouseout="this.style.background='#10B981'"
+          >
+            Get API key
+          </a>
+          <a
+            href="/docs/api"
+            class="inline-flex items-center justify-center px-6 py-3 rounded-md font-medium no-underline transition-all duration-150 text-[#10B981] text-sm whitespace-nowrap"
+            style="border: 1px solid rgba(16,185,129,0.3);"
+            onmouseover="this.style.background='rgba(16,185,129,0.06)'"
+            onmouseout="this.style.background='transparent'"
+          >
+            API docs &rarr;
+          </a>
+        </div>
+      </div>
     </div>
   </section>
 

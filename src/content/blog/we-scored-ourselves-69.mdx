@@ -1,0 +1,135 @@
+---
+title: "We Scored Our Own Tool a 69. Here's Why That's the Point."
+description: "ForgeOS Trust Index scored our own tool 69 — Bronze. We publish it. Here's what each of the 8 dimensions measures and why honest scoring matters."
+date: 2026-03-02
+author: "SyncTek Team"
+category: engineering
+tags: ["fti", "trust", "transparency", "forgeos", "open-source"]
+product: forgeos
+---
+
+ForgeOS Trust Index scored ForgeOS — our own flagship product — at 69. Bronze tier. We publish this score publicly. You can verify it right now:
+
+```
+GET https://forgeos-api.synctek.io/v1/trust/npm/synctek/forgeos
+```
+
+The score is not a rounding error. It is not a placeholder pending a marketing revision. It is the current state of the product, scored by the same system we offer to everyone else.
+
+## Why Not 95?
+
+Because FTI does not measure what we think of ourselves. It measures what the ecosystem can actually verify.
+
+Here is the full breakdown:
+
+| Dimension | Score | Tier |
+|-----------|-------|------|
+| Security | 86.2 | Gold |
+| Supply chain | 74.0 | Silver |
+| Maintainability | 73.2 | Silver |
+| Documentation | 66.8 | Bronze |
+| Community | 47.1 | Needs Improvement |
+| Governance | 83.4 | Gold |
+| Operational | 65.2 | Bronze |
+| Improvement Velocity | 50.0 | Needs Improvement |
+| **Overall** | **69.0** | **Bronze** |
+
+The composite comes in at Bronze because the weakest dimensions pull the overall score down. That is by design. A product that is extraordinarily secure but has no community adoption and thin documentation is not, in any meaningful sense, a trustworthy open-source choice for a team that will depend on it. The score reflects that reality.
+
+## What Each Dimension Measures
+
+### Security (86.2)
+
+Security scoring looks at verifiable signals: test coverage, known vulnerability exposure, release signing practices, and update frequency. ForgeOS runs 2,779 tests at 95% coverage, uses Ed25519 signing on all releases, and has no registered CVEs. The deduction from a perfect score reflects the absence of a formal published security disclosure policy — something we will publish before the next scoring cycle.
+
+The key word is "verifiable." FTI does not accept self-attestation for security. If the evidence is not in the public record, it does not count.
+
+### Supply Chain (74.0)
+
+Supply chain scoring measures how much transitive risk a package carries. ForgeOS has 5 direct dependencies with pinned versions and a lockfile committed to the repository. The score lands at Silver because two of those dependencies have moderate transitive depth — a known trade-off we accepted for capability, and one we are actively reducing.
+
+What this dimension does not penalize: having dependencies. It penalizes unpinned versions, missing lockfiles, and deep transitive graphs with unverified sources.
+
+### Maintainability (73.2)
+
+Maintainability looks at structural signals that correlate with long-term reliability: code organization, test layout, release cadence, and change frequency. ForgeOS scores Silver here because the architecture is consistent and active development is visible in the commit history.
+
+What keeps it from Gold: the project is young. Maintainability scoring partially rewards tenure — a package that has been maintained cleanly for three years carries a different signal than one maintained cleanly for four months. We have to earn that over time.
+
+### Documentation (66.8)
+
+This is where it starts to sting. README exists. API reference exists. But FTI documentation scoring also looks for community tutorials, third-party guides, worked examples from users other than the author, and structured getting-started paths for common integration patterns.
+
+ForgeOS has the author-produced documentation. It does not yet have the ecosystem around it. The score reflects that gap honestly. Blog posts like this one improve the score — not because we are gaming the index, but because more documented surface area is genuinely more useful.
+
+### Community (47.1)
+
+One contributor. A young repository. No public issue discussions yet from external users. This is where we are, and FTI scores it accurately.
+
+Community scoring is the dimension that developers working on new projects most often find frustrating — because you cannot fake it, you cannot accelerate it through effort alone, and a low score here is almost always correct. A package with one contributor and minimal external engagement is a higher dependency risk than a package with an active community, regardless of code quality.
+
+The score will rise as adoption grows. That is the correct behavior.
+
+### Governance (83.4)
+
+Governance scoring measures the audit trail: are gate decisions logged, are artifacts signed, is there a verifiable record of who approved what? ForgeOS earns Gold here because the governance engine is its core product — every action is hash-chained and Ed25519-signed. The gap from a perfect score reflects the early stage of third-party adoption; external projects haven't yet generated enough governed ledger entries for FTI to measure governance at scale.
+
+### Operational (65.2)
+
+Operational scoring looks at deployment reliability, incident response history, and runtime health signals. ForgeOS is early-stage — not enough public deployment data yet to score above Bronze. This will improve as production usage accumulates.
+
+### Improvement Velocity (50.0)
+
+Improvement velocity measures release cadence, resolved issues, and regression trends over time. At four months old, ForgeOS doesn't have enough history for a strong velocity signal. The score is accurate: we've shipped consistently, but there's no multi-year track record to measure against yet.
+
+## Why Honest Scoring Matters
+
+If we inflated our own score, you would have no reason to trust any score the system produces.
+
+A trust index that generates flattering results for its creator is not a trust index. It is marketing copy with a badge attached. Every team that has ever read a vendor's self-assessment knows the feeling: the compliance report checks every box, the security posture is described as "robust," the documentation is "comprehensive." None of it is independently verifiable. All of it is written to persuade.
+
+FTI scores what it can verify — signals in the public record, structured against a published methodology. The score for ForgeOS is 69 because that is what the evidence supports today. If the evidence improves, the score improves. If it does not, the score holds.
+
+That is the only kind of trust index worth building.
+
+## How We Will Improve
+
+The path from Bronze to Silver is visible from here.
+
+**Documentation** rises as we publish more content — tutorials, integration guides, worked examples. This post contributes. So does every piece of public documentation we produce in the next scoring cycle.
+
+**Community** rises as adoption grows and external contributors appear. We cannot manufacture this, and we should not try. The right approach is to build something worth contributing to and make it easy to contribute. The score follows.
+
+**Supply chain** improves as we reduce transitive dependency depth in the next release cycle. One of our five direct dependencies carries more transitive graph than we need. We have a refactor scoped for Q2 that addresses it.
+
+**Security** closes its remaining gap with a published disclosure policy. This is a half-day of work that we have been deferring. It ships before the next scoring cycle.
+
+The score is a snapshot. Trajectory matters more than the number. ForgeOS tracks trajectory: rising, stable, or declining. Our current trajectory is rising, across all eight dimensions. We will publish the next snapshot when it drops.
+
+## The Bigger Point
+
+Every software package that teams depend on should have a score like this.
+
+Not self-assessed. Not a vendor's security checklist. A deterministic, independently verifiable score based on signals that are in the public record — signals that any team could independently check if they had the time and methodology to do so.
+
+Most teams do not have the time. That is what FTI provides: the methodology, applied consistently, at scale, to every package in the ecosystem. Not just the ones vendors want scored.
+
+The goal is a world where picking a dependency involves the same kind of structured evidence review that a security team applies to a procurement decision. A world where "we checked the FTI score" means something — because the score is honest even when the creator's own product scores 69.
+
+We are publishing our score because we believe that. If we did not, we would not have built the index.
+
+---
+
+**Check your own package:**
+
+```
+GET https://forgeos-api.synctek.io/v1/trust/{ecosystem}/{package}
+```
+
+Embed the badge in your README:
+
+```html
+<img src="https://forgeos-api.synctek.io/v1/badge/npm/synctek/forgeos/flat" alt="FTI Trust Score" />
+```
+
+[Score your stack →](/forgeos)
