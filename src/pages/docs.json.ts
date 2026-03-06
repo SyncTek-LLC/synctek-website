@@ -146,6 +146,28 @@ export const GET: APIRoute = () => {
           { method: 'GET', path: '/workflow/{initiative_id}', description: 'Get current workflow state. Returns current step, next actions, blockers, and progress percentage.', auth_required: true },
         ],
       },
+      {
+        name: 'FTI — Trust Scoring API',
+        description: 'ForgeOS Trust Index scoring endpoints. Bundled with ForgeOS plans (Free: 5 scores/day; Pro/Team/Enterprise: unlimited). Standalone metered access available without a ForgeOS subscription.',
+        auth_note: 'ForgeOS subscribers: use X-ForgeOS-API-Key. Standalone metered access: use X-FTI-API-Key. GET /v1/methodology is public, no auth required.',
+        endpoints: [
+          { method: 'POST', path: '/v1/score', description: 'Score a package or agent across all 8 FTI dimensions (security, maintainability, documentation, community_health, supply_chain, improvement_velocity, governance, operational). Returns signed Ed25519 score 0–100 with tier classification. Metered: $0.003/call for standalone API users.', auth_required: true },
+          { method: 'POST', path: '/v1/recommend', description: 'Get trust-based recommendations for a package given your context (compliance, prototype, production). Returns ranked alternatives if the package scores below threshold. Metered: $0.005/call for standalone API users.', auth_required: true },
+          { method: 'POST', path: '/v1/compare', description: 'Compare two or more packages side-by-side across all 8 FTI dimensions. Returns dimension-by-dimension breakdown and contextual recommendation. Metered: $0.008/call for standalone API users.', auth_required: true },
+          { method: 'GET', path: '/v1/methodology', description: 'Retrieve FTI dimension definitions, scoring weights, tier thresholds, and algorithm version. Machine-readable. Free and public — no API key required.', auth_required: false },
+        ],
+        fti_pricing: {
+          bundled_with_forgeos: true,
+          standalone_metered: true,
+          rates: [
+            { endpoint: 'POST /v1/score', price_usd_per_call: 0.003 },
+            { endpoint: 'POST /v1/recommend', price_usd_per_call: 0.005 },
+            { endpoint: 'POST /v1/compare', price_usd_per_call: 0.008 },
+            { endpoint: 'GET /v1/methodology', price_usd_per_call: 0, public: true },
+          ],
+          volume_discount_threshold: 100000,
+        },
+      },
     ],
     mcp_tools: [
       { name: 'forge_init', category: 'session', description: 'Initialize a ForgeOS governance session. Returns project state, active work, governance rules, and workflow runbook.' },

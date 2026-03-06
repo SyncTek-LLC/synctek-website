@@ -135,12 +135,12 @@ const jsonLd = {
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
       <!-- ForgeOS card -->
-      <a
-        href="/products/forgeos/"
-        class="group block rounded-xl p-6 no-underline transition-all duration-200"
+      <div
+        class="group block rounded-xl p-6 transition-all duration-200 cursor-pointer"
         style="background: #111111; border: 1px solid #1F1F1F;"
         onmouseover="this.style.borderColor='rgba(59,130,246,0.4)'"
         onmouseout="this.style.borderColor='#1F1F1F'"
+        onclick="if(!event.target.closest('a')){window.location.href='/products/forgeos/'}"
       >
         <div class="flex items-start justify-between mb-3">
           <h3 class="text-lg font-semibold text-[#E6EDF3] group-hover:text-white transition-colors">
@@ -165,9 +165,9 @@ const jsonLd = {
           Includes <a href="/products/forgeos/fti/" class="text-[#3B82F6] no-underline hover:underline">Forge Trust Index (FTI)</a> — trust-scored packages across 8 dimensions, Ed25519-signed.
         </p>
         <div class="mt-4 pt-4" style="border-top: 1px solid #1F1F1F;">
-          <span class="text-sm font-medium text-[#3B82F6]">Explore ForgeOS &rarr;</span>
+          <a href="/products/forgeos/" class="text-sm font-medium text-[#3B82F6] no-underline hover:underline">Explore ForgeOS &rarr;</a>
         </div>
-      </a>
+      </div>
 
       <!-- SpecterQA card -->
       <a
