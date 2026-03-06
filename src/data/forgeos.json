@@ -1,0 +1,302 @@
+{
+  "product_id": "PROD-2026-006",
+  "name": "ForgeOS",
+  "tagline": "AI-Powered Software Trust & Governance Platform",
+  "description_short": "ForgeOS brings constitutional governance to software development — every decision tracked, every change auditable, every gate enforced.",
+  "description_long": "ForgeOS is a governance platform for AI-native software teams. It provides\nhash-chained audit ledgers, gate-based approval workflows, trust scoring,\nand a shared organizational memory — all accessible via CLI, MCP tools,\nREST API, and a web dashboard.\n\nBuilt for teams where AI agents are first-class contributors alongside\nhuman developers. ForgeOS ensures that as AI writes more code, governance\ndoesn't disappear — it gets stronger.\n",
+  "brand": {
+    "accent_color": "#FF8255",
+    "design_language": "Measured Authority"
+  },
+  "urls": {
+    "website": "https://synctek.io/products/forgeos",
+    "dashboard": "https://forgeos.synctek.io",
+    "api": "https://forgeos-api.synctek.io",
+    "docs": "https://forgeos.synctek.io/docs",
+    "support": "support@synctek.io",
+    "github": "https://github.com/SyncTek-LLC/forgeos",
+    "npm": "https://www.npmjs.com/package/@synctek/forgeos",
+    "federation": "https://federation.synctek.io"
+  },
+  "distribution": {
+    "npm_package": "@synctek/forgeos",
+    "npm_version": "2.1.2",
+    "mcp_package": "@synctek/forgeos-mcp",
+    "cli_binary": "forge",
+    "license": "commercial"
+  },
+  "pricing": {
+    "model": "tiered",
+    "billing_provider": "stripe",
+    "currency": "USD",
+    "tiers": [
+      {
+        "id": "free",
+        "name": "Free",
+        "price": 0,
+        "period": null,
+        "tagline": "Get started with governance basics",
+        "cta": "Start Free",
+        "cta_url": "https://forgeos.synctek.io/register",
+        "features": [
+          "1 project",
+          "Basic gate enforcement",
+          "CLI access",
+          "Community support",
+          "14-day full-feature trial"
+        ]
+      },
+      {
+        "id": "pro",
+        "name": "Pro",
+        "price": 49,
+        "period": "monthly",
+        "tagline": "Full governance for solo developers and small teams",
+        "cta": "Start Pro",
+        "cta_url": "https://forgeos.synctek.io/register?plan=pro",
+        "features": [
+          "Unlimited projects",
+          "Ed25519 signed audit ledger",
+          "21 MCP tools",
+          "Full CLI (49 commands)",
+          "Shared Mind organizational memory",
+          "Gate intelligence & auto-routing",
+          "Dashboard access",
+          "Federation Hub",
+          "Email support"
+        ]
+      },
+      {
+        "id": "team",
+        "name": "Team",
+        "price": 29,
+        "price_unit": "seat",
+        "period": "monthly",
+        "minimum_seats": 3,
+        "base_price_display": "$87/mo base (3 seats)",
+        "tagline": "Governance at scale for engineering teams",
+        "cta": "Start Team",
+        "cta_url": "https://forgeos.synctek.io/register?plan=team",
+        "features": [
+          "Everything in Pro",
+          "Team dashboard with RBAC",
+          "Shared projects across team",
+          "200K API calls/month",
+          "Priority support"
+        ]
+      },
+      {
+        "id": "enterprise",
+        "name": "Enterprise",
+        "price": null,
+        "price_display": "Custom",
+        "period": null,
+        "tagline": "Dedicated infrastructure for regulated industries",
+        "cta": "Contact Sales",
+        "cta_url": "mailto:enterprise@synctek.io",
+        "features": [
+          "Everything in Team",
+          "Dedicated infrastructure",
+          "4-hour SLA",
+          "Security support & DPA",
+          "Custom integrations",
+          "Unlimited API calls"
+        ]
+      }
+    ]
+  },
+  "feature_matrix": [
+    {
+      "category": "Core",
+      "features": [
+        {
+          "name": "Projects",
+          "free": "1",
+          "pro": "Unlimited",
+          "team": "Unlimited",
+          "enterprise": "Unlimited"
+        },
+        {
+          "name": "Gate enforcement",
+          "free": "Basic",
+          "pro": "Full",
+          "team": "Full",
+          "enterprise": "Full + custom"
+        },
+        {
+          "name": "Audit ledger",
+          "free": "Unsigned",
+          "pro": "Ed25519 signed",
+          "team": "Ed25519 signed",
+          "enterprise": "Ed25519 signed + backup"
+        },
+        {
+          "name": "CLI commands",
+          "free": "10",
+          "pro": "49",
+          "team": "49",
+          "enterprise": "49 + custom"
+        }
+      ]
+    },
+    {
+      "category": "AI & Intelligence",
+      "features": [
+        {
+          "name": "MCP tools",
+          "free": "5",
+          "pro": "21",
+          "team": "21",
+          "enterprise": "21 + custom"
+        },
+        {
+          "name": "Shared Mind",
+          "free": false,
+          "pro": true,
+          "team": true,
+          "enterprise": true
+        },
+        {
+          "name": "Gate intelligence",
+          "free": false,
+          "pro": true,
+          "team": true,
+          "enterprise": true
+        }
+      ]
+    },
+    {
+      "category": "Collaboration",
+      "features": [
+        {
+          "name": "Team dashboard",
+          "free": false,
+          "pro": false,
+          "team": true,
+          "enterprise": true
+        },
+        {
+          "name": "RBAC",
+          "free": false,
+          "pro": false,
+          "team": true,
+          "enterprise": true
+        },
+        {
+          "name": "Federation Hub",
+          "free": false,
+          "pro": true,
+          "team": true,
+          "enterprise": "Dedicated"
+        }
+      ]
+    },
+    {
+      "category": "FTI (Trust Scoring)",
+      "features": [
+        {
+          "name": "FTI scoring",
+          "free": "5 scores/day",
+          "pro": "Unlimited",
+          "team": "Unlimited",
+          "enterprise": "Unlimited"
+        },
+        {
+          "name": "FTI recommendations",
+          "free": false,
+          "pro": true,
+          "team": true,
+          "enterprise": true
+        },
+        {
+          "name": "FTI comparative analysis",
+          "free": false,
+          "pro": true,
+          "team": true,
+          "enterprise": true
+        },
+        {
+          "name": "FTI methodology endpoint",
+          "free": true,
+          "pro": true,
+          "team": true,
+          "enterprise": true
+        }
+      ]
+    },
+    {
+      "category": "Support",
+      "features": [
+        {
+          "name": "Support level",
+          "free": "Community",
+          "pro": "Email",
+          "team": "Priority",
+          "enterprise": "Dedicated + SLA"
+        },
+        {
+          "name": "API calls",
+          "free": "1K/mo",
+          "pro": "50K/mo",
+          "team": "200K/mo",
+          "enterprise": "Unlimited"
+        }
+      ]
+    }
+  ],
+  "capabilities": {
+    "cli_commands": 49,
+    "mcp_tools": 21,
+    "api_endpoints": 135,
+    "gate_types": 16,
+    "supported_languages": [
+      "Python",
+      "JavaScript",
+      "TypeScript",
+      "Go",
+      "Rust"
+    ],
+    "key_features": [
+      "Hash-chained Ed25519 signed audit ledger",
+      "16-gate governance pipeline (standard pathway)",
+      "7-gate infrastructure pathway",
+      "Shared Mind organizational memory",
+      "Federation Hub for cross-instance governance",
+      "ForgeOS Trust Index (FTI) — package trust scoring",
+      "Policy-as-config (YAML-based governance rules)",
+      "Governance drift detection",
+      "MCP-native (21 tools for AI agent integration)"
+    ]
+  },
+  "faq": [
+    {
+      "q": "What AI model does ForgeOS use?",
+      "a": "ForgeOS uses Claude (Anthropic) for gate intelligence, code review routing, and Shared Mind pattern recognition. AI costs are included in your plan — you are never charged separately for AI usage."
+    },
+    {
+      "q": "Can I self-host ForgeOS?",
+      "a": "Enterprise plans include dedicated infrastructure options. Contact enterprise@synctek.io for details."
+    },
+    {
+      "q": "Is there a free trial?",
+      "a": "Yes — all new accounts get a 14-day trial of all Pro features. No credit card required."
+    },
+    {
+      "q": "How does the audit ledger work?",
+      "a": "Every governance action (gate approval, review, changeset) is recorded in a hash-chained JSONL ledger signed with Ed25519 keys. Each entry's hash includes the previous entry, making the chain tamper-evident."
+    },
+    {
+      "q": "What is the ForgeOS Trust Index (FTI)?",
+      "a": "FTI is a context-aware trust scoring system for open-source packages. It evaluates packages across 8 dimensions (security, maintainability, documentation, community health, supply chain, improvement velocity, operational, governance) and provides scores tailored to your specific security posture, team size, and tech stack. FTI scoring is included with all ForgeOS plans. A standalone metered API is also available for AI agents and external integrations."
+    },
+    {
+      "q": "How does FTI API pricing work?",
+      "a": "FTI scoring is bundled with ForgeOS plans at your tier's API call limit. For standalone agentic access (without a ForgeOS subscription), metered pricing is available: $0.003/score for basic scoring, $0.005/score for recommendations, and $0.008/score for comparative analysis. Volume discounts available at 100K+ scores/month."
+    }
+  ],
+  "_meta": {
+    "generated_at": "2026-03-06T04:09:00.112136+00:00",
+    "source": "config/product_docs/prod_2026_006.yaml",
+    "generator": "ba docs-generate"
+  }
+}

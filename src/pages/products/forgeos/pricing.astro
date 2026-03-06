@@ -101,7 +101,12 @@ const faqItems = [
   {
     question: 'What is included in the Free plan?',
     answer:
-      'The Free plan includes gate enforcement, Ed25519-signed ledger, forge CLI, FTI badge embeds, and SharedMind in read-only mode. You get 1,000 API calls/month at 20 req/min. MCP tools are limited to 5 of 21. Upgrade to Pro for the full suite.',
+      'The Free plan includes gate enforcement, Ed25519-signed ledger, forge CLI, FTI badge embeds, 5 FTI scores/day, and SharedMind in read-only mode. You get 1,000 API calls/month at 20 req/min. MCP tools are limited to 5 of 21. Upgrade to Pro for the full suite.',
+  },
+  {
+    question: 'How does FTI scoring work with my plan?',
+    answer:
+      'FTI (ForgeOS Trust Index) is bundled with every ForgeOS plan. Free plans include 5 FTI scores/day. Pro, Team, and Enterprise plans include unlimited scoring, recommendations, and comparative analysis across all 8 dimensions (security, maintainability, documentation, community health, supply chain, improvement velocity, governance, and operational). If you need FTI API access without a ForgeOS subscription — for AI agents, CI/CD pipelines, or external tooling — a standalone metered API is available at $0.003/score, $0.005/recommendation, and $0.008/comparison. The GET /v1/methodology endpoint is free and public.',
   },
 ];
 
@@ -123,6 +128,9 @@ const comparisonRows: FeatureRow[] = [
   { feature: 'Ed25519-signed ledger', free: true, pro: true, team: true, enterprise: true },
   { feature: '21 MCP governance tools', free: '5 of 21', pro: true, team: true, enterprise: true },
   { feature: 'forge CLI (18 command groups)', free: true, pro: true, team: true, enterprise: true },
+  { feature: 'FTI scoring (8 dimensions)', free: '5/day', pro: 'Unlimited', team: 'Unlimited', enterprise: 'Unlimited' },
+  { feature: 'FTI recommendations', free: false, pro: true, team: true, enterprise: true },
+  { feature: 'FTI comparative analysis', free: false, pro: true, team: true, enterprise: true },
   { feature: 'SharedMind (institutional memory)', free: 'Read-only', pro: true, team: true, enterprise: true },
   { feature: 'Self-approval prevention', free: true, pro: true, team: true, enterprise: true },
   { feature: 'Circuit breakers', free: true, pro: true, team: true, enterprise: true },
@@ -443,6 +451,39 @@ function renderValue(val: FeatureValue) {
             onmouseout="this.style.background='transparent'"
           >
             Join the waitlist
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Standalone FTI API callout -->
+    <div class="mt-4 rounded-xl p-6" style="background: #111111; border: 1px solid #10B981; box-shadow: 0 0 0 1px rgba(16,185,129,0.1);">
+      <div class="flex flex-col sm:flex-row sm:items-start gap-6">
+        <div class="flex-1">
+          <div class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold mb-3"
+               style="background: rgba(16,185,129,0.12); color: #10B981;">
+            Standalone FTI API — for AI agents
+          </div>
+          <p class="text-sm text-[#E6EDF3] font-medium mb-1">FTI scoring without a ForgeOS subscription.</p>
+          <p class="text-xs text-[#8B949E] leading-relaxed">
+            Metered, pay-per-call access for AI agents, CI/CD pipelines, and external tools. API key authentication. Billed monthly via Stripe. Volume discounts at 100K+ scores/month.
+          </p>
+          <div class="mt-3 flex flex-wrap gap-3 text-xs font-mono">
+            <span class="px-2 py-1 rounded" style="background: rgba(16,185,129,0.08); color: #10B981; border: 1px solid rgba(16,185,129,0.2);">POST /v1/score — $0.003</span>
+            <span class="px-2 py-1 rounded" style="background: rgba(16,185,129,0.08); color: #10B981; border: 1px solid rgba(16,185,129,0.2);">POST /v1/recommend — $0.005</span>
+            <span class="px-2 py-1 rounded" style="background: rgba(16,185,129,0.08); color: #10B981; border: 1px solid rgba(16,185,129,0.2);">POST /v1/compare — $0.008</span>
+            <span class="px-2 py-1 rounded" style="background: rgba(16,185,129,0.06); color: #8B949E; border: 1px solid rgba(16,185,129,0.15);">GET /v1/methodology — free</span>
+          </div>
+        </div>
+        <div class="sm:flex-shrink-0">
+          <a
+            href="https://forgeos.synctek.io/register?plan=fti-api"
+            class="inline-flex items-center px-6 py-3 rounded-md font-medium text-white no-underline transition-all duration-150 text-sm whitespace-nowrap"
+            style="background: #10B981;"
+            onmouseover="this.style.background='#059669'"
+            onmouseout="this.style.background='#10B981'"
+          >
+            Get API key
           </a>
         </div>
       </div>
