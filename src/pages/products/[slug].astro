@@ -93,14 +93,14 @@ const stackRows = slug === 'forgeos' ? [
 
 // EU AI Act rows (ForgeOS only)
 const euAiActRows = slug === 'forgeos' ? [
-  { article: 'Art. 12', requirement: 'Record-keeping — immutable logs of all automated decisions', coverage: 'Hash-chained, Ed25519-signed ledger', confidence: 'Direct coverage' },
-  { article: 'Art. 9', requirement: 'Risk management system — documented procedures', coverage: 'Gate enforcement, circuit breakers, violation scanner', confidence: 'Direct coverage' },
-  { article: 'Art. 14', requirement: 'Human oversight — ability to halt and override', coverage: 'Human-in-the-loop gates, kill switch, circuit breaker', confidence: 'Direct coverage' },
+  { article: 'Art. 12', requirement: 'Record-keeping - immutable logs of all automated decisions', coverage: 'Hash-chained, Ed25519-signed ledger', confidence: 'Direct coverage' },
+  { article: 'Art. 9', requirement: 'Risk management system - documented procedures', coverage: 'Gate enforcement, circuit breakers, violation scanner', confidence: 'Direct coverage' },
+  { article: 'Art. 14', requirement: 'Human oversight - ability to halt and override', coverage: 'Human-in-the-loop gates, kill switch, circuit breaker', confidence: 'Direct coverage' },
   { article: 'Art. 17', requirement: 'Quality management system', coverage: 'Initiative + gate lifecycle', confidence: 'Direct coverage' },
   { article: 'Art. 61', requirement: 'Post-market monitoring', coverage: 'Continuous automated scanning, daily self-audit', confidence: 'Partial coverage' },
 ] : [];
 
-// FTI derived values — computed in frontmatter to avoid generic-type parse errors in JSX
+// FTI derived values - computed in frontmatter to avoid generic-type parse errors in JSX
 const ftiShieldBadgeUrl = fti && 'shieldBadgeUrl' in fti ? fti.shieldBadgeUrl as string : undefined;
 const ftiFlatBadgeUrl = fti && 'flatBadgeUrl' in fti ? fti.flatBadgeUrl as string : undefined;
 const ftiBadgeUrl = fti && !ftiShieldBadgeUrl && 'badgeUrl' in fti ? fti.badgeUrl as string : undefined;
@@ -169,7 +169,7 @@ if (ftiApiUrl) {
       }
     }
   } catch (e) {
-    // Build-time fetch failed — fall back to static scores if present
+    // Build-time fetch failed - fall back to static scores if present
     console.warn('FTI API fetch failed at build time:', e);
   }
 }
@@ -196,10 +196,10 @@ const finalFtiScores = liveFtiScores.length > 0 ? liveFtiScores : ftiScores;
           <img
             src="/images/forge-anvil-icon.png"
             alt="ForgeOS"
-            width="56"
-            height="56"
+            width="80"
+            height="80"
             loading="lazy"
-            style="width: 56px; height: 56px; border-radius: 10px; flex-shrink: 0;"
+            style="width: 80px; height: 80px; border-radius: 10px; flex-shrink: 0;"
           />
         )}
         <h1 class="text-3xl sm:text-4xl font-bold tracking-tight">{product.name}</h1>
@@ -384,7 +384,7 @@ const finalFtiScores = liveFtiScores.length > 0 ? liveFtiScores : ftiScores;
                   <div>
                     <span class="text-[#EF4444]">  ✗</span>
                     <span class="text-[#E6EDF3]">  implementation</span>
-                    <span class="text-[#F59E0B] text-xs ml-2">PENDING — architect review required</span>
+                    <span class="text-[#F59E0B] text-xs ml-2">PENDING - architect review required</span>
                   </div>
                 </div>
                 <div class="mt-4" style="border-top: 1px solid #1F1F1F; padding-top: 1rem;">
@@ -431,7 +431,7 @@ const finalFtiScores = liveFtiScores.length > 0 ? liveFtiScores : ftiScores;
             </div>
             <h3 class="text-lg font-semibold text-[#E6EDF3] mb-2">Enforce, don't observe</h3>
             <p class="text-sm text-[#8B949E] leading-relaxed">
-              Gates fire before actions execute. Policy is constitutional — defined once, enforced everywhere.
+              Gates fire before actions execute. Policy is constitutional - defined once, enforced everywhere.
               No configuration can disable self-approval prevention.
             </p>
           </div>
@@ -449,7 +449,7 @@ const finalFtiScores = liveFtiScores.length > 0 ? liveFtiScores : ftiScores;
             <h3 class="text-lg font-semibold text-[#E6EDF3] mb-2">Immutable audit trail</h3>
             <p class="text-sm text-[#8B949E] leading-relaxed">
               Ed25519-signed, hash-chained ledger. Every agent action, every gate decision, every delegation event.
-              Retroactive alteration breaks the chain — detectable in milliseconds. Auditor-ready. Designed for EU AI Act readiness.
+              Retroactive alteration breaks the chain - detectable in milliseconds. Auditor-ready. Designed for EU AI Act readiness.
             </p>
           </div>
 
@@ -465,8 +465,8 @@ const finalFtiScores = liveFtiScores.length > 0 ? liveFtiScores : ftiScores;
             </div>
             <h3 class="text-lg font-semibold text-[#E6EDF3] mb-2">Agent-native + CLI</h3>
             <p class="text-sm text-[#8B949E] leading-relaxed">
-              21 governance tools over MCP (HTTP/SSE). Any MCP-compatible agent calls ForgeOS directly —
-              gate-check, delegation-validate, audit-query. Plus the <code class="font-mono text-xs px-1 py-0.5 rounded" style="background: rgba(139,148,158,0.10); border: 1px solid #1F1F1F; color: #E6EDF3;">forge</code> CLI for terminal-first workflows. Framework-agnostic. No SDK required. Works with Claude, GPT, Gemini, or local models — your AI keys stay with you.
+              21 governance tools over MCP (HTTP/SSE). Any MCP-compatible agent calls ForgeOS directly -
+              gate-check, delegation-validate, audit-query. Plus the <code class="font-mono text-xs px-1 py-0.5 rounded" style="background: rgba(139,148,158,0.10); border: 1px solid #1F1F1F; color: #E6EDF3;">forge</code> CLI for terminal-first workflows. Framework-agnostic. No SDK required. Works with Claude, GPT, Gemini, or local models - your AI keys stay with you.
             </p>
           </div>
         </div>
@@ -524,7 +524,7 @@ const finalFtiScores = liveFtiScores.length > 0 ? liveFtiScores : ftiScores;
       <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <p class="text-xs font-semibold tracking-[0.12em] uppercase text-[#3B82F6] mb-3">TRUST SIGNALS</p>
         <h2 class="text-2xl sm:text-3xl font-semibold text-[#E6EDF3] tracking-tight mb-10">
-          Governing 13 AI departments in production — including the team that built it.
+          Governing 13 AI departments in production - including the team that built it.
         </h2>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
@@ -535,8 +535,8 @@ const finalFtiScores = liveFtiScores.length > 0 ? liveFtiScores : ftiScores;
           >
             <h3 class="text-sm font-semibold text-[#E6EDF3] mb-2">Dogfooded in production</h3>
             <p class="text-sm text-[#8B949E] leading-relaxed">
-              ForgeOS governs the development of ForgeOS. Thirteen specialized AI departments — engineering,
-              security, quality, operations, and nine others — operate under ForgeOS governance every day.
+              ForgeOS governs the development of ForgeOS. Thirteen specialized AI departments - engineering,
+              security, quality, operations, and nine others - operate under ForgeOS governance every day.
               Real agents. Real violations blocked.
             </p>
           </div>
@@ -549,7 +549,7 @@ const finalFtiScores = liveFtiScores.length > 0 ? liveFtiScores : ftiScores;
             <h3 class="text-sm font-semibold text-[#E6EDF3] mb-2">The 41% problem</h3>
             <p class="text-sm text-[#8B949E] leading-relaxed">
               41% of official MCP servers currently lack authentication, based on our analysis of public MCP server listings (SyncTek, 2026). ForgeOS is an MCP-listed
-              governance tool with authentication enforcement by default — not as a configuration, as a requirement.
+              governance tool with authentication enforcement by default - not as a configuration, as a requirement.
             </p>
           </div>
 
@@ -558,7 +558,7 @@ const finalFtiScores = liveFtiScores.length > 0 ? liveFtiScores : ftiScores;
             class="rounded-xl p-6"
             style="background: #111111; border-left: 3px solid #3B82F6; border-top: 1px solid #1F1F1F; border-right: 1px solid #1F1F1F; border-bottom: 1px solid #1F1F1F;"
           >
-            <h3 class="text-sm font-semibold text-[#E6EDF3] mb-2">EU AI Act — enforcement begins Aug 2, 2026</h3>
+            <h3 class="text-sm font-semibold text-[#E6EDF3] mb-2">EU AI Act - enforcement begins Aug 2, 2026</h3>
             <p class="text-sm text-[#8B949E] leading-relaxed">
               ForgeOS maps directly to Article 12 (record-keeping) and Article 17 (quality management system).
               Enterprise procurement cycles run 90+ days. Evaluation must begin by May 2026.
@@ -618,7 +618,7 @@ const finalFtiScores = liveFtiScores.length > 0 ? liveFtiScores : ftiScores;
             Agentic workflow governance is the discipline of defining, enforcing, and auditing what AI agents
             are permitted to do in a multi-agent system. It is distinct from model governance (which governs
             AI model behavior) and agent observability (which records what agents did after the fact).
-            Governance enforces rules before actions are taken — through gates that require human approval,
+            Governance enforces rules before actions are taken - through gates that require human approval,
             delegation rules that define agent authority, circuit breakers that halt execution on failure,
             and self-approval prevention that blocks agents from authorizing their own outputs.
             <strong class="text-[#E6EDF3]"> ForgeOS is the first purpose-built governance OS for MCP agents.</strong>
@@ -648,7 +648,7 @@ const finalFtiScores = liveFtiScores.length > 0 ? liveFtiScores : ftiScores;
         </div>
         <p class="text-xs text-[#6B7280] italic">
           MintMCP secures the connection. LangSmith records the trace. CrewAI routes the task.
-          ForgeOS enforces the rules — before the action is taken, with a cryptographic receipt that proves it.
+          ForgeOS enforces the rules - before the action is taken, with a cryptographic receipt that proves it.
         </p>
       </section>
 
@@ -661,7 +661,7 @@ const finalFtiScores = liveFtiScores.length > 0 ? liveFtiScores : ftiScores;
           Your agents can find us.
         </h2>
         <p class="text-[#9CA3AF] mb-10 max-w-2xl">
-          ForgeOS is designed to be discovered and called natively by AI agents — no SDK, no custom integration, no human intermediary required.
+          ForgeOS is designed to be discovered and called natively by AI agents - no SDK, no custom integration, no human intermediary required.
         </p>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -670,8 +670,8 @@ const finalFtiScores = liveFtiScores.length > 0 ? liveFtiScores : ftiScores;
             <div class="font-mono text-xs text-[#3B82F6] mb-3 font-semibold">MCP (HTTP/SSE)</div>
             <h3 class="text-base font-semibold text-[#E6EDF3] mb-2">Model Context Protocol</h3>
             <p class="text-sm text-[#8B949E] leading-relaxed">
-              ForgeOS exposes 21 governance tools over MCP. Any MCP-compatible agent — Claude, GPT-4, Gemini,
-              local models — can call gate-check, delegation-validate, and audit-query without modification. Works with any MCP-compatible AI — Claude, GPT, Gemini, or local models. Your AI keys stay with you.
+              ForgeOS exposes 21 governance tools over MCP. Any MCP-compatible agent - Claude, GPT-4, Gemini,
+              local models - can call gate-check, delegation-validate, and audit-query without modification. Works with any MCP-compatible AI - Claude, GPT, Gemini, or local models. Your AI keys stay with you.
             </p>
           </div>
 
@@ -680,7 +680,7 @@ const finalFtiScores = liveFtiScores.length > 0 ? liveFtiScores : ftiScores;
             <div class="font-mono text-xs text-[#3B82F6] mb-3 font-semibold">A2A Agent Card</div>
             <h3 class="text-base font-semibold text-[#E6EDF3] mb-2">Agent-to-Agent discovery</h3>
             <p class="text-sm text-[#8B949E] leading-relaxed">
-              ForgeOS issues A2A Agent Cards — machine-readable capability manifests. Any A2A-compatible agent
+              ForgeOS issues A2A Agent Cards - machine-readable capability manifests. Any A2A-compatible agent
               can discover, evaluate, and interoperate with ForgeOS autonomously. No human required to wire the integration.
             </p>
           </div>
