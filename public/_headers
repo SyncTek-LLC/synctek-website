@@ -1,0 +1,22 @@
+/.well-known/*
+  Access-Control-Allow-Origin: *
+  Access-Control-Allow-Methods: GET, HEAD, OPTIONS
+  Access-Control-Allow-Headers: Content-Type, Authorization, X-ForgeOS-Key
+  Access-Control-Max-Age: 86400
+  Cache-Control: public, max-age=3600, s-maxage=86400
+
+/llms.txt
+  Access-Control-Allow-Origin: *
+  Cache-Control: public, max-age=86400, s-maxage=604800
+  Content-Type: text/plain; charset=utf-8
+
+/agents.md
+  Access-Control-Allow-Origin: *
+  Cache-Control: public, max-age=86400, s-maxage=604800
+  Content-Type: text/markdown; charset=utf-8
+
+/api/openapi.json
+  Access-Control-Allow-Origin: *
+  Access-Control-Allow-Methods: GET, HEAD, OPTIONS
+  Access-Control-Allow-Headers: Content-Type, Authorization, X-ForgeOS-Key
+  Cache-Control: public, max-age=300, s-maxage=3600
