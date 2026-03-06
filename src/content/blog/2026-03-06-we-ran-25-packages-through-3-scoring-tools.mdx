@@ -1,0 +1,164 @@
+---
+title: "We Ran 25 Packages Through 3 Scoring Tools. Here's What We Found."
+description: "Cross-tool comparison of OpenSSF Scorecard, Registry Quality signals, and ForgeOS Trust Index across 25 popular open-source packages. Raw data included."
+date: 2026-03-06
+author: "SyncTek Team"
+category: engineering
+tags: ["fti", "trust", "transparency", "openssf", "scoring", "open-source"]
+product: forgeos
+---
+
+Nobody publishes cross-tool scoring comparisons for open-source packages.
+
+Every scoring tool has its own methodology, its own scale, and its own definition of "good." OpenSSF Scorecard focuses on security practices. Registry quality signals measure packaging health. The ForgeOS Trust Index (FTI) attempts to cover eight dimensions of trust. But how do these tools actually compare when pointed at the same packages?
+
+We decided to find out. We picked 25 packages across npm and PyPI, ran them through three scoring tools, and published the raw data. No cherry-picking, no narrative-first analysis. Just numbers.
+
+---
+
+## Methodology
+
+We scored 25 packages using three tools:
+
+**OpenSSF Scorecard** - Google-backed security scoring for GitHub repositories. Evaluates signed releases, branch protection, CI/CD practices, dependency management, and vulnerability response. Native scale is 0-10; we normalized to 0-100 for comparison.
+
+**Registry Quality** - Aggregates signals from npm/PyPI registries and GitHub. Covers documentation, maintenance activity, download trends, issue responsiveness, and packaging standards. Scale: 0-100.
+
+**ForgeOS Trust Index (FTI)** - Eight-dimensional trust scoring covering security, governance, velocity, documentation, community, licensing, testing, and supply chain health. Scale: 0-100.
+
+**Package selection:** We chose packages across four tiers - critical infrastructure (express, react, django), widely-used utilities (lodash, axios, dotenv), security-focused libraries (bcrypt, cryptography, helmet), and known-bad packages (event-stream, colors, is-odd). Two ForgeOS packages were included but could not be scored due to private repositories.
+
+**Important caveat:** FTI scores in this study are *estimated*, not live-scored through the ForgeOS API. The estimation model uses Scorecard output as one of its inputs. This matters for interpreting the Scorecard-FTI correlation.
+
+---
+
+## The Data
+
+All 25 packages, sorted by FTI score descending. Blank cells indicate the tool could not produce a score for that package.
+
+| Package | Ecosystem | Scorecard | Quality | FTI |
+|---------|-----------|-----------|---------|-----|
+| express | npm | 87.0 | 83.5 | 85.6 |
+| requests | pypi | 84.0 | 83.2 | 83.7 |
+| cryptography | pypi | 85.0 | 70.7 | 79.3 |
+| helmet | npm | 75.0 | 85.6 | 79.2 |
+| faker | npm | - | 79.1 | 79.1 |
+| tensorflow | pypi | 72.0 | 82.0 | 76.0 |
+| axios | npm | 59.0 | 100.0 | 75.4 |
+| numpy | pypi | 73.0 | 78.5 | 75.2 |
+| lodash | npm | 69.0 | 83.0 | 74.6 |
+| flask | pypi | 62.0 | 83.6 | 70.6 |
+| django | pypi | 66.0 | 75.8 | 69.9 |
+| react | npm | 64.0 | 76.0 | 68.8 |
+| next | npm | 59.0 | 82.0 | 68.2 |
+| dotenv | npm | 44.0 | 95.3 | 64.5 |
+| fastapi | pypi | 51.0 | 83.8 | 64.1 |
+| jsonwebtoken | npm | 48.0 | 78.5 | 60.2 |
+| left-pad | npm | - | 56.7 | 56.7 |
+| bcrypt | npm | 37.0 | 82.5 | 55.2 |
+| paramiko | pypi | 42.0 | 66.2 | 51.7 |
+| flask-cors | pypi | 38.0 | 58.4 | 46.2 |
+| colors | npm | 22.0 | 51.8 | 33.9 |
+| is-odd | npm | 21.0 | 52.3 | 33.5 |
+| event-stream | npm | 21.0 | 41.4 | 29.2 |
+| forgeos | npm | - | - | - |
+| forgeos-mcp | npm | - | - | - |
+
+---
+
+## Key Findings
+
+### 1. Scorecard and FTI correlate strongly (r = 0.962) - but read the fine print
+
+The Pearson correlation between OpenSSF Scorecard and FTI across the 21 packages where both tools produced scores is 0.962 (95% CI: 0.907-0.985). That is very high.
+
+However, this number requires context. FTI estimation uses Scorecard output as one of its inputs. The correlation is partially circular - of course two measures agree when one is derived from the other. This does not validate FTI against Scorecard. It confirms the estimation model is working as designed, weighting Scorecard data heavily.
+
+A proper validation would require live FTI scores computed from independent data sources. We have not done that here.
+
+### 2. Scorecard and Registry Quality diverge meaningfully (r = 0.619)
+
+This is the most interesting finding. Security posture and packaging quality are related but far from equivalent. The 95% CI is wide (0.256-0.829), and the Spearman rank correlation drops to 0.438, suggesting some of the linear relationship is driven by outliers.
+
+Concrete examples of the divergence:
+
+- **axios** scores 59 on Scorecard but a perfect 100 on Quality. Its npm packaging, documentation, and maintenance signals are pristine. Its security practices are middling.
+- **cryptography** scores 85 on Scorecard but only 70.7 on Quality. Strong security posture, weaker registry signals.
+- **dotenv** scores 44 on Scorecard but 95.3 on Quality. One of the largest gaps in the dataset.
+
+The takeaway: a package can be well-maintained by registry standards and still have weak security practices, or vice versa. One score does not predict the other reliably.
+
+### 3. Known-bad packages score consistently low
+
+The three packages with documented supply chain incidents - event-stream (malicious code injection, 2018), colors (intentional sabotage, 2022), and is-odd (trivial package, quality concerns) - scored in the bottom quartile across all three tools.
+
+| Package | Scorecard | Quality | FTI |
+|---------|-----------|---------|-----|
+| event-stream | 21.0 | 41.4 | 29.2 |
+| colors | 22.0 | 51.8 | 33.9 |
+| is-odd | 21.0 | 52.3 | 33.5 |
+
+All three tools catch these. None of them miss the obvious cases. The harder question - which this dataset cannot answer - is whether any of these tools would have flagged these packages *before* their incidents became public.
+
+### 4. Security libraries can score poorly on security tools
+
+bcrypt, a library whose entire purpose is password hashing, scores 37 on OpenSSF Scorecard. This is lower than lodash (69), lower than flask (62), lower than numpy (73).
+
+The reason is that Scorecard measures repository security practices, not code security purpose. bcrypt's repository lacks some of the CI/CD hardening, branch protection, and release signing that Scorecard checks for. The code itself may be solid. The development practices around it score low.
+
+Similarly, jsonwebtoken - used in authentication flows across thousands of applications - scores 48 on Scorecard and 60.2 on FTI.
+
+This is not a criticism of Scorecard. It measures what it claims to measure. But it highlights the risk of treating any single score as a complete assessment.
+
+### 5. Quality scores cluster high, Scorecard scores spread wide
+
+Registry Quality scores range from 41.4 to 100 with a median around 79. Scorecard scores range from 21 to 87 with much more variance. FTI, as a composite, falls between the two in spread.
+
+This distribution difference matters for decision-making. If you are using Quality scores to triage packages, you will find most popular packages clustered in a narrow band. Scorecard provides more separation between packages but only along the security axis.
+
+---
+
+## Limitations
+
+We want to be direct about what this study does not prove.
+
+**FTI scores are estimated.** We did not use the ForgeOS API for live scoring. The estimation model is a weighted composite that uses Scorecard and Quality data as inputs. This means FTI is not an independent third measure in this comparison - it is partially derived from the other two.
+
+**Sample size is 25.** This is enough to observe trends but too small for strong statistical claims. The confidence intervals on the correlations are wide. A 100+ package study would produce more reliable results.
+
+**Two ForgeOS packages could not be scored.** The forgeos and forgeos-mcp repositories are private, so neither Scorecard nor Registry Quality could assess them. We included them in the table for transparency rather than quietly dropping them.
+
+**Point-in-time snapshot.** Scores change as repositories evolve. These numbers reflect the state of each package on March 6, 2026. A package that scores 40 today might score 70 after a quarter of focused maintenance.
+
+**No causal claims.** Correlation between tools tells us they trend together. It does not tell us which tool is "right" or whether any score predicts real-world outcomes like security incidents or adoption success.
+
+---
+
+## What This Means
+
+Different tools measure different things. That sounds obvious, but the practical implication is important: relying on any single scoring tool gives you a partial picture.
+
+OpenSSF Scorecard is strong on security practices but says nothing about documentation quality or community health. Registry Quality captures packaging and maintenance signals but misses security depth. FTI attempts to cover more dimensions - governance, velocity, and testing on top of the others - but broader coverage means each dimension gets less depth.
+
+The right approach is probably multi-tool, choosing which scores matter based on your risk profile. If you are building a financial application, Scorecard's security focus is critical. If you are evaluating packages for a prototype, Quality's maintenance signals might matter more. If you want a single composite that balances multiple concerns, that is what FTI is designed for.
+
+We are publishing this data because cross-tool comparison should be normal, not exceptional. The more scoring tools are compared openly, the better all of them get.
+
+---
+
+## Raw Data
+
+The full dataset, including per-dimension breakdowns and correlation analysis, is available in the [FTI baseline repository](https://github.com/SyncTek-LLC/forgeos/tree/main/scripts/fti-baseline/data).
+
+Files included:
+- `summary_table.csv` - All 25 packages with three-tool scores
+- `correlation.json` - Pairwise Pearson and Spearman correlations with 95% confidence intervals
+- Per-package detail files with dimensional breakdowns
+
+---
+
+## Try It Yourself
+
+Want to see how your packages score? The ForgeOS Trust Index scores any npm or PyPI package across eight trust dimensions.
+
+[Run FTI on your packages](https://forgeos.dev) - free for public repositories.
