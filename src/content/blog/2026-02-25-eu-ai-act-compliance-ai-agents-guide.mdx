@@ -14,10 +14,10 @@ On August 2, 2026, the EU AI Act's high-risk AI system provisions take full lega
 
 The four obligations that most directly affect AI agent deployments:
 
-- **Article 12** — Record-keeping: immutable logs sufficient to reconstruct automated decision-making
-- **Article 9** — Risk management: systematic identification, analysis, and mitigation of risks
-- **Article 14** — Human oversight: mechanisms to monitor, halt, and override AI systems
-- **Article 17** — Quality management system: documented procedures for the full AI lifecycle
+- **Article 12** - Record-keeping: immutable logs sufficient to reconstruct automated decision-making
+- **Article 9** - Risk management: systematic identification, analysis, and mitigation of risks
+- **Article 14** - Human oversight: mechanisms to monitor, halt, and override AI systems
+- **Article 17** - Quality management system: documented procedures for the full AI lifecycle
 
 Enterprise procurement cycles run 90 days or more. The evaluation window to be compliant by August 2, 2026 closes approximately May 4, 2026.
 
@@ -53,7 +53,7 @@ Work through these questions. If you answer yes to any, seek legal advice on cla
 7. Is your organization established in the EU or do you deploy the system to EU users?
 8. Do EU customers' agents call your system's API to make or assist decisions in any of the above categories?
 
-If several answers are yes, your system is likely high-risk. If you are uncertain, the safer assumption is high-risk — the compliance infrastructure required is proportionate to the penalty exposure.
+If several answers are yes, your system is likely high-risk. If you are uncertain, the safer assumption is high-risk - the compliance infrastructure required is proportionate to the penalty exposure.
 
 ---
 
@@ -63,11 +63,11 @@ If several answers are yes, your system is likely high-risk. If you are uncertai
 
 **Why standard application logs do not qualify:**
 
-Standard application logs — structured logs, centralized logging stacks, application performance monitoring — are not tamper-evident. They are files written to a filesystem or forwarded to a log aggregator. In most implementations:
+Standard application logs - structured logs, centralized logging stacks, application performance monitoring - are not tamper-evident. They are files written to a filesystem or forwarded to a log aggregator. In most implementations:
 
 - Any process with filesystem access can modify log files
 - Log aggregators accept arbitrary write operations
-- There is no chain of custody — no mechanism to prove that a log entry was written at the time it claims
+- There is no chain of custody - no mechanism to prove that a log entry was written at the time it claims
 - Deletion is detectable only if the logging system itself is monitoring for gaps, which can itself be compromised
 
 For Article 12 compliance, "sufficient to ensure traceability" requires that the logs cannot be altered without detection. Standard logs do not satisfy this requirement by construction.
@@ -76,12 +76,12 @@ For Article 12 compliance, "sufficient to ensure traceability" requires that the
 
 A hash-chained, cryptographically signed ledger provides tamper-evident record-keeping that satisfies the Article 12 intent:
 
-- **Hash-chaining:** Each ledger entry contains a cryptographic hash of the previous entry. Altering any entry breaks the hash chain for all subsequent entries — the alteration is detectable in milliseconds without trusting any individual component of the system.
-- **Ed25519 signatures:** Each entry is signed with the governance system's private key. The signature proves the entry was written by the governance system at the time recorded — it cannot be backdated or injected by an unauthorized party.
+- **Hash-chaining:** Each ledger entry contains a cryptographic hash of the previous entry. Altering any entry breaks the hash chain for all subsequent entries - the alteration is detectable in milliseconds without trusting any individual component of the system.
+- **Ed25519 signatures:** Each entry is signed with the governance system's private key. The signature proves the entry was written by the governance system at the time recorded - it cannot be backdated or injected by an unauthorized party.
 
-ForgeOS's ledger uses both mechanisms. Every gate decision, delegation event, blocked violation, and autonomous action is written to a hash-chained JSONL file signed with Ed25519. The ledger can be exported to JSON for auditors, mapped to specific decision events, and verified mathematically — without trusting the governance system's operational state.
+ForgeOS's ledger uses both mechanisms. Every gate decision, delegation event, blocked violation, and autonomous action is written to a hash-chained JSONL file signed with Ed25519. The ledger can be exported to JSON for auditors, mapped to specific decision events, and verified mathematically - without trusting the governance system's operational state.
 
-**What ForgeOS does NOT cover:** Model-level input/output logging — the actual prompts and completions exchanged between agent and model — must be implemented at the model layer or AI gateway layer. Article 12 compliance is multi-layered; ForgeOS covers the governance action layer, not the inference layer.
+**What ForgeOS does NOT cover:** Model-level input/output logging - the actual prompts and completions exchanged between agent and model - must be implemented at the model layer or AI gateway layer. Article 12 compliance is multi-layered; ForgeOS covers the governance action layer, not the inference layer.
 
 ---
 
@@ -89,7 +89,7 @@ ForgeOS's ledger uses both mechanisms. Every gate decision, delegation event, bl
 
 **What the Act requires:** Providers of high-risk AI systems must establish, implement, document, and maintain a risk management system throughout the AI system's lifecycle. This includes systematic identification and analysis of risks, appropriate risk mitigation measures, and testing to ensure the mitigation measures work.
 
-The risk management system must be continuous — not a one-time assessment — and must produce evidence of ongoing monitoring.
+The risk management system must be continuous - not a one-time assessment - and must produce evidence of ongoing monitoring.
 
 **ForgeOS coverage:**
 
@@ -100,7 +100,7 @@ The risk management system must be continuous — not a one-time assessment — 
 | Testing of mitigation measures | Forensic scanner validates that gates are firing correctly; self-audit checks system health daily |
 | Continuous monitoring | Governance monitor runs on a scheduled cycle; forensic scanner covers self-approval, gate gaps, ledger integrity, budget overrun |
 
-**Gap note:** Article 9 also requires risk identification for model-level accuracy and bias — whether the AI model's predictions or recommendations are systematically inaccurate for specific populations or inputs. This is not covered by ForgeOS — it requires product-level compliance tools (model evaluation, bias testing, drift monitoring).
+**Gap note:** Article 9 also requires risk identification for model-level accuracy and bias - whether the AI model's predictions or recommendations are systematically inaccurate for specific populations or inputs. This is not covered by ForgeOS - it requires product-level compliance tools (model evaluation, bias testing, drift monitoring).
 
 ForgeOS covers the governance risk layer. Organizations with high-risk deployments need both governance risk management (covered by ForgeOS) and model risk management (covered by appropriate model governance tooling).
 
@@ -114,13 +114,13 @@ ForgeOS covers the governance risk layer. Organizations with high-risk deploymen
 - Ability to monitor system operation and detect anomalies and unexpected behavior
 - Ability to disregard, override, or halt the system with a simple command
 
-The human oversight requirement is operational — it must be implemented in the system's design, not just described in documentation.
+The human oversight requirement is operational - it must be implemented in the system's design, not just described in documentation.
 
 **ForgeOS coverage:**
 
-**Human-in-the-loop gates** satisfy Article 14's core requirement directly. Gates are defined at workflow junctures where human approval is constitutionally required. No agent proceeds past the gate without the authorized human approval on record. The gate is not bypassable — it is enforced at the governance layer before any external system is affected.
+**Human-in-the-loop gates** satisfy Article 14's core requirement directly. Gates are defined at workflow junctures where human approval is constitutionally required. No agent proceeds past the gate without the authorized human approval on record. The gate is not bypassable - it is enforced at the governance layer before any external system is affected.
 
-**Circuit breaker** satisfies the halt requirement. The circuit breaker halts autonomous execution automatically at the third consecutive failure. It can also be triggered manually. The kill switch — a durable mechanism that persists across sessions — provides the "simple command" halt that Article 14 requires.
+**Circuit breaker** satisfies the halt requirement. The circuit breaker halts autonomous execution automatically at the third consecutive failure. It can also be triggered manually. The kill switch - a durable mechanism that persists across sessions - provides the "simple command" halt that Article 14 requires.
 
 **Violation surfacing** satisfies the anomaly detection requirement. The governance monitor's forensic scanner runs on a scheduled cycle and surfaces violations to the responsible party. The daily self-audit produces a health report with specific items requiring human review.
 
@@ -130,7 +130,7 @@ The human oversight requirement is operational — it must be implemented in the
 
 ## Article 17: Quality Management System
 
-Article 17 is the provision most directly addressed by a governance OS. It requires providers of high-risk AI systems to implement a quality management system — and ForgeOS's initiative and gate lifecycle is structurally equivalent to an Article 17 QMS for the governance layer.
+Article 17 is the provision most directly addressed by a governance OS. It requires providers of high-risk AI systems to implement a quality management system - and ForgeOS's initiative and gate lifecycle is structurally equivalent to an Article 17 QMS for the governance layer.
 
 **What Article 17 requires:**
 
@@ -154,12 +154,12 @@ The quality management system must cover:
 | AI system design, control, and verification procedures | Initiative lifecycle: initiative → gates → artifacts → ledger |
 | Risk management system | Gate enforcement, circuit breakers, violation scanner (Article 9) |
 | Post-market monitoring | Governance monitor (6h cycle), daily self-audit (Article 61) |
-| Accountability — roles and responsibilities | Typed delegation rules, department authority scopes, attribution in every ledger entry |
+| Accountability - roles and responsibilities | Typed delegation rules, department authority scopes, attribution in every ledger entry |
 | Internal review and validation | Gate approval chain (feasibility, architecture, QA, security, deployment review) |
 | Record-keeping system | Hash-chained, Ed25519-signed ledger (Article 12) |
 | Incident reporting system | Automated escalation chain from violation detection to human notification with full ledger trail |
 
-**The core argument:** ForgeOS's gate lifecycle is not a QMS adapter — it is a QMS. The initiative structure defines the lifecycle for a governed AI development or deployment activity. Gates enforce the required review and approval steps. The ledger produces the record-keeping evidence. The forensic scanner provides ongoing monitoring. The delegation rules define roles and responsibilities.
+**The core argument:** ForgeOS's gate lifecycle is not a QMS adapter - it is a QMS. The initiative structure defines the lifecycle for a governed AI development or deployment activity. Gates enforce the required review and approval steps. The ledger produces the record-keeping evidence. The forensic scanner provides ongoing monitoring. The delegation rules define roles and responsibilities.
 
 The mapping is structurally isomorphic, not a stretch.
 
@@ -182,9 +182,9 @@ August 2, 2026 is the enforcement date. Working backward from a live, compliant 
 |----------|--------|
 | **By March 15, 2026** | Complete scope assessment. Determine which agent workflows are high-risk. Engage legal counsel for classification confirmation. |
 | **By April 1, 2026** | Procurement decision. Enterprise procurement requires ~90 days from decision to compliant deployment. Decision must be made by early April for August readiness. |
-| **April — May 2026** | Implementation and integration. ForgeOS deployment, gate configuration, ledger integration, human-in-the-loop gate setup. |
-| **May — June 2026** | Internal compliance review. Validate that gates fire correctly. Review ledger export format with compliance team. Map forensic scanner output to Article 9 evidence. |
-| **June — July 2026** | Dry run with internal audit. Treat internal governance team as the auditor. Identify gaps. |
+| **April - May 2026** | Implementation and integration. ForgeOS deployment, gate configuration, ledger integration, human-in-the-loop gate setup. |
+| **May - June 2026** | Internal compliance review. Validate that gates fire correctly. Review ledger export format with compliance team. Map forensic scanner output to Article 9 evidence. |
+| **June - July 2026** | Dry run with internal audit. Treat internal governance team as the auditor. Identify gaps. |
 | **July 15, 2026** | Final sign-off. All Article 12, 9, 14, 17 evidence chains documented and reviewed. |
 | **August 2, 2026** | Enforcement begins. |
 
@@ -201,7 +201,7 @@ The EU AI Act's penalty structure for high-risk AI system violations:
 
 For context: ForgeOS Enterprise Compliance (contact info@synctek.io for pricing) is compliance infrastructure. Against a €15M penalty floor, it is a rounding error.
 
-The more operationally relevant risk is not the penalty — it is the enterprise procurement gate. Large enterprises are already including AI governance provisions in vendor questionnaires. The question "does your system produce a tamper-evident audit trail of AI agent decisions?" is increasingly a pass/fail criterion, not a nice-to-have.
+The more operationally relevant risk is not the penalty - it is the enterprise procurement gate. Large enterprises are already including AI governance provisions in vendor questionnaires. The question "does your system produce a tamper-evident audit trail of AI agent decisions?" is increasingly a pass/fail criterion, not a nice-to-have.
 
 ---
 
@@ -215,11 +215,11 @@ The more operationally relevant risk is not the penalty — it is the enterprise
 
 **Q: Does the EU AI Act apply to AI agents specifically, or only to foundation models?**
 
-The EU AI Act covers both. The General Purpose AI (GPAI) provisions cover foundation models. The high-risk AI system provisions (including Articles 9, 12, 14, and 17) cover AI systems — including AI agent systems — deployed in high-risk application contexts. If your organization deploys AI agents in employment, credit, education, or critical infrastructure contexts and has EU users, you are likely in scope for the high-risk provisions.
+The EU AI Act covers both. The General Purpose AI (GPAI) provisions cover foundation models. The high-risk AI system provisions (including Articles 9, 12, 14, and 17) cover AI systems - including AI agent systems - deployed in high-risk application contexts. If your organization deploys AI agents in employment, credit, education, or critical infrastructure contexts and has EU users, you are likely in scope for the high-risk provisions.
 
 **Q: What is the difference between Article 12 logging and standard application logs?**
 
-Article 12 requires logs "sufficient to ensure traceability" of the system's decision-making. Standard application logs are alterable — any process with filesystem access can modify them, and the modification is undetectable without a prior cryptographic commitment. Article 12 compliance requires tamper-evident logging. A hash-chained, Ed25519-signed ledger satisfies this requirement; standard logs do not.
+Article 12 requires logs "sufficient to ensure traceability" of the system's decision-making. Standard application logs are alterable - any process with filesystem access can modify them, and the modification is undetectable without a prior cryptographic commitment. Article 12 compliance requires tamper-evident logging. A hash-chained, Ed25519-signed ledger satisfies this requirement; standard logs do not.
 
 **Q: Does ForgeOS cover all EU AI Act requirements?**
 
@@ -227,7 +227,7 @@ No. ForgeOS covers the governance layer: Articles 9 (risk management at the gove
 
 **Q: When is the deadline to start the evaluation process?**
 
-Enterprise procurement for August 2 compliance requires a purchase decision no later than approximately May 4, 2026, assuming a standard 90-day implementation cycle. If your organization requires legal review, security questionnaire, and DPA negotiation as part of procurement, add 30-60 days to that timeline — meaning evaluation should begin now.
+Enterprise procurement for August 2 compliance requires a purchase decision no later than approximately May 4, 2026, assuming a standard 90-day implementation cycle. If your organization requires legal review, security questionnaire, and DPA negotiation as part of procurement, add 30-60 days to that timeline - meaning evaluation should begin now.
 
 **Q: What does ForgeOS Enterprise Compliance include?**
 

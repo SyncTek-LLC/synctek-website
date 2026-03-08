@@ -51,8 +51,8 @@ We offer the following paid subscription tiers for the ForgeOS governance platfo
 
 | Plan | Price | Description |
 |------|-------|-------------|
-| Free | $0/month | 1,000 API requests/month — local analysis and trust scoring |
-| Pro | $49/month | Individual developers — full platform access, 50,000 API calls/month |
+| Free | $0/month | 1,000 API requests/month - local analysis and trust scoring |
+| Pro | $49/month | Individual developers - full platform access, 50,000 API calls/month |
 | Team | $29/seat/month (3-seat minimum, $87/month base) | Collaborative governance workflows, 200,000 API calls/month |
 | Enterprise | Custom pricing | Dedicated tenant, 4h SLA, security questionnaire support, DPA on request |
 
@@ -77,12 +77,12 @@ For AI agents, CI/CD pipelines, and external integrations that require FTI acces
 
 | Endpoint | Price per call |
 |----------|---------------|
-| POST /v1/score — Basic trust score | $0.003 |
-| POST /v1/recommend — Recommendations | $0.005 |
-| POST /v1/compare — Comparative analysis | $0.008 |
-| GET /v1/methodology — Dimension definitions | Free (public) |
+| POST /v1/score - Basic trust score | $0.003 |
+| POST /v1/recommend - Recommendations | $0.005 |
+| POST /v1/compare - Comparative analysis | $0.008 |
+| GET /v1/methodology - Dimension definitions | Free (public) |
 
-Standalone API access requires API key authentication and usage-based billing via Stripe. Usage is billed monthly based on actual calls made. Volume discounts are available at 100,000+ scores per month — contact us for pricing.
+Standalone API access requires API key authentication and usage-based billing via Stripe. Usage is billed monthly based on actual calls made. Volume discounts are available at 100,000+ scores per month - contact us for pricing.
 
 ### 4.3 Auto-Renewal
 
@@ -110,7 +110,7 @@ If a payment fails, we will attempt to notify you and may retry the charge. Fail
 
 ---
 
-## 5. AI-Generated Outputs — Intellectual Property and Licensing
+## 5. AI-Generated Outputs - Intellectual Property and Licensing
 
 ### 5.1 Nature of AI-Generated Outputs
 
@@ -140,9 +140,9 @@ You retain all ownership rights in the source code, configuration files, and oth
 
 ForgeOS includes autonomous software agents ("Agents") that may perform actions including: evaluating and advancing governance gates, modifying governance ledgers, generating and classifying artifacts, dispatching tasks to specialized workflows, and coordinating multi-step execution pipelines.
 
-### 6.2 Software Tool — Not Professional Services
+### 6.2 Software Tool - Not Professional Services
 
-**ForgeOS Agents are software automation tools.** Their operation does not constitute professional engineering, legal, security, compliance, or other professional services. Gate approvals, trust scores, and governance decisions produced by Agents are automated outputs of software logic — they do not represent the opinion or endorsement of any licensed professional.
+**ForgeOS Agents are software automation tools.** Their operation does not constitute professional engineering, legal, security, compliance, or other professional services. Gate approvals, trust scores, and governance decisions produced by Agents are automated outputs of software logic - they do not represent the opinion or endorsement of any licensed professional.
 
 ### 6.3 User Responsibility for Agent Actions
 
@@ -226,16 +226,16 @@ SyncTek may take the Service offline for maintenance, upgrades, security patchin
 
 You agree that you will not use the Service to:
 
-1. **Engage in illegal activity** — violate any applicable law, regulation, or third-party right
-2. **Circumvent security controls** — attempt to disable, bypass, or undermine security features of the Service, connected systems, or third-party software
-3. **Generate malicious code** — produce, analyze for offensive purposes, or distribute malware, ransomware, spyware, or any code designed to harm systems or users
-4. **Abuse AI provider rate limits** — artificially inflate requests, scrape model outputs at scale, or otherwise abuse the API quotas or rate limits of underlying AI providers
-5. **Reverse engineer AI models** — attempt to extract, replicate, or reverse-engineer the weights, architecture, or training data of underlying AI models
-6. **Misrepresent outputs** — represent AI-generated trust scores or governance artifacts as certified professional opinions, regulatory approvals, or legally binding determinations
-7. **Harm others** — harass, threaten, defame, or otherwise harm individuals
-8. **Unauthorized access** — access accounts, systems, or data that you are not authorized to access
-9. **Competitive intelligence abuse** — use the Service to build a competing product or to systematically benchmark and replicate ForgeOS functionality
-10. **Violate third-party terms** — use the Service in a manner that violates the terms of service of your employer, customers, or any third party
+1. **Engage in illegal activity** - violate any applicable law, regulation, or third-party right
+2. **Circumvent security controls** - attempt to disable, bypass, or undermine security features of the Service, connected systems, or third-party software
+3. **Generate malicious code** - produce, analyze for offensive purposes, or distribute malware, ransomware, spyware, or any code designed to harm systems or users
+4. **Abuse AI provider rate limits** - artificially inflate requests, scrape model outputs at scale, or otherwise abuse the API quotas or rate limits of underlying AI providers
+5. **Reverse engineer AI models** - attempt to extract, replicate, or reverse-engineer the weights, architecture, or training data of underlying AI models
+6. **Misrepresent outputs** - represent AI-generated trust scores or governance artifacts as certified professional opinions, regulatory approvals, or legally binding determinations
+7. **Harm others** - harass, threaten, defame, or otherwise harm individuals
+8. **Unauthorized access** - access accounts, systems, or data that you are not authorized to access
+9. **Competitive intelligence abuse** - use the Service to build a competing product or to systematically benchmark and replicate ForgeOS functionality
+10. **Violate third-party terms** - use the Service in a manner that violates the terms of service of your employer, customers, or any third party
 
 SyncTek reserves the right to investigate and terminate accounts suspected of violating this Acceptable Use Policy, with or without prior notice.
 
@@ -251,7 +251,7 @@ Confidential Information does not include information that: (a) is or becomes pu
 
 ## 12. Intellectual Property Rights in the Service
 
-All rights, title, and interest in and to ForgeOS — including the platform, software, algorithms, user interface, documentation, branding, and underlying technology — are and remain the exclusive property of SyncTek LLC and its licensors. These Terms do not grant you any rights to SyncTek's intellectual property except the limited right to use the Service as expressly set forth herein.
+All rights, title, and interest in and to ForgeOS - including the platform, software, algorithms, user interface, documentation, branding, and underlying technology - are and remain the exclusive property of SyncTek LLC and its licensors. These Terms do not grant you any rights to SyncTek's intellectual property except the limited right to use the Service as expressly set forth herein.
 
 The ForgeOS name, logos, and product marks are trademarks of SyncTek LLC. You may not use SyncTek's marks without prior written consent.
 
@@ -353,7 +353,7 @@ Before initiating formal proceedings, you agree to first contact SyncTek at info
 
 ### 17.2 Binding Arbitration
 
-**If informal resolution fails, any dispute, claim, or controversy arising out of or relating to these Terms or the Service — including questions of arbitrability — shall be resolved by binding arbitration administered by the American Arbitration Association ("AAA") under its Consumer Arbitration Rules or Commercial Arbitration Rules (as applicable), as then in effect.**
+**If informal resolution fails, any dispute, claim, or controversy arising out of or relating to these Terms or the Service - including questions of arbitrability - shall be resolved by binding arbitration administered by the American Arbitration Association ("AAA") under its Consumer Arbitration Rules or Commercial Arbitration Rules (as applicable), as then in effect.**
 
 Arbitration shall be conducted:
 - By a single arbitrator

@@ -1,7 +1,7 @@
 import type { APIRoute } from 'astro';
 
 export const GET: APIRoute = () => {
-  const content = `# ForgeOS Documentation — Full Reference
+  const content = `# ForgeOS Documentation - Full Reference
 
 Base URL: https://forgeos-api.synctek.io
 MCP server: https://mcp.synctek.io/mcp
@@ -12,16 +12,16 @@ MCP server: https://mcp.synctek.io/mcp
 
 ForgeOS is a governance engine for AI agents. It enforces constitutional rules, gate-based change pipelines, Ed25519-signed audit trails, and circuit breakers so AI agents can ship code safely without human babysitting.
 
-ForgeOS exposes 21 governance tools over the Model Context Protocol (MCP). Any MCP-compatible agent — Claude, GPT-4, Gemini, local models — can call gate-check, submit reviews, and query institutional knowledge without custom integration.
+ForgeOS exposes 21 governance tools over the Model Context Protocol (MCP). Any MCP-compatible agent - Claude, GPT-4, Gemini, local models - can call gate-check, submit reviews, and query institutional knowledge without custom integration.
 
 Every change goes through a pipeline of gates:
 
-1. intent — what are we doing and why
-2. design — architecture and approach approved
-3. implementation — code written and ready for review
-4. verification — tests, scans, and evidence collected
-5. hardening — performance and reliability confirmed
-6. release — final sign-off, ready to ship
+1. intent - what are we doing and why
+2. design - architecture and approach approved
+3. implementation - code written and ready for review
+4. verification - tests, scans, and evidence collected
+5. hardening - performance and reliability confirmed
+6. release - final sign-off, ready to ship
 
 The engine computes a risk score for every changeset and determines which gates, reviewer roles, and evidence types are required automatically.
 
@@ -67,7 +67,7 @@ npx -y @synctek/forgeos@latest
 
 ### 5. Configure your editor
 
-Cursor — .cursor/mcp.json:
+Cursor - .cursor/mcp.json:
 
 {
   "mcpServers": {
@@ -82,7 +82,7 @@ Cursor — .cursor/mcp.json:
   }
 }
 
-Claude Code — ~/.claude/settings.json:
+Claude Code - ~/.claude/settings.json:
 
 {
   "mcpServers": {
@@ -97,7 +97,7 @@ Claude Code — ~/.claude/settings.json:
   }
 }
 
-VS Code (Copilot) — settings.json:
+VS Code (Copilot) - settings.json:
 
 {
   "mcp": {
@@ -126,7 +126,7 @@ The agent calls forge_init with your project ID. Returns project state, active i
 
 Then: "Create an initiative for adding user authentication."
 
-The agent calls forge_create_initiative. Every change from here goes through gates — propose a changeset, submit evidence, get reviews, promote gates before code ships.
+The agent calls forge_create_initiative. Every change from here goes through gates - propose a changeset, submit evidence, get reviews, promote gates before code ships.
 
 ---
 
@@ -180,12 +180,12 @@ Enterprise | Custom | Custom | Custom
 
 ### Error codes
 
-401 — Invalid or missing API key / session. Check FORGEOS_API_KEY or re-authenticate.
-402 — AI spend cap exceeded. Upgrade plan or wait for monthly reset.
-403 — Insufficient scope or access denied. Check plan tier and project ownership.
-409 — Conflict (e.g., email already registered).
-422 — Validation error (e.g., password too short).
-429 — Rate limit exceeded. Backoff per Retry-After header.
+401 - Invalid or missing API key / session. Check FORGEOS_API_KEY or re-authenticate.
+402 - AI spend cap exceeded. Upgrade plan or wait for monthly reset.
+403 - Insufficient scope or access denied. Check plan tier and project ownership.
+409 - Conflict (e.g., email already registered).
+422 - Validation error (e.g., password too short).
+429 - Rate limit exceeded. Backoff per Retry-After header.
 
 ---
 
@@ -207,8 +207,8 @@ Responses are JSON. Errors: {"detail": "error message"}
 Create a new user account. No auth required.
 
 Request body:
-- email (string, required) — Email address
-- password (string, required) — 12-128 characters
+- email (string, required) - Email address
+- password (string, required) - 12-128 characters
 
 Response 201:
 {"user_id": "usr_a1b2c3d4", "email": "dev@company.com", "role": "user", "created_at": "2026-02-25T10:00:00Z"}
@@ -225,7 +225,7 @@ Request body:
 Response 200:
 {"user_id": "usr_a1b2c3d4", "email": "dev@company.com", "role": "user"}
 
-Errors: 401 invalid credentials (identical error for wrong password and unknown email — no enumeration).
+Errors: 401 invalid credentials (identical error for wrong password and unknown email - no enumeration).
 
 #### POST /auth/logout
 Invalidate the current session and clear cookies.
@@ -241,9 +241,9 @@ Response 200:
 Register an autonomous agent identity. No auth required. Returns an API key scoped to the agent.
 
 Request body:
-- email (string, required) — Agent email address
-- password (string, required) — 12-128 characters
-- org_name (string, optional) — Organization name
+- email (string, required) - Agent email address
+- password (string, required) - 12-128 characters
+- org_name (string, optional) - Organization name
 
 ---
 
@@ -255,11 +255,11 @@ CRUD operations for projects. All endpoints require auth.
 Create a new project. Optionally import an existing codebase with source_directory.
 
 Request body:
-- name (string, required) — Project name
-- description (string, required) — Project description
-- platform (string, required) — Platform: web, mobile, api
-- constraints (object, optional) — Project constraints
-- source_directory (string, optional) — Path to existing codebase (triggers auto-scan)
+- name (string, required) - Project name
+- description (string, required) - Project description
+- platform (string, required) - Platform: web, mobile, api
+- constraints (object, optional) - Project constraints
+- source_directory (string, optional) - Path to existing codebase (triggers auto-scan)
 
 Response 201: Full project object with generated id (e.g., proj_a1b2c3d4).
 
@@ -288,15 +288,15 @@ Track units of work within a project.
 Create a new initiative.
 
 Request body:
-- title (string, required) — Initiative title
-- description (string, required) — What this initiative accomplishes
-- priority (string, optional) — low, medium, high, or critical (default: medium)
+- title (string, required) - Initiative title
+- description (string, required) - What this initiative accomplishes
+- priority (string, optional) - low, medium, high, or critical (default: medium)
 
 Response 201: Full initiative object with generated id (e.g., init_a1b2c3d4).
 
 #### GET /projects/{project_id}/initiatives
 List all initiatives for a project.
-Query params: status (optional) — filter by active, completed, or abandoned.
+Query params: status (optional) - filter by active, completed, or abandoned.
 Response 200: Array of initiative summaries.
 
 #### GET /projects/{project_id}/initiatives/{init_id}
@@ -306,8 +306,8 @@ Retrieve a single initiative.
 Update an initiative's status or priority.
 
 Request body:
-- status (string, optional) — active, completed, or abandoned
-- priority (string, optional) — low, medium, high, or critical
+- status (string, optional) - active, completed, or abandoned
+- priority (string, optional) - low, medium, high, or critical
 
 ---
 
@@ -319,11 +319,11 @@ Propose and track code changes with auto-computed risk profiles.
 Propose a new changeset. Automatically computes risk score and creates a gate pipeline.
 
 Request body:
-- initiative_id (string, required) — Parent initiative
-- description (string, required) — What changed and why
-- files_changed (string[], required) — File paths that changed
-- modules_affected (string[], required) — Module/area names affected
-- branch (string, optional) — Git branch name
+- initiative_id (string, required) - Parent initiative
+- description (string, required) - What changed and why
+- files_changed (string[], required) - File paths that changed
+- modules_affected (string[], required) - Module/area names affected
+- branch (string, optional) - Git branch name
 
 Response 201: Changeset with embedded risk_profile (score, required gates, roles, evidence).
 
@@ -346,9 +346,9 @@ Attach artifacts (test results, scans, etc.) to changesets to satisfy gate requi
 Attach evidence to a changeset. Auto-populates gate evidence requirements.
 
 Request body:
-- type (string, required) — unit_test, coverage, lint, security_scan, benchmark, migration_plan, ux_snapshot, a11y_audit, or ai_review
-- summary (string, required) — Summary of the evidence
-- file_refs (string[], optional) — File references
+- type (string, required) - unit_test, coverage, lint, security_scan, benchmark, migration_plan, ux_snapshot, a11y_audit, or ai_review
+- summary (string, required) - Summary of the evidence
+- file_refs (string[], optional) - File references
 
 Response 201: Evidence object.
 
@@ -365,7 +365,7 @@ Request and submit quality reviews on changesets. Reviews gate progression.
 Request a human review for a changeset.
 
 Request body:
-- role (string, required) — architect, qa_test, security, performance, reliability, accessibility, or docs_release
+- role (string, required) - architect, qa_test, security, performance, reliability, accessibility, or docs_release
 
 #### POST /projects/{project_id}/changesets/{cs_id}/reviews/ai
 Request an AI-powered review. Uses Claude to analyze the changeset against the role's quality criteria. If approved, auto-satisfies the gate role requirement.
@@ -377,13 +377,13 @@ Errors: 402 AI spend cap exceeded, 503 AI service unavailable.
 Combined create and submit review in one call. Designed for MCP convenience.
 
 Request body:
-- role (string, required) — Review role
-- status (string, required) — approved, blocked, or pending
-- notes (string, required) — Review summary (minimum 20 chars for approvals)
-- findings (object[], required) — Structured findings
-- reviewer_id (string, optional) — Reviewer identifier
-- reviewer_type (string, optional) — human or ai_agent
-- evidence_refs (string[], optional) — Evidence IDs referenced
+- role (string, required) - Review role
+- status (string, required) - approved, blocked, or pending
+- notes (string, required) - Review summary (minimum 20 chars for approvals)
+- findings (object[], required) - Structured findings
+- reviewer_id (string, optional) - Reviewer identifier
+- reviewer_type (string, optional) - human or ai_agent
+- evidence_refs (string[], optional) - Evidence IDs referenced
 
 Anti-gaming: All changesets require at least one approval from a reviewer different from the changeset creator.
 
@@ -418,7 +418,7 @@ Promote a gate to passed. All required evidence and role reviews must be satisfi
 Gate IDs: intent, design, implementation, verification, hardening, release
 
 Request body (optional):
-- promoted_by (string) — Who is promoting (default: local)
+- promoted_by (string) - Who is promoting (default: local)
 
 Errors: 400 requirements not met.
 
@@ -426,8 +426,8 @@ Errors: 400 requirements not met.
 Reject a gate with a reason.
 
 Request body:
-- reason (string) — Rejection reason
-- rejected_by (string) — Who is rejecting
+- reason (string) - Rejection reason
+- rejected_by (string) - Who is rejecting
 
 #### POST /projects/{project_id}/changesets/{cs_id}/gates/{gate_id}/skip
 Skip a gate with a waiver. Only allowed for low-risk changesets (risk score 50 or below).
@@ -457,7 +457,7 @@ Get current plan and subscription state.
 Create a Stripe Checkout session for plan upgrade. Returns checkout_url for browser redirect.
 
 Request body:
-- plan_id (string, required) — pro or enterprise
+- plan_id (string, required) - pro or enterprise
 
 #### POST /api/billing/portal
 Create a Stripe Customer Portal session for subscription management.
@@ -476,24 +476,24 @@ Query params: days (default 30, max 90)
 
 ### Shared Mind
 
-Federated institutional knowledge — patterns, anti-patterns, and lessons shared across the team.
+Federated institutional knowledge - patterns, anti-patterns, and lessons shared across the team.
 
 #### POST /api/shared-mind/{team_id}/observe
 Record an observation.
 
 Request body:
-- domain (string, required) — Knowledge domain
-- observation_type (string, required) — pattern, anti-pattern, fix-recipe, architecture-decision, or lesson
-- content (string, required) — What was observed
-- confidence (number, optional) — 0.0-1.0 (default: 0.8)
-- tags (string[], optional) — Tags
+- domain (string, required) - Knowledge domain
+- observation_type (string, required) - pattern, anti-pattern, fix-recipe, architecture-decision, or lesson
+- content (string, required) - What was observed
+- confidence (number, optional) - 0.0-1.0 (default: 0.8)
+- tags (string[], optional) - Tags
 
 #### GET /api/shared-mind/{team_id}/query
 Query relevant knowledge for a context.
 
 Query params:
-- context (string, required) — Free-text context (keywords extracted automatically)
-- domain (string, optional) — Domain filter
+- context (string, required) - Free-text context (keywords extracted automatically)
+- domain (string, optional) - Domain filter
 
 #### POST /api/shared-mind/{team_id}/consolidate
 Trigger consolidation of raw observations into structured knowledge nodes.
@@ -534,7 +534,7 @@ Get current workflow state for an initiative. Returns current step, next actions
 
 ---
 
-## MCP Server — 21 Governance Tools
+## MCP Server - 21 Governance Tools
 
 Install: npm install -g @synctek/forgeos
 NPX: npx -y @synctek/forgeos@latest
@@ -546,16 +546,16 @@ HTTP/SSE endpoint: https://mcp.synctek.io/mcp
 Initialize a ForgeOS governance session. Returns project state, active work, governance rules, and workflow runbook. Call this on every session start.
 
 Parameters:
-- project_id (string, required) — Project ID to initialize
-- developer_id (string, optional) — Developer identifier (default: local)
+- project_id (string, required) - Project ID to initialize
+- developer_id (string, optional) - Developer identifier (default: local)
 
 #### forge_create_project
 Create a new ForgeOS project. Projects are the top-level container for initiatives, changesets, and governance workflows.
 
 Parameters:
-- name (string, required) — Project name
-- description (string, optional) — Project description
-- platform (string, optional) — Target platform: web, mobile, api, cli, desktop, or other
+- name (string, required) - Project name
+- description (string, optional) - Project description
+- platform (string, optional) - Target platform: web, mobile, api, cli, desktop, or other
 
 ### Initiative management
 
@@ -563,16 +563,16 @@ Parameters:
 Create a new initiative to track a piece of work. Returns the initiative with a generated ID.
 
 Parameters:
-- project_id (string, required) — Project ID
-- title (string, required) — Initiative title
-- description (string, required) — What this initiative accomplishes
-- priority (string, optional) — low, medium, high, or critical
+- project_id (string, required) - Project ID
+- title (string, required) - Initiative title
+- description (string, required) - What this initiative accomplishes
+- priority (string, optional) - low, medium, high, or critical
 
 #### forge_get_workflow
 Get the current workflow state for an initiative. Shows which step the developer is on, what is needed next, and overall progress.
 
 Parameters:
-- initiative_id (string, required) — Initiative ID
+- initiative_id (string, required) - Initiative ID
 
 ### Changeset lifecycle
 
@@ -580,22 +580,22 @@ Parameters:
 Propose a changeset for an initiative. The engine computes a risk score and determines required gates, roles, and evidence. Returns the changeset with its risk profile and gate pipeline.
 
 Parameters:
-- project_id (string, required) — Project ID
-- initiative_id (string, required) — Initiative this changeset belongs to
-- description (string, required) — What changed and why
-- files_changed (string[], required) — File paths that changed
-- modules_affected (string[], required) — Module/area names affected
-- branch (string, optional) — Git branch name
+- project_id (string, required) - Project ID
+- initiative_id (string, required) - Initiative this changeset belongs to
+- description (string, required) - What changed and why
+- files_changed (string[], required) - File paths that changed
+- modules_affected (string[], required) - Module/area names affected
+- branch (string, optional) - Git branch name
 
 #### forge_submit_evidence
 Submit evidence (test results, scan outputs, etc.) for a changeset. Auto-populates gate evidence requirements.
 
 Parameters:
-- project_id (string, required) — Project ID
-- changeset_id (string, required) — Changeset ID
-- type (string, required) — unit_test, coverage, lint, security_scan, benchmark, migration_plan, ux_snapshot, a11y_audit, or ai_review
-- summary (string, required) — Summary of the evidence
-- file_refs (string[], optional) — File references
+- project_id (string, required) - Project ID
+- changeset_id (string, required) - Changeset ID
+- type (string, required) - unit_test, coverage, lint, security_scan, benchmark, migration_plan, ux_snapshot, a11y_audit, or ai_review
+- summary (string, required) - Summary of the evidence
+- file_refs (string[], optional) - File references
 
 ### Review tools
 
@@ -603,22 +603,22 @@ Parameters:
 Fetch a reviewer persona profile for local subagent injection. If project context is provided, the profile is enriched with Shared Mind patterns. Use the returned system_prompt as the subagent's instructions.
 
 Parameters:
-- role (string, required) — architect, qa_test, security, performance, reliability, accessibility, or docs_release
-- project_id (string, optional) — Project ID for contextualization
-- team_id (string, optional) — Team ID for Shared Mind context (default: default)
-- modules_affected (string[], optional) — Modules to focus on
-- files_changed (string[], optional) — Files to focus on
+- role (string, required) - architect, qa_test, security, performance, reliability, accessibility, or docs_release
+- project_id (string, optional) - Project ID for contextualization
+- team_id (string, optional) - Team ID for Shared Mind context (default: default)
+- modules_affected (string[], optional) - Modules to focus on
+- files_changed (string[], optional) - Files to focus on
 
 #### forge_submit_review
 Submit a complete review with findings and verdict. Creates and finalizes the review in one call.
 
 Parameters:
-- project_id (string, required) — Project ID
-- changeset_id (string, required) — Changeset ID
-- role (string, required) — Review role (e.g., security, architect)
-- status (string, required) — approved, blocked, or pending
-- notes (string, required) — Review summary
-- findings (object[], required) — Structured findings, each with: category, severity (pass/warning/concern/fail), observation, and optional recommendation
+- project_id (string, required) - Project ID
+- changeset_id (string, required) - Changeset ID
+- role (string, required) - Review role (e.g., security, architect)
+- status (string, required) - approved, blocked, or pending
+- notes (string, required) - Review summary
+- findings (object[], required) - Structured findings, each with: category, severity (pass/warning/concern/fail), observation, and optional recommendation
 
 ### Gate tools
 
@@ -626,24 +626,24 @@ Parameters:
 Get the gate pipeline status for a changeset. Shows which gates are passed, pending, or failed, and what is needed to advance.
 
 Parameters:
-- project_id (string, required) — Project ID
-- changeset_id (string, required) — Changeset ID
+- project_id (string, required) - Project ID
+- changeset_id (string, required) - Changeset ID
 
 #### forge_promote_gate
 Promote a gate to passed status. Requirements (evidence and roles) must be met. Advances the pipeline to the next gate.
 
 Parameters:
-- project_id (string, required) — Project ID
-- changeset_id (string, required) — Changeset ID
-- gate_id (string, required) — intent, design, implementation, verification, hardening, or release
-- promoted_by (string, optional) — Who is promoting (default: local_agent)
+- project_id (string, required) - Project ID
+- changeset_id (string, required) - Changeset ID
+- gate_id (string, required) - intent, design, implementation, verification, hardening, or release
+- promoted_by (string, optional) - Who is promoting (default: local_agent)
 
 #### forge_release_check
 Check if a changeset is ready to release. Returns can_release status and any remaining blockers.
 
 Parameters:
-- project_id (string, required) — Project ID
-- changeset_id (string, required) — Changeset ID
+- project_id (string, required) - Project ID
+- changeset_id (string, required) - Changeset ID
 
 ### Shared Mind tools
 
@@ -651,20 +651,20 @@ Parameters:
 Search the Shared Mind for institutional knowledge. Returns patterns, anti-patterns, and lessons relevant to the context.
 
 Parameters:
-- context (string, required) — Search context (keywords, module names, etc.)
-- team_id (string, optional) — Team ID (default: default)
-- domain (string, optional) — Specific domain to search
+- context (string, required) - Search context (keywords, module names, etc.)
+- team_id (string, optional) - Team ID (default: default)
+- domain (string, optional) - Specific domain to search
 
 #### forge_observe
 Record an observation to the Shared Mind. Use when you discover patterns, anti-patterns, or lessons during development.
 
 Parameters:
-- domain (string, required) — Knowledge domain (e.g., module name, technology)
-- observation_type (string, required) — pattern, anti-pattern, fix-recipe, architecture-decision, or lesson
-- content (string, required) — What was observed
-- team_id (string, optional) — Team ID (default: default)
-- confidence (number, optional) — Confidence 0.0-1.0 (default: 0.8)
-- tags (string[], optional) — Tags for categorization
+- domain (string, required) - Knowledge domain (e.g., module name, technology)
+- observation_type (string, required) - pattern, anti-pattern, fix-recipe, architecture-decision, or lesson
+- content (string, required) - What was observed
+- team_id (string, optional) - Team ID (default: default)
+- confidence (number, optional) - Confidence 0.0-1.0 (default: 0.8)
+- tags (string[], optional) - Tags for categorization
 
 ### Typical MCP workflow
 

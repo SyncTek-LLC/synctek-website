@@ -11,11 +11,11 @@ draft: false
 
 Two frameworks are shaping how regulators, enterprise buyers, and government procurement teams will evaluate AI agent deployments in 2026.
 
-The first is NIST AI RMF — the National Institute of Standards and Technology's Artificial Intelligence Risk Management Framework. Voluntary for most organizations, but increasingly referenced in US federal contracts and adopted as a baseline in enterprise security questionnaires.
+The first is NIST AI RMF - the National Institute of Standards and Technology's Artificial Intelligence Risk Management Framework. Voluntary for most organizations, but increasingly referenced in US federal contracts and adopted as a baseline in enterprise security questionnaires.
 
 The second is the EU AI Act. Not voluntary. High-risk AI systems face mandatory compliance with enforcement beginning August 2, 2026. Penalties up to €35M or 7% of global annual revenue.
 
-Both frameworks require the same four things: risk assessment, documentation, human oversight, and audit trails. If you're building or deploying AI agents, you need all four. Here's what each framework actually requires — and where ForgeOS maps to it.
+Both frameworks require the same four things: risk assessment, documentation, human oversight, and audit trails. If you're building or deploying AI agents, you need all four. Here's what each framework actually requires - and where ForgeOS maps to it.
 
 ## The Frameworks Side by Side
 
@@ -38,7 +38,7 @@ NIST AI RMF organizes risk management into four functions: GOVERN, MAP, MEASURE,
 
 **MAP** is about identifying the risks of a given AI deployment in context. What are the use cases? What can go wrong? What's the impact if it does? This requires documentation that most teams don't produce before deployment.
 
-**MEASURE** is ongoing evaluation: monitoring, testing, and benchmarking to ensure the system is performing within acceptable parameters. Not a one-time check before launch — a continuous process.
+**MEASURE** is ongoing evaluation: monitoring, testing, and benchmarking to ensure the system is performing within acceptable parameters. Not a one-time check before launch - a continuous process.
 
 **MANAGE** is the response layer: what happens when risks materialize? Who decides? How fast? With what authority?
 
@@ -48,13 +48,13 @@ None of these functions exist by default in an agent deployment. NIST is describ
 
 The EU AI Act's obligations for high-risk systems are more specific than NIST's framework. Four articles matter most for agent teams:
 
-**Article 9 — Risk management system.** Requires a continuous risk identification, analysis, and mitigation process. Not a risk assessment document produced once. A system that operates throughout the development and deployment lifecycle.
+**Article 9 - Risk management system.** Requires a continuous risk identification, analysis, and mitigation process. Not a risk assessment document produced once. A system that operates throughout the development and deployment lifecycle.
 
-**Article 12 — Record-keeping.** Requires automatic logging with sufficient detail to reconstruct the system's operation after the fact. "Sufficient detail" means: what decision was made, what data was used, which model produced it, who authorized it. General application logs don't qualify.
+**Article 12 - Record-keeping.** Requires automatic logging with sufficient detail to reconstruct the system's operation after the fact. "Sufficient detail" means: what decision was made, what data was used, which model produced it, who authorized it. General application logs don't qualify.
 
-**Article 14 — Human oversight.** Requires mechanisms that allow humans to monitor AI outputs, detect anomalies, and override or halt AI systems. Not a manual process — a built-in override path that works even when the system is operating autonomously.
+**Article 14 - Human oversight.** Requires mechanisms that allow humans to monitor AI outputs, detect anomalies, and override or halt AI systems. Not a manual process - a built-in override path that works even when the system is operating autonomously.
 
-**Article 17 — Quality management system.** Requires documented procedures for the full AI lifecycle: design, testing, monitoring, post-market surveillance. The full lifecycle, not just deployment.
+**Article 17 - Quality management system.** Requires documented procedures for the full AI lifecycle: design, testing, monitoring, post-market surveillance. The full lifecycle, not just deployment.
 
 The enforcement deadline is August 2, 2026. Enterprise procurement cycles run 90+ days. If you're evaluating compliance infrastructure, the decision window to be ready by August closes in early May.
 
@@ -72,11 +72,11 @@ This is the architectural shift. Not "document what the agent does." Build a sys
 
 ForgeOS is not compliance software retrofitted onto a development tool. It's a governance operating system where the compliance infrastructure and the development workflow are the same thing.
 
-**Risk assessment (Article 9 / NIST MAP):** Every initiative in ForgeOS starts with a scope assessment gate. Before code is written, the team must document what's being built and what the risks are. The gate doesn't open without the artifact. The risk assessment is not a separate compliance step — it's the gate that lets work begin.
+**Risk assessment (Article 9 / NIST MAP):** Every initiative in ForgeOS starts with a scope assessment gate. Before code is written, the team must document what's being built and what the risks are. The gate doesn't open without the artifact. The risk assessment is not a separate compliance step - it's the gate that lets work begin.
 
-**Documentation (Article 12 / NIST MEASURE):** The ForgeOS audit ledger is append-only and hash-chained. Every gate decision, every artifact submission, every deployment authorization is recorded with a timestamp, the authorizing identity, and an Ed25519 signature. The chain is self-evidencing — tampering invalidates downstream records. This is not a log file. It's a cryptographic evidence chain.
+**Documentation (Article 12 / NIST MEASURE):** The ForgeOS audit ledger is append-only and hash-chained. Every gate decision, every artifact submission, every deployment authorization is recorded with a timestamp, the authorizing identity, and an Ed25519 signature. The chain is self-evidencing - tampering invalidates downstream records. This is not a log file. It's a cryptographic evidence chain.
 
-**Human oversight (Article 14 / NIST GOVERN):** ForgeOS enforces mandatory human approval at defined gates. No agent can self-approve an architecture gate. No agent can approve its own security review. Separation of duties is structural — the agent that produces an artifact cannot be the identity that signs its gate approval. The override mechanism is a kill switch built into the governance layer, not an afterthought.
+**Human oversight (Article 14 / NIST GOVERN):** ForgeOS enforces mandatory human approval at defined gates. No agent can self-approve an architecture gate. No agent can approve its own security review. Separation of duties is structural - the agent that produces an artifact cannot be the identity that signs its gate approval. The override mechanism is a kill switch built into the governance layer, not an afterthought.
 
 **Quality management (Article 17 / NIST all functions):** The 10-gate lifecycle is a quality management system by design. Architecture reviewed before code. Code reviewed before deployment. Security reviewed before release. QA sign-off required. Each gate requires evidence. Each evidence artifact is signed. The system does not advance without each gate passing.
 
@@ -94,12 +94,12 @@ That's the difference between documentation as an afterthought and compliance in
 
 August 2, 2026 is not the date by which you should finish building your compliance infrastructure. It's the date by which that infrastructure must already be operating in production, with a track record.
 
-Compliance reviews, procurement approvals, and certification processes all require evidence of ongoing operation — not a system that was stood up the week before the deadline.
+Compliance reviews, procurement approvals, and certification processes all require evidence of ongoing operation - not a system that was stood up the week before the deadline.
 
-The teams that will be positioned correctly in August are the ones that initialized governance infrastructure months earlier. Not because they're compliance-focused companies. Because they understood that governing AI agents is operationally correct regardless of what the regulation says — and the regulation is now saying the same thing.
+The teams that will be positioned correctly in August are the ones that initialized governance infrastructure months earlier. Not because they're compliance-focused companies. Because they understood that governing AI agents is operationally correct regardless of what the regulation says - and the regulation is now saying the same thing.
 
 ---
 
 ForgeOS provides compliance infrastructure, not compliance documentation. The distinction is the difference between a record and an evidence chain.
 
-[Start the 14-day trial →](/forgeos) — governance infrastructure initialized in 30 seconds.
+[Start the 14-day trial →](/forgeos) - governance infrastructure initialized in 30 seconds.

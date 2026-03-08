@@ -1,12 +1,12 @@
 ---
 layout: ../../layouts/DocsLayout.astro
-title: "MCP Server — ForgeOS Documentation"
+title: "MCP Server - ForgeOS Documentation"
 description: "Install and configure the ForgeOS MCP server. All 21 governance tools documented with parameters, descriptions, and usage examples."
 ---
 
 # MCP Server
 
-ForgeOS exposes 21 governance tools over the Model Context Protocol (MCP). Any MCP-compatible agent — Claude, GPT-4, Gemini, local models — can call gate-check, submit reviews, and query institutional knowledge without custom integration. Your AI provides the intelligence — ForgeOS provides the governance. Connect via MCP with your ForgeOS API key. Raw source code stays local — only project metadata (file structure, languages, dependencies) is sent to ForgeOS.
+ForgeOS exposes 21 governance tools over the Model Context Protocol (MCP). Any MCP-compatible agent - Claude, GPT-4, Gemini, local models - can call gate-check, submit reviews, and query institutional knowledge without custom integration. Your AI provides the intelligence - ForgeOS provides the governance. Connect via MCP with your ForgeOS API key. Raw source code stays local - only project metadata (file structure, languages, dependencies) is sent to ForgeOS.
 
 ## Installation
 
@@ -24,7 +24,7 @@ npx -y @synctek/forgeos@latest
 
 ## Configuration
 
-The ForgeOS MCP server runs via stdio using `npx`. The config block is the same across editors — only the outer key differs.
+The ForgeOS MCP server runs via stdio using `npx`. The config block is the same across editors - only the outer key differs.
 
 ```json
 {
@@ -43,9 +43,9 @@ The ForgeOS MCP server runs via stdio using `npx`. The config block is the same 
 
 > **Note:** `FORGEOS_API_KEY` is your ForgeOS API key. Get it from the [ForgeOS dashboard](https://forgeos.synctek.io) after registering. The `FORGEOS_ENGINE_URL` and `FORGEOS_API_KEY` env vars are read directly by the MCP server (distinct from the `X-ForgeOS-API-Key` HTTP header used by direct REST calls).
 
-- **Cursor** — add to `.cursor/mcp.json` (project root or global Cursor settings) using the `"mcpServers"` key as shown above
-- **Claude Code** — add to `~/.claude/settings.json` using the `"mcpServers"` key as shown above
-- **VS Code (Copilot)** — add to `settings.json` using `"mcp": { "servers": { ... } }` instead of `"mcpServers"`
+- **Cursor** - add to `.cursor/mcp.json` (project root or global Cursor settings) using the `"mcpServers"` key as shown above
+- **Claude Code** - add to `~/.claude/settings.json` using the `"mcpServers"` key as shown above
+- **VS Code (Copilot)** - add to `settings.json` using `"mcp": { "servers": { ... } }` instead of `"mcpServers"`
 
 ### HTTP/SSE transport
 
@@ -56,7 +56,7 @@ Endpoint: https://mcp.synctek.io/mcp
 Header:   X-ForgeOS-API-Key: fos_your_api_key_here
 ```
 
-No installation required — ideal for server-side agents, CI pipelines, and any environment where running a local process is not practical.
+No installation required - ideal for server-side agents, CI pipelines, and any environment where running a local process is not practical.
 
 ## Tools reference
 
@@ -305,5 +305,5 @@ forge_release_check(project_id, cs_id)            → ready to ship
 
 ## Next steps
 
-- [Authentication](/docs/auth/) — API key management and security
-- [REST API](/docs/api/) — Full HTTP endpoint reference for direct integration
+- [Authentication](/docs/auth/) - API key management and security
+- [REST API](/docs/api/) - Full HTTP endpoint reference for direct integration

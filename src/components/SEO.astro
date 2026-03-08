@@ -24,7 +24,7 @@ const {
   jsonLd,
 } = Astro.props;
 
-const fullTitle = title === 'SyncTek' ? 'SyncTek — AI tools that work on your terms' : `${title} - SyncTek`;
+const fullTitle = title === 'SyncTek' ? 'SyncTek - AI tools that work on your terms' : `${title} - SyncTek`;
 const ogImageUrl = ogImage.startsWith('http') ? ogImage : new URL(ogImage, Astro.site).href;
 ---
 

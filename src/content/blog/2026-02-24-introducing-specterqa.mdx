@@ -8,7 +8,7 @@ tags: ["specterqa", "testing", "ai", "open-source", "playwright"]
 product: specterqa
 ---
 
-Traditional test scripts are coupled to implementation details. Change a CSS class, rename an ID, restructure your markup — tests break. But the application still works fine. You spend more time maintaining test infrastructure than catching real bugs.
+Traditional test scripts are coupled to implementation details. Change a CSS class, rename an ID, restructure your markup - tests break. But the application still works fine. You spend more time maintaining test infrastructure than catching real bugs.
 
 SpecterQA takes a different approach.
 
@@ -18,20 +18,20 @@ SpecterQA is an open-source CLI for behavioral testing. Instead of writing test 
 
 The loop is straightforward:
 
-1. **Screenshot** — Playwright captures the current browser state
-2. **Decide** — Claude's vision model receives the screenshot plus the persona's context (who they are, what they're trying to do, how patient they are). It returns a structured action: click at coordinates, type text, scroll, press a key, or signal done/stuck
-3. **Execute** — Playwright performs the action
-4. **Repeat** — Until the journey completes, the agent gets stuck, or the budget runs out
+1. **Screenshot** - Playwright captures the current browser state
+2. **Decide** - Claude's vision model receives the screenshot plus the persona's context (who they are, what they're trying to do, how patient they are). It returns a structured action: click at coordinates, type text, scroll, press a key, or signal done/stuck
+3. **Execute** - Playwright performs the action
+4. **Repeat** - Until the journey completes, the agent gets stuck, or the budget runs out
 
 No CSS selectors. No XPath. No DOM traversal. The AI reads the screen the same way a human does.
 
 ## Why vision-based testing matters
 
-Selector-based tests are fragile by design. They are coupled to your markup — class names, element IDs, DOM hierarchy. Change any of those (even for a good reason, like a refactor) and your tests break.
+Selector-based tests are fragile by design. They are coupled to your markup - class names, element IDs, DOM hierarchy. Change any of those (even for a good reason, like a refactor) and your tests break.
 
 Vision-based tests are coupled to the user experience. They break when what the user sees changes. Which is exactly what you want your tests to catch.
 
-A persona with low technical comfort navigates differently than a power user. A persona with low patience gives up faster — just like a real frustrated user would. This surfaces UX problems that scripted tests never find.
+A persona with low technical comfort navigates differently than a power user. A persona with low patience gives up faster - just like a real frustrated user would. This surfaces UX problems that scripted tests never find.
 
 ## Personas are YAML
 
@@ -62,7 +62,7 @@ steps:
   - goal: "Complete the first item on the checklist"
 ```
 
-The persona attributes shape how the AI navigates. This is not just randomized clicking — it is structured behavioral simulation.
+The persona attributes shape how the AI navigates. This is not just randomized clicking - it is structured behavioral simulation.
 
 ## Getting started
 
@@ -88,7 +88,7 @@ Every run costs money. We built this into the engine, not as an afterthought.
 | 5-step standard journey | $0.50 - $1.50 |
 | 10-step complex journey with forms | $1.00 - $3.00 |
 
-Default budget cap is $5.00 per run. You can set per-day and monthly limits in your product YAML. The engine uses model routing — simple actions go to Haiku (cheaper), complex reasoning goes to Sonnet — to keep costs predictable.
+Default budget cap is $5.00 per run. You can set per-day and monthly limits in your product YAML. The engine uses model routing - simple actions go to Haiku (cheaper), complex reasoning goes to Sonnet - to keep costs predictable.
 
 ## CI integration
 
@@ -104,7 +104,7 @@ SpecterQA outputs JUnit XML, so it drops into any existing pipeline:
     ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
 ```
 
-This runs alongside your unit tests and integration tests. SpecterQA supplements your existing test suite — it does not replace it.
+This runs alongside your unit tests and integration tests. SpecterQA supplements your existing test suite - it does not replace it.
 
 ## MCP server for AI agents
 
@@ -130,4 +130,4 @@ Try it. Point it at your staging environment. Define a persona that matches your
 - **GitHub:** [SyncTek-LLC/specterqa](https://github.com/SyncTek-LLC/specterqa)
 - **MCP Registry:** `io.github.SyncTekLLC/specterqa`
 
-MIT licensed. We would genuinely appreciate feedback — especially on the persona model and what attributes you would want to define for your test users. Open an issue or reach out on [Twitter](https://twitter.com/SyncTekLLC).
+MIT licensed. We would genuinely appreciate feedback - especially on the persona model and what attributes you would want to define for your test users. Open an issue or reach out on [Twitter](https://twitter.com/SyncTekLLC).

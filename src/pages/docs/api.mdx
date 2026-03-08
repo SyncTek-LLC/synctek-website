@@ -1,6 +1,6 @@
 ---
 layout: ../../layouts/DocsLayout.astro
-title: "REST API Reference — ForgeOS Documentation"
+title: "REST API Reference - ForgeOS Documentation"
 description: "Full REST API reference for ForgeOS. Auth, projects, initiatives, changesets, reviews, gates, billing, and Shared Mind endpoints."
 ---
 
@@ -85,7 +85,7 @@ curl -X POST https://forgeos-api.synctek.io/auth/login \
 }
 ```
 
-**Errors:** `401` invalid credentials (identical error for wrong password and unknown email — no enumeration).
+**Errors:** `401` invalid credentials (identical error for wrong password and unknown email - no enumeration).
 
 ---
 
@@ -245,7 +245,7 @@ curl -X POST https://forgeos-api.synctek.io/api/projects/proj_abc/initiatives \
 
 List all initiatives for a project, optionally filtered by status.
 
-**Query params:** `status` (optional) — filter by `active`, `completed`, or `abandoned`.
+**Query params:** `status` (optional) - filter by `active`, `completed`, or `abandoned`.
 
 **Response** `200`: Array of initiative summaries.
 
@@ -585,7 +585,7 @@ Get daily AI spend breakdown. Query param: `days` (default 30, max 90).
 
 ## Shared Mind
 
-Federated institutional knowledge — patterns, anti-patterns, and lessons shared across the team.
+Federated institutional knowledge - patterns, anti-patterns, and lessons shared across the team.
 
 ### `POST /api/shared-mind/{team_id}/observe`
 

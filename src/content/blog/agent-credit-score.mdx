@@ -8,19 +8,19 @@ tags: ["fti", "trust", "ai-agents", "forgeos", "security"]
 product: forgeos
 ---
 
-When you apply for a mortgage, your lender does not take your word for it. They pull a score — a number computed from your actual repayment behavior over years, standardized so any lender anywhere can read it, updated continuously as you use credit, independently verifiable by third parties. The score is not a vibe. It is a cryptographically grounded signal derived from evidence.
+When you apply for a mortgage, your lender does not take your word for it. They pull a score - a number computed from your actual repayment behavior over years, standardized so any lender anywhere can read it, updated continuously as you use credit, independently verifiable by third parties. The score is not a vibe. It is a cryptographically grounded signal derived from evidence.
 
 Your AI agent, right now, is picking npm packages, selecting API vendors, and choosing which other agents to delegate work to. Nobody is pulling a score.
 
 ## The Trust Gap in Agentic Systems
 
-When an agent needs an HTTP client, it selects from whatever appears in its training data or whatever its orchestration framework recommends. When it needs to call another agent — a code reviewer, a data transformer, a deployment system — it trusts whatever endpoint it is pointed at.
+When an agent needs an HTTP client, it selects from whatever appears in its training data or whatever its orchestration framework recommends. When it needs to call another agent - a code reviewer, a data transformer, a deployment system - it trusts whatever endpoint it is pointed at.
 
 The signals it has available: download counts on npm. Star counts on GitHub. Neither tells you whether the package has been audited for supply chain integrity. Neither tells you whether the maintainer has a history of abandoning projects six months after release. Neither tells you whether the documentation reflects current behavior or a version from two years ago.
 
 This is lending money with no credit check. It works until it doesn't.
 
-The problem is not that bad packages exist. The problem is that there is no standardized, machine-readable signal that lets an agent — or a human, or a compliance system — make a trust determination at query time.
+The problem is not that bad packages exist. The problem is that there is no standardized, machine-readable signal that lets an agent - or a human, or a compliance system - make a trust determination at query time.
 
 ## What Credit Scores Get Right
 
@@ -46,7 +46,7 @@ A few properties worth calling out explicitly:
 
 **Deterministic.** Given the same inputs, FTI produces the same score. There is no LLM making judgment calls at query time. The computation is defined, auditable, and reproducible.
 
-**Signed.** Every FTI response is Ed25519-signed. The score is not just a number — it is a cryptographic artifact. You can verify the response was produced by the FTI service and has not been tampered with. When an agent queries FTI and gets a score, it has a verifiable attestation.
+**Signed.** Every FTI response is Ed25519-signed. The score is not just a number - it is a cryptographic artifact. You can verify the response was produced by the FTI service and has not been tampered with. When an agent queries FTI and gets a score, it has a verifiable attestation.
 
 **Context-aware.** A solo developer building a weekend prototype has different trust requirements than a bank's compliance engineering team. FTI supports context parameters that adjust which thresholds are relevant for your deployment environment.
 
@@ -60,9 +60,9 @@ ForgeOS came in at 69. Bronze.
 
 This is worth dwelling on. ForgeOS has 2,779 tests. 95% coverage. An A+ quality rating from our own static analysis. The underlying code is not the problem.
 
-Bronze, because the score reflects reality. Low community adoption — the tool is new. Limited third-party GitHub reviews. Public documentation that does not yet match the depth of what we have internally. The score is not penalizing quality; it is penalizing the absence of community signal that a new project, by definition, has not yet accumulated.
+Bronze, because the score reflects reality. Low community adoption - the tool is new. Limited third-party GitHub reviews. Public documentation that does not yet match the depth of what we have internally. The score is not penalizing quality; it is penalizing the absence of community signal that a new project, by definition, has not yet accumulated.
 
-We published the score anyway. A trust system that only produces flattering scores is not a trust system — it is marketing. FTI's value is its honesty, including about us.
+We published the score anyway. A trust system that only produces flattering scores is not a trust system - it is marketing. FTI's value is its honesty, including about us.
 
 As ForgeOS adoption grows, the score will reflect that. The score should earn its way up.
 
@@ -72,7 +72,7 @@ The near-term use case for FTI is humans and CI pipelines querying scores before
 
 The more interesting case is agent-to-agent trust resolution.
 
-When Agent A needs to select an HTTP library, the naive approach is to pick the most popular one. Popular is not the same as trustworthy — it is a proxy that breaks badly at the tail. The principled approach is to pick the package that meets the trust threshold required for the specific context: compliance-sensitive workflow, pick the package with Platinum supply chain integrity; internal prototype, Bronze is probably fine.
+When Agent A needs to select an HTTP library, the naive approach is to pick the most popular one. Popular is not the same as trustworthy - it is a proxy that breaks badly at the tail. The principled approach is to pick the package that meets the trust threshold required for the specific context: compliance-sensitive workflow, pick the package with Platinum supply chain integrity; internal prototype, Bronze is probably fine.
 
 FTI makes this machine-readable. Agents can query FTI via API, get a signed score and tier, compare it against their configured threshold for the current context, and make a documented trust determination without human involvement.
 
@@ -107,7 +107,7 @@ curl https://forgeos-api.synctek.io/fti/score \
 
 The agent gets a signed, verifiable trust attestation. The trust decision is logged. The audit trail is complete.
 
-This is what "agentic trust infrastructure" actually means — not a dashboard humans check before deploying, but a queryable signal that agents can resolve at runtime as part of their decision-making.
+This is what "agentic trust infrastructure" actually means - not a dashboard humans check before deploying, but a queryable signal that agents can resolve at runtime as part of their decision-making.
 
 ## The Missing Layer
 
@@ -115,7 +115,7 @@ npm has download counts. GitHub has stars. Snyk has vulnerability scanning. Each
 
 None of them is a trust score. None of them is standardized across dimensions. None of them produces a signed cryptographic artifact. None of them is designed to be queried at agent decision time.
 
-FTI is built to be that layer — the trust signal that sits between "I found this package" and "I'm going to use it." For humans doing code review. For CI pipelines enforcing dependency policy. For agents making autonomous selection decisions.
+FTI is built to be that layer - the trust signal that sits between "I found this package" and "I'm going to use it." For humans doing code review. For CI pipelines enforcing dependency policy. For agents making autonomous selection decisions.
 
 Credit scores did not replace underwriters. They gave underwriters a standardized signal to work from. FTI does not replace security reviews. It gives security teams, agents, and automated pipelines a standardized trust signal to work from.
 
@@ -131,7 +131,7 @@ Check your package's trust score at [forgeos-api.synctek.io](https://forgeos-api
 
 **Q: What is FTI?**
 
-FTI (ForgeOS Trust Index) is a standardized, machine-readable trust score for software packages and AI agents. It evaluates eight dimensions — security, maintainability, documentation, community health, supply chain integrity, improvement velocity, governance, and operational — and produces a signed, verifiable score from 0–100.
+FTI (ForgeOS Trust Index) is a standardized, machine-readable trust score for software packages and AI agents. It evaluates eight dimensions - security, maintainability, documentation, community health, supply chain integrity, improvement velocity, governance, and operational - and produces a signed, verifiable score from 0–100.
 
 **Q: How is FTI different from vulnerability scanning tools like Snyk?**
 
@@ -139,12 +139,12 @@ Snyk is excellent at what it does: detecting known CVEs in your dependency tree.
 
 **Q: Why is the score deterministic? Wouldn't an LLM produce more nuanced results?**
 
-Determinism is a feature, not a limitation. A score that changes based on LLM temperature or prompt variation is not a signal you can build policy on. FTI's value is that the same input always produces the same output — which means you can audit it, dispute it, and build downstream automation that depends on it.
+Determinism is a feature, not a limitation. A score that changes based on LLM temperature or prompt variation is not a signal you can build policy on. FTI's value is that the same input always produces the same output - which means you can audit it, dispute it, and build downstream automation that depends on it.
 
 **Q: Can agents query FTI directly?**
 
 Yes. FTI is exposed via REST API with Ed25519-signed responses. Any agent that can make an HTTP request can query FTI and get a cryptographically verifiable trust attestation. The response is designed to be parsed by machines, not just humans.
 
-**Q: You scored ForgeOS at 69 — Bronze. Why publish that?**
+**Q: You scored ForgeOS at 69 - Bronze. Why publish that?**
 
-Because a trust system that only produces scores you want to see is not a trust system. Our score reflects our current community adoption and documentation depth — both of which are genuine gaps for a new product. The score will improve as we address them. Publishing it now is the honest thing to do.
+Because a trust system that only produces scores you want to see is not a trust system. Our score reflects our current community adoption and documentation depth - both of which are genuine gaps for a new product. The score will improve as we address them. Publishing it now is the honest thing to do.
