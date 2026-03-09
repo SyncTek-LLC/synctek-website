@@ -30,6 +30,17 @@ export default {
     flatBadgeUrl: 'https://forgeos-api.synctek.io/v1/badge/npm/synctek/forgeos/flat',
     trustProfileUrl: '/products/forgeos/fti/',
     apiScoreUrl: 'https://forgeos-api.synctek.io/v1/trust/npm/synctek/forgeos',
+    compositeScore: 74.8,
+    scores: {
+      security: 86.1,
+      maintainability: 82.4,
+      documentation: 75.4,
+      community_health: 43.1,
+      supply_chain: 80.0,
+      improvement_velocity: 50.0,
+      governance: 87.3,
+      operational: 65.0,
+    },
   },
 
   pricing: [
