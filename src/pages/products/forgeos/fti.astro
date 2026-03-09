@@ -86,16 +86,16 @@ function getTierColor(score: number): string {
 
 // Fetch live self-score for @synctek/forgeos (public endpoint, no auth required)
 // Fallback values match the last known good score in case the API is unreachable at build time.
-let SCORE = 73;
+let SCORE = 75;
 const FALLBACK_DIMENSIONS: Record<string, number> = {
   security: 86,
-  maintainability: 74,
+  maintainability: 82,
   documentation: 75,
-  community_health: 47,
+  community_health: 43,
   supply_chain: 80,
   improvement_velocity: 50,
-  governance: 74,
-  operational: 70,
+  governance: 87,
+  operational: 65,
 };
 let liveDimensions: Record<string, number> = { ...FALLBACK_DIMENSIONS };
 try {
@@ -583,16 +583,16 @@ curl -H "X-API-Key: fos_live_abc123..." \
       </div>
       <pre class="px-4 py-5 text-xs font-mono overflow-x-auto leading-relaxed" style="background: #0A0A0A; margin: 0; color: #E6EDF3;"><code><span style="color: #8B949E;">{"{"}
 </span>  <span style="color: #58A6FF;">"package"</span><span style="color: #8B949E;">:</span> <span style="color: #3FB950;">"@synctek/forgeos"</span><span style="color: #8B949E;">,</span>
-  <span style="color: #58A6FF;">"composite_score"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">72.72</span><span style="color: #8B949E;">,</span>
+  <span style="color: #58A6FF;">"composite_score"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">74.78</span><span style="color: #8B949E;">,</span>
   <span style="color: #58A6FF;">"dimensions"</span><span style="color: #8B949E;">: {"{"}</span>
     <span style="color: #58A6FF;">"security"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">86.08</span><span style="color: #8B949E;">,</span>
-    <span style="color: #58A6FF;">"maintainability"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">73.85</span><span style="color: #8B949E;">,</span>
+    <span style="color: #58A6FF;">"maintainability"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">82.39</span><span style="color: #8B949E;">,</span>
     <span style="color: #58A6FF;">"documentation"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">75.41</span><span style="color: #8B949E;">,</span>
-    <span style="color: #58A6FF;">"community_health"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">47.30</span><span style="color: #8B949E;">,</span>
+    <span style="color: #58A6FF;">"community_health"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">43.10</span><span style="color: #8B949E;">,</span>
     <span style="color: #58A6FF;">"supply_chain"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">80.00</span><span style="color: #8B949E;">,</span>
     <span style="color: #58A6FF;">"improvement_velocity"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">50.00</span><span style="color: #8B949E;">,</span>
-    <span style="color: #58A6FF;">"governance"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">74.34</span><span style="color: #8B949E;">,</span>
-    <span style="color: #58A6FF;">"operational"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">70.00</span>
+    <span style="color: #58A6FF;">"governance"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">87.34</span><span style="color: #8B949E;">,</span>
+    <span style="color: #58A6FF;">"operational"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">65.00</span>
   <span style="color: #8B949E;">{"}"}</span><span style="color: #8B949E;">,</span>
   <span style="color: #58A6FF;">"trajectory"</span><span style="color: #8B949E;">:</span> <span style="color: #3FB950;">"rising"</span><span style="color: #8B949E;">,</span>
   <span style="color: #58A6FF;">"algorithm_version"</span><span style="color: #8B949E;">:</span> <span style="color: #3FB950;">"fti-v1.0.0"</span>
