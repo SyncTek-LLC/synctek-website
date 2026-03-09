@@ -31,7 +31,7 @@ function getScoreColor(score: number): string {
 // dimensions is defined after liveDimensions is populated by the live fetch below.
 // Dimensions array is constructed post-fetch so scores reflect live API data (or fallback).
 
-// Tier system — MUST match the ForgeOS engine tier definitions
+// Tier system - MUST match the ForgeOS engine tier definitions
 const tiers = [
   { name: 'Exemplary', range: '95–100', color: '#e2e8f0', description: 'Production-grade. Ship with confidence.' },
   { name: 'Trusted', range: '85–94', color: '#d97706', description: 'Strong trust posture. Minor gaps.' },
@@ -49,7 +49,7 @@ try {
     packagesIndexed = typeof stats.packages_indexed === 'number' ? stats.packages_indexed : null;
   }
 } catch {
-  // Build-time fetch failed — fall back to generic copy
+  // Build-time fetch failed - fall back to generic copy
 }
 
 function formatPackageCount(n: number): string {
@@ -58,7 +58,7 @@ function formatPackageCount(n: number): string {
   return n.toLocaleString();
 }
 
-// Tier labels — MUST match the ForgeOS engine tier definitions
+// Tier labels - MUST match the ForgeOS engine tier definitions
 function getTierLabel(score: number): string {
   if (score >= 95) return 'EXEMPLARY';
   if (score >= 85) return 'TRUSTED';
@@ -75,7 +75,7 @@ function getTierLabelMixed(score: number): string {
   return 'Risky';
 }
 
-// Tier color for composite gauge ring — matches engine tier definitions
+// Tier color for composite gauge ring - matches engine tier definitions
 function getTierColor(score: number): string {
   if (score >= 95) return '#e2e8f0';
   if (score >= 85) return '#d97706';
@@ -86,7 +86,7 @@ function getTierColor(score: number): string {
 
 // Fetch live self-score for @synctek/forgeos (public endpoint, no auth required)
 // Fallback values match the last known good score in case the API is unreachable at build time.
-let SCORE = 79;
+let SCORE = 81;
 const FALLBACK_DIMENSIONS: Record<string, number> = {
   security: 97,
   maintainability: 78,
@@ -95,7 +95,7 @@ const FALLBACK_DIMENSIONS: Record<string, number> = {
   supply_chain: 80,
   improvement_velocity: 50,
   governance: 87,
-  operational: 70,
+  operational: 86,
 };
 let liveDimensions: Record<string, number> = { ...FALLBACK_DIMENSIONS };
 try {
@@ -119,7 +119,7 @@ try {
     }
   }
 } catch {
-  // Build-time fetch failed — fall back to last known good values
+  // Build-time fetch failed - fall back to last known good values
 }
 
 // Score circle math: circumference = 2π × 52 ≈ 326.7
@@ -162,7 +162,7 @@ const dimensions = [
     score: liveDimensions.community_health,
     color: getScoreColor(liveDimensions.community_health),
     description: 'Contributor count (bus factor), issue response time, PR review time, and governance documentation.',
-    explanation: 'Our lowest score — and we own it. Small core team means high bus factor risk and slower external issue response times. This is the reality of an early-stage product.',
+    explanation: 'Our lowest score - and we own it. Small core team means high bus factor risk and slower external issue response times. This is the reality of an early-stage product.',
     improving: 'Open-sourcing core modules to invite external contributors. Hiring community manager. Targeting 50+ by Q3.',
   },
   {
@@ -179,8 +179,8 @@ const dimensions = [
     icon: 'trend',
     score: liveDimensions.improvement_velocity,
     color: getScoreColor(liveDimensions.improvement_velocity),
-    description: 'Score trajectory over 30, 90, and 180 days — is this package trending better or worse?',
-    explanation: 'Baseline score — we launched FTI scoring recently, so the 90-day trend window is still filling. Active development means this will climb as scoring history accumulates.',
+    description: 'Score trajectory over 30, 90, and 180 days - is this package trending better or worse?',
+    explanation: 'Baseline score - we launched FTI scoring recently, so the 90-day trend window is still filling. Active development means this will climb as scoring history accumulates.',
     improving: 'Nightly rescoring active. Expect this to reflect our improvement pace within 60 days.',
   },
   {
@@ -205,7 +205,7 @@ const dimensions = [
 ---
 
 <BaseLayout
-  title="ForgeOS Trust Index (FTI) — Deterministic Package Trust Scoring"
+  title="ForgeOS Trust Index (FTI) - Deterministic Package Trust Scoring"
   description="The ForgeOS Trust Index scores any package in your stack 0-100 across eight dimensions: Security, Maintainability, Documentation, Community Health, Supply Chain, Improvement Velocity, Governance, and Operational. Every score is deterministic and Ed25519-signed."
   ogImage="/images/fti-trust-viz.png"
   jsonLd={jsonLd}
@@ -252,7 +252,7 @@ const dimensions = [
             Know what you're shipping.
           </h1>
           <p class="text-lg text-[#9CA3AF] max-w-2xl mb-5">
-            Transparent, deterministic trust scoring for every package in your stack. No guesswork, no LLMs at query time — just evidence.
+            Transparent, deterministic trust scoring for every package in your stack. No guesswork, no LLMs at query time - just evidence.
           </p>
 
           <!-- Dogfood trust signal -->
@@ -279,7 +279,7 @@ const dimensions = [
             >
               <img
                 src="https://forgeos-api.synctek.io/v1/badge/npm/synctek/forgeos/shield"
-                alt="FTI Score — @synctek/forgeos"
+                alt="FTI Score - @synctek/forgeos"
                 height="20"
                 loading="lazy"
                 style="height: 20px;"
@@ -301,7 +301,7 @@ const dimensions = [
             <!-- Score circle -->
             <div class="flex flex-col items-center mb-5">
               <div class="relative" style="width: 120px; height: 120px;">
-                <svg width="120" height="120" viewBox="0 0 120 120" aria-label={`FTI composite score: ${SCORE} — ${TIER_LABEL_MIXED} tier`}>
+                <svg width="120" height="120" viewBox="0 0 120 120" aria-label={`FTI composite score: ${SCORE} - ${TIER_LABEL_MIXED} tier`}>
                   <!-- Track -->
                   <circle
                     cx="60" cy="60" r="52"
@@ -309,7 +309,7 @@ const dimensions = [
                     stroke="#1F1F1F"
                     stroke-width="8"
                   />
-                  <!-- Score arc — rotated so 0° is top -->
+                  <!-- Score arc - rotated so 0 deg is top -->
                   <circle
                     cx="60" cy="60" r="52"
                     fill="none"
@@ -398,7 +398,7 @@ const dimensions = [
               <svg class="w-4 h-4 flex-shrink-0 mt-0.5 text-[#58A6FF]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
               <div>
                 <p class="text-sm font-medium text-[#E6EDF3] mb-1">Cryptographically signed</p>
-                <p class="text-xs text-[#8B949E]">Every score is Ed25519-signed. Tamper-evident — verify the score matches what we computed.</p>
+                <p class="text-xs text-[#8B949E]">Every score is Ed25519-signed. Tamper-evident - verify the score matches what we computed.</p>
               </div>
             </div>
           </div>
@@ -436,15 +436,15 @@ const dimensions = [
       </div>
       <ul class="space-y-2.5 text-sm text-[#9CA3AF] leading-relaxed ml-8">
         <li class="flex items-start gap-2">
-          <span class="text-[#58A6FF] flex-shrink-0 mt-0.5">—</span>
+          <span class="text-[#58A6FF] flex-shrink-0 mt-0.5">•</span>
           <span><span class="text-[#E6EDF3] font-medium">npm audit covers CVEs only.</span> FTI scores Security, Maintainability, Supply Chain, Documentation, Community Health, Improvement Velocity, Governance, and Operational - eight independent dimensions in one composite signal.</span>
         </li>
         <li class="flex items-start gap-2">
-          <span class="text-[#58A6FF] flex-shrink-0 mt-0.5">—</span>
-          <span><span class="text-[#E6EDF3] font-medium">npm audit results change each run.</span> FTI is deterministic — same data, same score, always. You can diff scores across deploys and point to exact regressions.</span>
+          <span class="text-[#58A6FF] flex-shrink-0 mt-0.5">•</span>
+          <span><span class="text-[#E6EDF3] font-medium">npm audit results change each run.</span> FTI is deterministic - same data, same score, always. You can diff scores across deploys and point to exact regressions.</span>
         </li>
         <li class="flex items-start gap-2">
-          <span class="text-[#58A6FF] flex-shrink-0 mt-0.5">—</span>
+          <span class="text-[#58A6FF] flex-shrink-0 mt-0.5">•</span>
           <span><span class="text-[#E6EDF3] font-medium">npm audit can't be embedded as a badge, verified cryptographically, or tracked over time.</span> FTI badges are live, scores are Ed25519-signed, and score history is queryable via API.</span>
         </li>
       </ul>
@@ -458,7 +458,7 @@ const dimensions = [
     <div class="mb-10">
       <p class="text-xs font-semibold tracking-[0.12em] uppercase text-[#58A6FF] mb-2">SCORING MODEL</p>
       <h2 class="text-2xl font-semibold text-[#E6EDF3] tracking-tight">Eight dimensions. One score.</h2>
-      <p class="text-[#9CA3AF] mt-2 max-w-xl">Each dimension is independently measured. The final score is a deterministic composite — cryptographically signed and fully auditable.</p>
+      <p class="text-[#9CA3AF] mt-2 max-w-xl">Each dimension is independently measured. The final score is a deterministic composite - cryptographically signed and fully auditable.</p>
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -489,7 +489,7 @@ const dimensions = [
 
   <SectionDivider />
 
-  <!-- Trust Tiers — visual cards -->
+  <!-- Trust Tiers - visual cards -->
   <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
     <div class="mb-10">
       <p class="text-xs font-semibold tracking-[0.12em] uppercase text-[#58A6FF] mb-2">TRUST TIERS</p>
@@ -497,7 +497,7 @@ const dimensions = [
       <p class="text-[#9CA3AF] mt-2 max-w-xl">Scores map to five tiers. Badges update automatically as the nightly rescore runs.</p>
     </div>
 
-    <!-- Tier cards — horizontal scroll on mobile -->
+    <!-- Tier cards - horizontal scroll on mobile -->
     <div class="flex gap-4 overflow-x-auto pb-2" style="-webkit-overflow-scrolling: touch;">
       {tiers.map((tier) => (
         <div
@@ -522,7 +522,7 @@ const dimensions = [
     <div class="mb-10">
       <p class="text-xs font-semibold tracking-[0.12em] uppercase text-[#58A6FF] mb-2">API ACCESS</p>
       <h2 class="text-2xl font-semibold text-[#E6EDF3] tracking-tight">Check any package</h2>
-      <p class="text-[#9CA3AF] mt-2 max-w-xl">Badges are public — no key needed. Trust profiles require your ForgeOS API key (found in your <a href="https://forgeos.synctek.io/settings" class="text-[#58A6FF] hover:underline">dashboard settings</a>).</p>
+      <p class="text-[#9CA3AF] mt-2 max-w-xl">Badges are public - no key needed. Trust profiles require your ForgeOS API key (found in your <a href="https://forgeos.synctek.io/settings" class="text-[#58A6FF] hover:underline">dashboard settings</a>).</p>
     </div>
 
     <!-- Live Scoreboard CTA -->
@@ -557,7 +557,7 @@ const dimensions = [
       <!-- Badge embed (public, no key) -->
       <div class="rounded-xl overflow-hidden" style="border: 1px solid #1F1F1F;">
         <div class="px-4 py-2.5 flex items-center justify-between" style="background: #0D1117; border-bottom: 1px solid #1F1F1F;">
-          <span class="text-xs font-mono text-[#8B949E]">Embed badge — no API key needed</span>
+          <span class="text-xs font-mono text-[#8B949E]">Embed badge - no API key needed</span>
           <Badge text="PUBLIC" variant="green" />
         </div>
         <pre class="px-4 py-5 text-xs font-mono text-[#E6EDF3] overflow-x-auto leading-relaxed" style="background: #0A0A0A; margin: 0;"><code>![FTI](https://forgeos-api.synctek.io/v1/badge/pypi/requests/shield)</code></pre>
@@ -566,7 +566,7 @@ const dimensions = [
       <!-- Trust profile query (requires API key) -->
       <div class="rounded-xl overflow-hidden" style="border: 1px solid #1F1F1F;">
         <div class="px-4 py-2.5 flex items-center justify-between" style="background: #0D1117; border-bottom: 1px solid #1F1F1F;">
-          <span class="text-xs font-mono text-[#8B949E]">Trust profile — requires ForgeOS API key</span>
+          <span class="text-xs font-mono text-[#8B949E]">Trust profile - requires ForgeOS API key</span>
           <Badge text="AUTH" variant="blue" />
         </div>
         <pre class="px-4 py-5 text-xs font-mono text-[#E6EDF3] overflow-x-auto leading-relaxed" style="background: #0A0A0A; margin: 0;"><code># Your API key is in ForgeOS Dashboard → Settings
@@ -578,21 +578,22 @@ curl -H "X-API-Key: fos_live_abc123..." \
     <!-- Sample JSON response -->
     <div class="rounded-xl overflow-hidden mb-6" style="border: 1px solid #1F1F1F;">
       <div class="px-4 py-2.5 flex items-center justify-between" style="background: #0D1117; border-bottom: 1px solid #1F1F1F;">
-        <span class="text-xs font-mono text-[#8B949E]">Sample response — JSON</span>
+        <span class="text-xs font-mono text-[#8B949E]">Sample response - JSON</span>
         <Badge text="200 OK" variant="green" />
       </div>
       <pre class="px-4 py-5 text-xs font-mono overflow-x-auto leading-relaxed" style="background: #0A0A0A; margin: 0; color: #E6EDF3;"><code><span style="color: #8B949E;">{"{"}
 </span>  <span style="color: #58A6FF;">"package"</span><span style="color: #8B949E;">:</span> <span style="color: #3FB950;">"@synctek/forgeos"</span><span style="color: #8B949E;">,</span>
-  <span style="color: #58A6FF;">"composite_score"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">74.78</span><span style="color: #8B949E;">,</span>
+  <span style="color: #58A6FF;">"composite_score"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">81.10</span><span style="color: #8B949E;">,</span>
+  <span style="color: #58A6FF;">"tier"</span><span style="color: #8B949E;">:</span> <span style="color: #3FB950;">"verified"</span><span style="color: #8B949E;">,</span>
   <span style="color: #58A6FF;">"dimensions"</span><span style="color: #8B949E;">: {"{"}</span>
-    <span style="color: #58A6FF;">"security"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">86.08</span><span style="color: #8B949E;">,</span>
-    <span style="color: #58A6FF;">"maintainability"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">82.39</span><span style="color: #8B949E;">,</span>
-    <span style="color: #58A6FF;">"documentation"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">75.41</span><span style="color: #8B949E;">,</span>
+    <span style="color: #58A6FF;">"security"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">97.00</span><span style="color: #8B949E;">,</span>
+    <span style="color: #58A6FF;">"maintainability"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">78.40</span><span style="color: #8B949E;">,</span>
+    <span style="color: #58A6FF;">"documentation"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">91.50</span><span style="color: #8B949E;">,</span>
     <span style="color: #58A6FF;">"community_health"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">43.10</span><span style="color: #8B949E;">,</span>
     <span style="color: #58A6FF;">"supply_chain"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">80.00</span><span style="color: #8B949E;">,</span>
     <span style="color: #58A6FF;">"improvement_velocity"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">50.00</span><span style="color: #8B949E;">,</span>
-    <span style="color: #58A6FF;">"governance"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">87.34</span><span style="color: #8B949E;">,</span>
-    <span style="color: #58A6FF;">"operational"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">65.00</span>
+    <span style="color: #58A6FF;">"governance"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">87.10</span><span style="color: #8B949E;">,</span>
+    <span style="color: #58A6FF;">"operational"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">86.00</span>
   <span style="color: #8B949E;">{"}"}</span><span style="color: #8B949E;">,</span>
   <span style="color: #58A6FF;">"trajectory"</span><span style="color: #8B949E;">:</span> <span style="color: #3FB950;">"rising"</span><span style="color: #8B949E;">,</span>
   <span style="color: #58A6FF;">"algorithm_version"</span><span style="color: #8B949E;">:</span> <span style="color: #3FB950;">"fti-v1.0.0"</span>
@@ -788,7 +789,7 @@ curl -H "X-API-Key: fos_live_abc123..." \
         <div class="flex-1">
           <div class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold mb-3"
                style="background: rgba(16,185,129,0.12); color: #10B981;">
-            Standalone FTI API — for AI agents
+            Standalone FTI API - for AI agents
           </div>
           <p class="text-sm text-[#E6EDF3] font-medium mb-1">No ForgeOS subscription required.</p>
           <p class="text-xs text-[#8B949E] leading-relaxed mb-4">
@@ -844,7 +845,7 @@ curl -H "X-API-Key: fos_live_abc123..." \
     <div class="mb-10">
       <p class="text-xs font-semibold tracking-[0.12em] uppercase text-[#58A6FF] mb-2">OUR PACKAGES</p>
       <h2 class="text-2xl font-semibold text-[#E6EDF3] tracking-tight">We eat our own cooking</h2>
-      <p class="text-[#9CA3AF] mt-2 max-w-xl">Every SyncTek package is scored by FTI. We publish the scores publicly — no exceptions.</p>
+      <p class="text-[#9CA3AF] mt-2 max-w-xl">Every SyncTek package is scored by FTI. We publish the scores publicly - no exceptions.</p>
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -860,7 +861,7 @@ curl -H "X-API-Key: fos_live_abc123..." \
         <div>
           <img
             src="https://forgeos-api.synctek.io/v1/badge/npm/synctek/forgeos/shield"
-            alt="FTI Score — @synctek/forgeos"
+            alt="FTI Score - @synctek/forgeos"
             height="20"
             loading="lazy"
             style="height: 20px;"
@@ -887,7 +888,7 @@ curl -H "X-API-Key: fos_live_abc123..." \
         <div>
           <img
             src="https://forgeos-api.synctek.io/v1/badge/pypi/specterqa/shield"
-            alt="FTI Score — SpecterQA"
+            alt="FTI Score - SpecterQA"
             height="20"
             loading="lazy"
             style="height: 20px;"
@@ -914,7 +915,7 @@ curl -H "X-API-Key: fos_live_abc123..." \
         Get started with ForgeOS
       </h2>
       <p class="text-[#9CA3AF] max-w-xl mx-auto mb-8 text-sm">
-        FTI is one piece of the ForgeOS governance stack. Gate enforcement, signed audit ledgers, SharedMind, and 21 MCP tools ship together — first gate running in under 10 minutes.
+        FTI is one piece of the ForgeOS governance stack. Gate enforcement, signed audit ledgers, SharedMind, and 21 MCP tools ship together - first gate running in under 10 minutes.
       </p>
       <div class="flex flex-wrap gap-4 justify-center">
         <a
