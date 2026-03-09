@@ -86,16 +86,11 @@ function getTierColor(score: number): string {
 
 // Fetch live self-score for @synctek/forgeos (public endpoint, no auth required)
 // Fallback values match the last known good score in case the API is unreachable at build time.
-let SCORE = 70;
+let SCORE = 81;
 const FALLBACK_DIMENSIONS: Record<string, number> = {
-  security: 67,
-  maintainability: 90,
-  documentation: 93,
-  community_health: 26,
-  supply_chain: 68,
-  improvement_velocity: 50,
-  governance: 83,
-  operational: 65,
+  security: 97, maintainability: 78, documentation: 92,
+  community_health: 43, supply_chain: 80, improvement_velocity: 50,
+  governance: 87, operational: 86,
 };
 let liveDimensions: Record<string, number> = { ...FALLBACK_DIMENSIONS };
 try {
