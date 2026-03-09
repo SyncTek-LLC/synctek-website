@@ -10,7 +10,7 @@ const jsonLd = {
   name: 'ForgeOS Trust Index (FTI)',
   url: 'https://synctek.io/products/forgeos/fti',
   description:
-    'The ForgeOS Trust Index (FTI) provides deterministic, cryptographically signed trust scores (0–100) for any package in your stack across eight dimensions: Security, Maintainability, Documentation, Community Health, Supply Chain, Improvement Velocity, Governance, and Operational.',
+    'The ForgeOS Trust Index (FTI) provides deterministic, cryptographically signed trust scores (0-100) for any package in your stack across six dimensions: Security, Maintainability, Documentation, Community Health, Supply Chain, and Improvement Velocity.',
   mainEntity: {
     '@type': 'SoftwareApplication',
     name: 'ForgeOS Trust Index',
@@ -86,16 +86,14 @@ function getTierColor(score: number): string {
 
 // Fetch live self-score for @synctek/forgeos (public endpoint, no auth required)
 // Fallback values match the last known good score in case the API is unreachable at build time.
-let SCORE = 70;
+let SCORE = 66;
 const FALLBACK_DIMENSIONS: Record<string, number> = {
-  security: 67,
-  maintainability: 90,
-  documentation: 93,
-  community_health: 26,
-  supply_chain: 68,
+  security: 88,
+  maintainability: 56,
+  documentation: 55,
+  community_health: 47,
+  supply_chain: 82,
   improvement_velocity: 50,
-  governance: 83,
-  operational: 65,
 };
 let liveDimensions: Record<string, number> = { ...FALLBACK_DIMENSIONS };
 try {
@@ -113,8 +111,6 @@ try {
         community_health: Math.round(selfData.dimensions.community_health ?? FALLBACK_DIMENSIONS.community_health),
         supply_chain: Math.round(selfData.dimensions.supply_chain ?? FALLBACK_DIMENSIONS.supply_chain),
         improvement_velocity: Math.round(selfData.dimensions.improvement_velocity ?? FALLBACK_DIMENSIONS.improvement_velocity),
-        governance: Math.round(selfData.dimensions.governance ?? FALLBACK_DIMENSIONS.governance),
-        operational: Math.round(selfData.dimensions.operational ?? FALLBACK_DIMENSIONS.operational),
       };
     }
   }
@@ -183,30 +179,12 @@ const dimensions = [
     explanation: 'Baseline score — we launched FTI scoring recently, so the 90-day trend window is still filling. Active development means this will climb as scoring history accumulates.',
     improving: 'Nightly rescoring active. Expect this to reflect our improvement pace within 60 days.',
   },
-  {
-    name: 'Governance',
-    icon: 'shield',
-    score: liveDimensions.governance,
-    color: getScoreColor(liveDimensions.governance),
-    description: 'Release process maturity, CODEOWNERS presence, branch protection, and change approval workflows.',
-    explanation: 'Ed25519-signed audit trail, mandatory gate approvals, and separation of duties built into the development workflow from day one.',
-    improving: 'Adding automated release signing verification and expanding CODEOWNERS granularity.',
-  },
-  {
-    name: 'Operational',
-    icon: 'code',
-    score: liveDimensions.operational,
-    color: getScoreColor(liveDimensions.operational),
-    description: 'API uptime, response latency, error rates, and monitoring coverage.',
-    explanation: 'Good uptime with room to improve on response latency percentiles. Monitoring coverage expanding.',
-    improving: 'Adding edge caching for read-heavy endpoints. Targeting sub-200ms p95 latency.',
-  },
 ];
 ---
 
 <BaseLayout
   title="ForgeOS Trust Index (FTI) — Deterministic Package Trust Scoring"
-  description="The ForgeOS Trust Index scores any package in your stack 0–100 across eight dimensions: Security, Maintainability, Documentation, Community Health, Supply Chain, Improvement Velocity, Governance, and Operational. Every score is deterministic and Ed25519-signed."
+  description="The ForgeOS Trust Index scores any package in your stack 0-100 across six dimensions: Security, Maintainability, Documentation, Community Health, Supply Chain, and Improvement Velocity. Every score is deterministic and Ed25519-signed."
   ogImage="/images/fti-trust-viz.png"
   jsonLd={jsonLd}
 >
@@ -234,7 +212,7 @@ const dimensions = [
         <div class="flex-1 min-w-0">
           <!-- Definition line -->
           <p class="font-mono text-sm text-[#8B949E] mb-3">
-            ForgeOS Trust Index — a 0-100 package trust score across eight dimensions.
+            ForgeOS Trust Index - a 0-100 package trust score across six dimensions.
           </p>
 
           <div class="flex items-center gap-2.5 mb-4">
@@ -437,7 +415,7 @@ const dimensions = [
       <ul class="space-y-2.5 text-sm text-[#9CA3AF] leading-relaxed ml-8">
         <li class="flex items-start gap-2">
           <span class="text-[#58A6FF] flex-shrink-0 mt-0.5">—</span>
-          <span><span class="text-[#E6EDF3] font-medium">npm audit covers CVEs only.</span> FTI scores Security, Maintainability, Supply Chain, Documentation, Community Health, Improvement Velocity, Governance, and Operational — eight independent dimensions in one composite signal.</span>
+          <span><span class="text-[#E6EDF3] font-medium">npm audit covers CVEs only.</span> FTI scores Security, Maintainability, Supply Chain, Documentation, Community Health, and Improvement Velocity - six independent dimensions in one composite signal.</span>
         </li>
         <li class="flex items-start gap-2">
           <span class="text-[#58A6FF] flex-shrink-0 mt-0.5">—</span>
@@ -582,20 +560,18 @@ curl -H "X-API-Key: fos_live_abc123..." \
         <Badge text="200 OK" variant="green" />
       </div>
       <pre class="px-4 py-5 text-xs font-mono overflow-x-auto leading-relaxed" style="background: #0A0A0A; margin: 0; color: #E6EDF3;"><code><span style="color: #8B949E;">{"{"}
-</span>  <span style="color: #58A6FF;">"package"</span><span style="color: #8B949E;">:</span> <span style="color: #3FB950;">"npm:@synctek/forgeos"</span><span style="color: #8B949E;">,</span>
-  <span style="color: #58A6FF;">"composite"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">69.35</span><span style="color: #8B949E;">,</span>
+</span>  <span style="color: #58A6FF;">"package"</span><span style="color: #8B949E;">:</span> <span style="color: #3FB950;">"@synctek/forgeos"</span><span style="color: #8B949E;">,</span>
+  <span style="color: #58A6FF;">"composite_score"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">65.81</span><span style="color: #8B949E;">,</span>
   <span style="color: #58A6FF;">"dimensions"</span><span style="color: #8B949E;">: {"{"}</span>
-    <span style="color: #58A6FF;">"security"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">86.15</span><span style="color: #8B949E;">,</span>
-    <span style="color: #58A6FF;">"maintainability"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">73.21</span><span style="color: #8B949E;">,</span>
-    <span style="color: #58A6FF;">"documentation"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">66.75</span><span style="color: #8B949E;">,</span>
+    <span style="color: #58A6FF;">"security"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">88.27</span><span style="color: #8B949E;">,</span>
+    <span style="color: #58A6FF;">"maintainability"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">55.62</span><span style="color: #8B949E;">,</span>
+    <span style="color: #58A6FF;">"documentation"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">54.83</span><span style="color: #8B949E;">,</span>
     <span style="color: #58A6FF;">"community_health"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">47.05</span><span style="color: #8B949E;">,</span>
-    <span style="color: #58A6FF;">"supply_chain"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">74.00</span><span style="color: #8B949E;">,</span>
-    <span style="color: #58A6FF;">"improvement_velocity"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">50.00</span><span style="color: #8B949E;">,</span>
-    <span style="color: #58A6FF;">"governance"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">83.40</span><span style="color: #8B949E;">,</span>
-    <span style="color: #58A6FF;">"operational"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">65.20</span>
+    <span style="color: #58A6FF;">"supply_chain"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">82.25</span><span style="color: #8B949E;">,</span>
+    <span style="color: #58A6FF;">"improvement_velocity"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">50.00</span>
   <span style="color: #8B949E;">{"}"}</span><span style="color: #8B949E;">,</span>
-  <span style="color: #58A6FF;">"algorithm_version"</span><span style="color: #8B949E;">:</span> <span style="color: #3FB950;">"fti-v1.0.0"</span><span style="color: #8B949E;">,</span>
-  <span style="color: #58A6FF;">"signature"</span><span style="color: #8B949E;">:</span> <span style="color: #3FB950;">"sha256:aaf8e233..."</span>
+  <span style="color: #58A6FF;">"trajectory"</span><span style="color: #8B949E;">:</span> <span style="color: #3FB950;">"rising"</span><span style="color: #8B949E;">,</span>
+  <span style="color: #58A6FF;">"algorithm_version"</span><span style="color: #8B949E;">:</span> <span style="color: #3FB950;">"fti-v1.0.0"</span>
 <span style="color: #8B949E;">{"}"}</span></code></pre>
     </div>
 
