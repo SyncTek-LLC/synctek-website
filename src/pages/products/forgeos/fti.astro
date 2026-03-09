@@ -10,7 +10,7 @@ const jsonLd = {
   name: 'ForgeOS Trust Index (FTI)',
   url: 'https://synctek.io/products/forgeos/fti',
   description:
-    'The ForgeOS Trust Index (FTI) provides deterministic, cryptographically signed trust scores (0–100) for any package in your stack across eight dimensions: Security, Maintainability, Documentation, Community Health, Supply Chain, Improvement Velocity, Governance, and Operational.',
+    'The ForgeOS Trust Index (FTI) provides deterministic, cryptographically signed trust scores (0-100) for any package in your stack across eight dimensions: Security, Maintainability, Documentation, Community Health, Supply Chain, Improvement Velocity, Governance, and Operational.',
   mainEntity: {
     '@type': 'SoftwareApplication',
     name: 'ForgeOS Trust Index',
@@ -201,7 +201,7 @@ const dimensions = [
 
 <BaseLayout
   title="ForgeOS Trust Index (FTI) - Deterministic Package Trust Scoring"
-  description="The ForgeOS Trust Index scores any package in your stack 0–100 across eight dimensions: Security, Maintainability, Documentation, Community Health, Supply Chain, Improvement Velocity, Governance, and Operational. Every score is deterministic and Ed25519-signed."
+  description="The ForgeOS Trust Index scores any package in your stack 0-100 across eight dimensions: Security, Maintainability, Documentation, Community Health, Supply Chain, Improvement Velocity, Governance, and Operational. Every score is deterministic and Ed25519-signed."
   ogImage="/images/fti-trust-viz.png"
   jsonLd={jsonLd}
 >
@@ -577,20 +577,20 @@ curl -H "X-API-Key: fos_live_abc123..." \
         <Badge text="200 OK" variant="green" />
       </div>
       <pre class="px-4 py-5 text-xs font-mono overflow-x-auto leading-relaxed" style="background: #0A0A0A; margin: 0; color: #E6EDF3;"><code><span style="color: #8B949E;">{"{"}
-</span>  <span style="color: #58A6FF;">"package"</span><span style="color: #8B949E;">:</span> <span style="color: #3FB950;">"npm:@synctek/forgeos"</span><span style="color: #8B949E;">,</span>
-  <span style="color: #58A6FF;">"composite"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">69.35</span><span style="color: #8B949E;">,</span>
+</span>  <span style="color: #58A6FF;">"package"</span><span style="color: #8B949E;">:</span> <span style="color: #3FB950;">"@synctek/forgeos"</span><span style="color: #8B949E;">,</span>
+  <span style="color: #58A6FF;">"composite_score"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">74.78</span><span style="color: #8B949E;">,</span>
   <span style="color: #58A6FF;">"dimensions"</span><span style="color: #8B949E;">: {"{"}</span>
-    <span style="color: #58A6FF;">"security"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">86.15</span><span style="color: #8B949E;">,</span>
-    <span style="color: #58A6FF;">"maintainability"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">73.21</span><span style="color: #8B949E;">,</span>
-    <span style="color: #58A6FF;">"documentation"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">66.75</span><span style="color: #8B949E;">,</span>
-    <span style="color: #58A6FF;">"community_health"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">47.05</span><span style="color: #8B949E;">,</span>
-    <span style="color: #58A6FF;">"supply_chain"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">74.00</span><span style="color: #8B949E;">,</span>
+    <span style="color: #58A6FF;">"security"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">86.08</span><span style="color: #8B949E;">,</span>
+    <span style="color: #58A6FF;">"maintainability"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">82.39</span><span style="color: #8B949E;">,</span>
+    <span style="color: #58A6FF;">"documentation"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">75.41</span><span style="color: #8B949E;">,</span>
+    <span style="color: #58A6FF;">"community_health"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">43.10</span><span style="color: #8B949E;">,</span>
+    <span style="color: #58A6FF;">"supply_chain"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">80.00</span><span style="color: #8B949E;">,</span>
     <span style="color: #58A6FF;">"improvement_velocity"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">50.00</span><span style="color: #8B949E;">,</span>
-    <span style="color: #58A6FF;">"governance"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">83.40</span><span style="color: #8B949E;">,</span>
-    <span style="color: #58A6FF;">"operational"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">65.20</span>
+    <span style="color: #58A6FF;">"governance"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">87.34</span><span style="color: #8B949E;">,</span>
+    <span style="color: #58A6FF;">"operational"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">65.00</span>
   <span style="color: #8B949E;">{"}"}</span><span style="color: #8B949E;">,</span>
-  <span style="color: #58A6FF;">"algorithm_version"</span><span style="color: #8B949E;">:</span> <span style="color: #3FB950;">"fti-v1.0.0"</span><span style="color: #8B949E;">,</span>
-  <span style="color: #58A6FF;">"signature"</span><span style="color: #8B949E;">:</span> <span style="color: #3FB950;">"sha256:aaf8e233..."</span>
+  <span style="color: #58A6FF;">"trajectory"</span><span style="color: #8B949E;">:</span> <span style="color: #3FB950;">"rising"</span><span style="color: #8B949E;">,</span>
+  <span style="color: #58A6FF;">"algorithm_version"</span><span style="color: #8B949E;">:</span> <span style="color: #3FB950;">"fti-v1.0.0"</span>
 <span style="color: #8B949E;">{"}"}</span></code></pre>
     </div>
 
