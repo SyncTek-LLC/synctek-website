@@ -7,7 +7,7 @@ export const GET: APIRoute = () => {
 
 ## What is ForgeOS?
 
-ForgeOS sits between your AI agent and your codebase. Every change goes through a pipeline of gates — intent, design, implementation, verification, hardening, release — with required evidence and reviews at each stage. The engine computes a risk score for every changeset and determines which gates, reviewer roles, and evidence types are required.
+ForgeOS sits between your AI agent and your codebase. Every change goes through a pipeline of gates - intent, design, implementation, verification, hardening, release - with required evidence and reviews at each stage. The engine computes a risk score for every changeset and determines which gates, reviewer roles, and evidence types are required.
 
 The MCP server exposes 21 governance tools any MCP-compatible agent (Claude, GPT-4, Gemini, local models) can call natively. No custom SDK required.
 

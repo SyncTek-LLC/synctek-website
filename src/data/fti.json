@@ -3,7 +3,7 @@
   "name": "ForgeOS Trust Index",
   "tagline": "We don't have a #1. We have your #1.",
   "description_short": "Context-aware trust scoring for open-source packages. Scores tailored to your security posture, team size, and tech stack.",
-  "description_long": "The ForgeOS Trust Index (FTI) evaluates open-source packages across\n6 scoring dimensions — security, maintenance, community health,\ncode quality, documentation, and licensing. Unlike static rankings,\nFTI provides context-aware recommendations based on YOUR specific\nneeds: security posture, team size, preferred language, and runtime.\n\nFTI is the first trust infrastructure that answers \"is this package\nright for ME?\" instead of \"is this package popular?\"\n",
+  "description_long": "The ForgeOS Trust Index (FTI) evaluates open-source packages across\n6 scoring dimensions - security, maintenance, community health,\ncode quality, documentation, and licensing. Unlike static rankings,\nFTI provides context-aware recommendations based on YOUR specific\nneeds: security posture, team size, preferred language, and runtime.\n\nFTI is the first trust infrastructure that answers \"is this package\nright for ME?\" instead of \"is this package popular?\"\n",
   "brand": {
     "accent_color": "#4f46e5",
     "design_language": "Measured Authority"
@@ -146,7 +146,7 @@
   "faq": [
     {
       "q": "How is FTI different from npm audit or Snyk?",
-      "a": "Those tools check for known vulnerabilities. FTI evaluates the overall trustworthiness of a package across 6 dimensions — security is just one. FTI also provides context-aware scores tailored to your specific needs."
+      "a": "Those tools check for known vulnerabilities. FTI evaluates the overall trustworthiness of a package across 6 dimensions - security is just one. FTI also provides context-aware scores tailored to your specific needs."
     },
     {
       "q": "Can I dispute a score?",

@@ -29,7 +29,7 @@ Please read this policy carefully. By using the Service, you acknowledge that yo
 10. [Data Retention](#10-data-retention)
 11. [Data Security](#11-data-security)
 12. [International Data Transfers](#12-international-data-transfers)
-13. [Your Privacy Rights — All Users](#13-your-privacy-rights--all-users)
+13. [Your Privacy Rights - All Users](#13-your-privacy-rights--all-users)
 14. [California Privacy Rights (CCPA/CPRA)](#14-california-privacy-rights-ccpacpra)
 15. [European Privacy Rights (GDPR)](#15-european-privacy-rights-gdpr)
 16. [Children's Privacy](#16-childrens-privacy)
@@ -62,7 +62,7 @@ When you create a ForgeOS account, we collect:
 - Full name
 - Email address
 - Organization name (if applicable)
-- Password (stored as a cryptographic hash — we never store plaintext passwords)
+- Password (stored as a cryptographic hash - we never store plaintext passwords)
 - Profile information you choose to add
 
 **Communications**
@@ -82,7 +82,7 @@ We use Stripe to process payments. When you subscribe to a paid plan:
 **Usage Data**
 We automatically collect data about how you interact with the Service, including:
 - Features and pages accessed
-- API calls made (endpoint, timestamp, response status — not request payload content)
+- API calls made (endpoint, timestamp, response status - not request payload content)
 - Dashboard interactions and navigation patterns
 - Session duration and frequency of use
 - Error events and performance diagnostics
@@ -106,7 +106,7 @@ When you use ForgeOS's code intelligence features, we collect metadata about you
 ### 2.3 Information from Third Parties
 
 We may receive information about you from:
-- **Identity providers** if you choose to authenticate via OAuth (e.g., GitHub, Google) — limited to the scopes you authorize
+- **Identity providers** if you choose to authenticate via OAuth (e.g., GitHub, Google) - limited to the scopes you authorize
 - **Payment processors** confirming transaction status
 - **Publicly available sources** if relevant to fraud prevention or account verification
 
@@ -155,16 +155,16 @@ If you are located in the European Economic Area (EEA), United Kingdom, or Switz
 
 | Processing Activity | Lawful Basis |
 |---|---|
-| Account creation and management | **Contract** — processing is necessary to perform our agreement with you |
-| Service delivery (core features) | **Contract** — necessary to provide the Service you have requested |
-| Payment processing | **Contract** — necessary to fulfill your subscription |
-| Security monitoring and fraud prevention | **Legitimate Interests** — we have a legitimate interest in keeping the Service secure |
-| Usage analytics and product improvement | **Legitimate Interests** — we have a legitimate interest in improving our product (you may object) |
-| Marketing communications | **Consent** — we only send marketing emails where you have opted in (you may withdraw consent at any time) |
-| Legal compliance | **Legal Obligation** — where required by applicable law |
-| Responding to legal claims | **Legitimate Interests** — defending or pursuing legal rights |
+| Account creation and management | **Contract** - processing is necessary to perform our agreement with you |
+| Service delivery (core features) | **Contract** - necessary to provide the Service you have requested |
+| Payment processing | **Contract** - necessary to fulfill your subscription |
+| Security monitoring and fraud prevention | **Legitimate Interests** - we have a legitimate interest in keeping the Service secure |
+| Usage analytics and product improvement | **Legitimate Interests** - we have a legitimate interest in improving our product (you may object) |
+| Marketing communications | **Consent** - we only send marketing emails where you have opted in (you may withdraw consent at any time) |
+| Legal compliance | **Legal Obligation** - where required by applicable law |
+| Responding to legal claims | **Legitimate Interests** - defending or pursuing legal rights |
 
-Where we rely on **legitimate interests**, we have conducted a balancing test and concluded our interests are not overridden by your privacy rights. You have the right to object to processing based on legitimate interests — see Section 15.
+Where we rely on **legitimate interests**, we have conducted a balancing test and concluded our interests are not overridden by your privacy rights. You have the right to object to processing based on legitimate interests - see Section 15.
 
 ---
 
@@ -246,7 +246,7 @@ If your organization has strict data handling requirements:
 
 ## 8. Federation Privacy
 
-ForgeOS supports federation — the ability to connect multiple ForgeOS instances to share governance intelligence across teams and organizations.
+ForgeOS supports federation - the ability to connect multiple ForgeOS instances to share governance intelligence across teams and organizations.
 
 ### Federation Is Opt-In
 
@@ -255,9 +255,9 @@ Federation is entirely opt-in. Your ForgeOS instance does not participate in any
 ### What Federation Shares
 
 When federation is enabled, the following data may be shared between federated instances:
-- **Trust scores** — aggregate governance health metrics
-- **Governance metadata** — gate statuses, initiative health, process patterns
-- **Anonymized pattern data** — de-identified observations that contribute to shared intelligence
+- **Trust scores** - aggregate governance health metrics
+- **Governance metadata** - gate statuses, initiative health, process patterns
+- **Anonymized pattern data** - de-identified observations that contribute to shared intelligence
 
 **What federation does NOT share:**
 - Source code content
@@ -306,9 +306,9 @@ With your consent, we use analytics cookies to understand how users interact wit
 
 ### What We Do Not Use
 
-- **Advertising cookies** — We do not run advertising campaigns and do not use cookies for ad targeting
-- **Third-party tracking cookies** — We do not allow third-party advertising networks to place tracking cookies on our properties
-- **Cross-site tracking** — We do not track your activity on other websites
+- **Advertising cookies** - We do not run advertising campaigns and do not use cookies for ad targeting
+- **Third-party tracking cookies** - We do not allow third-party advertising networks to place tracking cookies on our properties
+- **Cross-site tracking** - We do not track your activity on other websites
 
 ### Managing Cookies
 
@@ -338,7 +338,7 @@ We retain personal information for as long as necessary to fulfill the purposes 
 
 When you delete your account:
 1. Your account is deactivated immediately
-2. A **30-day data export window** opens — you may request a full export of your data during this period
+2. A **30-day data export window** opens - you may request a full export of your data during this period
 3. After 30 days, your account data is permanently deleted from production systems
 4. Data may persist in encrypted backups for up to an additional 30 days before those backups are cycled out
 
@@ -354,7 +354,7 @@ SyncTek implements technical and organizational security measures designed to pr
 - All data in transit is encrypted using TLS 1.2 or higher
 - Data at rest is encrypted using AES-256
 - Access to production systems is restricted to authorized personnel and requires multi-factor authentication
-- API keys and credentials are stored using secrets management infrastructure — never in source code
+- API keys and credentials are stored using secrets management infrastructure - never in source code
 
 **Organizational Measures**
 - Access to personal data is limited to personnel who require it to perform their job functions
@@ -373,22 +373,22 @@ SyncTek is headquartered in the United States. If you are located outside the Un
 **For EEA, UK, and Swiss Users**
 When we transfer personal data from the EEA, UK, or Switzerland to countries that have not received an adequacy decision from the relevant supervisory authority, we rely on:
 
-- **Standard Contractual Clauses (SCCs)** — We have implemented the European Commission's Standard Contractual Clauses with relevant processors and, upon request, can make these available via a signed Data Processing Agreement (DPA)
-- **UK International Data Transfer Agreement (IDTA)** — For transfers from the United Kingdom
+- **Standard Contractual Clauses (SCCs)** - We have implemented the European Commission's Standard Contractual Clauses with relevant processors and, upon request, can make these available via a signed Data Processing Agreement (DPA)
+- **UK International Data Transfer Agreement (IDTA)** - For transfers from the United Kingdom
 
 To request a Data Processing Agreement or inquire about our transfer safeguards, contact privacy@synctek.io.
 
 ---
 
-## 13. Your Privacy Rights — All Users
+## 13. Your Privacy Rights - All Users
 
 Regardless of where you are located, you have the following rights with respect to your personal information:
 
-- **Access** — You may request a copy of the personal information we hold about you
-- **Correction** — You may request that we correct inaccurate or incomplete information
-- **Deletion** — You may request that we delete your personal information, subject to legal retention requirements
-- **Data Portability** — You may request your data in a machine-readable format
-- **Opt-Out of Marketing** — You may unsubscribe from marketing communications at any time using the link in any marketing email, or by contacting us
+- **Access** - You may request a copy of the personal information we hold about you
+- **Correction** - You may request that we correct inaccurate or incomplete information
+- **Deletion** - You may request that we delete your personal information, subject to legal retention requirements
+- **Data Portability** - You may request your data in a machine-readable format
+- **Opt-Out of Marketing** - You may unsubscribe from marketing communications at any time using the link in any marketing email, or by contacting us
 
 To exercise any of these rights, email privacy@synctek.io. We will respond within 30 days. We may need to verify your identity before fulfilling your request.
 
@@ -412,7 +412,7 @@ In the preceding 12 months, we have collected the following categories of person
 | Internet/network activity | Feature usage, API calls, browsing history within the Service | Yes |
 | Geolocation data | Approximate location derived from IP address | Yes (approximate only) |
 | Professional/employment information | Organization name, job-related usage context | Yes |
-| Sensitive personal information | Payment card data (processed by Stripe — not stored by SyncTek) | No (not stored) |
+| Sensitive personal information | Payment card data (processed by Stripe - not stored by SyncTek) | No (not stored) |
 
 ### Categories of Sources
 
@@ -420,7 +420,7 @@ We collect personal information from: you directly, your use of the Service, and
 
 ### Business or Commercial Purposes for Collection
 
-As described in Section 3 — service delivery, security, product improvement, communications, and legal compliance.
+As described in Section 3 - service delivery, security, product improvement, communications, and legal compliance.
 
 ### Categories of Third Parties With Whom We Share
 
@@ -436,17 +436,17 @@ We do not share your personal information with third parties for cross-context b
 
 As a California resident, you have the right to:
 
-1. **Know** — Request disclosure of the categories and specific pieces of personal information we have collected about you, the categories of sources, the business purposes, and the categories of third parties with whom we share it
+1. **Know** - Request disclosure of the categories and specific pieces of personal information we have collected about you, the categories of sources, the business purposes, and the categories of third parties with whom we share it
 
-2. **Delete** — Request deletion of personal information we have collected from you, subject to certain exceptions (e.g., completing a transaction, security purposes, legal compliance)
+2. **Delete** - Request deletion of personal information we have collected from you, subject to certain exceptions (e.g., completing a transaction, security purposes, legal compliance)
 
-3. **Correct** — Request correction of inaccurate personal information we maintain about you
+3. **Correct** - Request correction of inaccurate personal information we maintain about you
 
-4. **Opt Out of Sale or Sharing** — As stated above, we do not sell or share your personal information for cross-context behavioral advertising, so no opt-out action is required
+4. **Opt Out of Sale or Sharing** - As stated above, we do not sell or share your personal information for cross-context behavioral advertising, so no opt-out action is required
 
-5. **Limit Use of Sensitive Personal Information** — We do not use sensitive personal information for purposes beyond those permitted by the CPRA without your consent
+5. **Limit Use of Sensitive Personal Information** - We do not use sensitive personal information for purposes beyond those permitted by the CPRA without your consent
 
-6. **Non-Discrimination** — We will not deny you goods or services, charge you different prices, provide a different level of service, or retaliate against you for exercising your CCPA/CPRA rights
+6. **Non-Discrimination** - We will not deny you goods or services, charge you different prices, provide a different level of service, or retaliate against you for exercising your CCPA/CPRA rights
 
 ### How to Submit a CCPA Request
 
@@ -464,19 +464,19 @@ This section applies to individuals in the European Economic Area (EEA), United 
 
 You have the following rights with respect to your personal data:
 
-- **Right of Access (Art. 15)** — Request a copy of the personal data we process about you and information about how it is used
+- **Right of Access (Art. 15)** - Request a copy of the personal data we process about you and information about how it is used
 
-- **Right to Rectification (Art. 16)** — Request correction of inaccurate or incomplete personal data
+- **Right to Rectification (Art. 16)** - Request correction of inaccurate or incomplete personal data
 
-- **Right to Erasure / Right to Be Forgotten (Art. 17)** — Request deletion of your personal data where it is no longer necessary, where you withdraw consent, where you object and we have no overriding legitimate interests, or where processing is unlawful
+- **Right to Erasure / Right to Be Forgotten (Art. 17)** - Request deletion of your personal data where it is no longer necessary, where you withdraw consent, where you object and we have no overriding legitimate interests, or where processing is unlawful
 
-- **Right to Restriction of Processing (Art. 18)** — Request that we restrict processing of your data while accuracy is contested, while you have objected to legitimate interest processing, or where processing is unlawful but you prefer restriction to erasure
+- **Right to Restriction of Processing (Art. 18)** - Request that we restrict processing of your data while accuracy is contested, while you have objected to legitimate interest processing, or where processing is unlawful but you prefer restriction to erasure
 
-- **Right to Data Portability (Art. 20)** — Receive your personal data in a structured, commonly used, machine-readable format and have it transmitted to another controller where processing is based on consent or contract and carried out by automated means
+- **Right to Data Portability (Art. 20)** - Receive your personal data in a structured, commonly used, machine-readable format and have it transmitted to another controller where processing is based on consent or contract and carried out by automated means
 
-- **Right to Object (Art. 21)** — Object to processing based on legitimate interests or direct marketing purposes. We will cease processing unless we can demonstrate compelling legitimate grounds that override your interests, or where processing is necessary for legal claims
+- **Right to Object (Art. 21)** - Object to processing based on legitimate interests or direct marketing purposes. We will cease processing unless we can demonstrate compelling legitimate grounds that override your interests, or where processing is necessary for legal claims
 
-- **Rights Related to Automated Decision-Making (Art. 22)** — We do not make solely automated decisions that produce legal or similarly significant effects on you without human review
+- **Rights Related to Automated Decision-Making (Art. 22)** - We do not make solely automated decisions that produce legal or similarly significant effects on you without human review
 
 ### Data Protection Officer
 
@@ -503,10 +503,10 @@ ForgeOS audit ledgers are hash-chained JSONL files where each entry includes a c
 
 To satisfy GDPR erasure rights while preserving audit chain integrity, SyncTek implements a **tombstone approach**:
 
-- Upon a validated erasure request, any ledger entry that contains personal data — specifically, the `actor` field that maps a key ID to an individual — is marked as redacted.
-- The `actor` field value is replaced with `[DELETED:{key_id}]` — removing the mapping between the key identifier and the account holder's identity.
+- Upon a validated erasure request, any ledger entry that contains personal data - specifically, the `actor` field that maps a key ID to an individual - is marked as redacted.
+- The `actor` field value is replaced with `[DELETED:{key_id}]` - removing the mapping between the key identifier and the account holder's identity.
 - A tombstone entry is appended to the ledger chain immediately following the redacted entry. The tombstone entry is signed and hash-chained normally, preserving the cryptographic continuity of the chain from that point forward.
-- The governance records themselves (initiative IDs, gate decisions, event timestamps, event types) are retained, as these are not personal data — they are organizational compliance records.
+- The governance records themselves (initiative IDs, gate decisions, event timestamps, event types) are retained, as these are not personal data - they are organizational compliance records.
 
 This approach satisfies the GDPR right to erasure with respect to personal data while maintaining the integrity of the audit trail that organizations depend on for compliance purposes. We will provide written confirmation of completed erasure within 30 days of a validated request.
 
@@ -569,6 +569,6 @@ We are committed to working with you to resolve any privacy concerns. If you are
 
 ---
 
-*SyncTek LLC — Building software governance infrastructure you can trust.*
+*SyncTek LLC - Building software governance infrastructure you can trust.*
 
 *© 2026 SyncTek LLC. All rights reserved.*

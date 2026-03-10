@@ -1,0 +1,278 @@
+---
+title: "The Governance Manifest: One File That Changes Your Score"
+description: "The governance manifest collects your project's trust signals into one signed, machine-readable file that FTI scores automatically."
+date: 2026-03-06
+author: "SyncTek Team"
+category: engineering
+tags: ["forgeos", "fti", "governance", "tutorial", "developer-experience", "trust", "devops"]
+product: forgeos
+---
+
+You have tests. You have a CI pipeline. You have a changelog that someone updates most of the time. You might even have a security policy buried in a `SECURITY.md` that nobody has read since it was committed.
+
+None of that matters if nothing can find it.
+
+The ForgeOS Trust Index scores projects across seven dimensions -- security, governance, quality, operational maturity, supply chain integrity, documentation, and ledger health. But FTI cannot score what it cannot see. And most projects scatter their governance data across dozens of files, configs, dashboards, and human memory.
+
+The governance manifest fixes that. One file. One schema. Machine-readable, signed, and discoverable.
+
+---
+
+## What Is a Governance Manifest?
+
+A governance manifest is a JSON file that lives at `.forgeos/governance.json` in your project root. It aggregates your project's governance posture into a standardized structure that FTI -- and any other tooling -- can consume.
+
+Think of it like `package.json` for trust. Instead of declaring your dependencies, you are declaring your governance state: what security practices you follow, how your supply chain is managed, whether your documentation is current, and how your operational processes work.
+
+The manifest does not replace your existing tools. It synthesizes their outputs into a single, verifiable artifact.
+
+Here is what a governance manifest looks like:
+
+```json
+{
+  "schema_version": "1.1.0",
+  "generated_at": "2026-03-06T14:30:00Z",
+  "project": {
+    "name": "my-saas-platform",
+    "version": "2.4.1",
+    "repository": "https://github.com/acme/my-saas-platform"
+  },
+  "sections": {
+    "ledger": {
+      "hash_chain_valid": true,
+      "total_entries": 847,
+      "last_entry_date": "2026-03-06",
+      "signing_algorithm": "ed25519"
+    },
+    "governance": {
+      "gate_count": 7,
+      "gates_with_approvals": 7,
+      "approval_coverage": 1.0,
+      "decision_log_entries": 134,
+      "separation_of_duties": true
+    },
+    "security": {
+      "vulnerability_scan_date": "2026-03-05",
+      "open_critical_cves": 0,
+      "open_high_cves": 1,
+      "security_policy_exists": true,
+      "dependency_audit_date": "2026-03-06",
+      "sbom_format": "CycloneDX"
+    },
+    "quality": {
+      "test_coverage_percent": 78.4,
+      "lint_pass": true,
+      "type_check_pass": true,
+      "ci_provider": "github-actions",
+      "last_ci_run": "2026-03-06T12:00:00Z",
+      "ci_pass_rate_30d": 0.94
+    },
+    "operational": {
+      "deployment_method": "containerized",
+      "rollback_capability": true,
+      "monitoring_enabled": true,
+      "incident_response_documented": true,
+      "uptime_30d": 0.997
+    },
+    "supply_chain": {
+      "lockfile_present": true,
+      "pinned_dependencies": true,
+      "total_dependencies": 142,
+      "direct_dependencies": 38,
+      "known_deprecated": 2,
+      "license_scan_date": "2026-03-04"
+    },
+    "documentation": {
+      "readme_exists": true,
+      "changelog_exists": true,
+      "api_docs_exists": true,
+      "contributing_guide_exists": true,
+      "last_doc_update": "2026-03-05"
+    }
+  },
+  "signature": {
+    "algorithm": "sha256",
+    "hash": "a1b2c3d4e5f6...",
+    "signed_at": "2026-03-06T14:30:00Z"
+  }
+}
+```
+
+Every section maps to a scoring dimension in FTI. When FTI discovers this file, it can immediately compute a trust score without crawling your entire repository, guessing at your CI setup, or parsing your README for badge URLs.
+
+---
+
+## Step 1: Install ForgeOS CLI
+
+If you have not already:
+
+```bash
+npm install -g @synctek/forgeos
+```
+
+Or with pip:
+
+```bash
+pip install forgeos
+```
+
+Verify the installation:
+
+```bash
+forgeos --version
+```
+
+---
+
+## Step 2: Initialize Your Project
+
+If your project does not already have a `.forgeos/` directory:
+
+```bash
+forgeos init
+```
+
+This creates the `.forgeos/` directory structure and a minimal configuration file. It does not modify your existing code or CI pipeline.
+
+---
+
+## Step 3: Generate the Manifest
+
+This is the command that does the work:
+
+```bash
+forgeos manifest generate
+```
+
+The CLI scans your project and populates each section of the manifest based on what it finds:
+
+- **Ledger**: Checks for a ForgeOS governance ledger (hash-chained event log)
+- **Governance**: Counts gates, approvals, and decision log entries
+- **Security**: Looks for vulnerability scan results, security policies, SBOMs
+- **Quality**: Reads test coverage reports, CI configs, lint results
+- **Operational**: Checks deployment configs, monitoring setup, incident docs
+- **Supply chain**: Analyzes lockfiles, dependency counts, license scans
+- **Documentation**: Verifies README, changelog, API docs, contributing guides
+
+If a section has no data -- say you do not have a governance ledger yet -- that section scores low. The manifest does not lie. It reports what exists.
+
+After generation, you will see output like:
+
+```
+Manifest generated: .forgeos/governance.json
+  Sections populated: 5/7
+  Missing data: ledger (no governance ledger found), operational (no deployment config)
+  Signature: sha256:a1b2c3d4...
+```
+
+The signature is computed over the entire manifest content. If anyone modifies the file after generation, the signature breaks. This is how FTI knows the data has not been tampered with.
+
+---
+
+## Step 4: Verify the Manifest
+
+Before you publish, verify that the manifest is valid and the signature checks out:
+
+```bash
+forgeos manifest verify
+```
+
+This confirms three things:
+
+1. The manifest conforms to the [governance manifest schema](https://forgeos.synctek.io/schemas/governance-manifest-v1.json)
+2. The SHA-256 signature matches the content
+3. All referenced data (coverage reports, scan dates, etc.) is internally consistent
+
+If verification fails, the CLI tells you exactly what is wrong:
+
+```
+FAIL: signature mismatch (manifest was modified after generation)
+WARN: security.vulnerability_scan_date is 45 days old
+PASS: schema valid (v1.1.0)
+```
+
+---
+
+## Step 5: Publish
+
+Once verified, publish the manifest so FTI can discover it:
+
+```bash
+forgeos manifest publish
+```
+
+Publishing makes the manifest available through multiple discovery channels. FTI uses several sources to find manifests -- package metadata, well-known URLs, repository files, and the ForgeOS Registry. Publishing ensures your manifest is reachable through all of them.
+
+You can also just commit `.forgeos/governance.json` to your repository. FTI will find it there during repository-based discovery.
+
+---
+
+## What Happens to Your Score
+
+Projects that add a governance manifest consistently see meaningful score improvements - not because the manifest invents governance that did not exist, but because it makes existing governance *visible*.
+
+Without a manifest, FTI relies on public signals: README presence, GitHub metadata, npm registry data. With a manifest, it gets direct access to your test coverage, security posture, operational metrics, and governance practices - all verified against your ledger.
+
+The biggest gains typically come from dimensions like governance and security, where FTI has almost no public signal to work with. There is no standard place to look for gate approvals, decision logs, or separation of duties. The manifest provides that signal directly.
+
+---
+
+## Keeping It Current
+
+A stale manifest is worse than no manifest. FTI penalizes manifests with old timestamps because they indicate abandoned governance, not active governance.
+
+The simplest approach: regenerate in CI.
+
+```yaml
+# .github/workflows/governance.yml
+name: Update Governance Manifest
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '0 6 * * 1'  # Weekly Monday 6am
+
+jobs:
+  manifest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: npm install -g @synctek/forgeos
+      - run: forgeos manifest generate
+      - run: forgeos manifest verify
+      - run: forgeos manifest publish
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: update governance manifest"
+          file_pattern: .forgeos/governance.json
+```
+
+Now every push to main and every Monday morning, your manifest reflects reality.
+
+---
+
+## Common Pitfalls
+
+**Generating without data sources.** The manifest reports what it finds. If you do not have test coverage reports in a standard format, the quality section will be sparse. Run your coverage tool first, then generate.
+
+**Manual editing.** Do not edit `governance.json` by hand. The signature will break, and FTI will flag it as tampered. Always regenerate through the CLI.
+
+**Ignoring the `.forgeos/` directory.** Do not add `.forgeos/` to your `.gitignore`. The manifest needs to be in your repository for repository-based discovery.
+
+**Treating it as a one-time task.** A manifest from three months ago actively hurts your score. Automate regeneration or do not bother.
+
+---
+
+## The Manifest Is the Message
+
+Most governance in software is invisible. Teams do good work -- they review PRs, they run security scans, they write docs -- but none of it is collected into a format that machines can verify and score.
+
+The governance manifest changes that equation. It does not ask you to adopt new processes. It asks you to declare the processes you already follow, in a format that the ecosystem can trust.
+
+One file. One command. A measurably better trust score.
+
+```bash
+forgeos manifest generate
+```
+
+Start there.

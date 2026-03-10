@@ -10,7 +10,7 @@ product: forgeos
 
 If you are building a multi-agent system and evaluating your tooling options, you may have encountered ForgeOS, CrewAI, and LangGraph in the same conversation. A natural question follows: which one should I use?
 
-The direct answer is that you may need all three. They solve different problems at different layers of the agent stack. This comparison explains what each tool does, where each excels, and where each stops — so you can assemble a stack that is complete, not just populated.
+The direct answer is that you may need all three. They solve different problems at different layers of the agent stack. This comparison explains what each tool does, where each excels, and where each stops - so you can assemble a stack that is complete, not just populated.
 
 ## The Short Version
 
@@ -21,35 +21,35 @@ The direct answer is that you may need all three. They solve different problems 
 | **Gate enforcement** | None | None | Pre-execution constitutional enforcement |
 | **Audit trail** | None | Partial (graph traces) | Hash-chained, Ed25519-signed ledger |
 | **Self-approval prevention** | None | None | Architecturally enforced |
-| **Circuit breakers** | None | None | Native — 3-fail halt, blast radius limits |
-| **Human-in-the-loop** | Manual integration required | Interrupt nodes (workflow pause) | Native gate enforcement — required human approval |
+| **Circuit breakers** | None | None | Native - 3-fail halt, blast radius limits |
+| **Human-in-the-loop** | Manual integration required | Interrupt nodes (workflow pause) | Native gate enforcement - required human approval |
 | **EU AI Act readiness** | None | None | Articles 12, 14, 17 coverage |
-| **MCP compatibility** | Via LangChain MCP adapter | Via LangGraph MCP tools | Native MCP server — 21 governance tools |
+| **MCP compatibility** | Via LangChain MCP adapter | Via LangGraph MCP tools | Native MCP server - 21 governance tools |
 | **Best for** | Collaborative multi-agent crews | Complex stateful workflows | Governance, compliance, cryptographic audit |
 
 ## What CrewAI Does (and What It Does Not)
 
-CrewAI is a framework for building collaborative multi-agent systems organized around crews and roles. You define agents with specific roles (researcher, writer, reviewer), give each role a set of tools, and specify the tasks the crew needs to accomplish. CrewAI handles the coordination — deciding which agent works on which task, passing context between agents, and managing the sequential or parallel execution of crew work.
+CrewAI is a framework for building collaborative multi-agent systems organized around crews and roles. You define agents with specific roles (researcher, writer, reviewer), give each role a set of tools, and specify the tasks the crew needs to accomplish. CrewAI handles the coordination - deciding which agent works on which task, passing context between agents, and managing the sequential or parallel execution of crew work.
 
 This model maps well to many real-world agent workflows. A content production crew might have a researcher who gathers facts, a writer who drafts content, and an editor who refines it. A development crew might have a planner, a coder, and a reviewer. CrewAI's role-based model makes these structures natural to define and extend.
 
 Where CrewAI excels: collaborative workflows with well-defined roles, clear task decomposition, and minimal need for governance enforcement. If you are building an internal tool where the agents are operating within a trusted context and audit requirements are low, CrewAI's model is productive and straightforward.
 
-Where CrewAI stops: there is no gate system in CrewAI. No approval checkpoints. No mechanism to require human sign-off before a specific action. No self-approval prevention — a CrewAI reviewer agent can approve a CrewAI writer agent's output even if they are the same underlying model. No signed audit trail. No circuit breakers on failure.
+Where CrewAI stops: there is no gate system in CrewAI. No approval checkpoints. No mechanism to require human sign-off before a specific action. No self-approval prevention - a CrewAI reviewer agent can approve a CrewAI writer agent's output even if they are the same underlying model. No signed audit trail. No circuit breakers on failure.
 
 The framing that clarifies the relationship: **CrewAI assigns roles. ForgeOS enforces what roles are allowed to do.**
 
-These are complementary capabilities. A CrewAI crew operating under ForgeOS governance gets the workflow coordination of CrewAI plus the enforcement and audit trail of ForgeOS. The MCP integration makes this combination straightforward — CrewAI agents call ForgeOS gate-check before governed actions, and ForgeOS enforces the constitutional rules.
+These are complementary capabilities. A CrewAI crew operating under ForgeOS governance gets the workflow coordination of CrewAI plus the enforcement and audit trail of ForgeOS. The MCP integration makes this combination straightforward - CrewAI agents call ForgeOS gate-check before governed actions, and ForgeOS enforces the constitutional rules.
 
 ## What LangGraph Does (and What It Does Not)
 
 LangGraph is a framework for building stateful, multi-step agent workflows represented as directed graphs. Nodes in the graph are agent operations; edges define the flow of execution between them. LangGraph manages the state that flows through the graph, allowing complex workflows where later steps depend on the outputs of earlier ones.
 
-LangGraph's graph model is a significant improvement over linear chains for complex workflows. The explicit state management makes it possible to build agents that reason across multiple steps, backtrack on failure, and incorporate human review at defined points. LangGraph's visualization tooling — LangSmith — makes the execution graph inspectable.
+LangGraph's graph model is a significant improvement over linear chains for complex workflows. The explicit state management makes it possible to build agents that reason across multiple steps, backtrack on failure, and incorporate human review at defined points. LangGraph's visualization tooling - LangSmith - makes the execution graph inspectable.
 
-Where LangGraph excels: complex stateful workflows with explicit dependencies, multi-step reasoning pipelines, and workflows where the execution graph needs to be visible and debuggable. LangGraph's interrupt nodes — which pause execution at defined points for human review — are the closest analogue to governance checkpoints available in any orchestration framework.
+Where LangGraph excels: complex stateful workflows with explicit dependencies, multi-step reasoning pipelines, and workflows where the execution graph needs to be visible and debuggable. LangGraph's interrupt nodes - which pause execution at defined points for human review - are the closest analogue to governance checkpoints available in any orchestration framework.
 
-Where LangGraph stops: describing execution paths is not the same as enforcing them. LangGraph shows you the map; it does not control the checkpoints. The interrupt mechanism is a workflow pause, not constitutional enforcement. It does not enforce delegation scope — an agent that reaches an interrupt can still access resources outside its intended authority while the human review is pending. It does not produce a signed ledger — LangSmith traces are rich but not tamper-evident. There is no self-approval prevention.
+Where LangGraph stops: describing execution paths is not the same as enforcing them. LangGraph shows you the map; it does not control the checkpoints. The interrupt mechanism is a workflow pause, not constitutional enforcement. It does not enforce delegation scope - an agent that reaches an interrupt can still access resources outside its intended authority while the human review is pending. It does not produce a signed ledger - LangSmith traces are rich but not tamper-evident. There is no self-approval prevention.
 
 The framing that clarifies the relationship: **LangGraph shows you the map. ForgeOS controls the checkpoints.**
 
@@ -57,23 +57,23 @@ The distinction between LangGraph interrupts and ForgeOS gates is worth dwelling
 
 ## What ForgeOS Does (and What It Does Not)
 
-ForgeOS is a governance OS — the enforcement layer for multi-agent systems. It defines constitutional rules (what agents are allowed to do), enforces them at the pre-execution layer (before agents act), and produces a cryptographic record of every authorized action.
+ForgeOS is a governance OS - the enforcement layer for multi-agent systems. It defines constitutional rules (what agents are allowed to do), enforces them at the pre-execution layer (before agents act), and produces a cryptographic record of every authorized action.
 
 The core enforcement primitives:
 
-**Gate enforcement.** Gates fire before agent actions execute. Define approval requirements at any workflow juncture — human sign-off, QA review, security clearance, architecture approval. No agent proceeds past a gate without the required authorization. The gate decision is signed and appended to the ledger regardless of outcome (AUTHORIZED or BLOCKED).
+**Gate enforcement.** Gates fire before agent actions execute. Define approval requirements at any workflow juncture - human sign-off, QA review, security clearance, architecture approval. No agent proceeds past a gate without the required authorization. The gate decision is signed and appended to the ledger regardless of outcome (AUTHORIZED or BLOCKED).
 
-**Delegation rules.** Each agent operates within a typed authority scope. Acting outside that scope is blocked before the action executes, logged, and classified as a governance violation. Agents cannot expand their own authority — that would itself require a gate.
+**Delegation rules.** Each agent operates within a typed authority scope. Acting outside that scope is blocked before the action executes, logged, and classified as a governance violation. Agents cannot expand their own authority - that would itself require a gate.
 
-**Self-approval prevention.** No agent can approve an artifact it produced. This rule is enforced architecturally — it is not a configuration option and cannot be disabled by an agent with approval authority. The provenance chain for every artifact is maintained and checked automatically.
+**Self-approval prevention.** No agent can approve an artifact it produced. This rule is enforced architecturally - it is not a configuration option and cannot be disabled by an agent with approval authority. The provenance chain for every artifact is maintained and checked automatically.
 
 **Circuit breakers.** Three consecutive failures halt autonomous execution. Blast-radius limits cap maximum spend per cycle and per day. Human notification is dispatched. The system stops itself before a failure becomes an incident.
 
-**Signed audit ledger.** Hash-chained JSONL signed with Ed25519. Each entry references the hash of the previous. Retroactive alteration breaks the chain — detectable in milliseconds. Every gate decision, delegation event, and blocked violation is in the ledger. Tamper-evident. Auditor-ready. EU AI Act Article 12 compliant.
+**Signed audit ledger.** Hash-chained JSONL signed with Ed25519. Each entry references the hash of the previous. Retroactive alteration breaks the chain - detectable in milliseconds. Every gate decision, delegation event, and blocked violation is in the ledger. Tamper-evident. Auditor-ready. EU AI Act Article 12 compliant.
 
 Where ForgeOS excels: production deployments where agents make consequential decisions, systems with compliance requirements (EU AI Act, SOC 2, enterprise procurement diligence), and any workflow where "which agent authorized that action" needs to be answerable with a signed receipt.
 
-Where ForgeOS stops: ForgeOS does not route tasks between agents. It does not manage workflow state. It does not help you coordinate a crew. It governs whatever orchestration framework is doing the routing — it does not replace it.
+Where ForgeOS stops: ForgeOS does not route tasks between agents. It does not manage workflow state. It does not help you coordinate a crew. It governs whatever orchestration framework is doing the routing - it does not replace it.
 
 The framing: **ForgeOS does not tell your agents what to do. It tells them what they are not allowed to do.**
 
@@ -81,11 +81,11 @@ The framing: **ForgeOS does not tell your agents what to do. It tells them what 
 
 For most teams deploying multi-agent systems in production:
 
-**Orchestration layer** — CrewAI or LangGraph, depending on whether your workflow is crew-based (CrewAI) or state-machine-based (LangGraph). Both are capable frameworks for the orchestration problem.
+**Orchestration layer** - CrewAI or LangGraph, depending on whether your workflow is crew-based (CrewAI) or state-machine-based (LangGraph). Both are capable frameworks for the orchestration problem.
 
-**Governance layer** — ForgeOS, integrated via MCP. CrewAI agents and LangGraph nodes call ForgeOS gate-check, delegation-validate, and audit-query directly. No SDK required. The governance layer is framework-agnostic by design.
+**Governance layer** - ForgeOS, integrated via MCP. CrewAI agents and LangGraph nodes call ForgeOS gate-check, delegation-validate, and audit-query directly. No SDK required. The governance layer is framework-agnostic by design.
 
-**Observability layer** — LangSmith, W&B Weave, or Langfuse for trace visibility and debugging.
+**Observability layer** - LangSmith, W&B Weave, or Langfuse for trace visibility and debugging.
 
 The three layers address three distinct concerns. Removing any one of them leaves a gap. Running orchestration without governance produces workflows with no enforcement. Running governance without orchestration leaves you without the workflow coordination that makes multi-agent systems practical. Running either without observability leaves you without the debugging visibility you need during development.
 
@@ -104,7 +104,7 @@ An analogy: you would not run a bank without tellers (orchestration), an audit s
 - You need human-in-the-loop pauses at defined workflow points (and you are not in a compliance context that requires cryptographic proof)
 
 **Use ForgeOS if:**
-- You need to prove what your agents did to an auditor, investor, or regulator — with tamper-evident evidence
+- You need to prove what your agents did to an auditor, investor, or regulator - with tamper-evident evidence
 - You have EU customers and need to address EU AI Act Articles 12, 14, or 17
 - You have had an agent incident involving unauthorized scope access, self-approval, or runaway execution
 - You are preparing for Series A diligence or enterprise procurement and need to demonstrate agent governance
@@ -129,7 +129,7 @@ No. ForgeOS is the governance layer; CrewAI and LangGraph are orchestration laye
 
 **Q: LangGraph has interrupt nodes for human review. Is that the same as ForgeOS gates?**
 
-They are related but distinct. LangGraph interrupt nodes pause workflow execution for human review — this is a useful capability. ForgeOS gates are constitutional enforcement checkpoints that fire before agent actions, enforce delegation scope, prevent self-approval, and produce a signed ledger entry regardless of outcome. For compliance contexts requiring tamper-evident records of human approval, the gate model is necessary.
+They are related but distinct. LangGraph interrupt nodes pause workflow execution for human review - this is a useful capability. ForgeOS gates are constitutional enforcement checkpoints that fire before agent actions, enforce delegation scope, prevent self-approval, and produce a signed ledger entry regardless of outcome. For compliance contexts requiring tamper-evident records of human approval, the gate model is necessary.
 
 **Q: Can I use ForgeOS without CrewAI or LangGraph?**
 

@@ -1,6 +1,6 @@
 ---
 title: "ForgeOS Trust Index: A Credit Score for Software"
-description: "We scored 599 packages. FTI measures 8 dimensions of software trustworthiness — not just stars and downloads. Context-aware, agent-native, Ed25519-signed."
+description: "We scored 599 packages. FTI measures 8 dimensions of software trustworthiness - not just stars and downloads. Context-aware, agent-native, Ed25519-signed."
 date: 2026-03-03
 author: "SyncTek Team"
 category: releases
@@ -9,7 +9,7 @@ product: forgeos
 draft: false
 ---
 
-Stars lie. Downloads can be gamed. Vulnerability scanners tell you about known CVEs — nothing about the package's future.
+Stars lie. Downloads can be gamed. Vulnerability scanners tell you about known CVEs - nothing about the package's future.
 
 When an AI agent is selecting dependencies, choosing which API vendor to call, or deciding which tool to delegate work to, it needs a trust signal it can actually build policy on. Not a proxy metric. A trust score.
 
@@ -34,7 +34,7 @@ The score is deterministic. Given the same inputs, FTI always produces the same 
 
 ## Why Stars and Downloads Fail
 
-A package with 50,000 weekly downloads might have a maintainer who last responded to an issue two years ago. A GitHub star count reflects enthusiasm at a point in time — it doesn't update when a project is abandoned. A package can have zero known CVEs and still score poorly on supply chain integrity because it has no verifiable provenance chain.
+A package with 50,000 weekly downloads might have a maintainer who last responded to an issue two years ago. A GitHub star count reflects enthusiasm at a point in time - it doesn't update when a project is abandoned. A package can have zero known CVEs and still score poorly on supply chain integrity because it has no verifiable provenance chain.
 
 These are not edge cases. They are common patterns.
 
@@ -44,7 +44,7 @@ FTI is built for a different question. Not "what do people like?" but "what woul
 
 ## The Fit-Over-Rank Philosophy
 
-FTI does not produce a global ranked list. It produces a trust score — and trust is contextual.
+FTI does not produce a global ranked list. It produces a trust score - and trust is contextual.
 
 A solo developer building a weekend CLI tool and a bank's compliance engineering team have different trust requirements. The weekend developer cares mostly about documentation quality and maintenance velocity. The bank cares deeply about supply chain integrity, security posture, and whether there's a CVE remediation SLA.
 
@@ -59,7 +59,7 @@ curl https://forgeos-api.synctek.io/fti/score \
 
 The response you get for `context: compliance` weights supply chain integrity and security posture higher than it would for `context: prototype`. Same package. Different context. Different recommendation.
 
-This is fit-over-rank: your top choice for your specific requirements, not THE top choice on an undifferentiated global list. A package that's Platinum for a startup's prototype might be Silver for a fintech's production system. That's not a flaw — it's the point.
+This is fit-over-rank: your top choice for your specific requirements, not THE top choice on an undifferentiated global list. A package that's Platinum for a startup's prototype might be Silver for a fintech's production system. That's not a flaw - it's the point.
 
 ## Ed25519 Signed Scores
 
@@ -89,7 +89,7 @@ Every FTI response is signed with Ed25519.
 
 The score is not just a number. It is a cryptographic artifact. You can verify the response was produced by the FTI service and has not been tampered with since it was issued.
 
-When an agent queries FTI at runtime and gets a score, it receives a verifiable attestation — not a dashboard value you hope is current, but a signed record tied to a specific version at a specific timestamp. That attestation can be logged, audited, and held as evidence of due diligence.
+When an agent queries FTI at runtime and gets a score, it receives a verifiable attestation - not a dashboard value you hope is current, but a signed record tied to a specific version at a specific timestamp. That attestation can be logged, audited, and held as evidence of due diligence.
 
 For compliance teams: this is the difference between "we checked the score" and "we have a signed attestation of the score at decision time."
 
@@ -103,7 +103,7 @@ For compliance teams: this is the difference between "we checked the score" and 
 | Bronze | 60–69 | Use with awareness of gaps |
 | Unrated | Below 60 | Insufficient signal for recommendation |
 
-The tiers make the score actionable without requiring every consumer to write their own threshold logic. An agent can be configured to auto-approve Platinum, warn on Bronze, and block Unrated — without writing a single line of threshold comparison code. The tier is the decision boundary.
+The tiers make the score actionable without requiring every consumer to write their own threshold logic. An agent can be configured to auto-approve Platinum, warn on Bronze, and block Unrated - without writing a single line of threshold comparison code. The tier is the decision boundary.
 
 ## How We Got to 599 Packages
 
@@ -114,11 +114,11 @@ FTI launched with 599 packages scored across npm, PyPI, and GitHub. The initial 
 - 100 MCP servers from the official registry
 - 149 packages across AI agent tooling, orchestration frameworks, and governance tools
 
-The corpus is growing. Package owners can request scoring via the API. Community contributors can submit packages for inclusion. The roadmap includes automated corpus expansion based on dependency graphs — if your project uses a package, we'll score its dependencies too.
+The corpus is growing. Package owners can request scoring via the API. Community contributors can submit packages for inclusion. The roadmap includes automated corpus expansion based on dependency graphs - if your project uses a package, we'll score its dependencies too.
 
 ## Agent-Native via MCP
 
-FTI ships as an MCP tool, which means any MCP-compatible agent can query trust scores as part of its decision-making — without human involvement.
+FTI ships as an MCP tool, which means any MCP-compatible agent can query trust scores as part of its decision-making - without human involvement.
 
 ```json
 {
@@ -134,7 +134,7 @@ FTI ships as an MCP tool, which means any MCP-compatible agent can query trust s
 }
 ```
 
-Once connected, your agent has `forge_fti_score` in its toolset. When it encounters a package selection decision, it can query FTI, receive a signed score, compare it against its configured threshold for the current context, and make a documented trust determination — all within a single action.
+Once connected, your agent has `forge_fti_score` in its toolset. When it encounters a package selection decision, it can query FTI, receive a signed score, compare it against its configured threshold for the current context, and make a documented trust determination - all within a single action.
 
 The trust decision is logged. The signed attestation is stored. The audit trail is complete. No human needed in the loop for routine selections. Human review triggered for anything that falls below threshold.
 
@@ -150,7 +150,7 @@ We publish this. You can verify it:
 GET https://forgeos-api.synctek.io/v1/trust/npm/synctek/forgeos
 ```
 
-The code quality is not the issue — 2,779 tests, 95% coverage, A+ static analysis. Bronze because the score reflects reality: low community adoption (new product), limited third-party reviews, public documentation that doesn't yet match our internal depth.
+The code quality is not the issue - 2,779 tests, 95% coverage, A+ static analysis. Bronze because the score reflects reality: low community adoption (new product), limited third-party reviews, public documentation that doesn't yet match our internal depth.
 
 A trust index that only produces scores you want to see is not a trust index. It's marketing. We built FTI to be honest. That applies to us.
 

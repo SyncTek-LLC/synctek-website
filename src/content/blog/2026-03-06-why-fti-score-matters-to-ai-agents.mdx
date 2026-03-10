@@ -1,0 +1,112 @@
+---
+title: "Why Your FTI Score Matters to AI Agents"
+description: "AI agents are evaluating packages programmatically. The ForgeOS Trust Index gives them something to measure. Here's why it matters."
+date: 2026-03-06
+author: "SyncTek Team"
+category: engineering
+tags: ["forgeos", "fti", "trust-index", "ai-agents", "governance", "supply-chain", "devops"]
+product: forgeos
+---
+
+Something quiet is happening in enterprise procurement.
+
+The engineers evaluating your package - the ones deciding whether to adopt your library, your API, your framework - are increasingly not human. They're AI agents. Automated pipelines that crawl registries, inspect metadata, check documentation coverage, scan for known vulnerabilities, and produce a recommendation before a human ever looks at your README.
+
+This isn't hypothetical. Procurement teams at mid-to-large SaaS companies are already deploying agent-assisted evaluation workflows. And these agents don't care about your marketing page. They care about what's measurable.
+
+Which raises a question every package maintainer and engineering leader should be asking: **when an AI agent evaluates your project, what does it find?**
+
+---
+
+## The Evaluation Gap
+
+Most software packages present themselves through two channels: human-readable documentation and raw source code. A developer browsing your repo can use judgment - they read the README, scan the commit history, check the issue tracker, and form an intuition about quality.
+
+AI agents don't form intuitions. They measure.
+
+And for most packages, the measurable signals are sparse. An agent can check whether a LICENSE file exists. It can count open issues. It can look for a CI config. But these are blunt instruments. They tell you almost nothing about whether a package is actually well-governed, actively maintained in meaningful ways, or safe to depend on in production.
+
+This is the evaluation gap: the distance between what a package actually is and what an automated system can verify about it.
+
+The ForgeOS Trust Index (FTI) was built to close that gap.
+
+---
+
+## What the FTI Measures
+
+The FTI scores packages across eight dimensions, each producing a normalized score that rolls up into a composite trust rating from 0 to 100:
+
+- **Security** - vulnerability exposure, dependency risk, security policy presence
+- **Maintainability** - code structure, complexity signals, architectural health
+- **Documentation** - coverage, completeness, accessibility to both humans and agents
+- **Community Health** - contributor diversity, responsiveness, project vitality
+- **Supply Chain** - dependency depth, transitive risk, lockfile hygiene
+- **Improvement Velocity** - release cadence, meaningful change rate, regression patterns
+- **Operational** - deployment readiness, observability, configuration maturity
+- **Governance** - decision trails, gate enforcement, policy coverage
+
+No single dimension tells the full story. A package can have strong security but poor documentation. It can have an active community but a brittle supply chain. The FTI treats trust as multidimensional because it is.
+
+What matters for AI agents is that every dimension is **computable**. An automated system can query the FTI API, receive structured scores, and make informed comparisons - without parsing prose or interpreting marketing language.
+
+---
+
+## The Governance Manifest
+
+Scoring external signals - commit frequency, issue counts, CVE databases - gets you partway there. But the most meaningful trust signals come from inside the project itself.
+
+This is where the ForgeOS governance manifest comes in.
+
+Projects that adopt ForgeOS governance generate a `.forgeos/governance.json` file - a machine-readable declaration of how the project is governed. It includes verifiable metadata about decision processes, gate enforcement, review policies, and compliance posture.
+
+The FTI scorer reads this manifest. When it's present and valid, the package's governance dimension reflects real, auditable practices rather than inferred proxies. The result is a meaningfully higher trust score - not because the manifest games the system, but because governance practices that are declared and verifiable are genuinely more trustworthy than those that aren't.
+
+For AI procurement agents, the manifest is particularly valuable. It's structured data that answers questions like: *Does this project enforce code review? Is there a security policy? Are releases gated on tests?* These are questions agents need answered, and the manifest answers them in a format agents can consume directly.
+
+---
+
+## What AI Agents Actually Do With This
+
+When an AI procurement agent evaluates a package today, it typically produces a risk profile: a structured assessment that feeds into a recommendation engine or a human review queue.
+
+The FTI gives these agents a richer signal set. Instead of binary checks (has tests / doesn't have tests), they get graduated assessments across eight dimensions. Instead of scraping unstructured docs for clues about maintenance practices, they get a scored governance dimension backed by verifiable data.
+
+The practical impact: packages with strong FTI scores surface higher in automated evaluations. They clear procurement gates faster. They reduce the burden on human reviewers, because the agent has already done the due diligence that used to require someone manually inspecting the repo.
+
+This compounds. Every automated pipeline that incorporates trust scoring becomes a channel where well-governed packages have an advantage - not through marketing, but through measurable engineering practice.
+
+---
+
+## The Badge as a Signal
+
+For projects that want to make their FTI score visible to both humans and agents, the FTI API provides an embeddable badge:
+
+```
+https://forgeos-api.synctek.io/v1/badge/{package_name}
+```
+
+Drop it in your README. It renders a live trust score that updates as your project evolves. For humans, it's a quick credibility signal. For agents crawling your repository, it's a machine-parseable indicator linked to the full scoring API.
+
+The full score breakdown is available at:
+
+```
+https://forgeos-api.synctek.io/v1/trust/{package_name}
+```
+
+This returns structured JSON with per-dimension scores, trend data, and metadata - exactly the format an automated evaluation system needs.
+
+---
+
+## The Shift That's Coming
+
+We're in the early phase of a fundamental change in how software gets evaluated and adopted. The shift from human-only evaluation to agent-assisted evaluation isn't a future prediction - it's happening now, quietly, inside procurement workflows at companies that move fast.
+
+The packages that will win in this environment aren't necessarily the ones with the most GitHub stars or the slickest landing pages. They're the ones that are **legible to automated systems**. The ones that expose verifiable governance, structured metadata, and computable trust signals.
+
+The FTI doesn't replace human judgment. It augments the automated layer that increasingly precedes it. And for engineering leaders thinking about adoption and distribution strategy, that layer is becoming impossible to ignore.
+
+Your FTI score is how AI agents decide whether to trust you. It might be worth knowing what yours is.
+
+---
+
+*Check your project's FTI score at [forgeos-api.synctek.io](https://forgeos-api.synctek.io). Adopt ForgeOS governance to generate your governance manifest and improve your score across all eight dimensions.*

@@ -1,6 +1,6 @@
 ---
 layout: ../../layouts/DocsLayout.astro
-title: "Quickstart — ForgeOS Documentation"
+title: "Quickstart - ForgeOS Documentation"
 description: "Get ForgeOS running in under 3 minutes. Register, create a project, connect the MCP server, and run your first governance command."
 ---
 
@@ -12,7 +12,7 @@ Get ForgeOS running in under 3 minutes. By the end of this guide, your AI agent 
 
 The fastest way to get started is through the ForgeOS dashboard:
 
-**[Sign up at forgeos.synctek.io/register](https://forgeos.synctek.io/register)** — no credit card required. 14-day free trial, full Pro-tier access.
+**[Sign up at forgeos.synctek.io/register](https://forgeos.synctek.io/register)** - no credit card required. 14-day free trial, full Pro-tier access.
 
 After registering, you will be taken straight to your dashboard where you can create a project and generate an API key.
 
@@ -39,7 +39,7 @@ This sets a `forge_session` cookie. Use `-b cookies.txt` on subsequent requests.
 
 ## 2. Create a project
 
-From the dashboard, click **New Project**, give it a name, and select your platform. The project ID (e.g., `proj_a1b2c3d4`) appears in the project settings — you will need it when configuring the MCP server.
+From the dashboard, click **New Project**, give it a name, and select your platform. The project ID (e.g., `proj_a1b2c3d4`) appears in the project settings - you will need it when configuring the MCP server.
 
 ### Alternative: create a project via curl
 
@@ -56,11 +56,11 @@ curl -X POST https://forgeos-api.synctek.io/api/projects \
 
 ## 3. Generate an API key
 
-From the dashboard, go to **Settings → API Keys** and generate a new key. Your key will have the prefix `fos_` and is shown only once — store it securely. This key is required for the MCP server and CLI.
+From the dashboard, go to **Settings → API Keys** and generate a new key. Your key will have the prefix `fos_` and is shown only once - store it securely. This key is required for the MCP server and CLI.
 
 ## 4. Install the package
 
-ForgeOS ships as a single npm package — `@synctek/forgeos` — which includes:
+ForgeOS ships as a single npm package - `@synctek/forgeos` - which includes:
 - The **MCP server**: connects your editor's AI agent directly to 21 governance tools
 - The **`forge` CLI**: 18 command groups, 49 subcommands for terminal-first workflows
 - **SharedMind**: institutional memory that persists patterns and lessons across sessions, backed by the ForgeOS cloud API
@@ -95,7 +95,7 @@ forge gate status --changeset cs_abc123
 
 > **Note:** `forge scorecard` and `forge quickstart` are MCP tools, not CLI commands. Run them from your AI agent via the MCP server.
 
-The CLI and MCP server share the same ForgeOS instance — you can use both together.
+The CLI and MCP server share the same ForgeOS instance - you can use both together.
 
 ## 5. Configure your editor
 
@@ -179,10 +179,10 @@ Then try:
 
 > "Create an initiative for adding user authentication."
 
-The agent calls `forge_create_initiative`, creating a tracked initiative with a generated ID. From here, every change goes through gates — propose a changeset, submit evidence, get reviews, and promote gates before code ships.
+The agent calls `forge_create_initiative`, creating a tracked initiative with a generated ID. From here, every change goes through gates - propose a changeset, submit evidence, get reviews, and promote gates before code ships.
 
 ## Next steps
 
-- [Authentication](/docs/auth/) — API key management, rate limits, and security
-- [MCP Server](/docs/mcp/) — All 21 governance tools with parameters and examples
-- [REST API](/docs/api/) — Full HTTP endpoint reference
+- [Authentication](/docs/auth/) - API key management, rate limits, and security
+- [MCP Server](/docs/mcp/) - All 21 governance tools with parameters and examples
+- [REST API](/docs/api/) - Full HTTP endpoint reference

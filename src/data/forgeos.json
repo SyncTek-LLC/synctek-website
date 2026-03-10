@@ -2,8 +2,8 @@
   "product_id": "PROD-2026-006",
   "name": "ForgeOS",
   "tagline": "AI-Powered Software Trust & Governance Platform",
-  "description_short": "ForgeOS brings constitutional governance to software development — every decision tracked, every change auditable, every gate enforced.",
-  "description_long": "ForgeOS is a governance platform for AI-native software teams. It provides\nhash-chained audit ledgers, gate-based approval workflows, trust scoring,\nand a shared organizational memory — all accessible via CLI, MCP tools,\nREST API, and a web dashboard.\n\nBuilt for teams where AI agents are first-class contributors alongside\nhuman developers. ForgeOS ensures that as AI writes more code, governance\ndoesn't disappear — it gets stronger.\n",
+  "description_short": "ForgeOS brings constitutional governance to software development - every decision tracked, every change auditable, every gate enforced.",
+  "description_long": "ForgeOS is a governance platform for AI-native software teams. It provides\nhash-chained audit ledgers, gate-based approval workflows, trust scoring,\nand a shared organizational memory - all accessible via CLI, MCP tools,\nREST API, and a web dashboard.\n\nBuilt for teams where AI agents are first-class contributors alongside\nhuman developers. ForgeOS ensures that as AI writes more code, governance\ndoesn't disappear - it gets stronger.\n",
   "brand": {
     "accent_color": "#FF8255",
     "design_language": "Measured Authority"
@@ -262,7 +262,7 @@
       "7-gate infrastructure pathway",
       "Shared Mind organizational memory",
       "Federation Hub for cross-instance governance",
-      "ForgeOS Trust Index (FTI) — package trust scoring",
+      "ForgeOS Trust Index (FTI) - package trust scoring",
       "Policy-as-config (YAML-based governance rules)",
       "Governance drift detection",
       "MCP-native (21 tools for AI agent integration)"
@@ -271,7 +271,7 @@
   "faq": [
     {
       "q": "What AI model does ForgeOS use?",
-      "a": "ForgeOS uses Claude (Anthropic) for gate intelligence, code review routing, and Shared Mind pattern recognition. AI costs are included in your plan — you are never charged separately for AI usage."
+      "a": "ForgeOS uses Claude (Anthropic) for gate intelligence, code review routing, and Shared Mind pattern recognition. AI costs are included in your plan - you are never charged separately for AI usage."
     },
     {
       "q": "Can I self-host ForgeOS?",
@@ -279,7 +279,7 @@
     },
     {
       "q": "Is there a free trial?",
-      "a": "Yes — all new accounts get a 14-day trial of all Pro features. No credit card required."
+      "a": "Yes - all new accounts get a 14-day trial of all Pro features. No credit card required."
     },
     {
       "q": "How does the audit ledger work?",
