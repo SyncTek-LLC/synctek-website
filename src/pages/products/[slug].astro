@@ -175,6 +175,10 @@ if (ftiApiUrl) {
 }
 // Use live scores if available, fall back to static
 const finalFtiScores = liveFtiScores.length > 0 ? liveFtiScores : ftiScores;
+// Fall back to static composite score if API didn't provide one
+if (ftiCompositeScore === null && fti && 'compositeScore' in fti) {
+  ftiCompositeScore = fti.compositeScore as number;
+}
 ---
 
 <BaseLayout
