@@ -30,17 +30,10 @@ export default {
     flatBadgeUrl: 'https://forgeos-api.synctek.io/v1/badge/npm/synctek/forgeos/flat',
     trustProfileUrl: '/products/forgeos/fti/',
     apiScoreUrl: 'https://forgeos-api.synctek.io/v1/trust/npm/synctek/forgeos',
-    compositeScore: 82.0,
-    scores: {
-      security: 97.0,
-      maintainability: 78.4,
-      documentation: 91.4,
-      community_health: 43.1,
-      supply_chain: 80.0,
-      improvement_velocity: 50.0,
-      governance: 87.0,
-      operational: 92.0,
-    },
+    // compositeScore and scores are intentionally omitted.
+    // The product page fetches live scores from apiScoreUrl at both build time and client side.
+    // Removing hardcoded fallbacks prevents the detail card from ever showing a stale score
+    // that diverges from the live badge image.
   },
 
   pricing: [
