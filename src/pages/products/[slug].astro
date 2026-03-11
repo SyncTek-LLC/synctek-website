@@ -93,14 +93,14 @@ const stackRows = slug === 'forgeos' ? [
 
 // EU AI Act rows (ForgeOS only)
 const euAiActRows = slug === 'forgeos' ? [
-  { article: 'Art. 12', requirement: 'Record-keeping — immutable logs of all automated decisions', coverage: 'Hash-chained, Ed25519-signed ledger', confidence: 'Direct coverage' },
-  { article: 'Art. 9', requirement: 'Risk management system — documented procedures', coverage: 'Gate enforcement, circuit breakers, violation scanner', confidence: 'Direct coverage' },
-  { article: 'Art. 14', requirement: 'Human oversight — ability to halt and override', coverage: 'Human-in-the-loop gates, kill switch, circuit breaker', confidence: 'Direct coverage' },
+  { article: 'Art. 12', requirement: 'Record-keeping - immutable logs of all automated decisions', coverage: 'Hash-chained, Ed25519-signed ledger', confidence: 'Direct coverage' },
+  { article: 'Art. 9', requirement: 'Risk management system - documented procedures', coverage: 'Gate enforcement, circuit breakers, violation scanner', confidence: 'Direct coverage' },
+  { article: 'Art. 14', requirement: 'Human oversight - ability to halt and override', coverage: 'Human-in-the-loop gates, kill switch, circuit breaker', confidence: 'Direct coverage' },
   { article: 'Art. 17', requirement: 'Quality management system', coverage: 'Initiative + gate lifecycle', confidence: 'Direct coverage' },
   { article: 'Art. 61', requirement: 'Post-market monitoring', coverage: 'Continuous automated scanning, daily self-audit', confidence: 'Partial coverage' },
 ] : [];
 
-// FTI derived values — computed in frontmatter to avoid generic-type parse errors in JSX
+// FTI derived values - computed in frontmatter to avoid generic-type parse errors in JSX
 const ftiShieldBadgeUrl = fti && 'shieldBadgeUrl' in fti ? fti.shieldBadgeUrl as string : undefined;
 const ftiFlatBadgeUrl = fti && 'flatBadgeUrl' in fti ? fti.flatBadgeUrl as string : undefined;
 const ftiBadgeUrl = fti && !ftiShieldBadgeUrl && 'badgeUrl' in fti ? fti.badgeUrl as string : undefined;
@@ -169,7 +169,7 @@ if (ftiApiUrl) {
       }
     }
   } catch (e) {
-    // Build-time fetch failed — fall back to static scores if present
+    // Build-time fetch failed - fall back to static scores if present
     console.warn('FTI API fetch failed at build time:', e);
   }
 }
@@ -200,10 +200,10 @@ if (ftiCompositeScore === null && fti && 'compositeScore' in fti) {
           <img
             src="/images/forge-anvil-icon.png"
             alt="ForgeOS"
-            width="56"
-            height="56"
+            width="80"
+            height="80"
             loading="lazy"
-            style="width: 56px; height: 56px; border-radius: 10px; flex-shrink: 0;"
+            style="width: 80px; height: 80px; border-radius: 10px; flex-shrink: 0;"
           />
         )}
         <h1 class="text-3xl sm:text-4xl font-bold tracking-tight">{product.name}</h1>
@@ -222,7 +222,11 @@ if (ftiCompositeScore === null && fti && 'compositeScore' in fti) {
 
       <!-- FTI Trust Score Card -->
       {fti && (
-        <div class="bg-gray-900/50 border border-gray-800 rounded-xl p-6 mb-8 max-w-2xl">
+        <div
+          class="bg-gray-900/50 border border-gray-800 rounded-xl p-6 mb-8 max-w-2xl"
+          id="fti-score-card"
+          data-fti-api-url={ftiApiUrl ?? ''}
+        >
           <!-- Header row: badges + label -->
           <div class="flex flex-wrap items-center gap-4 mb-5">
             <div class="flex items-center gap-3">
@@ -261,29 +265,31 @@ if (ftiCompositeScore === null && fti && 'compositeScore' in fti) {
             )}
           </div>
 
-          <!-- Composite score (live API only) -->
-          {ftiCompositeScore !== null && (
-            <div class="flex items-baseline gap-2 mb-4">
-              <span class="text-3xl font-bold">{ftiCompositeScore.toFixed(1)}</span>
-              <span class="text-sm text-gray-400">/ 100</span>
-            </div>
-          )}
+          <!-- Composite score - always rendered; client-side fetch overwrites on load -->
+          <div id="fti-composite-row" class="flex items-baseline gap-2 mb-4" style={ftiCompositeScore === null ? 'display:none' : ''}>
+            <span id="fti-composite-score" class="text-3xl font-bold">{ftiCompositeScore !== null ? ftiCompositeScore.toFixed(1) : ''}</span>
+            <span class="text-sm text-gray-400">/ 100</span>
+          </div>
+          <!-- Shown only when API is unreachable at both build time and runtime -->
+          <div id="fti-score-unavailable" class="text-sm text-gray-500 mb-4" style="display:none">Score unavailable - API unreachable</div>
 
           <!-- Dimensional score breakdown -->
-          {finalFtiScores.length > 0 && (
-            <div class="flex flex-wrap gap-x-6 gap-y-3">
-              {finalFtiScores.map((score) => (
-                <div class="flex flex-col gap-0.5 min-w-[72px]">
-                  <span class="text-xs text-gray-400 uppercase tracking-wider whitespace-nowrap">
-                    {score.label}
-                  </span>
-                  <span class:list={['text-lg font-bold', score.colorClass]}>
-                    {score.value.toFixed(1)}
-                  </span>
-                </div>
-              ))}
-            </div>
-          )}
+          <div
+            id="fti-dimensions"
+            class="flex flex-wrap gap-x-6 gap-y-3"
+            style={finalFtiScores.length === 0 ? 'display:none' : ''}
+          >
+            {finalFtiScores.map((score) => (
+              <div class="flex flex-col gap-0.5 min-w-[72px]" data-fti-dim={score.key}>
+                <span class="text-xs text-gray-400 uppercase tracking-wider whitespace-nowrap">
+                  {score.label}
+                </span>
+                <span class:list={['text-lg font-bold fti-dim-value', score.colorClass]}>
+                  {score.value.toFixed(1)}
+                </span>
+              </div>
+            ))}
+          </div>
         </div>
       )}
 
@@ -388,7 +394,7 @@ if (ftiCompositeScore === null && fti && 'compositeScore' in fti) {
                   <div>
                     <span class="text-[#EF4444]">  ✗</span>
                     <span class="text-[#E6EDF3]">  implementation</span>
-                    <span class="text-[#F59E0B] text-xs ml-2">PENDING — architect review required</span>
+                    <span class="text-[#F59E0B] text-xs ml-2">PENDING - architect review required</span>
                   </div>
                 </div>
                 <div class="mt-4" style="border-top: 1px solid #1F1F1F; padding-top: 1rem;">
@@ -435,7 +441,7 @@ if (ftiCompositeScore === null && fti && 'compositeScore' in fti) {
             </div>
             <h3 class="text-lg font-semibold text-[#E6EDF3] mb-2">Enforce, don't observe</h3>
             <p class="text-sm text-[#8B949E] leading-relaxed">
-              Gates fire before actions execute. Policy is constitutional — defined once, enforced everywhere.
+              Gates fire before actions execute. Policy is constitutional - defined once, enforced everywhere.
               No configuration can disable self-approval prevention.
             </p>
           </div>
@@ -453,7 +459,7 @@ if (ftiCompositeScore === null && fti && 'compositeScore' in fti) {
             <h3 class="text-lg font-semibold text-[#E6EDF3] mb-2">Immutable audit trail</h3>
             <p class="text-sm text-[#8B949E] leading-relaxed">
               Ed25519-signed, hash-chained ledger. Every agent action, every gate decision, every delegation event.
-              Retroactive alteration breaks the chain — detectable in milliseconds. Auditor-ready. Designed for EU AI Act readiness.
+              Retroactive alteration breaks the chain - detectable in milliseconds. Auditor-ready. Designed for EU AI Act readiness.
             </p>
           </div>
 
@@ -469,8 +475,8 @@ if (ftiCompositeScore === null && fti && 'compositeScore' in fti) {
             </div>
             <h3 class="text-lg font-semibold text-[#E6EDF3] mb-2">Agent-native + CLI</h3>
             <p class="text-sm text-[#8B949E] leading-relaxed">
-              21 governance tools over MCP (HTTP/SSE). Any MCP-compatible agent calls ForgeOS directly —
-              gate-check, delegation-validate, audit-query. Plus the <code class="font-mono text-xs px-1 py-0.5 rounded" style="background: rgba(139,148,158,0.10); border: 1px solid #1F1F1F; color: #E6EDF3;">forge</code> CLI for terminal-first workflows. Framework-agnostic. No SDK required. Works with Claude, GPT, Gemini, or local models — your AI keys stay with you.
+              21 governance tools over MCP (HTTP/SSE). Any MCP-compatible agent calls ForgeOS directly -
+              gate-check, delegation-validate, audit-query. Plus the <code class="font-mono text-xs px-1 py-0.5 rounded" style="background: rgba(139,148,158,0.10); border: 1px solid #1F1F1F; color: #E6EDF3;">forge</code> CLI for terminal-first workflows. Framework-agnostic. No SDK required. Works with Claude, GPT, Gemini, or local models - your AI keys stay with you.
             </p>
           </div>
         </div>
@@ -528,7 +534,7 @@ if (ftiCompositeScore === null && fti && 'compositeScore' in fti) {
       <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <p class="text-xs font-semibold tracking-[0.12em] uppercase text-[#3B82F6] mb-3">TRUST SIGNALS</p>
         <h2 class="text-2xl sm:text-3xl font-semibold text-[#E6EDF3] tracking-tight mb-10">
-          Governing 13 AI departments in production — including the team that built it.
+          Governing 13 AI departments in production - including the team that built it.
         </h2>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
@@ -539,8 +545,8 @@ if (ftiCompositeScore === null && fti && 'compositeScore' in fti) {
           >
             <h3 class="text-sm font-semibold text-[#E6EDF3] mb-2">Dogfooded in production</h3>
             <p class="text-sm text-[#8B949E] leading-relaxed">
-              ForgeOS governs the development of ForgeOS. Thirteen specialized AI departments — engineering,
-              security, quality, operations, and nine others — operate under ForgeOS governance every day.
+              ForgeOS governs the development of ForgeOS. Thirteen specialized AI departments - engineering,
+              security, quality, operations, and nine others - operate under ForgeOS governance every day.
               Real agents. Real violations blocked.
             </p>
           </div>
@@ -553,7 +559,7 @@ if (ftiCompositeScore === null && fti && 'compositeScore' in fti) {
             <h3 class="text-sm font-semibold text-[#E6EDF3] mb-2">The 41% problem</h3>
             <p class="text-sm text-[#8B949E] leading-relaxed">
               41% of official MCP servers currently lack authentication, based on our analysis of public MCP server listings (SyncTek, 2026). ForgeOS is an MCP-listed
-              governance tool with authentication enforcement by default — not as a configuration, as a requirement.
+              governance tool with authentication enforcement by default - not as a configuration, as a requirement.
             </p>
           </div>
 
@@ -562,7 +568,7 @@ if (ftiCompositeScore === null && fti && 'compositeScore' in fti) {
             class="rounded-xl p-6"
             style="background: #111111; border-left: 3px solid #3B82F6; border-top: 1px solid #1F1F1F; border-right: 1px solid #1F1F1F; border-bottom: 1px solid #1F1F1F;"
           >
-            <h3 class="text-sm font-semibold text-[#E6EDF3] mb-2">EU AI Act — enforcement begins Aug 2, 2026</h3>
+            <h3 class="text-sm font-semibold text-[#E6EDF3] mb-2">EU AI Act - enforcement begins Aug 2, 2026</h3>
             <p class="text-sm text-[#8B949E] leading-relaxed">
               ForgeOS maps directly to Article 12 (record-keeping) and Article 17 (quality management system).
               Enterprise procurement cycles run 90+ days. Evaluation must begin by May 2026.
@@ -622,7 +628,7 @@ if (ftiCompositeScore === null && fti && 'compositeScore' in fti) {
             Agentic workflow governance is the discipline of defining, enforcing, and auditing what AI agents
             are permitted to do in a multi-agent system. It is distinct from model governance (which governs
             AI model behavior) and agent observability (which records what agents did after the fact).
-            Governance enforces rules before actions are taken — through gates that require human approval,
+            Governance enforces rules before actions are taken - through gates that require human approval,
             delegation rules that define agent authority, circuit breakers that halt execution on failure,
             and self-approval prevention that blocks agents from authorizing their own outputs.
             <strong class="text-[#E6EDF3]"> ForgeOS is the first purpose-built governance OS for MCP agents.</strong>
@@ -652,7 +658,7 @@ if (ftiCompositeScore === null && fti && 'compositeScore' in fti) {
         </div>
         <p class="text-xs text-[#6B7280] italic">
           MintMCP secures the connection. LangSmith records the trace. CrewAI routes the task.
-          ForgeOS enforces the rules — before the action is taken, with a cryptographic receipt that proves it.
+          ForgeOS enforces the rules - before the action is taken, with a cryptographic receipt that proves it.
         </p>
       </section>
 
@@ -665,7 +671,7 @@ if (ftiCompositeScore === null && fti && 'compositeScore' in fti) {
           Your agents can find us.
         </h2>
         <p class="text-[#9CA3AF] mb-10 max-w-2xl">
-          ForgeOS is designed to be discovered and called natively by AI agents — no SDK, no custom integration, no human intermediary required.
+          ForgeOS is designed to be discovered and called natively by AI agents - no SDK, no custom integration, no human intermediary required.
         </p>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -674,8 +680,8 @@ if (ftiCompositeScore === null && fti && 'compositeScore' in fti) {
             <div class="font-mono text-xs text-[#3B82F6] mb-3 font-semibold">MCP (HTTP/SSE)</div>
             <h3 class="text-base font-semibold text-[#E6EDF3] mb-2">Model Context Protocol</h3>
             <p class="text-sm text-[#8B949E] leading-relaxed">
-              ForgeOS exposes 21 governance tools over MCP. Any MCP-compatible agent — Claude, GPT-4, Gemini,
-              local models — can call gate-check, delegation-validate, and audit-query without modification. Works with any MCP-compatible AI — Claude, GPT, Gemini, or local models. Your AI keys stay with you.
+              ForgeOS exposes 21 governance tools over MCP. Any MCP-compatible agent - Claude, GPT-4, Gemini,
+              local models - can call gate-check, delegation-validate, and audit-query without modification. Works with any MCP-compatible AI - Claude, GPT, Gemini, or local models. Your AI keys stay with you.
             </p>
           </div>
 
@@ -684,7 +690,7 @@ if (ftiCompositeScore === null && fti && 'compositeScore' in fti) {
             <div class="font-mono text-xs text-[#3B82F6] mb-3 font-semibold">A2A Agent Card</div>
             <h3 class="text-base font-semibold text-[#E6EDF3] mb-2">Agent-to-Agent discovery</h3>
             <p class="text-sm text-[#8B949E] leading-relaxed">
-              ForgeOS issues A2A Agent Cards — machine-readable capability manifests. Any A2A-compatible agent
+              ForgeOS issues A2A Agent Cards - machine-readable capability manifests. Any A2A-compatible agent
               can discover, evaluate, and interoperate with ForgeOS autonomously. No human required to wire the integration.
             </p>
           </div>
@@ -857,6 +863,91 @@ if (ftiCompositeScore === null && fti && 'compositeScore' in fti) {
       </section>
     </>
   )}
+
+  <!-- Client-side FTI score hydration: overwrites build-time scores with live API data.
+       This ensures the detail card always matches the live badge image. -->
+  <script>
+    (function () {
+      const card = document.getElementById('fti-score-card');
+      if (!card) return;
+
+      const apiUrl = card.getAttribute('data-fti-api-url');
+      if (!apiUrl) return;
+
+      const dimensionLabels: Record<string, string> = {
+        security: 'Security',
+        maintainability: 'Maintainability',
+        documentation: 'Documentation',
+        community_health: 'Community',
+        community: 'Community',
+        supply_chain: 'Supply Chain',
+        improvement_velocity: 'Velocity',
+        operational: 'Operational',
+        governance: 'Governance',
+      };
+
+      function scoreColorClass(score: number): string {
+        if (score >= 80) return 'text-[#22c55e]';
+        if (score >= 60) return 'text-[#6366f1]';
+        if (score >= 40) return 'text-[#f59e0b]';
+        return 'text-[#ef4444]';
+      }
+
+      fetch(apiUrl, { headers: { Accept: 'application/json' } })
+        .then((res) => {
+          if (!res.ok) throw new Error('API returned ' + res.status);
+          return res.json();
+        })
+        .then((data: { composite_score?: number; dimensions?: Record<string, number> }) => {
+          // Update composite score row
+          const compositeRow = document.getElementById('fti-composite-row');
+          const compositeSpan = document.getElementById('fti-composite-score');
+          const unavailableEl = document.getElementById('fti-score-unavailable');
+
+          if (typeof data.composite_score === 'number' && compositeRow && compositeSpan) {
+            compositeSpan.textContent = data.composite_score.toFixed(1);
+            (compositeRow as HTMLElement).style.display = '';
+            if (unavailableEl) (unavailableEl as HTMLElement).style.display = 'none';
+          }
+
+          // Update dimensional scores
+          const dimensionsContainer = document.getElementById('fti-dimensions');
+          if (data.dimensions && typeof data.dimensions === 'object' && dimensionsContainer) {
+            const entries = Object.entries(data.dimensions);
+            if (entries.length > 0) {
+              // Clear SSR-rendered dimensions and rebuild with live data
+              dimensionsContainer.innerHTML = entries
+                .map(([key, score]) => {
+                  const label = dimensionLabels[key] ?? key;
+                  const colorClass = scoreColorClass(score);
+                  return `<div class="flex flex-col gap-0.5 min-w-[72px]" data-fti-dim="${key}">
+                    <span class="text-xs text-gray-400 uppercase tracking-wider whitespace-nowrap">${label}</span>
+                    <span class="${colorClass} text-lg font-bold fti-dim-value">${score.toFixed(1)}</span>
+                  </div>`;
+                })
+                .join('');
+              (dimensionsContainer as HTMLElement).style.display = '';
+            }
+          }
+        })
+        .catch(() => {
+          // API unreachable at runtime - show "unavailable" only if SSR also had no score
+          const compositeRow = document.getElementById('fti-composite-row');
+          const unavailableEl = document.getElementById('fti-score-unavailable');
+          const compositeSpan = document.getElementById('fti-composite-score');
+          // If SSR populated a score, leave it visible; do not override with "unavailable"
+          if (
+            unavailableEl &&
+            compositeRow &&
+            compositeSpan &&
+            !compositeSpan.textContent?.trim()
+          ) {
+            (compositeRow as HTMLElement).style.display = 'none';
+            (unavailableEl as HTMLElement).style.display = '';
+          }
+        });
+    })();
+  </script>
 
   <!-- Related blog posts -->
   {relatedPosts.length > 0 && (
