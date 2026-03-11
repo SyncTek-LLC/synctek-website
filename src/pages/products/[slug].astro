@@ -130,55 +130,10 @@ const ftiScores: FtiScore[] = (() => {
   }));
 })();
 
-// Fetch live FTI scores at build time from the ForgeOS Trust Index API.
-// The API returns a TrustProfile: { composite_score: number, dimensions: Record<string, number>, ... }
-let liveFtiScores: FtiScore[] = [];
-let ftiCompositeScore: number | null = null;
+// FTI scores are fetched client-side only - no SSR fetch to avoid stale build-time data
 const ftiApiUrl = fti && 'apiScoreUrl' in fti ? fti.apiScoreUrl as string : undefined;
-if (ftiApiUrl) {
-  try {
-    const res = await fetch(ftiApiUrl, {
-      headers: { 'Accept': 'application/json' },
-      signal: AbortSignal.timeout(5000),
-    });
-    if (res.ok) {
-      const data = await res.json();
-      const dimensionLabels: Record<string, string> = {
-        security: 'Security',
-        maintainability: 'Maintainability',
-        documentation: 'Documentation',
-        community_health: 'Community',
-        community: 'Community',
-        supply_chain: 'Supply Chain',
-        improvement_velocity: 'Velocity',
-        operational: 'Operational',
-        governance: 'Governance',
-      };
-      // Capture composite score from TrustProfile.composite_score
-      if (typeof data.composite_score === 'number') {
-        ftiCompositeScore = data.composite_score;
-      }
-      // API returns dimensions as Record<string, number> (flat dict of scores)
-      if (data.dimensions && typeof data.dimensions === 'object') {
-        liveFtiScores = Object.entries(data.dimensions as Record<string, number>).map(([key, score]) => ({
-          key,
-          label: dimensionLabels[key] ?? key,
-          value: typeof score === 'number' ? score : 0,
-          colorClass: score >= 80 ? 'text-[#22c55e]' : score >= 60 ? 'text-[#6366f1]' : score >= 40 ? 'text-[#f59e0b]' : 'text-[#ef4444]',
-        }));
-      }
-    }
-  } catch (e) {
-    // Build-time fetch failed - fall back to static scores if present
-    console.warn('FTI API fetch failed at build time:', e);
-  }
-}
-// Use live scores if available, fall back to static
-const finalFtiScores = liveFtiScores.length > 0 ? liveFtiScores : ftiScores;
-// Fall back to static composite score if API didn't provide one
-if (ftiCompositeScore === null && fti && 'compositeScore' in fti) {
-  ftiCompositeScore = fti.compositeScore as number;
-}
+const finalFtiScores: FtiScore[] = ftiScores; // static fallback shape only; client overwrites
+const ftiCompositeScore: number | null = null; // always starts null; client populates
 ---
 
 <BaseLayout
@@ -265,19 +220,21 @@ if (ftiCompositeScore === null && fti && 'compositeScore' in fti) {
             )}
           </div>
 
-          <!-- Composite score - always rendered; client-side fetch overwrites on load -->
-          <div id="fti-composite-row" class="flex items-baseline gap-2 mb-4" style={ftiCompositeScore === null ? 'display:none' : ''}>
-            <span id="fti-composite-score" class="text-3xl font-bold">{ftiCompositeScore !== null ? ftiCompositeScore.toFixed(1) : ''}</span>
+          <!-- Composite score - hidden until client-side fetch populates it -->
+          <div id="fti-composite-row" class="flex items-baseline gap-2 mb-4" style="display:none">
+            <span id="fti-composite-score" class="text-3xl font-bold"></span>
             <span class="text-sm text-gray-400">/ 100</span>
           </div>
-          <!-- Shown only when API is unreachable at both build time and runtime -->
-          <div id="fti-score-unavailable" class="text-sm text-gray-500 mb-4" style="display:none">Score unavailable - API unreachable</div>
+          <!-- Loading placeholder shown until client fetch resolves -->
+          <div id="fti-loading" class="text-sm text-gray-400 mb-4">Loading score...</div>
+          <!-- Shown when API is unreachable at runtime -->
+          <div id="fti-score-unavailable" class="text-sm text-gray-500 mb-4" style="display:none">Score unavailable</div>
 
-          <!-- Dimensional score breakdown -->
+          <!-- Dimensional score breakdown - hidden until client fetch populates -->
           <div
             id="fti-dimensions"
             class="flex flex-wrap gap-x-6 gap-y-3"
-            style={finalFtiScores.length === 0 ? 'display:none' : ''}
+            style="display:none"
           >
             {finalFtiScores.map((score) => (
               <div class="flex flex-col gap-0.5 min-w-[72px]" data-fti-dim={score.key}>
@@ -864,9 +821,9 @@ if (ftiCompositeScore === null && fti && 'compositeScore' in fti) {
     </>
   )}
 
-  <!-- Client-side FTI score hydration: overwrites build-time scores with live API data.
-       This ensures the detail card always matches the live badge image. -->
-  <script>
+  <!-- Client-side FTI score fetch: populates score card from live API on page load.
+       No SSR data - client is sole source of truth for scores. -->
+  <script is:inline>
     (function () {
       const card = document.getElementById('fti-score-card');
       if (!card) return;
@@ -874,7 +831,7 @@ if (ftiCompositeScore === null && fti && 'compositeScore' in fti) {
       const apiUrl = card.getAttribute('data-fti-api-url');
       if (!apiUrl) return;
 
-      const dimensionLabels: Record<string, string> = {
+      const dimensionLabels = {
         security: 'Security',
         maintainability: 'Maintainability',
         documentation: 'Documentation',
@@ -886,65 +843,65 @@ if (ftiCompositeScore === null && fti && 'compositeScore' in fti) {
         governance: 'Governance',
       };
 
-      function scoreColorClass(score: number): string {
+      function scoreColorClass(score) {
         if (score >= 80) return 'text-[#22c55e]';
         if (score >= 60) return 'text-[#6366f1]';
         if (score >= 40) return 'text-[#f59e0b]';
         return 'text-[#ef4444]';
       }
 
+      function hideLoading() {
+        var loadingEl = document.getElementById('fti-loading');
+        if (loadingEl) loadingEl.style.display = 'none';
+      }
+
       fetch(apiUrl, { headers: { Accept: 'application/json' } })
-        .then((res) => {
+        .then(function (res) {
           if (!res.ok) throw new Error('API returned ' + res.status);
           return res.json();
         })
-        .then((data: { composite_score?: number; dimensions?: Record<string, number> }) => {
+        .then(function (data) {
+          hideLoading();
+
           // Update composite score row
-          const compositeRow = document.getElementById('fti-composite-row');
-          const compositeSpan = document.getElementById('fti-composite-score');
-          const unavailableEl = document.getElementById('fti-score-unavailable');
+          var compositeRow = document.getElementById('fti-composite-row');
+          var compositeSpan = document.getElementById('fti-composite-score');
+          var unavailableEl = document.getElementById('fti-score-unavailable');
 
           if (typeof data.composite_score === 'number' && compositeRow && compositeSpan) {
             compositeSpan.textContent = data.composite_score.toFixed(1);
-            (compositeRow as HTMLElement).style.display = '';
-            if (unavailableEl) (unavailableEl as HTMLElement).style.display = 'none';
+            compositeRow.style.display = '';
+            if (unavailableEl) unavailableEl.style.display = 'none';
           }
 
           // Update dimensional scores
-          const dimensionsContainer = document.getElementById('fti-dimensions');
+          var dimensionsContainer = document.getElementById('fti-dimensions');
           if (data.dimensions && typeof data.dimensions === 'object' && dimensionsContainer) {
-            const entries = Object.entries(data.dimensions);
+            var entries = Object.entries(data.dimensions);
             if (entries.length > 0) {
-              // Clear SSR-rendered dimensions and rebuild with live data
               dimensionsContainer.innerHTML = entries
-                .map(([key, score]) => {
-                  const label = dimensionLabels[key] ?? key;
-                  const colorClass = scoreColorClass(score);
-                  return `<div class="flex flex-col gap-0.5 min-w-[72px]" data-fti-dim="${key}">
-                    <span class="text-xs text-gray-400 uppercase tracking-wider whitespace-nowrap">${label}</span>
-                    <span class="${colorClass} text-lg font-bold fti-dim-value">${score.toFixed(1)}</span>
-                  </div>`;
+                .map(function (entry) {
+                  var key = entry[0];
+                  var score = entry[1];
+                  var label = dimensionLabels[key] || key;
+                  var colorClass = scoreColorClass(score);
+                  return '<div class="flex flex-col gap-0.5 min-w-[72px]" data-fti-dim="' + key + '">' +
+                    '<span class="text-xs text-gray-400 uppercase tracking-wider whitespace-nowrap">' + label + '</span>' +
+                    '<span class="' + colorClass + ' text-lg font-bold fti-dim-value">' + score.toFixed(1) + '</span>' +
+                    '</div>';
                 })
                 .join('');
-              (dimensionsContainer as HTMLElement).style.display = '';
+              dimensionsContainer.style.display = '';
             }
           }
         })
-        .catch(() => {
-          // API unreachable at runtime - show "unavailable" only if SSR also had no score
-          const compositeRow = document.getElementById('fti-composite-row');
-          const unavailableEl = document.getElementById('fti-score-unavailable');
-          const compositeSpan = document.getElementById('fti-composite-score');
-          // If SSR populated a score, leave it visible; do not override with "unavailable"
-          if (
-            unavailableEl &&
-            compositeRow &&
-            compositeSpan &&
-            !compositeSpan.textContent?.trim()
-          ) {
-            (compositeRow as HTMLElement).style.display = 'none';
-            (unavailableEl as HTMLElement).style.display = '';
-          }
+        .catch(function () {
+          hideLoading();
+          // API unreachable - show "Score unavailable"
+          var compositeRow = document.getElementById('fti-composite-row');
+          var unavailableEl = document.getElementById('fti-score-unavailable');
+          if (compositeRow) compositeRow.style.display = 'none';
+          if (unavailableEl) unavailableEl.style.display = '';
         });
     })();
   </script>
