@@ -1,85 +1,14 @@
 name: Agentic Approval
+# DISABLED: This workflow polled for up to 30 minutes (90 attempts x 20s)
+# waiting for other checks, burning Actions minutes on every PR.
+# Re-enable when needed with a shorter timeout.
 
 on:
-  pull_request:
-    types: [opened, synchronize, reopened, ready_for_review]
-
-permissions:
-  checks: read
-  pull-requests: write
-  contents: read
+  workflow_dispatch: {}
 
 jobs:
   gate:
-    if: ${{ !github.event.pull_request.draft }}
+    if: false
     runs-on: ubuntu-latest
     steps:
-      - name: Evaluate required checks and auto-approve
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const owner = context.repo.owner;
-            const repo = context.repo.repo;
-            const pr = context.payload.pull_request;
-            const sha = pr.head.sha;
-            const required = [
-              'governance-gates',
-              'build-and-deploy'
-            ];
-
-            const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
-            for (let attempt = 1; attempt <= 90; attempt++) {
-              const checks = await github.paginate(github.rest.checks.listForRef, {
-                owner, repo, ref: sha, per_page: 100
-              });
-
-              const byName = new Map(checks.map(c => [c.name.trim().toLowerCase(), c]));
-              const missing = [];
-              const pending = [];
-              const failed = [];
-
-              for (const name of required) {
-                const c = byName.get(name.trim().toLowerCase());
-                if (!c) {
-                  missing.push(name);
-                  continue;
-                }
-                if (c.status !== 'completed') {
-                  pending.push(name);
-                  continue;
-                }
-                if (c.conclusion !== 'success') {
-                  failed.push(`${name} (${c.conclusion || 'unknown'})`);
-                }
-              }
-
-              if (failed.length) {
-                core.setFailed(`failed: ${failed.join(', ')}`);
-                return;
-              }
-              if (!missing.length && !pending.length) {
-                try {
-                  await github.rest.pulls.createReview({
-                    owner,
-                    repo,
-                    pull_number: pr.number,
-                    event: 'APPROVE',
-                    body: 'Agentic approval: all required checks passed.'
-                  });
-                  core.notice('Agentic approval: PR approved — all required checks passed.');
-                } catch (err) {
-                  if (err.status === 422) {
-                    core.notice('Agentic approval gate passed: all required checks completed successfully. (Self-approval skipped — GitHub API limitation.)');
-                  } else {
-                    throw err;
-                  }
-                }
-                return;
-              }
-
-              core.info(`Attempt ${attempt}/90 - waiting. missing=${missing.join(',') || '-'} pending=${pending.join(',') || '-'}`);
-              await sleep(20000);
-            }
-
-            core.setFailed('Timeout waiting for required checks to complete.');
+      - run: echo "disabled"
