@@ -10,7 +10,7 @@ const jsonLd = {
   name: 'ForgeOS Trust Index (FTI)',
   url: 'https://synctek.io/products/forgeos/fti',
   description:
-    'The ForgeOS Trust Index (FTI) provides deterministic, cryptographically signed trust scores (0-100) for any package in your stack across eight dimensions: Security, Maintainability, Documentation, Community Health, Supply Chain, Improvement Velocity, Governance, and Operational.',
+    'The ForgeOS Trust Index (FTI) provides deterministic, cryptographically signed trust scores (0–100) for any package in your stack across eight dimensions: Security, Maintainability, Documentation, Community Health, Supply Chain, Improvement Velocity, Governance, and Operational.',
   mainEntity: {
     '@type': 'SoftwareApplication',
     name: 'ForgeOS Trust Index',
@@ -86,16 +86,11 @@ function getTierColor(score: number): string {
 
 // Fetch live self-score for @synctek/forgeos (public endpoint, no auth required)
 // Fallback values match the last known good score in case the API is unreachable at build time.
-let SCORE = 82;
+let SCORE = 81;
 const FALLBACK_DIMENSIONS: Record<string, number> = {
-  security: 97,
-  maintainability: 78,
-  documentation: 91,
-  community_health: 43,
-  supply_chain: 80,
-  improvement_velocity: 50,
-  governance: 87,
-  operational: 92,
+  security: 97, maintainability: 78, documentation: 92,
+  community_health: 43, supply_chain: 80, improvement_velocity: 50,
+  governance: 87, operational: 86,
 };
 let liveDimensions: Record<string, number> = { ...FALLBACK_DIMENSIONS };
 try {
@@ -206,7 +201,7 @@ const dimensions = [
 
 <BaseLayout
   title="ForgeOS Trust Index (FTI) - Deterministic Package Trust Scoring"
-  description="The ForgeOS Trust Index scores any package in your stack 0-100 across eight dimensions: Security, Maintainability, Documentation, Community Health, Supply Chain, Improvement Velocity, Governance, and Operational. Every score is deterministic and Ed25519-signed."
+  description="The ForgeOS Trust Index scores any package in your stack 0–100 across eight dimensions: Security, Maintainability, Documentation, Community Health, Supply Chain, Improvement Velocity, Governance, and Operational. Every score is deterministic and Ed25519-signed."
   ogImage="/images/fti-trust-viz.png"
   jsonLd={jsonLd}
 >
@@ -241,10 +236,10 @@ const dimensions = [
             <img
               src="/images/forge-anvil-icon.png"
               alt="ForgeOS"
-              width="40"
-              height="40"
+              width="56"
+              height="56"
               loading="lazy"
-              style="width: 40px; height: 40px; border-radius: 8px; flex-shrink: 0;"
+              style="width: 56px; height: 56px; border-radius: 8px; flex-shrink: 0;"
             />
             <p class="text-xs font-semibold tracking-[0.12em] uppercase text-[#58A6FF]">FORGEOS TRUST INDEX</p>
           </div>
@@ -309,7 +304,7 @@ const dimensions = [
                     stroke="#1F1F1F"
                     stroke-width="8"
                   />
-                  <!-- Score arc - rotated so 0 deg is top -->
+                  <!-- Score arc - rotated so 0° is top -->
                   <circle
                     cx="60" cy="60" r="52"
                     fill="none"
@@ -436,15 +431,15 @@ const dimensions = [
       </div>
       <ul class="space-y-2.5 text-sm text-[#9CA3AF] leading-relaxed ml-8">
         <li class="flex items-start gap-2">
-          <span class="text-[#58A6FF] flex-shrink-0 mt-0.5">•</span>
+          <span class="text-[#58A6FF] flex-shrink-0 mt-0.5">-</span>
           <span><span class="text-[#E6EDF3] font-medium">npm audit covers CVEs only.</span> FTI scores Security, Maintainability, Supply Chain, Documentation, Community Health, Improvement Velocity, Governance, and Operational - eight independent dimensions in one composite signal.</span>
         </li>
         <li class="flex items-start gap-2">
-          <span class="text-[#58A6FF] flex-shrink-0 mt-0.5">•</span>
+          <span class="text-[#58A6FF] flex-shrink-0 mt-0.5">-</span>
           <span><span class="text-[#E6EDF3] font-medium">npm audit results change each run.</span> FTI is deterministic - same data, same score, always. You can diff scores across deploys and point to exact regressions.</span>
         </li>
         <li class="flex items-start gap-2">
-          <span class="text-[#58A6FF] flex-shrink-0 mt-0.5">•</span>
+          <span class="text-[#58A6FF] flex-shrink-0 mt-0.5">-</span>
           <span><span class="text-[#E6EDF3] font-medium">npm audit can't be embedded as a badge, verified cryptographically, or tracked over time.</span> FTI badges are live, scores are Ed25519-signed, and score history is queryable via API.</span>
         </li>
       </ul>
@@ -582,21 +577,20 @@ curl -H "X-API-Key: fos_live_abc123..." \
         <Badge text="200 OK" variant="green" />
       </div>
       <pre class="px-4 py-5 text-xs font-mono overflow-x-auto leading-relaxed" style="background: #0A0A0A; margin: 0; color: #E6EDF3;"><code><span style="color: #8B949E;">{"{"}
-</span>  <span style="color: #58A6FF;">"package"</span><span style="color: #8B949E;">:</span> <span style="color: #3FB950;">"@synctek/forgeos"</span><span style="color: #8B949E;">,</span>
-  <span style="color: #58A6FF;">"composite_score"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">81.10</span><span style="color: #8B949E;">,</span>
-  <span style="color: #58A6FF;">"tier"</span><span style="color: #8B949E;">:</span> <span style="color: #3FB950;">"verified"</span><span style="color: #8B949E;">,</span>
+</span>  <span style="color: #58A6FF;">"package"</span><span style="color: #8B949E;">:</span> <span style="color: #3FB950;">"npm:@synctek/forgeos"</span><span style="color: #8B949E;">,</span>
+  <span style="color: #58A6FF;">"composite"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">69.35</span><span style="color: #8B949E;">,</span>
   <span style="color: #58A6FF;">"dimensions"</span><span style="color: #8B949E;">: {"{"}</span>
-    <span style="color: #58A6FF;">"security"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">97.00</span><span style="color: #8B949E;">,</span>
-    <span style="color: #58A6FF;">"maintainability"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">78.40</span><span style="color: #8B949E;">,</span>
-    <span style="color: #58A6FF;">"documentation"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">91.50</span><span style="color: #8B949E;">,</span>
-    <span style="color: #58A6FF;">"community_health"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">43.10</span><span style="color: #8B949E;">,</span>
-    <span style="color: #58A6FF;">"supply_chain"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">80.00</span><span style="color: #8B949E;">,</span>
+    <span style="color: #58A6FF;">"security"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">86.15</span><span style="color: #8B949E;">,</span>
+    <span style="color: #58A6FF;">"maintainability"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">73.21</span><span style="color: #8B949E;">,</span>
+    <span style="color: #58A6FF;">"documentation"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">66.75</span><span style="color: #8B949E;">,</span>
+    <span style="color: #58A6FF;">"community_health"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">47.05</span><span style="color: #8B949E;">,</span>
+    <span style="color: #58A6FF;">"supply_chain"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">74.00</span><span style="color: #8B949E;">,</span>
     <span style="color: #58A6FF;">"improvement_velocity"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">50.00</span><span style="color: #8B949E;">,</span>
-    <span style="color: #58A6FF;">"governance"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">87.10</span><span style="color: #8B949E;">,</span>
-    <span style="color: #58A6FF;">"operational"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">86.00</span>
+    <span style="color: #58A6FF;">"governance"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">83.40</span><span style="color: #8B949E;">,</span>
+    <span style="color: #58A6FF;">"operational"</span><span style="color: #8B949E;">:</span> <span style="color: #D29922;">65.20</span>
   <span style="color: #8B949E;">{"}"}</span><span style="color: #8B949E;">,</span>
-  <span style="color: #58A6FF;">"trajectory"</span><span style="color: #8B949E;">:</span> <span style="color: #3FB950;">"rising"</span><span style="color: #8B949E;">,</span>
-  <span style="color: #58A6FF;">"algorithm_version"</span><span style="color: #8B949E;">:</span> <span style="color: #3FB950;">"fti-v1.0.0"</span>
+  <span style="color: #58A6FF;">"algorithm_version"</span><span style="color: #8B949E;">:</span> <span style="color: #3FB950;">"fti-v1.0.0"</span><span style="color: #8B949E;">,</span>
+  <span style="color: #58A6FF;">"signature"</span><span style="color: #8B949E;">:</span> <span style="color: #3FB950;">"sha256:aaf8e233..."</span>
 <span style="color: #8B949E;">{"}"}</span></code></pre>
     </div>
 

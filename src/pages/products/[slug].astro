@@ -130,10 +130,55 @@ const ftiScores: FtiScore[] = (() => {
   }));
 })();
 
-// FTI scores are fetched client-side only - no SSR fetch to avoid stale build-time data
+// Fetch live FTI scores at build time from the ForgeOS Trust Index API.
+// The API returns a TrustProfile: { composite_score: number, dimensions: Record<string, number>, ... }
+let liveFtiScores: FtiScore[] = [];
+let ftiCompositeScore: number | null = null;
 const ftiApiUrl = fti && 'apiScoreUrl' in fti ? fti.apiScoreUrl as string : undefined;
-const finalFtiScores: FtiScore[] = ftiScores; // static fallback shape only; client overwrites
-const ftiCompositeScore: number | null = null; // always starts null; client populates
+if (ftiApiUrl) {
+  try {
+    const res = await fetch(ftiApiUrl, {
+      headers: { 'Accept': 'application/json' },
+      signal: AbortSignal.timeout(5000),
+    });
+    if (res.ok) {
+      const data = await res.json();
+      const dimensionLabels: Record<string, string> = {
+        security: 'Security',
+        maintainability: 'Maintainability',
+        documentation: 'Documentation',
+        community_health: 'Community',
+        community: 'Community',
+        supply_chain: 'Supply Chain',
+        improvement_velocity: 'Velocity',
+        operational: 'Operational',
+        governance: 'Governance',
+      };
+      // Capture composite score from TrustProfile.composite_score
+      if (typeof data.composite_score === 'number') {
+        ftiCompositeScore = data.composite_score;
+      }
+      // API returns dimensions as Record<string, number> (flat dict of scores)
+      if (data.dimensions && typeof data.dimensions === 'object') {
+        liveFtiScores = Object.entries(data.dimensions as Record<string, number>).map(([key, score]) => ({
+          key,
+          label: dimensionLabels[key] ?? key,
+          value: typeof score === 'number' ? score : 0,
+          colorClass: score >= 80 ? 'text-[#22c55e]' : score >= 60 ? 'text-[#6366f1]' : score >= 40 ? 'text-[#f59e0b]' : 'text-[#ef4444]',
+        }));
+      }
+    }
+  } catch (e) {
+    // Build-time fetch failed - fall back to static scores if present
+    console.warn('FTI API fetch failed at build time:', e);
+  }
+}
+// Use live scores if available, fall back to static
+const finalFtiScores = liveFtiScores.length > 0 ? liveFtiScores : ftiScores;
+// Fall back to static composite score if API didn't provide one
+if (ftiCompositeScore === null && fti && 'compositeScore' in fti) {
+  ftiCompositeScore = fti.compositeScore as number;
+}
 ---
 
 <BaseLayout
@@ -155,10 +200,10 @@ const ftiCompositeScore: number | null = null; // always starts null; client pop
           <img
             src="/images/forge-anvil-icon.png"
             alt="ForgeOS"
-            width="120"
-            height="120"
+            width="80"
+            height="80"
             loading="lazy"
-            style="width: 120px; height: 120px; border-radius: 12px; flex-shrink: 0;"
+            style="width: 80px; height: 80px; border-radius: 10px; flex-shrink: 0;"
           />
         )}
         <h1 class="text-3xl sm:text-4xl font-bold tracking-tight">{product.name}</h1>
@@ -177,11 +222,7 @@ const ftiCompositeScore: number | null = null; // always starts null; client pop
 
       <!-- FTI Trust Score Card -->
       {fti && (
-        <div
-          class="bg-gray-900/50 border border-gray-800 rounded-xl p-6 mb-8 max-w-2xl"
-          id="fti-score-card"
-          data-fti-api-url={ftiApiUrl ?? ''}
-        >
+        <div class="bg-gray-900/50 border border-gray-800 rounded-xl p-6 mb-8 max-w-2xl">
           <!-- Header row: badges + label -->
           <div class="flex flex-wrap items-center gap-4 mb-5">
             <div class="flex items-center gap-3">
@@ -220,33 +261,29 @@ const ftiCompositeScore: number | null = null; // always starts null; client pop
             )}
           </div>
 
-          <!-- Composite score - hidden until client-side fetch populates it -->
-          <div id="fti-composite-row" class="flex items-baseline gap-2 mb-4" style="display:none">
-            <span id="fti-composite-score" class="text-3xl font-bold"></span>
-            <span class="text-sm text-gray-400">/ 100</span>
-          </div>
-          <!-- Loading placeholder shown until client fetch resolves -->
-          <div id="fti-loading" class="text-sm text-gray-400 mb-4">Loading score...</div>
-          <!-- Shown when API is unreachable at runtime -->
-          <div id="fti-score-unavailable" class="text-sm text-gray-500 mb-4" style="display:none">Score unavailable</div>
+          <!-- Composite score (live API only) -->
+          {ftiCompositeScore !== null && (
+            <div class="flex items-baseline gap-2 mb-4">
+              <span class="text-3xl font-bold">{ftiCompositeScore.toFixed(1)}</span>
+              <span class="text-sm text-gray-400">/ 100</span>
+            </div>
+          )}
 
-          <!-- Dimensional score breakdown - hidden until client fetch populates -->
-          <div
-            id="fti-dimensions"
-            class="flex flex-wrap gap-x-6 gap-y-3"
-            style="display:none"
-          >
-            {finalFtiScores.map((score) => (
-              <div class="flex flex-col gap-0.5 min-w-[72px]" data-fti-dim={score.key}>
-                <span class="text-xs text-gray-400 uppercase tracking-wider whitespace-nowrap">
-                  {score.label}
-                </span>
-                <span class:list={['text-lg font-bold fti-dim-value', score.colorClass]}>
-                  {score.value.toFixed(1)}
-                </span>
-              </div>
-            ))}
-          </div>
+          <!-- Dimensional score breakdown -->
+          {finalFtiScores.length > 0 && (
+            <div class="flex flex-wrap gap-x-6 gap-y-3">
+              {finalFtiScores.map((score) => (
+                <div class="flex flex-col gap-0.5 min-w-[72px]">
+                  <span class="text-xs text-gray-400 uppercase tracking-wider whitespace-nowrap">
+                    {score.label}
+                  </span>
+                  <span class:list={['text-lg font-bold', score.colorClass]}>
+                    {score.value.toFixed(1)}
+                  </span>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       )}
 
@@ -820,91 +857,6 @@ const ftiCompositeScore: number | null = null; // always starts null; client pop
       </section>
     </>
   )}
-
-  <!-- Client-side FTI score fetch: populates score card from live API on page load.
-       No SSR data - client is sole source of truth for scores. -->
-  <script is:inline>
-    (function () {
-      const card = document.getElementById('fti-score-card');
-      if (!card) return;
-
-      const apiUrl = card.getAttribute('data-fti-api-url');
-      if (!apiUrl) return;
-
-      const dimensionLabels = {
-        security: 'Security',
-        maintainability: 'Maintainability',
-        documentation: 'Documentation',
-        community_health: 'Community',
-        community: 'Community',
-        supply_chain: 'Supply Chain',
-        improvement_velocity: 'Velocity',
-        operational: 'Operational',
-        governance: 'Governance',
-      };
-
-      function scoreColorClass(score) {
-        if (score >= 80) return 'text-[#22c55e]';
-        if (score >= 60) return 'text-[#6366f1]';
-        if (score >= 40) return 'text-[#f59e0b]';
-        return 'text-[#ef4444]';
-      }
-
-      function hideLoading() {
-        var loadingEl = document.getElementById('fti-loading');
-        if (loadingEl) loadingEl.style.display = 'none';
-      }
-
-      fetch(apiUrl, { headers: { Accept: 'application/json' } })
-        .then(function (res) {
-          if (!res.ok) throw new Error('API returned ' + res.status);
-          return res.json();
-        })
-        .then(function (data) {
-          hideLoading();
-
-          // Update composite score row
-          var compositeRow = document.getElementById('fti-composite-row');
-          var compositeSpan = document.getElementById('fti-composite-score');
-          var unavailableEl = document.getElementById('fti-score-unavailable');
-
-          if (typeof data.composite_score === 'number' && compositeRow && compositeSpan) {
-            compositeSpan.textContent = data.composite_score.toFixed(1);
-            compositeRow.style.display = '';
-            if (unavailableEl) unavailableEl.style.display = 'none';
-          }
-
-          // Update dimensional scores
-          var dimensionsContainer = document.getElementById('fti-dimensions');
-          if (data.dimensions && typeof data.dimensions === 'object' && dimensionsContainer) {
-            var entries = Object.entries(data.dimensions);
-            if (entries.length > 0) {
-              dimensionsContainer.innerHTML = entries
-                .map(function (entry) {
-                  var key = entry[0];
-                  var score = entry[1];
-                  var label = dimensionLabels[key] || key;
-                  var colorClass = scoreColorClass(score);
-                  return '<div class="flex flex-col gap-0.5 min-w-[72px]" data-fti-dim="' + key + '">' +
-                    '<span class="text-xs text-gray-400 uppercase tracking-wider whitespace-nowrap">' + label + '</span>' +
-                    '<span class="' + colorClass + ' text-lg font-bold fti-dim-value">' + score.toFixed(1) + '</span>' +
-                    '</div>';
-                })
-                .join('');
-              dimensionsContainer.style.display = '';
-            }
-          }
-        })
-        .catch(function () {
-          hideLoading();
-          // API unreachable - show "Score unavailable"
-          var compositeRow = document.getElementById('fti-composite-row');
-          var unavailableEl = document.getElementById('fti-score-unavailable');
-          if (compositeRow) compositeRow.style.display = 'none';
-          if (unavailableEl) unavailableEl.style.display = '';
-        });
-    })();
-  </script>
 
   <!-- Related blog posts -->
   {relatedPosts.length > 0 && (
