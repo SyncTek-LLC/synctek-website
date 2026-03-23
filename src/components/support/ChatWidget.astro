@@ -1,0 +1,761 @@
+---
+/**
+ * SiteAtlas Support Chat Widget
+ * Vanilla JS implementation — no React dependency required.
+ * Connects to the SupportAtlas SSE-based API.
+ */
+import './ChatWidget.css';
+
+interface Props {
+  apiUrl: string;
+  productSlug: string;
+}
+
+const { apiUrl, productSlug } = Astro.props;
+---
+
+<!-- Widget root -->
+<div id="support-widget" role="complementary" aria-label="Support chat">
+  <!-- Floating bubble -->
+  <button
+    id="sw-bubble"
+    type="button"
+    aria-label="Open support chat"
+    aria-expanded="false"
+    aria-controls="sw-panel"
+  >
+    <!-- Chat icon -->
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+    </svg>
+    <!-- Unread indicator -->
+    <span id="sw-unread-dot" class="hidden" aria-label="New message"></span>
+  </button>
+
+  <!-- Chat panel -->
+  <div
+    id="sw-panel"
+    class="hidden"
+    role="dialog"
+    aria-label="SiteAtlas Support chat"
+    aria-modal="false"
+  >
+    <!-- Header -->
+    <div id="sw-header">
+      <div class="sw-header-title">
+        <div class="sw-header-icon" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+          </svg>
+        </div>
+        <div class="sw-title-text">
+          <span class="sw-title-name">SiteAtlas Support</span>
+          <span class="sw-title-status" id="sw-status-line">
+            <span class="sw-status-dot" id="sw-status-dot"></span>
+            <span id="sw-status-text">Online</span>
+          </span>
+        </div>
+      </div>
+      <button id="sw-close-btn" type="button" aria-label="Close support chat">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Messages container or unavailable state -->
+    <div id="sw-body" style="display:flex;flex-direction:column;flex:1;overflow:hidden;">
+      <!-- Unavailable (shown when API URL not configured) -->
+      <div id="sw-unavailable" class="hidden">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="12" y1="8" x2="12" y2="12"/>
+          <line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+        <p class="sw-unavail-title">Support unavailable</p>
+        <p class="sw-unavail-sub">Live chat is not configured for this environment. Try our <a href="/contact/" style="color:#F59E0B;text-decoration:underline;">contact page</a> instead.</p>
+      </div>
+
+      <!-- Empty / welcome state -->
+      <div id="sw-empty">
+        <div class="sw-empty-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+          </svg>
+        </div>
+        <p class="sw-empty-title">How can we help?</p>
+        <p class="sw-empty-sub">Ask anything about SiteAtlas. Our AI support agent usually responds in seconds.</p>
+      </div>
+
+      <!-- Messages list -->
+      <div id="sw-messages" role="log" aria-live="polite" aria-label="Chat messages"></div>
+
+      <!-- Typing indicator -->
+      <div id="sw-typing" class="hidden" aria-label="Support agent is typing" style="padding: 0 14px 4px;">
+        <div class="sw-typing-dots">
+          <span class="sw-typing-dot"></span>
+          <span class="sw-typing-dot"></span>
+          <span class="sw-typing-dot"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Input area -->
+    <div id="sw-input-area">
+      <textarea
+        id="sw-input"
+        placeholder="Ask a question..."
+        rows="1"
+        aria-label="Type your message"
+        autocomplete="off"
+        spellcheck="true"
+      ></textarea>
+      <button id="sw-send-btn" type="button" aria-label="Send message" disabled>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="22" y1="2" x2="11" y2="13"/>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script is:inline define:vars={{ apiUrl, productSlug }}>
+  /**
+   * SiteAtlas Support Chat Widget — Client Runtime
+   *
+   * Implements:
+   *  - Floating bubble toggle
+   *  - Session persistence (localStorage)
+   *  - POST /api/chat to initiate a turn
+   *  - GET /api/chat/:sessionId/stream via fetch ReadableStream (NOT EventSource)
+   *  - SSE events: token, tool_start, tool_end, action_card, done, error
+   *  - Agent dispatch badges
+   *  - Action card approval via POST /api/chat/:sessionId/approve/:actionId
+   *  - Graceful degradation when apiUrl is empty
+   */
+
+  (function initSupportWidget() {
+    // ─── Constants ────────────────────────────────────────────────────
+    const SESSION_STORAGE_KEY = 'sw_session_' + productSlug;
+    const HISTORY_STORAGE_KEY = 'sw_history_' + productSlug;
+    const MAX_HISTORY = 50; // messages to keep in localStorage
+
+    // ─── DOM refs ─────────────────────────────────────────────────────
+    const widget   = document.getElementById('support-widget');
+    const bubble   = document.getElementById('sw-bubble');
+    const panel    = document.getElementById('sw-panel');
+    const closeBtn = document.getElementById('sw-close-btn');
+    const unreadDot = document.getElementById('sw-unread-dot');
+    const messagesEl = document.getElementById('sw-messages');
+    const typingEl  = document.getElementById('sw-typing');
+    const inputEl   = document.getElementById('sw-input');
+    const sendBtn   = document.getElementById('sw-send-btn');
+    const emptyEl   = document.getElementById('sw-empty');
+    const unavailEl = document.getElementById('sw-unavailable');
+    const statusDot = document.getElementById('sw-status-dot');
+    const statusText = document.getElementById('sw-status-text');
+
+    if (!widget) return;
+
+    // ─── State ────────────────────────────────────────────────────────
+    let isOpen     = false;
+    let isStreaming = false;
+    let hasUnread  = false;
+    let sessionId  = null;
+
+    // Message store: { id, role, content, timestamp, agentBadges, actionCards }
+    let messages   = [];
+
+    // Current streaming message DOM element
+    let streamingMsgEl = null;
+    let streamingTextEl = null;
+
+    // ─── Init ─────────────────────────────────────────────────────────
+    function init() {
+      // Check API availability
+      if (!apiUrl) {
+        showUnavailable();
+        return;
+      }
+
+      // Restore session
+      try {
+        sessionId = localStorage.getItem(SESSION_STORAGE_KEY) || null;
+        const saved = localStorage.getItem(HISTORY_STORAGE_KEY);
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            messages = parsed;
+          }
+        }
+      } catch (_) {
+        // localStorage unavailable — continue without persistence
+      }
+
+      // Bind events
+      bubble.addEventListener('click', togglePanel);
+      closeBtn.addEventListener('click', closePanel);
+      sendBtn.addEventListener('click', sendMessage);
+      inputEl.addEventListener('keydown', onInputKeydown);
+      inputEl.addEventListener('input', onInputChange);
+
+      // Keyboard: close on Escape
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && isOpen) closePanel();
+      });
+
+      // If we have history, show the unread dot
+      if (messages.length > 0) {
+        setUnread(true);
+      }
+    }
+
+    // ─── Unavailable mode ─────────────────────────────────────────────
+    function showUnavailable() {
+      if (statusDot) {
+        statusDot.classList.add('offline');
+        if (statusText) statusText.textContent = 'Offline';
+      }
+      if (unavailEl) unavailEl.classList.remove('hidden');
+      if (emptyEl)   emptyEl.classList.add('hidden');
+      if (messagesEl) messagesEl.style.display = 'none';
+      if (inputEl)   inputEl.disabled = true;
+      if (sendBtn)   sendBtn.disabled = true;
+    }
+
+    // ─── Panel toggle ─────────────────────────────────────────────────
+    function togglePanel() {
+      if (isOpen) {
+        closePanel();
+      } else {
+        openPanel();
+      }
+    }
+
+    function openPanel() {
+      isOpen = true;
+      panel.classList.remove('hidden');
+      bubble.setAttribute('aria-expanded', 'true');
+      setUnread(false);
+
+      // Render any restored messages
+      if (messages.length > 0) {
+        renderAllMessages();
+        hideEmpty();
+        scrollToBottom();
+      }
+
+      // Focus input
+      setTimeout(() => inputEl && inputEl.focus(), 50);
+    }
+
+    function closePanel() {
+      // Brief animation
+      panel.classList.add('sw-closing');
+      setTimeout(() => {
+        isOpen = false;
+        panel.classList.remove('sw-closing');
+        panel.classList.add('hidden');
+        bubble.setAttribute('aria-expanded', 'false');
+      }, 200);
+    }
+
+    // ─── Unread indicator ────────────────────────────────────────────
+    function setUnread(val) {
+      hasUnread = val;
+      if (unreadDot) {
+        if (val) {
+          unreadDot.classList.remove('hidden');
+        } else {
+          unreadDot.classList.add('hidden');
+        }
+      }
+    }
+
+    // ─── Input handling ───────────────────────────────────────────────
+    function onInputKeydown(e) {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        if (!sendBtn.disabled) sendMessage();
+      }
+    }
+
+    function onInputChange() {
+      const val = inputEl.value.trim();
+      sendBtn.disabled = val.length === 0 || isStreaming;
+      // Auto-resize textarea
+      inputEl.style.height = 'auto';
+      inputEl.style.height = Math.min(inputEl.scrollHeight, 100) + 'px';
+    }
+
+    // ─── Send message ─────────────────────────────────────────────────
+    async function sendMessage() {
+      const text = inputEl.value.trim();
+      if (!text || isStreaming) return;
+
+      // Clear input
+      inputEl.value = '';
+      inputEl.style.height = 'auto';
+      sendBtn.disabled = true;
+      isStreaming = true;
+
+      // Add user message to state + DOM
+      const userMsg = createMessage('user', text);
+      messages.push(userMsg);
+      hideEmpty();
+      renderMessage(userMsg);
+      scrollToBottom();
+
+      // Show typing indicator
+      showTyping(true);
+
+      try {
+        // POST to initiate the turn
+        const initRes = await fetch(`${apiUrl}/api/chat`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Product-Slug': productSlug,
+          },
+          body: JSON.stringify({
+            message: text,
+            sessionId: sessionId || undefined,
+            productSlug,
+          }),
+        });
+
+        if (!initRes.ok) {
+          throw new Error(`API error ${initRes.status}: ${initRes.statusText}`);
+        }
+
+        const { sessionId: newSessionId, streamUrl } = await initRes.json();
+
+        // Persist session
+        if (newSessionId) {
+          sessionId = newSessionId;
+          try { localStorage.setItem(SESSION_STORAGE_KEY, sessionId); } catch (_) {}
+        }
+
+        // Begin streaming
+        await streamResponse(streamUrl || `${apiUrl}/api/chat/${sessionId}/stream`);
+
+      } catch (err) {
+        showTyping(false);
+        isStreaming = false;
+        sendBtn.disabled = false;
+
+        const errMsg = createMessage('system', getErrorText(err));
+        errMsg._isError = true;
+        messages.push(errMsg);
+        renderError(getErrorText(err));
+        scrollToBottom();
+        saveHistory();
+      }
+    }
+
+    // ─── SSE Streaming (fetch ReadableStream) ─────────────────────────
+    async function streamResponse(streamUrl) {
+      let assistantMsg = null;
+
+      try {
+        const res = await fetch(streamUrl, {
+          method: 'GET',
+          headers: { 'Accept': 'text/event-stream' },
+        });
+
+        if (!res.ok) {
+          throw new Error(`Stream error ${res.status}`);
+        }
+
+        showTyping(false);
+
+        // Create assistant message placeholder
+        assistantMsg = createMessage('assistant', '');
+        messages.push(assistantMsg);
+        streamingMsgEl = renderMessage(assistantMsg, true);
+        streamingTextEl = streamingMsgEl
+          ? streamingMsgEl.querySelector('.sw-bubble-text')
+          : null;
+        scrollToBottom();
+
+        // Parse the ReadableStream line by line
+        const reader = res.body.getReader();
+        const decoder = new TextDecoder();
+        let buffer = '';
+
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+
+          buffer += decoder.decode(value, { stream: true });
+
+          // Process complete lines
+          const lines = buffer.split('\n');
+          buffer = lines.pop(); // keep incomplete last line
+
+          for (const line of lines) {
+            if (line.startsWith('data: ')) {
+              const raw = line.slice(6).trim();
+              if (!raw || raw === '[DONE]') continue;
+              try {
+                const event = JSON.parse(raw);
+                handleSSEEvent(event, assistantMsg, streamingTextEl);
+              } catch (_) {
+                // malformed JSON — skip
+              }
+            }
+          }
+
+          scrollToBottom();
+        }
+
+        // Finalize streaming
+        finalizeStreaming(assistantMsg, streamingTextEl);
+
+      } catch (err) {
+        showTyping(false);
+        if (streamingTextEl && assistantMsg && !assistantMsg.content) {
+          // Replace empty streaming bubble with error
+          if (streamingMsgEl) streamingMsgEl.remove();
+          messages = messages.filter(m => m !== assistantMsg);
+          renderError(getErrorText(err));
+        } else {
+          renderError(getErrorText(err));
+        }
+      } finally {
+        isStreaming = false;
+        streamingMsgEl = null;
+        streamingTextEl = null;
+        sendBtn.disabled = inputEl.value.trim().length === 0;
+        saveHistory();
+        scrollToBottom();
+
+        // Show unread dot if panel is closed
+        if (!isOpen) setUnread(true);
+      }
+    }
+
+    // ─── SSE Event handler ────────────────────────────────────────────
+    function handleSSEEvent(event, assistantMsg, textEl) {
+      switch (event.type) {
+        case 'token': {
+          assistantMsg.content += event.content;
+          if (textEl) {
+            textEl.textContent = assistantMsg.content;
+            textEl.classList.add('sw-streaming-cursor');
+          }
+          break;
+        }
+
+        case 'tool_start': {
+          // Add or update badge on the current assistant message
+          if (!assistantMsg.agentBadges) assistantMsg.agentBadges = [];
+          const existingIdx = assistantMsg.agentBadges.findIndex(
+            b => b.agentName === event.agentName && b.toolName === event.toolName
+          );
+          if (existingIdx === -1) {
+            assistantMsg.agentBadges.push({
+              agentName: event.agentName,
+              toolName: event.toolName,
+              status: 'running',
+            });
+          }
+          updateBadgesInDOM(assistantMsg, streamingMsgEl);
+          break;
+        }
+
+        case 'tool_end': {
+          // Mark matching badge as done
+          if (assistantMsg.agentBadges) {
+            const last = [...assistantMsg.agentBadges]
+              .reverse()
+              .find(b => b.status === 'running');
+            if (last) last.status = 'done';
+          }
+          updateBadgesInDOM(assistantMsg, streamingMsgEl);
+          break;
+        }
+
+        case 'action_card': {
+          if (!assistantMsg.actionCards) assistantMsg.actionCards = [];
+          const card = {
+            actionId: event.actionId,
+            description: event.description,
+            payload: event.payload || {},
+            approved: undefined,
+          };
+          assistantMsg.actionCards.push(card);
+          appendActionCardToDOM(card, assistantMsg, streamingMsgEl);
+          break;
+        }
+
+        case 'done': {
+          // Streaming complete — handled in finalizeStreaming
+          break;
+        }
+
+        case 'error': {
+          renderError(event.message || 'Something went wrong.');
+          break;
+        }
+      }
+    }
+
+    function finalizeStreaming(msg, textEl) {
+      if (textEl) {
+        textEl.classList.remove('sw-streaming-cursor');
+      }
+    }
+
+    // ─── Action card approval ─────────────────────────────────────────
+    async function approveAction(actionId, approved, msg, btnContainer) {
+      // Optimistic UI
+      if (btnContainer) {
+        btnContainer.innerHTML = approved
+          ? '<span class="sw-action-approved-label"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Approved</span>'
+          : '<span style="font-size:12px;color:#8B949E;">Dismissed</span>';
+      }
+
+      if (!approved) return; // nothing to POST for rejection
+
+      try {
+        await fetch(`${apiUrl}/api/chat/${sessionId}/approve/${actionId}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ approved: true }),
+        });
+      } catch (_) {
+        // Approval delivery failed — widget already shows approved state
+      }
+
+      // Update local state
+      if (msg && msg.actionCards) {
+        const card = msg.actionCards.find(c => c.actionId === actionId);
+        if (card) card.approved = approved;
+      }
+      saveHistory();
+    }
+
+    // ─── DOM rendering ────────────────────────────────────────────────
+    function hideEmpty() {
+      if (emptyEl) emptyEl.style.display = 'none';
+      if (messagesEl) messagesEl.style.display = '';
+    }
+
+    function renderAllMessages() {
+      if (!messagesEl) return;
+      messagesEl.innerHTML = '';
+      for (const msg of messages) {
+        if (msg._isError) {
+          renderError(msg.content, false);
+        } else {
+          renderMessage(msg);
+        }
+      }
+    }
+
+    function renderMessage(msg, isStreaming = false) {
+      if (!messagesEl) return null;
+
+      const wrapper = document.createElement('div');
+      wrapper.className = `sw-msg sw-msg-${msg.role}`;
+      wrapper.dataset.msgId = msg.id;
+
+      // Text bubble
+      const bubble = document.createElement('div');
+      bubble.className = 'sw-bubble-text';
+      if (isStreaming) bubble.classList.add('sw-streaming-cursor');
+      bubble.textContent = msg.content;
+      wrapper.appendChild(bubble);
+
+      // Timestamp
+      const time = document.createElement('span');
+      time.className = 'sw-msg-time';
+      time.textContent = formatTime(msg.timestamp);
+      wrapper.appendChild(time);
+
+      // Agent badges (if any)
+      if (msg.agentBadges && msg.agentBadges.length > 0) {
+        const badgesEl = buildBadgesEl(msg.agentBadges);
+        wrapper.appendChild(badgesEl);
+      }
+
+      // Action cards (if any)
+      if (msg.actionCards && msg.actionCards.length > 0) {
+        for (const card of msg.actionCards) {
+          const cardEl = buildActionCardEl(card, msg);
+          wrapper.appendChild(cardEl);
+        }
+      }
+
+      messagesEl.appendChild(wrapper);
+      return wrapper;
+    }
+
+    function updateBadgesInDOM(msg, wrapperEl) {
+      if (!wrapperEl || !msg.agentBadges) return;
+      let badgesContainer = wrapperEl.querySelector('.sw-badges');
+      if (!badgesContainer) {
+        badgesContainer = buildBadgesEl(msg.agentBadges);
+        // Insert after timestamp
+        const time = wrapperEl.querySelector('.sw-msg-time');
+        if (time) {
+          time.after(badgesContainer);
+        } else {
+          wrapperEl.appendChild(badgesContainer);
+        }
+      } else {
+        // Rebuild badges in-place
+        const fresh = buildBadgesEl(msg.agentBadges);
+        badgesContainer.replaceWith(fresh);
+      }
+    }
+
+    function buildBadgesEl(badges) {
+      const container = document.createElement('div');
+      container.className = 'sw-badges';
+      for (const badge of badges) {
+        const el = document.createElement('span');
+        const isDone = badge.status === 'done';
+        el.className = `sw-badge ${isDone ? 'sw-badge-done' : 'sw-badge-running'}`;
+        if (isDone) {
+          el.innerHTML = `<svg class="sw-badge-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>${badge.agentName}: ${badge.toolName}`;
+        } else {
+          el.innerHTML = `<span class="sw-badge-spinner"></span>${badge.agentName}: ${badge.toolName}`;
+        }
+        container.appendChild(el);
+      }
+      return container;
+    }
+
+    function appendActionCardToDOM(card, msg, wrapperEl) {
+      if (!wrapperEl) return;
+      const cardEl = buildActionCardEl(card, msg);
+      wrapperEl.appendChild(cardEl);
+      scrollToBottom();
+    }
+
+    function buildActionCardEl(card, msg) {
+      const el = document.createElement('div');
+      el.className = 'sw-action-card';
+      el.dataset.actionId = card.actionId;
+
+      const label = document.createElement('span');
+      label.className = 'sw-action-label';
+      label.textContent = 'Action Required';
+      el.appendChild(label);
+
+      const desc = document.createElement('p');
+      desc.className = 'sw-action-desc';
+      desc.textContent = card.description;
+      el.appendChild(desc);
+
+      const btnRow = document.createElement('div');
+      btnRow.className = 'sw-action-buttons';
+
+      if (card.approved !== undefined) {
+        // Already resolved
+        btnRow.innerHTML = card.approved
+          ? '<span class="sw-action-approved-label"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Approved</span>'
+          : '<span style="font-size:12px;color:#8B949E;">Dismissed</span>';
+      } else {
+        const approveBtn = document.createElement('button');
+        approveBtn.className = 'sw-action-btn sw-action-approve';
+        approveBtn.type = 'button';
+        approveBtn.textContent = 'Approve';
+        approveBtn.addEventListener('click', () => {
+          approveAction(card.actionId, true, msg, btnRow);
+        });
+
+        const rejectBtn = document.createElement('button');
+        rejectBtn.className = 'sw-action-btn sw-action-reject';
+        rejectBtn.type = 'button';
+        rejectBtn.textContent = 'Dismiss';
+        rejectBtn.addEventListener('click', () => {
+          approveAction(card.actionId, false, msg, btnRow);
+        });
+
+        btnRow.appendChild(approveBtn);
+        btnRow.appendChild(rejectBtn);
+      }
+
+      el.appendChild(btnRow);
+      return el;
+    }
+
+    function renderError(text, appendToDOM = true) {
+      if (!messagesEl || !appendToDOM) return;
+      const el = document.createElement('div');
+      el.className = 'sw-error-toast';
+      el.textContent = text;
+      messagesEl.appendChild(el);
+    }
+
+    // ─── Typing indicator ─────────────────────────────────────────────
+    function showTyping(show) {
+      if (!typingEl) return;
+      if (show) {
+        typingEl.classList.remove('hidden');
+      } else {
+        typingEl.classList.add('hidden');
+      }
+    }
+
+    // ─── Scroll helpers ───────────────────────────────────────────────
+    function scrollToBottom() {
+      if (messagesEl) {
+        messagesEl.scrollTop = messagesEl.scrollHeight;
+      }
+    }
+
+    // ─── Persistence ──────────────────────────────────────────────────
+    function saveHistory() {
+      try {
+        const toSave = messages.slice(-MAX_HISTORY);
+        localStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify(toSave));
+      } catch (_) {}
+    }
+
+    // ─── Utilities ────────────────────────────────────────────────────
+    function createMessage(role, content) {
+      return {
+        id: 'msg_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7),
+        role,
+        content,
+        timestamp: Date.now(),
+        agentBadges: [],
+        actionCards: [],
+      };
+    }
+
+    function formatTime(ts) {
+      const d = new Date(ts);
+      const h = d.getHours();
+      const m = d.getMinutes().toString().padStart(2, '0');
+      const ampm = h >= 12 ? 'pm' : 'am';
+      return `${h % 12 || 12}:${m} ${ampm}`;
+    }
+
+    function getErrorText(err) {
+      if (err instanceof Error) {
+        if (err.message.includes('Failed to fetch') || err.message.includes('NetworkError')) {
+          return 'Could not reach support. Check your connection and try again.';
+        }
+        if (err.message.includes('404')) {
+          return 'Support service not found. Please try again later.';
+        }
+        if (err.message.includes('429')) {
+          return 'Too many requests. Please wait a moment before sending another message.';
+        }
+        return err.message.length > 120 ? err.message.slice(0, 120) + '...' : err.message;
+      }
+      return 'An unexpected error occurred. Please try again.';
+    }
+
+    // ─── Boot ─────────────────────────────────────────────────────────
+    init();
+
+  })();
+</script>
