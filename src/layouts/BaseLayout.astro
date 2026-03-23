@@ -2,7 +2,6 @@
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import SEO from '../components/SEO.astro';
-import SupportWidget from '../components/SupportWidget.astro';
 import '../styles/global.css';
 
 interface Props {
@@ -77,7 +76,5 @@ const { title, description, ogImage, ogType, article, jsonLd } = Astro.props;
       <slot />
     </main>
     <Footer />
-    <!-- Support chat widget — renders only when PUBLIC_SUPPORT_API_URL is set -->
-    <SupportWidget />
   </body>
 </html>
