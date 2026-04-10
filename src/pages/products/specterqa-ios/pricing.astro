@@ -1,0 +1,559 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import SectionDivider from '../../../components/SectionDivider.astro';
+import product from '../../../data/products/specterqa-ios';
+
+const accentColor = product.accentColor;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: 'SpecterQA iOS Pricing',
+  url: 'https://synctek.io/products/specterqa-ios/pricing',
+  description:
+    'SpecterQA iOS pricing: Trial free, Indie $29/mo, Pro $99/mo ($990/yr), Team $299/mo ($2,990/yr), Enterprise custom. BYOK — your API key, your data.',
+  mainEntity: {
+    '@type': 'Product',
+    name: 'SpecterQA iOS',
+    description:
+      'AI-native iOS testing via MCP — record once, replay free. 19 MCP tools, Maestro-compatible, BYOK.',
+    brand: { '@type': 'Brand', name: 'SyncTek LLC' },
+    offers: [
+      {
+        '@type': 'Offer',
+        name: 'Trial',
+        price: '0',
+        priceCurrency: 'USD',
+        availability: 'https://schema.org/InStock',
+        url: 'https://synctek.io/products/specterqa-ios/pricing',
+        description: 'Trial: 1 simulator, 3 runs/session. No credit card.',
+      },
+      {
+        '@type': 'Offer',
+        name: 'Indie',
+        price: '29.00',
+        priceCurrency: 'USD',
+        billingIncrement: 'Month',
+        priceValidUntil: '2026-12-31',
+        availability: 'https://schema.org/InStock',
+        url: 'https://synctek.io/products/specterqa-ios/pricing',
+        description: 'Indie: 1 simulator, unlimited runs. BYOK required.',
+      },
+      {
+        '@type': 'Offer',
+        name: 'Pro',
+        price: '99.00',
+        priceCurrency: 'USD',
+        billingIncrement: 'Month',
+        priceValidUntil: '2026-12-31',
+        availability: 'https://schema.org/InStock',
+        url: 'https://synctek.io/products/specterqa-ios/pricing',
+        description: 'Pro: 4 simulators, parallel CI, unlimited runs. BYOK required. $990/yr annual.',
+      },
+      {
+        '@type': 'Offer',
+        name: 'Team',
+        price: '299.00',
+        priceCurrency: 'USD',
+        billingIncrement: 'Month',
+        priceValidUntil: '2026-12-31',
+        availability: 'https://schema.org/InStock',
+        url: 'https://synctek.io/products/specterqa-ios/pricing',
+        description: 'Team: 10 simulators, parallel CI, priority support. BYOK required. $2,990/yr annual.',
+      },
+      {
+        '@type': 'Offer',
+        name: 'Enterprise',
+        priceSpecification: {
+          '@type': 'PriceSpecification',
+          description: 'Custom pricing — contact us',
+        },
+        availability: 'https://schema.org/InStock',
+        url: 'https://synctek.io/products/specterqa-ios/pricing',
+        description: 'Enterprise: unlimited simulators, SLA, dedicated support, custom contracts.',
+      },
+    ],
+  },
+};
+
+type FeatureValue = boolean | string;
+
+interface FeatureRow {
+  feature: string;
+  trial: FeatureValue;
+  indie: FeatureValue;
+  pro: FeatureValue;
+  team: FeatureValue;
+  enterprise: FeatureValue;
+  note?: string;
+}
+
+const comparisonRows: FeatureRow[] = [
+  { feature: 'Simulators', trial: '1', indie: '1', pro: '4', team: '10', enterprise: 'Unlimited' },
+  { feature: 'Runs / session limit', trial: '3', indie: 'Unlimited', pro: 'Unlimited', team: 'Unlimited', enterprise: 'Unlimited' },
+  { feature: 'Parallel CI', trial: false, indie: false, pro: true, team: true, enterprise: true },
+  { feature: 'All 19 MCP tools', trial: true, indie: true, pro: true, team: true, enterprise: true },
+  { feature: 'Record & replay (YAML)', trial: true, indie: true, pro: true, team: true, enterprise: true },
+  { feature: 'Maestro YAML compat', trial: true, indie: true, pro: true, team: true, enterprise: true },
+  { feature: 'Accessibility audit', trial: true, indie: true, pro: true, team: true, enterprise: true },
+  { feature: 'GitHub Actions integration', trial: true, indie: true, pro: true, team: true, enterprise: true },
+  { feature: 'BYOK (Anthropic key)', trial: 'Required', indie: 'Required', pro: 'Required', team: 'Required', enterprise: 'Required' },
+  { feature: 'CI replay (no AI cost)', trial: true, indie: true, pro: true, team: true, enterprise: true },
+  { feature: 'Dark / light mode toggle', trial: true, indie: true, pro: true, team: true, enterprise: true },
+  { feature: 'WebView element query', trial: true, indie: true, pro: true, team: true, enterprise: true },
+  { feature: 'Priority support', trial: false, indie: false, pro: false, team: true, enterprise: true },
+  { feature: 'SLA', trial: false, indie: false, pro: false, team: false, enterprise: true },
+  { feature: 'Custom contracts / DPA', trial: false, indie: false, pro: false, team: false, enterprise: true },
+  { feature: 'Dedicated support channel', trial: false, indie: false, pro: false, team: false, enterprise: true },
+  { feature: 'Annual billing (save 17%)', trial: false, indie: false, pro: true, team: true, enterprise: 'Custom' },
+];
+
+const faqItems = [
+  {
+    question: 'What is BYOK?',
+    answer:
+      'BYOK stands for "Bring Your Own Key." You supply your own Anthropic API key for the AI-powered record phase. SyncTek never stores, proxies, or sees your key. Your AI spend goes directly to Anthropic — not through us. Replay runs are 100% deterministic and never call the Anthropic API, so CI costs zero AI tokens.',
+  },
+  {
+    question: 'What simulators are supported?',
+    answer:
+      'SpecterQA iOS works with any iOS simulator available via Xcode on macOS. You control which device types and iOS versions are booted — iPhone, iPad, any Xcode-supported iOS version. Physical device testing is not currently supported. A macOS runner with Xcode 15 or later is required.',
+  },
+  {
+    question: 'How does licensing work?',
+    answer:
+      'SpecterQA iOS is licensed under the Elastic License 2.0 (ELv2). It is free for internal use — building and testing your own apps. You cannot redistribute it as a managed service or competing testing product without a commercial agreement. The CLI is open source; the commercial subscription unlocks more simulators and parallel CI.',
+  },
+  {
+    question: 'Does the trial require a credit card?',
+    answer:
+      'No. The Trial tier is free with no credit card required. You get 1 simulator and 3 runs per session. You still need your own Anthropic API key for the record phase (BYOK). Install via pip and run immediately.',
+  },
+  {
+    question: 'What counts as a "run"?',
+    answer:
+      'A run is one invocation of `specterqa-ios run` or one MCP-triggered recording session. Trial limits are per session (process lifetime). Indie, Pro, Team, and Enterprise tiers have no run limits — only simulator concurrency limits.',
+  },
+  {
+    question: 'Can I use SpecterQA iOS in CI/CD?',
+    answer:
+      'Yes. Replay files (YAML) recorded once can be replayed in CI without any Anthropic API calls. The `specterqa-ios ci` command accepts a directory of replay files and runs them sequentially (Trial/Indie) or in parallel (Pro/Team/Enterprise). GitHub Actions integration is included at all tiers.',
+  },
+  {
+    question: 'What is the annual discount?',
+    answer:
+      'Pro annual is $990/yr (vs $1,188/yr monthly — save $198). Team annual is $2,990/yr (vs $3,588/yr monthly — save $598). Annual billing is available on Pro and Team tiers. Enterprise pricing is fully custom.',
+  },
+  {
+    question: 'Is Maestro YAML migration free?',
+    answer:
+      'Yes. Existing Maestro YAML files work natively with SpecterQA iOS — `tapOn`, `inputText`, `assertVisible`, `assertNotVisible`, and `waitFor` are understood without modification. No migration tooling required. Mix Maestro shorthand and SpecterQA native syntax in the same file.',
+  },
+];
+
+function renderValue(val: FeatureValue) {
+  if (val === true) return { type: 'check' };
+  if (val === false) return { type: 'x' };
+  return { type: 'text', text: val };
+}
+---
+
+<BaseLayout
+  title="SpecterQA iOS Pricing — Trial Free, Indie $29, Pro $99, Team $299"
+  description="SpecterQA iOS pricing: free trial (no card), Indie $29/mo, Pro $99/mo ($990/yr), Team $299/mo ($2,990/yr), Enterprise custom. BYOK — AI costs go to Anthropic, not us."
+  jsonLd={jsonLd}
+>
+  <!-- Pricing hero -->
+  <section class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-12">
+    <!-- Glow -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+      <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px]"
+           style={`background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(188,140,255,0.12) 0%, transparent 70%);`}>
+      </div>
+    </div>
+
+    <div class="relative z-10 text-center">
+      <!-- Breadcrumb -->
+      <div class="flex items-center justify-center gap-2 text-sm text-[#8B949E] mb-8">
+        <a href="/products/specterqa-ios/" class="no-underline hover:text-[#E6EDF3] transition-colors">SpecterQA iOS</a>
+        <span>/</span>
+        <span class="text-[#E6EDF3]">Pricing</span>
+      </div>
+
+      <p class="text-xs font-semibold tracking-[0.12em] uppercase mb-4" style={`color: ${accentColor};`}>PRICING</p>
+      <h1 class="text-4xl sm:text-5xl font-bold text-[#E6EDF3] tracking-tight mb-4" style="letter-spacing: -0.02em;">
+        Start free.<br />Scale when ready.
+      </h1>
+      <p class="text-lg text-[#9CA3AF] max-w-xl mx-auto mb-4">
+        No credit card for the trial. BYOK means your AI costs flow directly to Anthropic — never through us.
+      </p>
+    </div>
+  </section>
+
+  <!-- Pricing cards -->
+  <section id="plans" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 items-start mb-4">
+
+      <!-- Trial -->
+      <div class="rounded-xl p-6" style="background: #111111; border: 1px solid #1F1F1F;">
+        <div class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold mb-5"
+             style="background: rgba(139,148,158,0.12); color: #8B949E;">
+          Trial
+        </div>
+        <div class="flex items-baseline gap-1 mb-1">
+          <span class="text-4xl font-bold text-[#E6EDF3]">Free</span>
+        </div>
+        <p class="text-xs text-[#8B949E] mb-2">no credit card required</p>
+        <p class="text-xs text-[#8B949E] mb-6">1 simulator · 3 runs/session</p>
+        <a
+          href="https://github.com/SyncTek-LLC/specterqa-ios#readme"
+          class="block w-full text-center py-3 rounded-md font-medium no-underline transition-all duration-150 mb-6 text-[#E6EDF3]"
+          style="border: 1px solid #1F1F1F;"
+          onmouseover="this.style.borderColor='#8B949E'; this.style.background='rgba(255,255,255,0.04)'"
+          onmouseout="this.style.borderColor='#1F1F1F'; this.style.background='transparent'"
+          aria-label="Get started with SpecterQA iOS Trial"
+        >
+          Get started
+        </a>
+        <ul class="space-y-3 text-sm">
+          <li class="flex items-start gap-2 text-[#E6EDF3]">
+            <svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            All 19 MCP tools
+          </li>
+          <li class="flex items-start gap-2 text-[#E6EDF3]">
+            <svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            Record &amp; replay
+          </li>
+          <li class="flex items-start gap-2 text-[#E6EDF3]">
+            <svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            Maestro compat
+          </li>
+          <li class="flex items-start gap-2">
+            <svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="#8B949E" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+            <span class="text-[#8B949E]">Parallel CI</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Indie -->
+      <div class="rounded-xl p-6" style="background: #111111; border: 1px solid #1F1F1F;">
+        <div class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold mb-5"
+             style={`background: rgba(188,140,255,0.1); color: ${accentColor};`}>
+          Indie
+        </div>
+        <div class="flex items-baseline gap-1 mb-1">
+          <span class="text-4xl font-bold text-[#E6EDF3]">$29</span>
+          <span class="text-sm text-[#8B949E]">/mo</span>
+        </div>
+        <p class="text-xs text-[#8B949E] mb-2">BYOK required</p>
+        <p class="text-xs text-[#8B949E] mb-6">1 simulator · unlimited runs</p>
+        <a
+          href="https://synctek.io/products/specterqa-ios#pricing"
+          class="block w-full text-center py-3 rounded-md font-medium text-[#E6EDF3] no-underline transition-all duration-150 mb-6"
+          style="border: 1px solid #30363D;"
+          onmouseover="this.style.borderColor='#8B949E'; this.style.background='rgba(255,255,255,0.04)'"
+          onmouseout="this.style.borderColor='#30363D'; this.style.background='transparent'"
+          aria-label="Start free trial of SpecterQA iOS Indie"
+        >
+          Start free trial
+        </a>
+        <ul class="space-y-3 text-sm">
+          <li class="flex items-start gap-2 text-[#E6EDF3]">
+            <svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            All 19 MCP tools
+          </li>
+          <li class="flex items-start gap-2 text-[#E6EDF3]">
+            <svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            Unlimited runs
+          </li>
+          <li class="flex items-start gap-2 text-[#E6EDF3]">
+            <svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            CI replay
+          </li>
+          <li class="flex items-start gap-2">
+            <svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="#8B949E" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+            <span class="text-[#8B949E]">Parallel CI</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Pro — featured -->
+      <div class="relative rounded-xl p-6" style={`background: #111111; border: 1px solid ${accentColor}; box-shadow: 0 0 0 1px rgba(188,140,255,0.15), 0 8px 32px rgba(188,140,255,0.08);`}>
+        <div class="absolute -top-3 left-1/2 -translate-x-1/2 px-3.5 py-1 rounded-full text-xs font-semibold text-white whitespace-nowrap"
+             style={`background: ${accentColor};`}>
+          Most popular
+        </div>
+
+        <div class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold mb-5"
+             style={`background: rgba(188,140,255,0.12); color: ${accentColor};`}>
+          Pro
+        </div>
+
+        <div class="flex items-baseline gap-1 mb-1">
+          <span class="text-4xl font-bold text-[#E6EDF3]">$99</span>
+          <span class="text-sm text-[#8B949E]">/mo</span>
+        </div>
+        <p class="text-xs text-[#8B949E] mb-1">BYOK required · cancel anytime</p>
+        <p class="text-xs mb-6" style={`color: ${accentColor};`}>$990/yr — save $198</p>
+
+        <a
+          href="https://synctek.io/products/specterqa-ios#pricing"
+          class="block w-full text-center py-3 rounded-md font-semibold text-white no-underline transition-all duration-150 mb-6"
+          style={`background: ${accentColor};`}
+          onmouseover="this.style.opacity='0.9'"
+          onmouseout="this.style.opacity='1'"
+          aria-label="Start free trial of SpecterQA iOS Pro"
+        >
+          Start free trial
+        </a>
+
+        <ul class="space-y-3 text-sm">
+          <li class="flex items-start gap-2 text-[#E6EDF3]">
+            <svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            4 simulators
+          </li>
+          <li class="flex items-start gap-2 text-[#E6EDF3]">
+            <svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            Parallel CI
+          </li>
+          <li class="flex items-start gap-2 text-[#E6EDF3]">
+            <svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            Unlimited runs
+          </li>
+          <li class="flex items-start gap-2 text-[#E6EDF3]">
+            <svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            Annual billing option
+          </li>
+          <li class="flex items-start gap-2">
+            <svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="#8B949E" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+            <span class="text-[#8B949E]">Priority support</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Team -->
+      <div class="rounded-xl p-6" style="background: #111111; border: 1px solid #1F1F1F;">
+        <div class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold mb-5"
+             style={`background: rgba(188,140,255,0.1); color: ${accentColor};`}>
+          Team
+        </div>
+
+        <div class="flex items-baseline gap-1 mb-1">
+          <span class="text-4xl font-bold text-[#E6EDF3]">$299</span>
+          <span class="text-sm text-[#8B949E]">/mo</span>
+        </div>
+        <p class="text-xs text-[#8B949E] mb-1">BYOK required</p>
+        <p class="text-xs mb-6" style={`color: ${accentColor};`}>$2,990/yr — save $598</p>
+
+        <a
+          href="https://synctek.io/products/specterqa-ios#pricing"
+          class="block w-full text-center py-3 rounded-md font-medium text-[#E6EDF3] no-underline transition-all duration-150 mb-6"
+          style="border: 1px solid #30363D;"
+          onmouseover="this.style.borderColor='#8B949E'; this.style.background='rgba(255,255,255,0.04)'"
+          onmouseout="this.style.borderColor='#30363D'; this.style.background='transparent'"
+          aria-label="Start free trial of SpecterQA iOS Team"
+        >
+          Start free trial
+        </a>
+
+        <ul class="space-y-3 text-sm">
+          <li class="flex items-start gap-2 text-[#E6EDF3]">
+            <svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            10 simulators
+          </li>
+          <li class="flex items-start gap-2 text-[#E6EDF3]">
+            <svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            Parallel CI
+          </li>
+          <li class="flex items-start gap-2 text-[#E6EDF3]">
+            <svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            Priority support
+          </li>
+          <li class="flex items-start gap-2 text-[#E6EDF3]">
+            <svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            Annual billing option
+          </li>
+        </ul>
+      </div>
+
+      <!-- Enterprise -->
+      <div class="rounded-xl p-6" style="background: #111111; border: 1px solid #1F1F1F;">
+        <div class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold mb-5"
+             style="background: rgba(139,148,158,0.12); color: #8B949E;">
+          Enterprise
+        </div>
+
+        <div class="flex items-baseline gap-1 mb-1">
+          <span class="text-4xl font-bold text-[#E6EDF3]">Custom</span>
+        </div>
+        <p class="text-xs text-[#8B949E] mb-2">from $1,000/mo</p>
+        <p class="text-xs text-[#8B949E] mb-6">unlimited simulators</p>
+
+        <a
+          href="mailto:sales@synctek.io"
+          class="block w-full text-center py-3 rounded-md font-medium text-[#E6EDF3] no-underline transition-all duration-150 mb-6"
+          style="border: 1px solid #1F1F1F;"
+          onmouseover="this.style.borderColor='#8B949E'; this.style.background='rgba(255,255,255,0.04)'"
+          onmouseout="this.style.borderColor='#1F1F1F'; this.style.background='transparent'"
+          aria-label="Contact sales for SpecterQA iOS Enterprise"
+        >
+          Contact sales
+        </a>
+
+        <ul class="space-y-3 text-sm">
+          <li class="flex items-start gap-2 text-[#E6EDF3]">
+            <svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            Unlimited simulators
+          </li>
+          <li class="flex items-start gap-2 text-[#E6EDF3]">
+            <svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            SLA
+          </li>
+          <li class="flex items-start gap-2 text-[#E6EDF3]">
+            <svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            Custom contracts
+          </li>
+          <li class="flex items-start gap-2 text-[#E6EDF3]">
+            <svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            Dedicated support
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <SectionDivider />
+
+  <!-- Comparison table -->
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div class="text-center mb-10">
+      <h2 class="text-2xl font-bold text-[#E6EDF3] tracking-tight">Full feature comparison</h2>
+    </div>
+
+    <div class="overflow-x-auto rounded-xl" style="border: 1px solid #1F1F1F;">
+      <table class="w-full text-sm min-w-[700px]">
+        <thead>
+          <tr style="background: #111111; border-bottom: 1px solid #1F1F1F;">
+            <th class="text-left px-5 py-4 font-semibold text-[#8B949E] w-48">Feature</th>
+            <th class="text-center px-4 py-4 font-semibold text-[#8B949E]">Trial</th>
+            <th class="text-center px-4 py-4 font-semibold text-[#8B949E]">Indie</th>
+            <th class="text-center px-4 py-4 font-semibold whitespace-nowrap" style={`color: ${accentColor};`}>Pro</th>
+            <th class="text-center px-4 py-4 font-semibold text-[#8B949E]">Team</th>
+            <th class="text-center px-4 py-4 font-semibold text-[#8B949E]">Enterprise</th>
+          </tr>
+        </thead>
+        <tbody>
+          {comparisonRows.map((row, i) => {
+            const tVal = renderValue(row.trial);
+            const iVal = renderValue(row.indie);
+            const pVal = renderValue(row.pro);
+            const tmVal = renderValue(row.team);
+            const eVal = renderValue(row.enterprise);
+
+            return (
+              <tr style={`background: ${i % 2 === 0 ? '#0D0D0D' : '#111111'}; border-bottom: 1px solid #1A1A1A;`}>
+                <td class="px-5 py-3.5 text-[#E6EDF3] font-medium">
+                  {row.feature}
+                  {row.note && <span class="block text-xs text-[#8B949E] font-normal mt-0.5">{row.note}</span>}
+                </td>
+                <td class="px-4 py-3.5 text-center">
+                  {tVal.type === 'check' && <svg class="w-4 h-4 mx-auto" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2" aria-label="Included"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>}
+                  {tVal.type === 'x' && <svg class="w-4 h-4 mx-auto" fill="none" stroke="#484F58" viewBox="0 0 24 24" stroke-width="2" aria-label="Not included"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>}
+                  {tVal.type === 'text' && <span class="text-[#9CA3AF] text-xs">{tVal.text}</span>}
+                </td>
+                <td class="px-4 py-3.5 text-center">
+                  {iVal.type === 'check' && <svg class="w-4 h-4 mx-auto" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2" aria-label="Included"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>}
+                  {iVal.type === 'x' && <svg class="w-4 h-4 mx-auto" fill="none" stroke="#484F58" viewBox="0 0 24 24" stroke-width="2" aria-label="Not included"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>}
+                  {iVal.type === 'text' && <span class="text-[#9CA3AF] text-xs">{iVal.text}</span>}
+                </td>
+                <td class="px-4 py-3.5 text-center" style={`background: rgba(188,140,255,0.04);`}>
+                  {pVal.type === 'check' && <svg class="w-4 h-4 mx-auto" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2" aria-label="Included"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>}
+                  {pVal.type === 'x' && <svg class="w-4 h-4 mx-auto" fill="none" stroke="#484F58" viewBox="0 0 24 24" stroke-width="2" aria-label="Not included"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>}
+                  {pVal.type === 'text' && <span class="text-xs" style={`color: ${accentColor};`}>{pVal.text}</span>}
+                </td>
+                <td class="px-4 py-3.5 text-center">
+                  {tmVal.type === 'check' && <svg class="w-4 h-4 mx-auto" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2" aria-label="Included"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>}
+                  {tmVal.type === 'x' && <svg class="w-4 h-4 mx-auto" fill="none" stroke="#484F58" viewBox="0 0 24 24" stroke-width="2" aria-label="Not included"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>}
+                  {tmVal.type === 'text' && <span class="text-[#9CA3AF] text-xs">{tmVal.text}</span>}
+                </td>
+                <td class="px-4 py-3.5 text-center">
+                  {eVal.type === 'check' && <svg class="w-4 h-4 mx-auto" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2" aria-label="Included"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>}
+                  {eVal.type === 'x' && <svg class="w-4 h-4 mx-auto" fill="none" stroke="#484F58" viewBox="0 0 24 24" stroke-width="2" aria-label="Not included"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>}
+                  {eVal.type === 'text' && <span class="text-[#9CA3AF] text-xs">{eVal.text}</span>}
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <SectionDivider />
+
+  <!-- FAQ -->
+  <section class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div class="text-center mb-10">
+      <p class="text-xs font-semibold tracking-[0.12em] uppercase mb-3" style={`color: ${accentColor};`}>FAQ</p>
+      <h2 class="text-3xl font-bold text-[#E6EDF3] tracking-tight" style="letter-spacing: -0.02em;">
+        Common questions
+      </h2>
+    </div>
+
+    <div class="space-y-4">
+      {faqItems.map((item) => (
+        <details class="group rounded-xl overflow-hidden" style="background: #111111; border: 1px solid #1F1F1F;">
+          <summary class="flex items-center justify-between px-6 py-4 cursor-pointer list-none select-none">
+            <span class="font-medium text-[#E6EDF3] pr-4">{item.question}</span>
+            <svg
+              class="w-4 h-4 flex-shrink-0 text-[#8B949E] transition-transform duration-200 group-open:rotate-45"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              stroke-width="2"
+              aria-hidden="true"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+            </svg>
+          </summary>
+          <div class="px-6 pb-5">
+            <p class="text-sm text-[#9CA3AF] leading-relaxed">{item.answer}</p>
+          </div>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <SectionDivider />
+
+  <!-- Bottom CTA -->
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
+    <h2 class="text-3xl font-bold text-[#E6EDF3] mb-4" style="letter-spacing: -0.02em;">
+      Ready to let your agent write the tests?
+    </h2>
+    <p class="text-[#9CA3AF] mb-8 max-w-xl mx-auto">
+      Start free — no credit card. Bring your own Anthropic key. Record once, replay free in CI forever.
+    </p>
+    <div class="flex flex-col sm:flex-row gap-3 justify-center">
+      <a
+        href="#plans"
+        class="inline-flex items-center justify-center px-8 py-3.5 rounded-md font-semibold text-white no-underline transition-all duration-150"
+        style={`background: ${accentColor};`}
+        onmouseover="this.style.opacity='0.9'"
+        onmouseout="this.style.opacity='1'"
+      >
+        View plans
+      </a>
+      <a
+        href="mailto:sales@synctek.io"
+        class="inline-flex items-center justify-center px-8 py-3.5 rounded-md font-semibold text-[#E6EDF3] no-underline transition-all"
+        style="border: 1px solid #30363D;"
+        onmouseover="this.style.borderColor='#8B949E'; this.style.background='rgba(255,255,255,0.04)'"
+        onmouseout="this.style.borderColor='#30363D'; this.style.background='transparent'"
+      >
+        Talk to sales
+      </a>
+    </div>
+  </section>
+</BaseLayout>

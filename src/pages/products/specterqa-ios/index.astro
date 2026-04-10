@@ -1,0 +1,441 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import SectionDivider from '../../../components/SectionDivider.astro';
+import product from '../../../data/products/specterqa-ios';
+
+const accentColor = product.accentColor;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: product.name,
+  applicationCategory: 'DeveloperApplication',
+  operatingSystem: 'macOS',
+  softwareVersion: product.version,
+  description: 'The first iOS testing tool built for AI agents. Record, replay, and verify iOS app behavior through the Model Context Protocol — no XCUITest boilerplate, no flaky selectors.',
+  license: 'https://github.com/SyncTek-LLC/specterqa-ios/blob/main/LICENSE',
+  downloadUrl: `https://pypi.org/project/${product.distribution.pypi}/`,
+  offers: [
+    { '@type': 'Offer', name: 'Trial', price: '0', priceCurrency: 'USD', availability: 'https://schema.org/InStock' },
+    { '@type': 'Offer', name: 'Indie', price: '29', priceCurrency: 'USD', billingIncrement: 'Month', availability: 'https://schema.org/InStock' },
+    { '@type': 'Offer', name: 'Pro', price: '99', priceCurrency: 'USD', billingIncrement: 'Month', availability: 'https://schema.org/InStock' },
+    { '@type': 'Offer', name: 'Team', price: '299', priceCurrency: 'USD', billingIncrement: 'Month', availability: 'https://schema.org/InStock' },
+  ],
+  brand: { '@type': 'Brand', name: 'SyncTek LLC' },
+};
+
+const featureIcons: Record<string, string> = {
+  workflow: 'M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15',
+  plug: 'M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1',
+  code: 'M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4',
+  eye: 'M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z',
+  shield: 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z',
+  user: 'M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z',
+};
+
+const checkIcon = `<svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="#10B981" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>`;
+const xIcon = `<svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="#8B949E" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>`;
+---
+
+<BaseLayout
+  title="SpecterQA iOS — AI-native iOS testing via MCP"
+  description="The first iOS testing tool built for AI agents. Record, replay, and verify iOS app behavior through the Model Context Protocol — no XCUITest boilerplate, no flaky selectors."
+  jsonLd={jsonLd}
+>
+  <!-- Hero -->
+  <section class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16">
+    <!-- Purple glow -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+      <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[500px]"
+           style={`background: radial-gradient(ellipse 60% 50% at 50% 0%, rgba(188,140,255,0.14) 0%, transparent 70%);`}>
+      </div>
+    </div>
+
+    <div class="relative z-10 text-center max-w-4xl mx-auto">
+      <!-- Breadcrumb -->
+      <div class="flex items-center justify-center gap-2 text-sm text-[#8B949E] mb-8">
+        <a href="/products/" class="no-underline hover:text-[#E6EDF3] transition-colors">Products</a>
+        <span>/</span>
+        <span class="text-[#E6EDF3]">SpecterQA iOS</span>
+      </div>
+
+      <!-- Version badge -->
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold mb-6"
+           style={`background: rgba(188,140,255,0.12); color: ${accentColor}; border: 1px solid rgba(188,140,255,0.2);`}>
+        <span class="w-1.5 h-1.5 rounded-full inline-block" style={`background: ${accentColor};`}></span>
+        v{product.version} · {product.license}
+      </div>
+
+      <h1 class="text-5xl sm:text-6xl font-bold text-[#E6EDF3] tracking-tight mb-6" style="letter-spacing: -0.03em;">
+        AI-native iOS testing<br />
+        <span style={`color: ${accentColor};`}>via MCP</span>
+      </h1>
+
+      <p class="text-xl text-[#9CA3AF] max-w-2xl mx-auto mb-4 leading-relaxed">
+        The first iOS testing tool built for AI agents. Record, replay, and verify iOS app behavior through the Model Context Protocol — no XCUITest boilerplate, no flaky selectors.
+      </p>
+
+      <p class="text-sm text-[#8B949E] mb-10">
+        19 MCP tools · Record once, replay free · macOS + Xcode 15+
+      </p>
+
+      <!-- CTAs -->
+      <div class="flex flex-col sm:flex-row gap-3 justify-center mb-8">
+        <a
+          href="#pricing"
+          class="inline-flex items-center justify-center px-8 py-3.5 rounded-md font-semibold text-white no-underline transition-all duration-150"
+          style={`background: ${accentColor};`}
+          onmouseover={`this.style.opacity='0.9'`}
+          onmouseout={`this.style.opacity='1'`}
+          aria-label="Start free — no credit card required"
+        >
+          Start free
+        </a>
+        <a
+          href="https://github.com/SyncTek-LLC/specterqa-ios"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-md font-semibold text-[#E6EDF3] no-underline transition-all duration-150"
+          style="border: 1px solid #30363D;"
+          onmouseover="this.style.borderColor='#8B949E'; this.style.background='rgba(255,255,255,0.04)'"
+          onmouseout="this.style.borderColor='#30363D'; this.style.background='transparent'"
+          aria-label="View SpecterQA iOS on GitHub"
+        >
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+          </svg>
+          View on GitHub
+        </a>
+      </div>
+
+      <!-- Install command -->
+      <div class="inline-flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-mono"
+           style="background: #111111; border: 1px solid #1F1F1F;">
+        <span class="text-[#8B949E]">$</span>
+        <span class="text-[#E6EDF3]">pip install 'specterqa-ios[mcp]'</span>
+        <button
+          onclick="navigator.clipboard.writeText(\"pip install 'specterqa-ios[mcp]'\").then(() => { this.textContent = 'Copied!'; setTimeout(() => this.textContent = 'Copy', 1500); })"
+          class="text-xs text-[#8B949E] hover:text-[#E6EDF3] transition-colors cursor-pointer bg-transparent border-0 p-0"
+          aria-label="Copy install command"
+        >Copy</button>
+      </div>
+    </div>
+  </section>
+
+  <SectionDivider />
+
+  <!-- Feature grid -->
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div class="text-center mb-12">
+      <p class="text-xs font-semibold tracking-[0.12em] uppercase mb-3" style={`color: ${accentColor};`}>FEATURES</p>
+      <h2 class="text-3xl sm:text-4xl font-bold text-[#E6EDF3] tracking-tight" style="letter-spacing: -0.02em;">
+        Built for the agent era
+      </h2>
+      <p class="text-[#9CA3AF] mt-3 max-w-xl mx-auto">
+        Every feature designed around one insight: AI records once, deterministic engine replays free.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+      {product.features.map((feature) => (
+        <div class="rounded-xl p-6 transition-all duration-200"
+             style="background: #111111; border: 1px solid #1F1F1F;"
+             onmouseover={`this.style.borderColor='rgba(188,140,255,0.3)'; this.style.background='#141414';`}
+             onmouseout="this.style.borderColor='#1F1F1F'; this.style.background='#111111';">
+          <div class="w-10 h-10 rounded-lg flex items-center justify-center mb-4"
+               style={`background: rgba(188,140,255,0.1);`}>
+            <svg class="w-5 h-5" fill="none" stroke={accentColor} viewBox="0 0 24 24" stroke-width="1.5" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d={featureIcons[feature.icon] ?? featureIcons.code} />
+            </svg>
+          </div>
+          <h3 class="font-semibold text-[#E6EDF3] mb-2">{feature.title}</h3>
+          <p class="text-sm text-[#9CA3AF] leading-relaxed">{feature.description}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <SectionDivider />
+
+  <!-- How it works -->
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div class="text-center mb-12">
+      <p class="text-xs font-semibold tracking-[0.12em] uppercase mb-3" style={`color: ${accentColor};`}>QUICKSTART</p>
+      <h2 class="text-3xl sm:text-4xl font-bold text-[#E6EDF3] tracking-tight" style="letter-spacing: -0.02em;">
+        Up in six commands
+      </h2>
+    </div>
+
+    <div class="max-w-2xl mx-auto space-y-3">
+      {product.quickstart.map((step, i) => (
+        <div class="flex gap-4 items-start rounded-lg px-5 py-4"
+             style="background: #111111; border: 1px solid #1F1F1F;">
+          <span class="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold text-[#0A0A0A]"
+                style={`background: ${accentColor};`}>
+            {i + 1}
+          </span>
+          <div class="min-w-0 flex-1">
+            <code class="text-sm text-[#E6EDF3] font-mono break-all">{step.command}</code>
+            <p class="text-xs text-[#8B949E] mt-1">{step.description}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <SectionDivider />
+
+  <!-- AI cost transparency -->
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div class="max-w-3xl mx-auto">
+      <div class="text-center mb-10">
+        <p class="text-xs font-semibold tracking-[0.12em] uppercase mb-3" style={`color: ${accentColor};`}>BYOK ECONOMICS</p>
+        <h2 class="text-3xl font-bold text-[#E6EDF3] tracking-tight" style="letter-spacing: -0.02em;">
+          Pay for AI once. Replay forever.
+        </h2>
+        <p class="text-[#9CA3AF] mt-3">
+          You bring your own Anthropic API key. Claude drives recording. Replay runs deterministically — zero AI tokens, zero API cost.
+        </p>
+      </div>
+
+      <div class="rounded-xl overflow-hidden" style="border: 1px solid #1F1F1F;">
+        <table class="w-full text-sm">
+          <thead>
+            <tr style="background: #111111; border-bottom: 1px solid #1F1F1F;">
+              <th class="text-left px-6 py-3 font-semibold text-[#8B949E]">What you're doing</th>
+              <th class="text-right px-6 py-3 font-semibold text-[#8B949E]">Typical AI cost</th>
+            </tr>
+          </thead>
+          <tbody>
+            {product.costs.map((row, i) => (
+              <tr style={`background: ${i % 2 === 0 ? '#0D0D0D' : '#111111'}; border-bottom: 1px solid #1F1F1F;`}>
+                <td class="px-6 py-4 text-[#E6EDF3]">{row.type}</td>
+                <td class="px-6 py-4 text-right font-mono" style={`color: ${row.range === '$0.00' ? '#10B981' : accentColor};`}>
+                  {row.range}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <p class="text-xs text-[#8B949E] mt-3 text-center">
+        SyncTek never sees your API key. Your recordings stay on your machine. Full BYOK.
+      </p>
+    </div>
+  </section>
+
+  <SectionDivider />
+
+  <!-- Pricing -->
+  <section id="pricing" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div class="text-center mb-12">
+      <p class="text-xs font-semibold tracking-[0.12em] uppercase mb-3" style={`color: ${accentColor};`}>PRICING</p>
+      <h2 class="text-3xl sm:text-4xl font-bold text-[#E6EDF3] tracking-tight" style="letter-spacing: -0.02em;">
+        Start free. Scale when ready.
+      </h2>
+      <p class="text-[#9CA3AF] mt-3">
+        Trial requires no credit card. BYOK means your AI costs go directly to Anthropic — not us.
+      </p>
+      <p class="mt-2">
+        <a href="/products/specterqa-ios/pricing/" class="text-sm no-underline transition-colors hover:text-[#E6EDF3]" style={`color: ${accentColor};`}>
+          View full pricing comparison →
+        </a>
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 items-start">
+
+      <!-- Trial -->
+      <div class="rounded-xl p-5" style="background: #111111; border: 1px solid #1F1F1F;">
+        <div class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold mb-4"
+             style="background: rgba(139,148,158,0.12); color: #8B949E;">
+          Trial
+        </div>
+        <div class="flex items-baseline gap-1 mb-1">
+          <span class="text-4xl font-bold text-[#E6EDF3]">Free</span>
+        </div>
+        <p class="text-xs text-[#8B949E] mb-4">No credit card required</p>
+        <ul class="space-y-2 text-xs text-[#E6EDF3] mb-5">
+          <li class="flex items-start gap-1.5"><Fragment set:html={checkIcon} />1 simulator</li>
+          <li class="flex items-start gap-1.5"><Fragment set:html={checkIcon} />3 runs/session</li>
+          <li class="flex items-start gap-1.5"><Fragment set:html={checkIcon} />All 19 MCP tools</li>
+          <li class="flex items-start gap-1.5"><Fragment set:html={xIcon} /><span class="text-[#8B949E]">CI replay</span></li>
+        </ul>
+        <a href="https://github.com/SyncTek-LLC/specterqa-ios#readme"
+           class="block w-full text-center py-2.5 rounded-md text-sm font-medium text-[#E6EDF3] no-underline transition-all"
+           style="border: 1px solid #30363D;"
+           onmouseover="this.style.borderColor='#8B949E'"
+           onmouseout="this.style.borderColor='#30363D'">
+          Get started
+        </a>
+      </div>
+
+      <!-- Indie -->
+      <div class="rounded-xl p-5" style="background: #111111; border: 1px solid #1F1F1F;">
+        <div class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold mb-4"
+             style={`background: rgba(188,140,255,0.1); color: ${accentColor};`}>
+          Indie
+        </div>
+        <div class="flex items-baseline gap-1 mb-1">
+          <span class="text-4xl font-bold text-[#E6EDF3]">$29</span>
+          <span class="text-xs text-[#8B949E]">/mo</span>
+        </div>
+        <p class="text-xs text-[#8B949E] mb-4">BYOK required</p>
+        <ul class="space-y-2 text-xs text-[#E6EDF3] mb-5">
+          <li class="flex items-start gap-1.5"><Fragment set:html={checkIcon} />1 simulator</li>
+          <li class="flex items-start gap-1.5"><Fragment set:html={checkIcon} />Unlimited runs</li>
+          <li class="flex items-start gap-1.5"><Fragment set:html={checkIcon} />All 19 MCP tools</li>
+          <li class="flex items-start gap-1.5"><Fragment set:html={xIcon} /><span class="text-[#8B949E]">Parallel CI</span></li>
+        </ul>
+        <a href="https://synctek.io/products/specterqa-ios#pricing"
+           class="block w-full text-center py-2.5 rounded-md text-sm font-medium text-[#E6EDF3] no-underline transition-all"
+           style="border: 1px solid #30363D;"
+           onmouseover="this.style.borderColor='#8B949E'"
+           onmouseout="this.style.borderColor='#30363D'">
+          Start free trial
+        </a>
+      </div>
+
+      <!-- Pro — featured -->
+      <div class="relative rounded-xl p-5" style={`background: #111111; border: 1px solid ${accentColor}; box-shadow: 0 0 0 1px rgba(188,140,255,0.15), 0 8px 32px rgba(188,140,255,0.08);`}>
+        <div class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full text-xs font-semibold text-white whitespace-nowrap"
+             style={`background: ${accentColor};`}>
+          Most popular
+        </div>
+        <div class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold mb-4"
+             style={`background: rgba(188,140,255,0.1); color: ${accentColor};`}>
+          Pro
+        </div>
+        <div class="flex items-baseline gap-1 mb-1">
+          <span class="text-4xl font-bold text-[#E6EDF3]">$99</span>
+          <span class="text-xs text-[#8B949E]">/mo</span>
+        </div>
+        <p class="text-xs text-[#8B949E] mb-1">BYOK required</p>
+        <p class="text-xs mb-4" style={`color: ${accentColor};`}>$990/yr — save 17%</p>
+        <ul class="space-y-2 text-xs text-[#E6EDF3] mb-5">
+          <li class="flex items-start gap-1.5"><Fragment set:html={checkIcon} />4 simulators</li>
+          <li class="flex items-start gap-1.5"><Fragment set:html={checkIcon} />Unlimited runs</li>
+          <li class="flex items-start gap-1.5"><Fragment set:html={checkIcon} />Parallel CI</li>
+          <li class="flex items-start gap-1.5"><Fragment set:html={checkIcon} />All 19 MCP tools</li>
+        </ul>
+        <a href="https://synctek.io/products/specterqa-ios#pricing"
+           class="block w-full text-center py-2.5 rounded-md text-sm font-semibold text-white no-underline transition-all"
+           style={`background: ${accentColor};`}
+           onmouseover="this.style.opacity='0.9'"
+           onmouseout="this.style.opacity='1'">
+          Start free trial
+        </a>
+      </div>
+
+      <!-- Team -->
+      <div class="rounded-xl p-5" style="background: #111111; border: 1px solid #1F1F1F;">
+        <div class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold mb-4"
+             style={`background: rgba(188,140,255,0.1); color: ${accentColor};`}>
+          Team
+        </div>
+        <div class="flex items-baseline gap-1 mb-1">
+          <span class="text-4xl font-bold text-[#E6EDF3]">$299</span>
+          <span class="text-xs text-[#8B949E]">/mo</span>
+        </div>
+        <p class="text-xs text-[#8B949E] mb-1">BYOK required</p>
+        <p class="text-xs mb-4" style={`color: ${accentColor};`}>$2,990/yr — save 17%</p>
+        <ul class="space-y-2 text-xs text-[#E6EDF3] mb-5">
+          <li class="flex items-start gap-1.5"><Fragment set:html={checkIcon} />10 simulators</li>
+          <li class="flex items-start gap-1.5"><Fragment set:html={checkIcon} />Unlimited runs</li>
+          <li class="flex items-start gap-1.5"><Fragment set:html={checkIcon} />Parallel CI</li>
+          <li class="flex items-start gap-1.5"><Fragment set:html={checkIcon} />Priority support</li>
+        </ul>
+        <a href="https://synctek.io/products/specterqa-ios#pricing"
+           class="block w-full text-center py-2.5 rounded-md text-sm font-medium text-[#E6EDF3] no-underline transition-all"
+           style="border: 1px solid #30363D;"
+           onmouseover="this.style.borderColor='#8B949E'"
+           onmouseout="this.style.borderColor='#30363D'">
+          Start free trial
+        </a>
+      </div>
+
+      <!-- Enterprise -->
+      <div class="rounded-xl p-5" style="background: #111111; border: 1px solid #1F1F1F;">
+        <div class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold mb-4"
+             style="background: rgba(139,148,158,0.12); color: #8B949E;">
+          Enterprise
+        </div>
+        <div class="flex items-baseline gap-1 mb-1">
+          <span class="text-4xl font-bold text-[#E6EDF3]">Custom</span>
+        </div>
+        <p class="text-xs text-[#8B949E] mb-4">from $1,000/mo</p>
+        <ul class="space-y-2 text-xs text-[#E6EDF3] mb-5">
+          <li class="flex items-start gap-1.5"><Fragment set:html={checkIcon} />Unlimited simulators</li>
+          <li class="flex items-start gap-1.5"><Fragment set:html={checkIcon} />SLA</li>
+          <li class="flex items-start gap-1.5"><Fragment set:html={checkIcon} />Dedicated support</li>
+          <li class="flex items-start gap-1.5"><Fragment set:html={checkIcon} />Custom contracts</li>
+        </ul>
+        <a href="mailto:sales@synctek.io"
+           class="block w-full text-center py-2.5 rounded-md text-sm font-medium text-[#E6EDF3] no-underline transition-all"
+           style="border: 1px solid #30363D;"
+           onmouseover="this.style.borderColor='#8B949E'"
+           onmouseout="this.style.borderColor='#30363D'">
+          Contact sales
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <SectionDivider />
+
+  <!-- Tradeoffs (honest) -->
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div class="max-w-3xl mx-auto">
+      <div class="text-center mb-10">
+        <p class="text-xs font-semibold tracking-[0.12em] uppercase mb-3" style="color: #8B949E;">HONEST TRADEOFFS</p>
+        <h2 class="text-2xl font-bold text-[#E6EDF3] tracking-tight">What you should know before you commit</h2>
+      </div>
+      <ul class="space-y-3">
+        {product.tradeoffs.map((item) => (
+          <li class="flex items-start gap-3 text-sm text-[#9CA3AF] leading-relaxed">
+            <svg class="w-4 h-4 flex-shrink-0 mt-0.5 text-[#F59E0B]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+            {item}
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <SectionDivider />
+
+  <!-- CTA footer -->
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
+    <h2 class="text-3xl font-bold text-[#E6EDF3] mb-4" style="letter-spacing: -0.02em;">
+      Your AI agent can write iOS tests today.
+    </h2>
+    <p class="text-[#9CA3AF] mb-8 max-w-xl mx-auto">
+      19 MCP tools. Record once. Replay free. No XCUITest boilerplate.
+    </p>
+    <div class="flex flex-col sm:flex-row gap-3 justify-center">
+      <a
+        href="#pricing"
+        class="inline-flex items-center justify-center px-8 py-3.5 rounded-md font-semibold text-white no-underline transition-all duration-150"
+        style={`background: ${accentColor};`}
+        onmouseover="this.style.opacity='0.9'"
+        onmouseout="this.style.opacity='1'"
+      >
+        Start free
+      </a>
+      <a
+        href="https://github.com/SyncTek-LLC/specterqa-ios"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center justify-center px-8 py-3.5 rounded-md font-semibold text-[#E6EDF3] no-underline transition-all"
+        style="border: 1px solid #30363D;"
+        onmouseover="this.style.borderColor='#8B949E'; this.style.background='rgba(255,255,255,0.04)'"
+        onmouseout="this.style.borderColor='#30363D'; this.style.background='transparent'"
+      >
+        View docs on GitHub
+      </a>
+    </div>
+  </section>
+</BaseLayout>
