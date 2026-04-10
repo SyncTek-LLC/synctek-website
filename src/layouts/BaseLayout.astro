@@ -26,7 +26,6 @@ const { title, description, ogImage, ogType, article, jsonLd } = Astro.props;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="generator" content={Astro.generator} />
     <meta name="theme-color" content="#0A0A0A" />
 
     <SEO
@@ -54,6 +53,9 @@ const { title, description, ogImage, ogType, article, jsonLd } = Astro.props;
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet" />
+
+    <!-- Analytics -->
+    <script defer data-domain="synctek.io" src="https://plausible.io/js/script.js"></script>
 
     <!-- Inline theme detection to prevent flash -->
     <script is:inline>
