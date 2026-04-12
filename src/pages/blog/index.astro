@@ -1,17 +1,11 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import BlogPostCard from '../../components/BlogPostCard.astro';
-import Pagination from '../../components/Pagination.astro';
 import Badge from '../../components/Badge.astro';
 import { getCollection } from 'astro:content';
 
 const allPosts = await getCollection('blog', ({ data }) => !data.draft);
-const sortedPosts = allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
-
-const postsPerPage = 10;
-const totalPages = Math.ceil(sortedPosts.length / postsPerPage);
-const currentPage = 1;
-const posts = sortedPosts.slice(0, postsPerPage);
+const posts = allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
 function getReadingTime(text: string): string {
   const wpm = 200;
@@ -73,6 +67,5 @@ const categories = [
       </p>
     )}
 
-    <Pagination currentPage={currentPage} totalPages={totalPages} baseUrl="/blog/" />
   </section>
 </BaseLayout>

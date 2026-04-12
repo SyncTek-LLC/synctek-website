@@ -483,7 +483,7 @@ You have the following rights with respect to your personal data:
 We have designated a data protection contact for GDPR purposes:
 
 **Data Protection Contact:** info@synctek.io
-**Postal Address:** SyncTek LLC, [Registered Address]
+**Postal Address:** SyncTek LLC, 5540 Centerview Dr Ste 204 #462485, Raleigh, NC 27606
 
 ### Right to Lodge a Complaint
 
