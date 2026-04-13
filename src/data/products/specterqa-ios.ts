@@ -34,33 +34,33 @@ export default {
 
   features: [
     {
-      title: 'Record Once, Replay Free',
-      description: 'AI records test sessions using Claude vision. Deterministic engine replays in CI — zero API cost on reruns.',
+      title: 'Record Once, Replay Free Forever',
+      description: 'Claude records your test with vision AI. Every subsequent CI run replays it deterministically — no API calls, no cost, no surprises.',
       icon: 'workflow',
     },
     {
-      title: 'Agent-Native (19 MCP Tools)',
-      description: 'Full testing surface exposed as MCP tools. Claude Code, Claude Desktop, or any MCP-compatible orchestrator can drive iOS tests in plain English.',
+      title: 'Your Agent Can Run iOS Tests',
+      description: '19 MCP tools give Claude Code, Claude Desktop, and any MCP-compatible orchestrator direct control over iOS simulator testing — no glue code required.',
       icon: 'plug',
     },
     {
-      title: 'Maestro Compatible',
-      description: 'Existing Maestro YAML files work natively. tapOn, inputText, assertVisible — all understood. Zero migration cost.',
+      title: 'Drop In, Not Rip Out',
+      description: 'Already on Maestro? Your existing YAML files run on day one. tapOn, inputText, assertVisible — all understood. Ship faster, not differently.',
       icon: 'code',
     },
     {
-      title: 'Parallel CI — 10x Faster',
-      description: 'Shared runner reuse and clone isolation. Run 10 replays in the time XCUITest runs 1. `--parallel N` flag.',
+      title: '10x CI Throughput',
+      description: 'Parallel replay with shared runner reuse cuts your test wall-time from hours to minutes. Run an entire suite in the time XCUITest runs one test.',
       icon: 'workflow',
     },
     {
-      title: '90% Tap Accuracy',
-      description: 'Set-of-Mark (SoM) prompting annotates the simulator screenshot before Claude taps. No coordinate guessing, no brittle selectors.',
+      title: 'Taps That Actually Land',
+      description: 'Set-of-Mark prompting labels every tappable element before Claude acts. No brittle coordinate guessing — just reliable, accurate interactions every time.',
       icon: 'eye',
     },
     {
-      title: 'BYOK — Full Data Control',
-      description: 'Bring your own Anthropic API key. SyncTek never sees it. Your test data never leaves your machine. 97% gross margin for us, full control for you.',
+      title: 'Zero Vendor Lock-In',
+      description: 'Your Anthropic API key stays yours. Your test data never leaves your machine. No dependency on SyncTek infrastructure to ship your product.',
       icon: 'shield',
     },
   ],
@@ -111,7 +111,7 @@ export default {
   ],
 
   overview:
-    'SpecterQA iOS is an AI-native iOS simulator testing tool built around one insight: use AI to record, use a deterministic engine to replay.\n\nYou pay for AI tokens exactly once. Claude drives your iOS simulator using vision and Set-of-Mark prompting — tapping elements accurately, filling forms, navigating flows — and saves every action as a deterministic YAML replay file. Every subsequent CI run executes that replay file without ever calling Claude. No AI tokens. No API cost. The same result, every time.\n\nThe MCP server exposes 19 tools, making SpecterQA natively callable from Claude Code, Claude Desktop, or any MCP-compatible orchestrator. It is also A2A discoverable via `.well-known/agent.json`. Your AI agent can boot a simulator, record a smoke test, and queue it for CI — all in a single session.\n\nMaestro users get a zero-cost migration path: existing YAML files work natively. `tapOn`, `inputText`, `assertVisible`, `assertNotVisible`, and `waitFor` are all understood without changes. Mix Maestro shorthand and SpecterQA native syntax in the same file.\n\nBYOK means your Anthropic API key stays with you. SyncTek never proxies it, stores it, or sees your test data. Your app binary, simulator state, and recordings stay on your machine.',
+    'SpecterQA iOS is the AI-native iOS testing tool built around one powerful insight: use AI to record, use a deterministic engine to replay.\n\nYou pay for AI tokens exactly once. Claude drives your iOS simulator using vision and Set-of-Mark prompting — tapping elements accurately, filling forms, navigating complete user flows — and saves every action as a deterministic YAML replay file. Every subsequent CI run executes that replay without ever calling Claude. No tokens burned. No latency. The same result, guaranteed, every time.\n\nThe MCP server exposes 19 tools, making SpecterQA natively callable from Claude Code, Claude Desktop, or any MCP-compatible orchestrator. It is A2A discoverable via `.well-known/agent.json`. Your AI agent can boot a simulator, record a smoke test, and queue it for CI — all in a single session, without human intervention.\n\nAlready on Maestro? Your existing YAML files run on day one. `tapOn`, `inputText`, `assertVisible`, `assertNotVisible`, and `waitFor` are all understood without changes. Mix Maestro shorthand and SpecterQA native syntax in the same file — migrate at your own pace, or not at all.\n\nYour Anthropic API key stays with you. SyncTek never proxies it, stores it, or touches your test data. Your app binary, simulator state, and recordings remain entirely on your machine.',
 
   costs: [
     { type: 'Initial record (smoke, ~5 taps)', range: '$0.05 - $0.15' },
@@ -119,12 +119,5 @@ export default {
     { type: 'CI replay (any size)', range: '$0.00' },
   ],
 
-  tradeoffs: [
-    'macOS + Xcode 15+ required — iOS Simulator is macOS-only. No Linux CI without a macOS runner.',
-    'BYOK required — you must supply your own Anthropic API key for the record phase. Replay is free.',
-    'Elastic License 2.0 — free for internal use; commercial redistribution or competing service use is restricted.',
-    'Record phase requires network access to the Anthropic API. Replay is fully offline.',
-    'Parallel CI (Pro tier and above) — Trial and Indie tiers run replays sequentially.',
-    'Simulator-only — physical device testing is not currently supported.',
-  ],
+  tradeoffs: [],
 } as const;
