@@ -1,22 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SectionDivider from '../components/SectionDivider.astro';
-import BlogPostCard from '../components/BlogPostCard.astro';
-import { getCollection } from 'astro:content';
-
-// Get latest blog posts
-const allPosts = await getCollection('blog', ({ data }) => !data.draft);
-const latestPosts = allPosts
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
-  .slice(0, 3);
-
-// Calculate reading time
-function getReadingTime(text: string): string {
-  const wpm = 200;
-  const words = text.split(/\s+/).length;
-  const minutes = Math.ceil(words / wpm);
-  return `${minutes} min read`;
-}
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -24,18 +8,17 @@ const jsonLd = {
   name: 'SyncTek LLC',
   url: 'https://synctek.io',
   description:
-    'SyncTek builds developer tools for agentic teams — governance infrastructure and behavioral testing that work together.',
+    'SyncTek LLC is a Raleigh-based developer-infrastructure company building tools for the agent-first software development era. SimDrive is our flagship product.',
   sameAs: [
     'https://github.com/SyncTek-LLC',
-    'https://twitter.com/SyncTekLLC',
-    'https://linkedin.com/company/synctek-llc',
+    'https://simdrive.dev',
   ],
 };
 ---
 
 <BaseLayout
-  title="SyncTek — Developer Tools Built for Trust"
-  description="SyncTek builds developer tools for agentic teams. ForgeOS: governance OS with Ed25519-signed audit trail and circuit breakers. SpecterQA: AI-powered behavioral testing in real browsers."
+  title="SyncTek — Developer Infrastructure for the Agent-First Era"
+  description="SyncTek LLC builds developer infrastructure for AI agents. Our flagship product is SimDrive — the MCP-native iOS simulator and real-device automation toolkit."
   jsonLd={jsonLd}
 >
   <!-- Hero -->
@@ -49,7 +32,6 @@ const jsonLd = {
         style="opacity: 0.18;"
         loading="eager"
       />
-      <!-- Gradient overlay to preserve text legibility -->
       <div
         class="absolute inset-0"
         style="background: linear-gradient(180deg, rgba(10,10,10,0.0) 0%, rgba(10,10,10,0.55) 60%, rgba(10,10,10,0.95) 100%);"
@@ -66,7 +48,7 @@ const jsonLd = {
     <div class="relative z-10">
       <!-- Overline -->
       <p class="text-xs font-semibold tracking-[0.12em] uppercase text-[#3B82F6] mb-4">
-        Developer Tools
+        SyncTek LLC
       </p>
 
       <!-- Headline -->
@@ -74,255 +56,107 @@ const jsonLd = {
         class="text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight max-w-3xl text-[#E6EDF3]"
         style="letter-spacing: -0.02em;"
       >
-        Developer tools built<br />
+        Reproduce and validate iOS bugs<br />
         <span
           style="background: linear-gradient(135deg, #3B82F6, #1D4ED8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"
         >
-          for trust.
+          in 60 seconds with Claude.
         </span>
       </h1>
 
       <p class="mt-6 text-lg sm:text-xl text-[#9CA3AF] max-w-2xl leading-relaxed">
-        SyncTek builds governance and testing infrastructure for agentic teams — the two layers
-        every AI system needs before it ships to production.
-      </p>
-
-      <!-- Sub-tagline -->
-      <p class="mt-3 text-sm text-[#6B7280] max-w-xl">
-        Enforce before you deploy. Test before you trust.
+        SyncTek builds developer infrastructure for AI agents. Our flagship product is <strong class="text-[#E6EDF3]">SimDrive</strong> —
+        the MCP-native iOS simulator and real-device automation toolkit.
       </p>
 
       <!-- CTA buttons -->
-      <div class="mt-10 flex flex-wrap gap-4">
+      <div class="mt-10 flex flex-wrap gap-4 items-center">
         <a
-          href="/products/forgeos/"
+          href="https://simdrive.dev"
+          target="_blank"
+          rel="noopener noreferrer"
           class="inline-flex items-center px-6 py-3 rounded-md font-medium text-white no-underline transition-all duration-150"
           style="background: #3B82F6; font-size: 1rem;"
           onmouseover="this.style.background='#2563EB'"
           onmouseout="this.style.background='#3B82F6'"
         >
-          Explore ForgeOS &rarr;
+          Visit simdrive.dev &rarr;
         </a>
         <a
-          href="/products/specterqa/"
-          class="inline-flex items-center px-6 py-3 rounded-md font-medium no-underline transition-all duration-150 text-[#E6EDF3]"
-          style="border: 1px solid #1F1F1F;"
-          onmouseover="this.style.borderColor='#BC8CFF'; this.style.background='rgba(188,140,255,0.04)'"
-          onmouseout="this.style.borderColor='#1F1F1F'; this.style.background='transparent'"
+          href="https://docs.simdrive.dev"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-sm font-medium no-underline text-[#9CA3AF] hover:text-[#E6EDF3] transition-colors"
         >
-          Explore SpecterQA &rarr;
+          docs.simdrive.dev ↗
         </a>
       </div>
-
-      <!-- Trust signal -->
-      <p class="mt-8 text-sm text-[#8B949E]">
-        Built by the team it governs. 13 AI departments running on ForgeOS governance. Live in production.
-      </p>
     </div>
   </section>
 
   <SectionDivider />
 
-  <!-- Products -->
+  <!-- What is SimDrive -->
   <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-    <p class="text-xs font-semibold tracking-[0.12em] uppercase text-[#3B82F6] mb-3">PRODUCTS</p>
-    <h2 class="text-2xl sm:text-3xl font-semibold text-[#E6EDF3] tracking-tight mb-3">
-      Two tools. One mission.
+    <p class="text-xs font-semibold tracking-[0.12em] uppercase text-[#3B82F6] mb-3">FLAGSHIP PRODUCT</p>
+    <h2 class="text-2xl sm:text-3xl font-semibold text-[#E6EDF3] tracking-tight mb-4">
+      What is SimDrive?
     </h2>
-    <p class="text-[#9CA3AF] mb-10 max-w-2xl">
-      Governance infrastructure and behavioral testing — the two layers every agentic system needs before it ships.
+    <p class="text-[#9CA3AF] mb-4 max-w-3xl leading-relaxed">
+      SimDrive is an MCP-native automation toolkit that lets Claude (and any MCP-aware agent) drive iOS Simulators
+      and real iOS devices. Record once, replay deterministically, capture evidence — turn ambiguous bug reports
+      into reproducible failures in under a minute.
     </p>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <!-- ForgeOS card -->
-      <div
-        class="group block rounded-xl p-6 transition-all duration-200 cursor-pointer"
-        style="background: #111111; border: 1px solid #1F1F1F;"
-        onmouseover="this.style.borderColor='rgba(59,130,246,0.4)'"
-        onmouseout="this.style.borderColor='#1F1F1F'"
-        onclick="if(!event.target.closest('a')){window.location.href='/products/forgeos/'}"
-      >
-        <div class="flex items-start justify-between mb-3">
-          <h3 class="text-lg font-semibold text-[#E6EDF3] group-hover:text-white transition-colors">
-            ForgeOS
-          </h3>
-          <span
-            class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold"
-            style="background: rgba(59,130,246,0.12); color: #3B82F6;"
-          >
-            Launched
-          </span>
-        </div>
-        <p class="text-sm text-[#9CA3AF] mb-4 leading-relaxed">
-          The governance OS for agentic teams — constitutional enforcement, signed audit trail, and circuit breakers for AI agents in production.
-        </p>
-        <div class="flex items-center gap-2 flex-wrap">
-          <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium" style="background: rgba(59,130,246,0.10); color: #3B82F6;">Governance OS</span>
-          <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium" style="background: rgba(59,130,246,0.10); color: #3B82F6;">21 MCP Tools</span>
-          <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium" style="background: rgba(59,130,246,0.10); color: #3B82F6;">EU AI Act</span>
-        </div>
-        <p class="mt-4 text-xs text-[#8B949E]">
-          Includes <a href="/products/forgeos/fti/" class="text-[#3B82F6] no-underline hover:underline">Forge Trust Index (FTI)</a> — trust-scored packages across 8 dimensions, Ed25519-signed.
-        </p>
-        <div class="mt-4 pt-4" style="border-top: 1px solid #1F1F1F;">
-          <a href="/products/forgeos/" class="text-sm font-medium text-[#3B82F6] no-underline hover:underline">Explore ForgeOS &rarr;</a>
-        </div>
-      </div>
-
-      <!-- SpecterQA card -->
-      <a
-        href="/products/specterqa/"
-        class="group block rounded-xl p-6 no-underline transition-all duration-200"
-        style="background: #111111; border: 1px solid #1F1F1F;"
-        onmouseover="this.style.borderColor='rgba(188,140,255,0.4)'"
-        onmouseout="this.style.borderColor='#1F1F1F'"
-      >
-        <div class="flex items-start justify-between mb-3">
-          <h3 class="text-lg font-semibold text-[#E6EDF3] group-hover:text-white transition-colors">
-            SpecterQA
-          </h3>
-          <span
-            class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold"
-            style="background: rgba(188,140,255,0.12); color: #BC8CFF;"
-          >
-            Launched
-          </span>
-        </div>
-        <p class="text-sm text-[#9CA3AF] mb-4 leading-relaxed">
-          AI personas test your web app in real browsers — no scripts needed. Vision-based, persona-driven behavioral testing for agentic workflows.
-        </p>
-        <div class="flex items-center gap-2 flex-wrap">
-          <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium" style="background: rgba(188,140,255,0.10); color: #BC8CFF;">CLI Tool</span>
-          <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium" style="background: rgba(188,140,255,0.10); color: #BC8CFF;">MCP Server</span>
-          <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium" style="background: rgba(188,140,255,0.10); color: #BC8CFF;">MIT</span>
-        </div>
-        <div class="mt-5 pt-4" style="border-top: 1px solid #1F1F1F;">
-          <span class="text-sm font-medium text-[#BC8CFF]">Explore SpecterQA &rarr;</span>
-        </div>
-      </a>
-    </div>
+    <p class="text-[#9CA3AF] mb-8 max-w-3xl leading-relaxed">
+      Built for engineers who want their AI assistant to actually <em>use the app</em>, not just read about it.
+    </p>
+    <a
+      href="https://simdrive.dev"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="inline-flex items-center px-5 py-2.5 rounded-md font-medium text-white no-underline transition-all duration-150"
+      style="background: #3B82F6;"
+      onmouseover="this.style.background='#2563EB'"
+      onmouseout="this.style.background='#3B82F6'"
+    >
+      See the full pitch at simdrive.dev &rarr;
+    </a>
   </section>
 
   <SectionDivider />
 
-  <!-- Company Differentiators -->
+  <!-- About SyncTek -->
   <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-    <p class="text-xs font-semibold tracking-[0.12em] uppercase text-[#3B82F6] mb-3">WHY SYNCTEK</p>
-    <h2 class="text-2xl sm:text-3xl font-semibold text-[#E6EDF3] tracking-tight mb-10">
-      What makes us different
+    <p class="text-xs font-semibold tracking-[0.12em] uppercase text-[#3B82F6] mb-3">THE COMPANY</p>
+    <h2 class="text-2xl sm:text-3xl font-semibold text-[#E6EDF3] tracking-tight mb-4">
+      About SyncTek
     </h2>
-
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <!-- Dogfooded -->
-      <div class="rounded-xl p-6" style="background: #111111; border: 1px solid #1F1F1F;">
-        <div
-          class="w-10 h-10 rounded-lg flex items-center justify-center mb-4"
-          style="background: rgba(59,130,246,0.10);"
-        >
-          <svg class="w-5 h-5" fill="none" stroke="#3B82F6" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-          </svg>
-        </div>
-        <h3 class="text-lg font-semibold text-[#E6EDF3] mb-2">Built by what it governs</h3>
-        <p class="text-sm text-[#8B949E] leading-relaxed">
-          SyncTek runs 13 AI departments under ForgeOS governance every day. Our tools are tested in production before they reach yours.
-        </p>
-      </div>
-
-      <!-- Cryptographic trust -->
-      <div class="rounded-xl p-6" style="background: #111111; border: 1px solid #1F1F1F;">
-        <div
-          class="w-10 h-10 rounded-lg flex items-center justify-center mb-4"
-          style="background: rgba(59,130,246,0.10);"
-        >
-          <svg class="w-5 h-5" fill="none" stroke="#3B82F6" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-          </svg>
-        </div>
-        <h3 class="text-lg font-semibold text-[#E6EDF3] mb-2">Cryptographic trust, not promises</h3>
-        <p class="text-sm text-[#8B949E] leading-relaxed">
-          Ed25519-signed audit trails, hash-chained ledgers, and deterministic scoring. Every claim is verifiable. Every action is traceable.
-        </p>
-      </div>
-
-      <!-- Agent-native -->
-      <div class="rounded-xl p-6" style="background: #111111; border: 1px solid #1F1F1F;">
-        <div
-          class="w-10 h-10 rounded-lg flex items-center justify-center mb-4"
-          style="background: rgba(59,130,246,0.10);"
-        >
-          <svg class="w-5 h-5" fill="none" stroke="#3B82F6" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-          </svg>
-        </div>
-        <h3 class="text-lg font-semibold text-[#E6EDF3] mb-2">Agent-native from day one</h3>
-        <p class="text-sm text-[#8B949E] leading-relaxed">
-          MCP, A2A Agent Cards, and llms.txt built in. Your AI agents discover and use our tools without human intermediaries or custom SDKs.
-        </p>
-      </div>
-    </div>
+    <p class="text-[#9CA3AF] max-w-3xl leading-relaxed">
+      SyncTek LLC is a Raleigh-based developer-infrastructure company building tools for the agent-first
+      software development era. SimDrive is our flagship; more products are in the pipeline.
+    </p>
   </section>
 
   <SectionDivider />
 
-  <!-- Latest blog posts -->
-  {latestPosts.length > 0 && (
-    <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-      <div class="flex items-center justify-between mb-8">
-        <h2 class="text-2xl font-semibold tracking-tight">Latest from the blog</h2>
-        <a
-          href="/blog/"
-          class="text-sm text-accent-silver hover:text-accent-silver-hover hover:underline no-underline font-medium"
-        >
-          View all posts &rarr;
-        </a>
+  <!-- Contact -->
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <p class="text-xs font-semibold tracking-[0.12em] uppercase text-[#3B82F6] mb-3">GET IN TOUCH</p>
+    <h2 class="text-2xl sm:text-3xl font-semibold text-[#E6EDF3] tracking-tight mb-6">
+      Contact
+    </h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl">
+      <div class="rounded-xl p-6" style="background: #111111; border: 1px solid #1F1F1F;">
+        <h3 class="text-sm font-semibold text-[#E6EDF3] mb-2">SimDrive support</h3>
+        <a href="mailto:support@simdrive.dev" class="text-sm text-[#3B82F6] no-underline hover:underline">support@simdrive.dev</a>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {latestPosts.map((post) => (
-          <BlogPostCard
-            title={post.data.title}
-            description={post.data.description}
-            date={post.data.date}
-            category={post.data.category}
-            slug={post.slug}
-            readingTime={getReadingTime(post.body || '')}
-          />
-        ))}
+      <div class="rounded-xl p-6" style="background: #111111; border: 1px solid #1F1F1F;">
+        <h3 class="text-sm font-semibold text-[#E6EDF3] mb-2">Company</h3>
+        <a href="mailto:hello@synctek.io" class="text-sm text-[#3B82F6] no-underline hover:underline">hello@synctek.io</a>
       </div>
-    </section>
-  )}
-
-  {latestPosts.length > 0 && <SectionDivider />}
-
-  <!-- Final CTA -->
-  <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-    <div class="rounded-xl p-8 sm:p-12 text-center" style="background: #111111; border: 1px solid #1F1F1F;">
-      <p class="text-xs font-semibold tracking-[0.12em] uppercase text-[#3B82F6] mb-4">GET STARTED</p>
-      <h2 class="text-2xl sm:text-3xl font-semibold text-[#E6EDF3] tracking-tight mb-4">
-        Pick your starting point.
-      </h2>
-      <p class="text-[#9CA3AF] max-w-xl mx-auto mb-8">
-        Govern your agents with ForgeOS. Test your UX with SpecterQA. Both are ready today.
-      </p>
-      <div class="flex flex-wrap gap-4 justify-center">
-        <a
-          href="/products/forgeos/pricing#trial"
-          class="inline-flex items-center px-8 py-3.5 rounded-md font-medium text-white no-underline transition-all duration-150"
-          style="background: #3B82F6; font-size: 1.125rem;"
-          onmouseover="this.style.background='#2563EB'"
-          onmouseout="this.style.background='#3B82F6'"
-        >
-          Start ForgeOS trial
-        </a>
-        <a
-          href="/products/specterqa/"
-          class="inline-flex items-center px-8 py-3.5 rounded-md font-medium no-underline transition-all duration-150 text-[#BC8CFF]"
-          style="border: 1px solid rgba(188,140,255,0.3); font-size: 1.125rem;"
-          onmouseover="this.style.borderColor='#BC8CFF'; this.style.background='rgba(188,140,255,0.06)'"
-          onmouseout="this.style.borderColor='rgba(188,140,255,0.3)'; this.style.background='transparent'"
-        >
-          Try SpecterQA free &rarr;
-        </a>
+      <div class="rounded-xl p-6" style="background: #111111; border: 1px solid #1F1F1F;">
+        <h3 class="text-sm font-semibold text-[#E6EDF3] mb-2">GitHub</h3>
+        <a href="https://github.com/SyncTek-LLC" target="_blank" rel="noopener noreferrer" class="text-sm text-[#3B82F6] no-underline hover:underline">github.com/SyncTek-LLC ↗</a>
       </div>
     </div>
   </section>
