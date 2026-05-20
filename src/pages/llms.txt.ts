@@ -1,42 +1,37 @@
 import type { APIRoute } from 'astro';
 
 export const GET: APIRoute = () => {
-  const content = `# ForgeOS by SyncTek
+  const content = `# SyncTek LLC
 
-> ForgeOS is a governance engine for AI agents. It enforces constitutional rules, gate-based change pipelines, Ed25519-signed audit trails, and circuit breakers so AI agents can ship code safely without human babysitting.
+SyncTek LLC is a Raleigh-based developer-infrastructure company building tools for the agent-first software development era. Our flagship product is SimDrive.
 
-## What is ForgeOS?
+---
 
-ForgeOS sits between your AI agent and your codebase. Every change goes through a pipeline of gates — intent, design, implementation, verification, hardening, release — with required evidence and reviews at each stage. The engine computes a risk score for every changeset and determines which gates, reviewer roles, and evidence types are required.
+# SimDrive by SyncTek
 
-The MCP server exposes 21 governance tools any MCP-compatible agent (Claude, GPT-4, Gemini, local models) can call natively. No custom SDK required.
+> SimDrive is an MCP-native iOS simulator and real-device automation toolkit. Reproduce and validate iOS bugs in 60 seconds with Claude.
 
-## Quick links
+## What is SimDrive?
 
-- Quickstart guide: https://synctek.io/docs/quickstart/
-- Authentication reference: https://synctek.io/docs/auth/
-- MCP server setup: https://synctek.io/docs/mcp/
-- REST API reference: https://synctek.io/docs/api/
-- Full docs as plain text: https://synctek.io/llms-full.txt
-- Structured endpoint index: https://synctek.io/docs.json
+SimDrive lets MCP-aware agents drive iOS Simulators and real iOS devices. Record once, replay deterministically, capture evidence — turning ambiguous bug reports into reproducible failures in under a minute.
 
-## Engine API
+Built for engineers who want their AI assistant to actually use the app, not just read about it.
 
-- Base URL: https://forgeos-api.synctek.io
+## Links
 
-## MCP server
+- Website: https://simdrive.dev
+- Docs: https://docs.simdrive.dev
+- Support: support@simdrive.dev
 
-Install: npm install -g @synctek/forgeos
-NPX: npx -y @synctek/forgeos@latest
-HTTP/SSE endpoint: https://mcp.synctek.io/mcp
+---
 
-## Auth
+# Company
 
-All API requests require either:
-- X-ForgeOS-API-Key: fos_your_key header
-- forge_session cookie (set by POST /auth/login)
+- Website: https://synctek.io
+- GitHub: https://github.com/SyncTek-LLC
+- Contact: hello@synctek.io
 
-Authentication and registration endpoints are public. All other endpoints require authentication.
+This site (synctek.io) is the corporate landing page. Product details, pricing, and integration guides live on https://simdrive.dev.
 `;
 
   return new Response(content, {

@@ -3,7 +3,7 @@
   "name": "ForgeOS Trust Index",
   "tagline": "We don't have a #1. We have your #1.",
   "description_short": "Context-aware trust scoring for open-source packages. Scores tailored to your security posture, team size, and tech stack.",
-  "description_long": "The ForgeOS Trust Index (FTI) evaluates open-source packages across\n6 scoring dimensions — security, maintenance, community health,\ncode quality, documentation, and licensing. Unlike static rankings,\nFTI provides context-aware recommendations based on YOUR specific\nneeds: security posture, team size, preferred language, and runtime.\n\nFTI is the first trust infrastructure that answers \"is this package\nright for ME?\" instead of \"is this package popular?\"\n",
+  "description_long": "The ForgeOS Trust Index (FTI) evaluates open-source packages across\n8 scoring dimensions — security, maintainability, documentation,\ncommunity health, supply chain, improvement velocity, governance,\nand operational. Unlike static rankings,\nFTI provides context-aware recommendations based on YOUR specific\nneeds: security posture, team size, preferred language, and runtime.\n\nFTI is the first trust infrastructure that answers \"is this package\nright for ME?\" instead of \"is this package popular?\"\n",
   "brand": {
     "accent_color": "#4f46e5",
     "design_language": "Measured Authority"
@@ -102,32 +102,50 @@
       {
         "id": "security",
         "name": "Security",
-        "description": "Known vulnerabilities, security advisories, response times"
+        "weight": 0.20,
+        "description": "Known vulnerabilities, CVE count, vulnerability patch cadence, SAST findings, signed releases"
       },
       {
-        "id": "maintenance",
-        "name": "Maintenance",
-        "description": "Release cadence, issue response time, contributor activity"
-      },
-      {
-        "id": "community",
-        "name": "Community Health",
-        "description": "Bus factor, code of conduct, funding, governance docs"
-      },
-      {
-        "id": "code_quality",
-        "name": "Code Quality",
-        "description": "Test coverage, linting, type safety, complexity"
+        "id": "maintainability",
+        "name": "Maintainability",
+        "weight": 0.15,
+        "description": "Commit frequency, test coverage, code complexity, open issue age, changelog/CI health"
       },
       {
         "id": "documentation",
         "name": "Documentation",
-        "description": "README quality, API docs, examples, changelog"
+        "weight": 0.10,
+        "description": "API reference completeness, README quality, examples, changelog, docs site freshness"
       },
       {
-        "id": "licensing",
-        "name": "Licensing",
-        "description": "License compatibility, patent grants, commercial use"
+        "id": "community",
+        "name": "Community Health",
+        "weight": 0.10,
+        "description": "Contributor count, bus factor resilience, issue response time, star/fork trajectory, downstream dependents"
+      },
+      {
+        "id": "supply_chain",
+        "name": "Supply Chain",
+        "weight": 0.10,
+        "description": "Dependency count, transitive CVEs, SBOM presence, Sigstore/in-toto attestations, typosquatting distance"
+      },
+      {
+        "id": "velocity",
+        "name": "Improvement Velocity",
+        "weight": 0.05,
+        "description": "90-day trailing FTI score delta, CVE closure rate, test coverage changes, documentation improvements"
+      },
+      {
+        "id": "governance",
+        "name": "Governance",
+        "weight": 0.15,
+        "description": "CI/system health grade, gate completion rate, separation of duties, ledger integrity, violation remediation"
+      },
+      {
+        "id": "operational",
+        "name": "Operational",
+        "weight": 0.15,
+        "description": "Uptime SLA, incident frequency, MTTR, monitoring coverage, API p95 latency"
       }
     ],
     "context_factors": [
@@ -146,7 +164,7 @@
   "faq": [
     {
       "q": "How is FTI different from npm audit or Snyk?",
-      "a": "Those tools check for known vulnerabilities. FTI evaluates the overall trustworthiness of a package across 6 dimensions — security is just one. FTI also provides context-aware scores tailored to your specific needs."
+      "a": "Those tools check for known vulnerabilities. FTI evaluates the overall trustworthiness of a package across 8 dimensions — security is just one. FTI also provides context-aware scores tailored to your specific needs."
     },
     {
       "q": "Can I dispute a score?",
@@ -162,8 +180,8 @@
     }
   ],
   "_meta": {
-    "generated_at": "2026-03-03T04:27:17.597587+00:00",
-    "source": "config/product_docs/fti_001.yaml",
+    "generated_at": "2026-03-27T00:00:00.000000+00:00",
+    "source": "config/product_docs/fti.yaml",
     "generator": "ba docs-generate"
   }
 }

@@ -2,10 +2,8 @@
 import Logo from './Logo.astro';
 
 const footerLinks = [
-  { label: 'Products', href: '/products/' },
-  { label: 'Docs', href: '/docs/' },
+  { label: 'SimDrive', href: 'https://simdrive.dev', external: true },
   { label: 'Blog', href: '/blog/' },
-  { label: 'Open Source', href: '/open-source/' },
   { label: 'About', href: '/about/' },
   { label: 'Contact', href: '/contact/' },
 ];
@@ -27,7 +25,7 @@ const currentYear = new Date().getFullYear();
           <Logo height={32} class="sm:h-10" />
         </a>
         <p class="text-sm text-light-gray-500 dark:text-muted max-w-xs">
-          AI-powered developer tools. Honest software that works on your terms.
+          Developer infrastructure for the agent-first era. Maker of SimDrive.
         </p>
       </div>
 
@@ -36,9 +34,11 @@ const currentYear = new Date().getFullYear();
         {footerLinks.map((link) => (
           <a
             href={link.href}
+            target={link.external ? '_blank' : undefined}
+            rel={link.external ? 'noopener noreferrer' : undefined}
             class="text-sm text-light-gray-500 dark:text-muted hover:text-light-text-primary dark:hover:text-terminal-white no-underline transition-colors"
           >
-            {link.label}
+            {link.label}{link.external ? ' ↗' : ''}
           </a>
         ))}
       </nav>

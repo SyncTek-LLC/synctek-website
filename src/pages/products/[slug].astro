@@ -6,17 +6,20 @@ import SectionDivider from '../../components/SectionDivider.astro';
 import { getCollection } from 'astro:content';
 import specterqa from '../../data/products/specterqa';
 import forgeos from '../../data/products/forgeos';
+import specterqaIos from '../../data/products/specterqa-ios';
 
 // Build all product pages from data
-const products: Record<string, typeof specterqa | typeof forgeos> = {
+const products: Record<string, typeof specterqa | typeof forgeos | typeof specterqaIos> = {
   specterqa,
   forgeos,
+  'specterqa-ios': specterqaIos,
 };
 
 export function getStaticPaths() {
   return [
     { params: { slug: 'specterqa' } },
     { params: { slug: 'forgeos' } },
+    { params: { slug: 'specterqa-ios' } },
   ];
 }
 

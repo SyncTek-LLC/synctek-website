@@ -14,7 +14,6 @@
     "api": "https://forgeos-api.synctek.io",
     "docs": "https://forgeos.synctek.io/docs",
     "support": "support@synctek.io",
-    "github": "https://github.com/SyncTek-LLC/forgeos",
     "npm": "https://www.npmjs.com/package/@synctek/forgeos",
     "federation": "https://federation.synctek.io"
   },
@@ -247,7 +246,7 @@
   "capabilities": {
     "cli_commands": 49,
     "mcp_tools": 21,
-    "api_endpoints": 135,
+    "api_endpoints": 239,
     "gate_types": 16,
     "supported_languages": [
       "Python",
