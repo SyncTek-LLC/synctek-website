@@ -20,7 +20,7 @@ Built for engineers who want their AI assistant to actually use the app, not jus
 ## Links
 
 - Website: https://simdrive.dev
-- Docs: https://docs.simdrive.dev
+- Docs: https://github.com/SyncTek-LLC/simdrive-docs
 - Support: support@simdrive.dev
 
 ---
@@ -29,7 +29,7 @@ Built for engineers who want their AI assistant to actually use the app, not jus
 
 - Website: https://synctek.io
 - GitHub: https://github.com/SyncTek-LLC
-- Contact: hello@synctek.io
+- Contact: support@simdrive.dev
 
 This site (synctek.io) is the corporate landing page. Product details, pricing, and integration guides live on https://simdrive.dev.
 `;

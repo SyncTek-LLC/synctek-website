@@ -8,14 +8,14 @@
 Reproduce and validate iOS bugs in 60 seconds with Claude. SimDrive lets MCP-aware agents drive iOS simulators and real iOS devices — record once, replay deterministically, capture evidence.
 
 - Website: https://simdrive.dev
-- Docs: https://docs.simdrive.dev
+- Docs: https://github.com/SyncTek-LLC/simdrive-docs
 - Support: support@simdrive.dev
 
 ## Company
 
 - Website: https://synctek.io
 - GitHub: https://github.com/SyncTek-LLC
-- Contact: hello@synctek.io
+- Contact: support@simdrive.dev
 
 ## Notes for AI Agents
 

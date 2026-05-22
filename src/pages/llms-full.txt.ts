@@ -8,9 +8,9 @@ SyncTek LLC is a Raleigh-based developer-infrastructure company. Our flagship pr
 For SimDrive's full documentation, integration guides, MCP tool reference, and pricing, see:
 
 - https://simdrive.dev
-- https://docs.simdrive.dev
+- https://github.com/SyncTek-LLC/simdrive-docs
 
-For company inquiries: hello@synctek.io
+For company inquiries: support@simdrive.dev
 For SimDrive support: support@simdrive.dev
 GitHub: https://github.com/SyncTek-LLC
 
