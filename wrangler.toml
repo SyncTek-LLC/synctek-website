@@ -1,0 +1,18 @@
+# wrangler.toml — Cloudflare Pages / Workers configuration for synctek-website
+# Managed by DeployAtlas. Do not edit manually in CI.
+
+name = "synctek-website"
+compatibility_date = "2024-01-01"
+pages_build_output_dir = "./dist"
+
+# ── D1 Databases ──────────────────────────────────────────────────────────────
+# DeployAtlas: create the database with:
+#   wrangler d1 create heka-waitlist
+# Then paste the returned database_id below and remove the TODO comment.
+# After creating, run the migration:
+#   wrangler d1 execute heka-waitlist --file=migrations/0001_create_waitlist.sql
+
+# [[d1_databases]]
+# binding      = "WAITLIST_DB"
+# database_name = "heka-waitlist"
+# database_id  = "TODO: replace with id from `wrangler d1 create heka-waitlist`"
