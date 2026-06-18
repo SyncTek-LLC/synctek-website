@@ -8,7 +8,7 @@ tags: ["ai", "engineering", "agents", "verification", "epistemic-engineering"]
 draft: false
 ---
 
-We build software at SyncTek — including SimDrive, which reproduces iOS bugs by driving a real device with Claude. Building it, and the harness our agents run on, we kept hitting the same wall, and it wasn't a coding problem. It was knowing when an answer had actually earned the right to be believed. This is what we learned.
+We build software at SyncTek, including SimDrive, which reproduces iOS bugs by driving a real device with Claude. Building it, and the harness our agents run on, we kept hitting the same wall, and it wasn't a coding problem. It was knowing when an answer had actually earned the right to be believed. This is what we learned.
 
 Most software teams do not have a coding problem first. They have a truth problem.
 
@@ -48,7 +48,7 @@ The skill is knowing what kind of problem you are actually holding before you le
 
 ## Creation as Collapse
 
-Borrowing a metaphor, loosely: before a decision, there is a field of possibility. Many explanations could be true. Many designs could work. Many fixes could solve the visible symptom. Many interpretations could be coherent. The act of engineering is not just choosing one — it is knowing how long to keep the field open before collapsing it into form.
+Borrowing a metaphor, loosely: before a decision, there is a field of possibility. Many explanations could be true. Many designs could work. Many fixes could solve the visible symptom. Many interpretations could be coherent. The act of engineering is not just choosing one. It is knowing how long to keep the field open before collapsing it into form.
 
 Collapse too early, and you get shallow certainty. Never collapse, and nothing ships.
 
@@ -64,35 +64,35 @@ That can be useful, but it leaves too much discipline inside the human operator'
 
 A harness moves the discipline into the environment. Instead of hoping the model remembers to consider alternatives, the environment spreads the work across multiple candidates. Instead of hoping the model checks itself, the environment runs refuters. Instead of hoping the final answer mentions uncertainty, the environment asks what risk remains.
 
-None of these moves is new on its own — multiple hypotheses, red-teaming, residual-risk accounting are old ideas. The discipline is composing them deliberately into the environment instead of leaving them to the operator's memory on a good day.
+None of these moves is new on its own. Multiple hypotheses, red-teaming, residual-risk accounting are old ideas. The discipline is composing them deliberately into the environment instead of leaving them to the operator's memory on a good day.
 
 The goal is not to make the model magically smarter. The goal is to make shallow certainty harder to get away with.
 
-## The Spread–Verify–Collapse Loop
+## The Spread-Verify-Collapse Loop
 
 A default epistemic loop looks like this:
 
-**Shape** — Name the structural shape of the task, not just its domain label.
+**Shape:** Name the structural shape of the task, not just its domain label.
 
-**Spread** — Generate multiple candidates or hypotheses. Hold the possibility field open long enough to sample the space.
+**Spread:** Generate multiple candidates or hypotheses. Hold the possibility field open long enough to sample the space.
 
-**Verify** — Attack the candidates. Try to refute them. Look for missing cases, false assumptions, regressions, unsafe conclusions, and unsupported claims.
+**Verify:** Attack the candidates. Try to refute them. Look for missing cases, false assumptions, regressions, unsafe conclusions, and unsupported claims.
 
-**Collapse** — Synthesize only what survives into the committed artifact.
+**Collapse:** Synthesize only what survives into the committed artifact.
 
-**Capture** — Record what did not fit: the off-shape findings, the rejected-but-interesting ideas, the residual risks.
+**Capture:** Record what did not fit: the off-shape findings, the rejected-but-interesting ideas, the residual risks.
 
 This loop does not need the same amount of ceremony every time. A variable rename does not need five candidates and three refuters. A billing migration probably does.
 
-That is why the loop needs a *stakes dial* — ceremony that scales with how reversible the change is and how much it can break. Low-stakes work can collapse quickly. High-stakes work should be forced to survive opposition.
+That is why the loop needs a *stakes dial*: ceremony that scales with how reversible the change is and how much it can break. Low-stakes work can collapse quickly. High-stakes work should be forced to survive opposition.
 
 ## The Schema Problem
 
 Structured output is one of the most powerful tools in agentic engineering. It lets agents coordinate. It makes outputs machine-readable. It turns language into workflow.
 
-But a schema is also a kind of premature naming. It says, in advance, "These are the kinds of truths I am prepared to receive." That is useful when the shape is already known. It is dangerous during discovery — because if the real finding does not fit, the model will often squeeze it into the closest field. The result looks structured, but the truth has been rounded off.
+But a schema is also a kind of premature naming. It says, in advance, "These are the kinds of truths I am prepared to receive." That is useful when the shape is already known. It is dangerous during discovery, because if the real finding does not fit, the model will often squeeze it into the closest field. The result looks structured, but the truth has been rounded off.
 
-So a useful rule: **schema the report, not the search.** Let exploration stay loose enough to preserve the weird, off-shape findings. Impose structure afterward, once the shape has emerged, for coordination and storage and execution. And leave the structure a way to say *"this didn't quite fit"* — so schema drift becomes a signal instead of a silent failure.
+So a useful rule: **schema the report, not the search.** Let exploration stay loose enough to preserve the weird, off-shape findings. Impose structure afterward, once the shape has emerged, for coordination and storage and execution. And leave the structure a way to say *"this didn't quite fit"*, so schema drift becomes a signal instead of a silent failure.
 
 ## Verification as a Control Structure
 
@@ -100,7 +100,7 @@ In normal conversation, a plausible claim often survives because nobody refutes 
 
 Those statements may be true. But they should not be free.
 
-> **From our own ledger:** While building one of our backends, an auth endpoint returned a session object with an empty `token` field. The backend's integration tests checked that the response was `200` and that the token field was *present* — both green. The team was ready to move on. But the client's tests asserted something the backend's did not: that the token's *value* was non-empty. That one assertion caught a P0 — our highest-severity class — a broken auth contract that two passing test suites had just waved through. The first plausible "it works" was true at the shape level and false at the level that mattered. "Present" is not "correct," and only a verifier looking for the gap between them can tell the difference.
+> **From our own ledger:** While building one of our backends, an auth endpoint returned a session object with an empty `token` field. The backend's integration tests checked that the response was `200` and that the token field was *present*. Both were green. The team was ready to move on. But the client's tests asserted something the backend's did not: that the token's *value* was non-empty. That one assertion caught a P0 (our highest-severity class), a broken auth contract that two passing test suites had just waved through. The first plausible "it works" was true at the shape level and false at the level that mattered. "Present" is not "correct," and only a verifier looking for the gap between them can tell the difference.
 
 An epistemic harness treats confident claims as events that require verification. If the system says the bug is fixed, it should point to the failing case now passing. If it says there is no regression, it should name the regression check. If it asserts a root cause, it should show how rival causes were ruled out.
 
@@ -118,4 +118,4 @@ AI makes generation cheap. That means judgment, verification, orchestration, and
 
 The teams that win won't be the ones that just ask models for answers. They will be the ones that build environments where answers have to earn the right to become real.
 
-*This is the discipline behind how we build at SyncTek. If you're working on the same problem — making AI-assisted systems that don't collapse on the first plausible answer — we'd like to hear from you.*
+*This is the discipline behind how we build at SyncTek. If you're working on the same problem, making AI-assisted systems that don't collapse on the first plausible answer, we'd like to hear from you.*

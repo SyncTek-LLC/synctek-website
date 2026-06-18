@@ -3,11 +3,8 @@ import ThemeToggle from './ThemeToggle.astro';
 import Logo from './Logo.astro';
 
 const navLinks = [
-  { label: 'Products', href: '/products/' },
-  { label: 'Trust Index', href: '/products/forgeos/fti/' },
-  { label: 'Docs', href: '/docs/' },
+  { label: 'SimDrive', href: 'https://simdrive.dev', external: true },
   { label: 'Blog', href: '/blog/' },
-  { label: 'Open Source', href: '/open-source/' },
   { label: 'About', href: '/about/' },
   { label: 'Contact', href: '/contact/' },
 ];
@@ -27,14 +24,16 @@ const currentPath = Astro.url.pathname;
       {navLinks.map((link) => (
         <a
           href={link.href}
+          target={link.external ? '_blank' : undefined}
+          rel={link.external ? 'noopener noreferrer' : undefined}
           class:list={[
             'text-sm font-medium no-underline transition-colors',
-            currentPath.startsWith(link.href)
+            !link.external && currentPath.startsWith(link.href)
               ? 'text-accent-silver-hover dark:text-terminal-white'
               : 'text-light-gray-500 dark:text-muted hover:text-light-text-primary dark:hover:text-terminal-white',
           ]}
         >
-          {link.label}
+          {link.label}{link.external ? ' ↗' : ''}
         </a>
       ))}
       <ThemeToggle />
@@ -79,14 +78,16 @@ const currentPath = Astro.url.pathname;
         {navLinks.map((link) => (
           <a
             href={link.href}
+            target={link.external ? '_blank' : undefined}
+            rel={link.external ? 'noopener noreferrer' : undefined}
             class:list={[
               'text-lg font-medium no-underline py-2 transition-colors',
-              currentPath.startsWith(link.href)
+              !link.external && currentPath.startsWith(link.href)
                 ? 'text-accent-silver-hover dark:text-terminal-white'
                 : 'text-light-gray-500 dark:text-muted hover:text-light-text-primary dark:hover:text-terminal-white',
             ]}
           >
-            {link.label}
+            {link.label}{link.external ? ' ↗' : ''}
           </a>
         ))}
       </div>
