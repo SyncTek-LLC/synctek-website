@@ -78,7 +78,7 @@ This is a fleet of autonomous engineers, coordinated by a central harness.
 
 **Is it production-ready?** The code is solid and mutation-tested; the runtime promises are staged with device verification required. Production-ready for code review, not for merge without human verification. The agent knew this and built the gates.
 
-**What happens when the harness breaks?** A human must trace the logs. The harness creates clarity (explicit PRs, staged gates, clear dependencies), but debugging distributed agents is new territory.
+**What happens when the harness breaks?** Less than you might expect. The harness is self-documenting, and an agent can repair and extend it as a task demands, fixing or improving the harness itself to get the work done. A human can still step in, and the clarity the harness creates (explicit PRs, staged gates, clear dependencies) makes that easy, but the first responder to a broken harness is increasingly the agent itself.
 
 ## The Real Innovation
 
