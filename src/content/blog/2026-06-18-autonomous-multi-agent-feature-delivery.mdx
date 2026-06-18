@@ -33,7 +33,7 @@ This is the kind of decision a senior engineer makes thinking three steps ahead.
 
 ## The Testing: Mutation-Driven Verification
 
-The test suite was small but surgical. One test pinned a subtle boundary: a page labeled "07" is numerically 7 but isn't an exact string match for "7," so it must resolve through the numeric fallback, and an inclusive `<=` bound is critical, because a `<` would skip the equal page.
+The test suite was small but surgical. One test pinned a subtle boundary: when a requested page has no exact label match, it must resolve to the nearest preceding page, and an inclusive `<=` bound is critical, because an exclusive `<` would skip a page whose value equals the request.
 
 Why that exact test? Because the agent ran diff-scoped mutation analysis, found a survivor (the `<=` could have been `<`), and added a test to kill it. Mutation coverage went from 87.5% to 100%. This is professional QA discipline most developers skip. The agent didn't.
 
