@@ -1,72 +1,22 @@
-# SyncTek — AI-Native Software Infrastructure
+# SyncTek LLC
 
-> SyncTek builds governed AI infrastructure for software teams.
+> SyncTek LLC is a Raleigh-based developer-infrastructure company building tools for the agent-first software development era.
 
-## Products
+## Flagship Product
 
-### ForgeOS — Governance OS for Agentic Software Teams
-Trust-scored package intelligence, gate-based delivery pipelines, and institutional memory.
-- Website: https://synctek.io/forgeos/
-- API: https://forgeos-api.synctek.io
-- MCP server: https://mcp.synctek.io/mcp
+### SimDrive — MCP-Native iOS Automation Toolkit
+Reproduce and validate iOS bugs in 60 seconds with Claude. SimDrive lets MCP-aware agents drive iOS simulators and real iOS devices — record once, replay deterministically, capture evidence.
 
-### ForgeOS Trust Index
-Context-aware trust scoring for every package in your stack, open-source or commercial. "We don't have a #1. We have your #1."
-- API: https://forgeos-api.synctek.io/api/v1/scores
-- Methodology: transparent, auditable, context-weighted
-
-### Federation Hub
-Cross-instance pattern sharing for ForgeOS deployments.
-- Public insights: https://forgeos-api.synctek.io/api/v1/federation/insights
-- Privacy: all shared data is scrubbed and anonymized
-
-### SpecterQA — Vision-Based Behavioral Testing
-AI personas navigate real UIs in a live browser and report what actually happens — no test scripts, no CSS selectors. Define a persona (role, goals, frustration level) and a journey; SpecterQA takes screenshots, sends them to a vision model, and the AI decides what to click or type, just like a real user. Tests break when the UX breaks, not when markup changes. MIT licensed. Integrates with ForgeOS governance gates.
-- Website: https://synctek.io/products/specterqa/
-
-## For AI Agents
-
-ForgeOS is built agent-first. To get started:
-1. POST https://forgeos-api.synctek.io/auth/register — register for an account
-2. Use the API key in `X-ForgeOS-API-Key` header for authenticated endpoints
-3. Or use ForgeOS MCP server for Claude Code / Cursor / Windsurf integration
-
-- [Agent Integration Guide](https://synctek.io/agents.md): MCP tools, REST patterns, auth reference
-- [MCP Server Metadata](https://synctek.io/.well-known/mcp.json): Transport options and tool list
-- [A2A Agent Card](https://synctek.io/.well-known/agent.json): Google A2A discovery
-
-### FTI API (Trust Scoring for Agents)
-
-Agents can query trust scores without a ForgeOS subscription via the standalone metered FTI API:
-- POST https://forgeos-api.synctek.io/v1/score — Score a package ($0.003/call). Auth: X-FTI-API-Key.
-- POST https://forgeos-api.synctek.io/v1/recommend — Get recommendations for a package ($0.005/call).
-- POST https://forgeos-api.synctek.io/v1/compare — Compare packages side-by-side ($0.008/call).
-- GET https://forgeos-api.synctek.io/v1/methodology — Dimension definitions and scoring weights (free, no auth required).
-
-Scores are Ed25519-signed and include all 8 dimensions: security, maintainability, documentation, community_health, supply_chain, improvement_velocity, governance, operational.
-
-## Documentation
-
-- [Documentation Home](https://synctek.io/docs/): Full developer documentation
-- [Quickstart](https://synctek.io/docs/quickstart/): Start using ForgeOS in under 3 minutes
-- [Authentication](https://synctek.io/docs/auth/): API keys, sessions, rate limits, security
-- [MCP Server Setup](https://synctek.io/docs/mcp/): Connect ForgeOS to Cursor, Claude Code, VS Code, or any MCP client
-- [REST API Reference](https://synctek.io/docs/api/): Full API reference with request/response examples
-- [Full docs as plain text](https://synctek.io/docs/): Machine-readable documentation
-
-## Pricing
-
-- [ForgeOS Pricing](https://synctek.io/products/forgeos/pricing/): 14-day free trial, no credit card. Free: $0/1K API calls. Pro: $49/mo/50K calls. Team: $29/seat/mo (3-seat min, $87/mo base)/200K calls. Enterprise: custom. Machine-readable at /docs.json.
-- [FTI Pricing](https://synctek.io/products/forgeos/fti/): FTI is bundled with ForgeOS (Free: 5 scores/day; Pro/Team/Enterprise: unlimited). Standalone metered API for agents: $0.003/score, $0.005/recommendation, $0.008/comparison. GET /v1/methodology is free and public. Badge embeds always free, no API key required.
-
-## Blog
-
-- [The 41% Problem](https://synctek.io/blog/2026-02-25-41-percent-problem-ai-agents-governance/): Why MCP auth is broken and what to do about it
-- [What is a Governance OS?](https://synctek.io/blog/2026-02-25-what-is-a-governance-os/): ForgeOS explained for agents and their operators
-- [ForgeOS vs CrewAI](https://synctek.io/blog/2026-02-25-forgeos-vs-crewai-vs-langgraph/): Governance vs orchestration — different layers of the stack
-- [EU AI Act Guide](https://synctek.io/blog/2026-02-25-eu-ai-act-compliance-ai-agents-guide/): Article 6 enforcement begins Aug 2, 2026
+- Website: https://simdrive.dev
+- Docs: https://github.com/SyncTek-LLC/simdrive-docs
+- Support: support@simdrive.dev
 
 ## Company
 
-SyncTek LLC — Building governed AI infrastructure.
-Website: https://synctek.io
+- Website: https://synctek.io
+- GitHub: https://github.com/SyncTek-LLC
+- Contact: support@simdrive.dev
+
+## Notes for AI Agents
+
+SyncTek is the holding company. Product details, pricing, and integration guides live on https://simdrive.dev. This site (synctek.io) is the corporate landing page only.
