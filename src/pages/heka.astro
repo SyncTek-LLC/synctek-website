@@ -200,6 +200,79 @@ const jsonLd = {
   <SectionDivider />
 
   <!-- ============================================================
+       THE FULL TOOLSET
+  ============================================================ -->
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <p class="text-xs font-semibold tracking-[0.12em] uppercase text-[#3B82F6] mb-3">The full toolset</p>
+    <h2 class="text-2xl sm:text-3xl font-semibold text-[#E6EDF3] tracking-tight mb-4">
+      Eight capabilities. One substrate.
+    </h2>
+    <p class="text-[#9CA3AF] leading-relaxed mb-10 max-w-2xl">
+      Heka is not a prompt. It is the working substrate underneath your agents.
+    </p>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <!-- Card 1 -->
+      <div class="rounded-xl p-6 bg-[#111111] border border-[#1F1F1F]">
+        <h3 class="text-[#E6EDF3] font-semibold text-sm mb-2">A coordinated agent team</h3>
+        <p class="text-[#9CA3AF] text-sm leading-relaxed">
+          Multiple agents work in parallel over a shared bridge, each in its own isolated workspace. Not one session doing everything.
+        </p>
+      </div>
+      <!-- Card 2 -->
+      <div class="rounded-xl p-6 bg-[#111111] border border-[#1F1F1F]">
+        <h3 class="text-[#E6EDF3] font-semibold text-sm mb-2">Memory that won't go stale</h3>
+        <p class="text-[#9CA3AF] text-sm leading-relaxed">
+          Institutional knowledge with freshness tracking, so agents re-verify aging facts instead of trusting them blindly.
+        </p>
+      </div>
+      <!-- Card 3 -->
+      <div class="rounded-xl p-6 bg-[#111111] border border-[#1F1F1F]">
+        <h3 class="text-[#E6EDF3] font-semibold text-sm mb-2">Separation-of-duties review</h3>
+        <p class="text-[#9CA3AF] text-sm leading-relaxed">
+          Independent architect and QA reviewers that cannot approve their own work, with every material action logged to a signed evidence trail.
+        </p>
+      </div>
+      <!-- Card 4 -->
+      <div class="rounded-xl p-6 bg-[#111111] border border-[#1F1F1F]">
+        <h3 class="text-[#E6EDF3] font-semibold text-sm mb-2">A codebase that remembers how it broke</h3>
+        <p class="text-[#9CA3AF] text-sm leading-relaxed">
+          Past failures and decisions resurface automatically when an agent touches a risky area.
+        </p>
+      </div>
+      <!-- Card 5 -->
+      <div class="rounded-xl p-6 bg-[#111111] border border-[#1F1F1F]">
+        <h3 class="text-[#E6EDF3] font-semibold text-sm mb-2">Real device and simulator testing</h3>
+        <p class="text-[#9CA3AF] text-sm leading-relaxed">
+          Auto-allocated simulators, record-once visual-regression replay that runs free in CI, and rebuild checks that catch stale-binary false passes.
+        </p>
+      </div>
+      <!-- Card 6 -->
+      <div class="rounded-xl p-6 bg-[#111111] border border-[#1F1F1F]">
+        <h3 class="text-[#E6EDF3] font-semibold text-sm mb-2">One-command, non-destructive install</h3>
+        <p class="text-[#9CA3AF] text-sm leading-relaxed">
+          Drops into any repo, recons it, learns its critical paths, and never overwrites your files.
+        </p>
+      </div>
+      <!-- Card 7 -->
+      <div class="rounded-xl p-6 bg-[#111111] border border-[#1F1F1F]">
+        <h3 class="text-[#E6EDF3] font-semibold text-sm mb-2">Knowledge capture on day one</h3>
+        <p class="text-[#9CA3AF] text-sm leading-relaxed">
+          A structured senior-engineer interview captures domain knowledge before the expert rotates off.
+        </p>
+      </div>
+      <!-- Card 8 -->
+      <div class="rounded-xl p-6 bg-[#111111] border border-[#1F1F1F]">
+        <h3 class="text-[#E6EDF3] font-semibold text-sm mb-2">A harness that improves itself</h3>
+        <p class="text-[#9CA3AF] text-sm leading-relaxed">
+          Every escaped bug becomes a new permanent guardrail, and improvements propagate across your projects.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <SectionDivider />
+
+  <!-- ============================================================
        PROOF
   ============================================================ -->
   <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
@@ -209,20 +282,51 @@ const jsonLd = {
     </h2>
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-      <!-- Headline stat card -->
+      <!-- 4-stat cluster -->
       <div
-        class="rounded-xl p-8 flex flex-col justify-between"
+        class="rounded-xl p-8 lg:col-span-3"
         style="background: rgba(59,130,246,0.06); border: 1px solid rgba(59,130,246,0.25);"
       >
-        <p
-          class="text-3xl sm:text-4xl font-bold leading-tight mb-4"
-          style="background: linear-gradient(135deg, #3B82F6, #60A5FA); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"
-        >
-          +208% merged PRs per week, zero reverts
-        </p>
-        <p class="text-xs text-[#8B949E] leading-relaxed">
-          One week of real git telemetry from a production iOS app run on Heka (40 merged PRs vs
-          a 13/week baseline).
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-6 mb-6">
+          <div class="text-center">
+            <p
+              class="text-3xl sm:text-4xl font-bold leading-tight mb-1"
+              style="background: linear-gradient(135deg, #3B82F6, #60A5FA); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"
+            >
+              +208%
+            </p>
+            <p class="text-xs text-[#8B949E] leading-snug">merged PRs per week (40 vs a 13/week baseline)</p>
+          </div>
+          <div class="text-center">
+            <p
+              class="text-3xl sm:text-4xl font-bold leading-tight mb-1"
+              style="background: linear-gradient(135deg, #3B82F6, #60A5FA); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"
+            >
+              0
+            </p>
+            <p class="text-xs text-[#8B949E] leading-snug">reverts</p>
+          </div>
+          <div class="text-center">
+            <p
+              class="text-3xl sm:text-4xl font-bold leading-tight mb-1"
+              style="background: linear-gradient(135deg, #3B82F6, #60A5FA); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"
+            >
+              +55%
+            </p>
+            <p class="text-xs text-[#8B949E] leading-snug">commit volume</p>
+          </div>
+          <div class="text-center">
+            <p
+              class="text-3xl sm:text-4xl font-bold leading-tight mb-1"
+              style="background: linear-gradient(135deg, #3B82F6, #60A5FA); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"
+            >
+              0.86
+            </p>
+            <p class="text-xs text-[#8B949E] leading-snug">test-to-source ratio</p>
+          </div>
+        </div>
+        <p class="text-xs text-[#8B949E] leading-relaxed text-center">
+          One week of real git telemetry from a large production iOS app, run on Heka. Reproducible from repo history, not self-reported.
         </p>
       </div>
 
